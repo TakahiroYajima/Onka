@@ -11,16 +11,21 @@ public class SoundPlayerObject : MonoBehaviour
 {
     [SerializeField] private List<AudioClip> audioClipList = new List<AudioClip>();
     public AudioSource audioSource { get; private set; } = null;
-    private List<SoundData> soundDataList = new List<SoundData>();
+    //private List<SoundData> soundDataList = new List<SoundData>();
 
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
     }
-    // Start is called before the first frame update
-    void Start()
+    
+    public AudioClip GetClip(int arrayNum)
     {
-        
+        if (arrayNum < 0 || arrayNum >= audioClipList.Count) return null;
+        return audioClipList[arrayNum];
+    }
+    public List<AudioClip> GetClipList()
+    {
+        return audioClipList;
     }
 
     public void PlaySoundLoop(int arrayNum, float volume = 1f)

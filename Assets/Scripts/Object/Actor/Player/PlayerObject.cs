@@ -16,8 +16,7 @@ public class PlayerObject : MonoBehaviour
 
     public UnityAction<PlayerState> onStateChangeCallback = null;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         raycastor = GetComponent<Raycastor>();
 
@@ -25,7 +24,11 @@ public class PlayerObject : MonoBehaviour
         playerStateDic.Add(PlayerState.Free, new PlayerStateFree());
         playerStateDic.Add(PlayerState.ItemGet, new PlayerStateItemGet());
         //playerStateDic.Add(PlayerState.Event, new PlayerStateWatchItem());
+    }
 
+    // Start is called before the first frame update
+    void Start()
+    {
         //デバッグ用
         playerStateDic[currentState].StartAction();
     }

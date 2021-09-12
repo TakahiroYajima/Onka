@@ -2,23 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using SoundDistance;
 
 [RequireComponent(typeof(WanderingActor))]
 [RequireComponent(typeof(Raycastor))]
 [RequireComponent(typeof(CapsuleCollider))]
-[RequireComponent(typeof(SoundPlayerObject))] 
+//[RequireComponent(typeof(SoundPlayerObject))] 
 public class Enemy_Yukie : Enemy
 {
     public WanderingActor wanderingActor { get; private set; } = null;
     public PlayerObject player { get; private set; } = null;
     public Raycastor raycastor { get; private set; } = null;
     public CapsuleCollider capsuleCollider { get; private set; } = null;
-    public SoundPlayerObject soundPlayerObject { get; private set; } = null;
+    [SerializeField] private SoundPlayerObject emitterSoundPlayer = null;
 
     public Dictionary<EnemyState, StateBase> yukieStateDic { get; private set; } = new Dictionary<EnemyState, StateBase>();
 
     public UnityAction<EnemyState> onStateChangeCallback = null;
-    public UnityAction<Collision> onCollisionEnterCallback = null;
+    public UnityAction<Collider> onColliderEnterCallback = null;
 
     //プレイヤーとの距離計算用（Vector3では重いのでY軸を無視してVector2(x,z)に変換）
     [HideInInspector] public Vector2 yukieXZ = new Vector2(0, 0);
@@ -27,23 +28,26 @@ public class Enemy_Yukie : Enemy
     private float playerDetectionDistance = 8f;
     private float searchAngle = 60f;
 
-
-    // Start is called before the first frame update
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         wanderingActor = GetComponent<WanderingActor>();
         player = StageManager.Instance.GetPlayer();
         raycastor = GetComponent<Raycastor>();
         capsuleCollider = GetComponent<CapsuleCollider>();
-        soundPlayerObject = GetComponent<SoundPlayerObject>();
 
         //State登録
         yukieStateDic.Add(EnemyState.Wandering, new YukieStateWandering());
         yukieStateDic.Add(EnemyState.RecognizedPlayer, new YukieStateRecognizedPlayer());
         yukieStateDic.Add(EnemyState.ChasePlayer, new YukieStateChasePlayer());
         yukieStateDic.Add(EnemyState.CaughtPlayer, new YukieStateCaughtPlayer());
+    }
 
+    // Start is called before the first frame update
+    protected override void Start()
+    {
+        base.Start();
+        
         StartCoroutine(StartAction());
     }
 
@@ -105,12 +109,29 @@ public class Enemy_Yukie : Enemy
         return false;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void PlaySoundLoop(int arrayNum, float volume = 1f)
     {
-        if(onCollisionEnterCallback != null)
-        {
-            onCollisionEnterCallback(collision);
-        }
+        SoundDistanceManager.Instance.StartSoundDistanceMaker(emitterSoundPlayer.GetClip(arrayNum), volume);
+    }
+    public void SetMaxVolume(float _volume)
+    {
+        SoundDistanceManager.Instance.SetMaxVolumeToMaker(_volume);
+    }
+
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if(onColliderEnterCallback != null)
+    //    {
+    //        //onColliderEnterCallback(collision);
+    //    }
         
+    //}
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (onColliderEnterCallback != null)
+        {
+            onColliderEnterCallback(other);
+        }
     }
 }

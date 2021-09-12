@@ -13,6 +13,8 @@ public abstract class DoorObject : MonoBehaviour
 
     protected bool isMoving = false;
     protected bool isOpenState = false;//ドアが開いている状態か
+    protected const float DistanceRequiredToCloseDoorSqrMagnitude = 100f;//自動でドアが閉まるために必要なプレイヤーとの距離：距離は10。sqrMagnitudeの計算なので 10 * 10 = 100
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,7 +51,7 @@ public abstract class DoorObject : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(3f);
-            if (Vector3.Distance(transform.position, StageManager.Instance.GetPlayer().Position) >= 10f)
+            if ((transform.position - StageManager.Instance.GetPlayer().Position).sqrMagnitude >= DistanceRequiredToCloseDoorSqrMagnitude)
             {
                 break;
             }

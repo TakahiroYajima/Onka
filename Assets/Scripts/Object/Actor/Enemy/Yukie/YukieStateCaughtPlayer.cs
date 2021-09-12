@@ -15,7 +15,7 @@ public class YukieStateCaughtPlayer : StateBase
         yukie.navMeshAgent.velocity = Vector3.zero;
         yukie.navMeshAgent.enabled = false;
         yukie.capsuleCollider.enabled = false;
-        yukie.onCollisionEnterCallback = null;
+        yukie.onColliderEnterCallback = null;
         Debug.Log("GameOver");
     }
 

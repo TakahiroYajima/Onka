@@ -13,6 +13,7 @@ TagManager:
   - Item
   - KeyLock
   - Event
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -31,9 +32,9 @@ TagManager:
   - StageObject
   - Item
   - Event
-  - 
-  - 
-  - 
+  - SoundDirectionSystem
+  - Enemy
+  - ToPlayerOnlyCollision
   - 
   - 
   - 

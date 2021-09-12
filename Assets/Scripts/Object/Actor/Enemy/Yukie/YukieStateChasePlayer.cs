@@ -12,14 +12,16 @@ public class YukieStateChasePlayer : StateBase
     private int frameCount = 0;
     private const int doUpdateFrameCount = 6;
     private float noRecognitionTime = 0f;
+    private const float ToChangeWanderingLostPlayerTime = 6f;
 
     public override void StartAction()
     {
         yukie = StageManager.Instance.GetYukie();
         yukie.navMeshAgent.speed = yukie.runSpeed;
-        yukie.onCollisionEnterCallback = OnCollisionEnterEvent;
+        yukie.onColliderEnterCallback = OnColliderEnterEvent;
         frameCount = 0;
-        yukie.soundPlayerObject.PlaySoundLoop(1,1f);
+        yukie.SetMaxVolume(1f);
+        yukie.PlaySoundLoop(1,1f);
         noRecognitionTime = 0f;
         Debug.Log("プレイヤー追尾");
     }
@@ -28,10 +30,10 @@ public class YukieStateChasePlayer : StateBase
     {
         yukie.navMeshAgent.SetDestination(yukie.player.transform.position);
 
-        //プレイヤーを5秒間認識しなかったら徘徊モードに戻る
+        //プレイヤーをToChangeWanderingLostPlayerTime秒間認識しなかったら徘徊モードに戻る
         if (frameCount >= doUpdateFrameCount)
         {
-            if(noRecognitionTime >= 5f)
+            if(noRecognitionTime >= ToChangeWanderingLostPlayerTime)
             {
                 yukie.navMeshAgent.velocity = Vector3.zero;
                 yukie.ChangeState(EnemyState.Wandering);
@@ -44,12 +46,12 @@ public class YukieStateChasePlayer : StateBase
                 if (Utility.Instance.IsTagNameMatch(hit.transform.gameObject, "Player"))
                 {
                     noRecognitionTime = 0f;
-                    yukie.soundPlayerObject.SetVolume(1f);
+                    //yukie.SetMaxVolume(1f);
                 }
                 else
                 {
                     noRecognitionTime += Time.deltaTime * doUpdateFrameCount;
-                    yukie.soundPlayerObject.SetVolume(0.5f);
+                    //yukie.SetMaxVolume(0.5f);
                 }
             }, 10f);
             frameCount = 0;
@@ -65,9 +67,9 @@ public class YukieStateChasePlayer : StateBase
 
     }
 
-    public void OnCollisionEnterEvent(Collision collision)
+    public void OnColliderEnterEvent(Collider collider)
     {
-        switch (collision.transform.tag)
+        switch (collider.transform.tag)
         {
             case "Player":
                 Debug.Log("プレイヤーを捕まえた");

@@ -11,10 +11,15 @@ public class Enemy : MonoBehaviour
 
     public EnemyState currentState { get; protected set; } = EnemyState.Init;
 
+    protected virtual void Awake()
+    {
+        navMeshAgent = GetComponent<NavMeshAgent>();
+    }
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        navMeshAgent = GetComponent<NavMeshAgent>();
+        
     }
 
     public void MoveToTargetNavMeshAgent(Vector3 targetPosition)
