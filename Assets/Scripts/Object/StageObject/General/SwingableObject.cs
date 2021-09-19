@@ -45,54 +45,47 @@ public class SwingableObject : MonoBehaviour
         }
     }
 
-    private IEnumerator DoSwing(bool open, UnityAction onComplete = null)
+    private IEnumerator DoSwing(bool _open, UnityAction _onComplete = null)
     {
         isMoving = true;
-        //thisCollider.enabled = !open;
         float endTime = 0.5f;
         float currentTime = 0;
-        float initAngale = currentLocalRotation;//swingTransform.localRotation.y;
+        float initAngale = currentLocalRotation;
         float angle = initAngale;
-        Debug.Log("start : " + swingTransform.localRotation.y);
-        const float swingAngle = 90f;
+        float swingAngle = 90f;
+        if(swingDirection == SwingDirection.Right || swingDirection == SwingDirection.Up) { swingAngle = -swingAngle; }
 
-        UnityAction updateActin = null;
-        if (open)
+        UnityAction updateAction = null;
+        if (_open)
         {
-            if (swingDirection == SwingDirection.Left)
-            {
-                updateActin = () => { angle = initAngale + (currentTime / endTime * swingAngle); };//90度でオープン完了
-            }
-            else
-            {
-                updateActin = () => { angle = initAngale + (currentTime / endTime * -swingAngle); };//-90度でオープン完了
-            }
+            updateAction = () => { angle = initAngale + (currentTime / endTime * swingAngle); };
         }
         else
         {
-            if (swingDirection == SwingDirection.Left)
-            {
-                updateActin = () => { angle = initAngale - (currentTime / endTime * swingAngle); };//0度でクローズ完了
-            }
-            else
-            {
-                updateActin = () => { angle = initAngale - (currentTime / endTime * -swingAngle); };//0度でクローズ完了
-            }
+            updateAction = () => { angle = initAngale - (currentTime / endTime * swingAngle); };
+        }
+
+        UnityAction setRotationAction = null;
+        if (swingDirection == SwingDirection.Right || swingDirection == SwingDirection.Left) {
+            setRotationAction = () => { swingTransform.localRotation = Quaternion.Euler(0, angle, 0); };
+        }
+        else
+        {
+            setRotationAction = () => { swingTransform.localRotation = Quaternion.Euler(angle, 0, 0); };
         }
         while (currentTime < endTime)
         {
-            updateActin();
-            swingTransform.localRotation = Quaternion.Euler(0, angle, 0);
+            updateAction();
+            setRotationAction();
             currentTime += Time.deltaTime;
             yield return null;
         }
-        Debug.Log("final : " + swingTransform.localRotation.y);
         currentLocalRotation = angle;
         isMoving = false;
-        isOpenState = open;
-        if(onComplete != null)
+        isOpenState = _open;
+        if(_onComplete != null)
         {
-            onComplete();
+            _onComplete();
         }
     }
 }
@@ -100,5 +93,7 @@ public class SwingableObject : MonoBehaviour
 public enum SwingDirection
 {
     Left,
-    Right
+    Right,
+    Up,
+    Down,
 }

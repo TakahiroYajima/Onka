@@ -32,7 +32,7 @@ public class PlayerStateFree : StateBase
     /// <param name="hit"></param>
     public void ClickAction(RaycastHit hit)
     {
-        //Debug.Log("hit : " + hit.transform.name);
+        //Debug.Log("playerRaycastHit : " + hit.transform.name);
         switch (hit.transform.tag)
         {
             case "StageObject":
@@ -45,6 +45,7 @@ public class PlayerStateFree : StateBase
                 hit.transform.GetComponent<DoorKeyLockObject>().DoUnlockDoorKey();
                 break;
             case "Item":
+                Debug.Log("アイテム取得 : " + hit.transform.name);
                 ItemObject itemObject = hit.transform.gameObject.GetComponent<ItemObject>();
                 ItemManager.Instance.ItemGetAction(itemObject);
                 player.ChangeState(PlayerState.ItemGet);

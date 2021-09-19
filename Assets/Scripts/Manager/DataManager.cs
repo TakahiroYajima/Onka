@@ -142,8 +142,12 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
 
     public ItemData GetItemData(string _key)
     {
-        return itemDatalist.itemDataList.FirstOrDefault(x => x.key == _key);
+        return gameData.itemDataList.itemDataList.FirstOrDefault(x => x.key == _key);
     }
+    /// <summary>
+    /// アイテムのデータ更新（ゲーム内のみ。セーブ無し）
+    /// </summary>
+    /// <param name="_itemData"></param>
     private void UpdateItemData(ItemData _itemData)
     {
         for(int i = 0; i < gameData.itemDataList.itemDataList.Count; i++)
@@ -154,7 +158,6 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
                 break;
             }
         }
-        //FileManager.DataSave<GameData>(gameData, GameDataFileName);
     }
 
     public bool IsDoorKeyUnlocked(string _doorItemKey)

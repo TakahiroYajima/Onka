@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ドア状の棚・収納の開閉を管理する
+/// </summary>
 [RequireComponent(typeof(SwingableObject))]
 public class SwingableShelfObject : StageObjectBase
 {

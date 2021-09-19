@@ -7,13 +7,14 @@ using SoundDistance;
 [RequireComponent(typeof(WanderingActor))]
 [RequireComponent(typeof(Raycastor))]
 [RequireComponent(typeof(CapsuleCollider))]
-//[RequireComponent(typeof(SoundPlayerObject))] 
+[RequireComponent(typeof(InRoomChecker))]
 public class Enemy_Yukie : Enemy
 {
     public WanderingActor wanderingActor { get; private set; } = null;
     public PlayerObject player { get; private set; } = null;
     public Raycastor raycastor { get; private set; } = null;
     public CapsuleCollider capsuleCollider { get; private set; } = null;
+    public InRoomChecker inRoomChecker { get; private set; } = null;
     [SerializeField] private SoundPlayerObject emitterSoundPlayer = null;
 
     public Dictionary<EnemyState, StateBase> yukieStateDic { get; private set; } = new Dictionary<EnemyState, StateBase>();
@@ -28,6 +29,8 @@ public class Enemy_Yukie : Enemy
     private float playerDetectionDistance = 8f;
     private float searchAngle = 60f;
 
+    
+
     protected override void Awake()
     {
         base.Awake();
@@ -35,6 +38,7 @@ public class Enemy_Yukie : Enemy
         player = StageManager.Instance.GetPlayer();
         raycastor = GetComponent<Raycastor>();
         capsuleCollider = GetComponent<CapsuleCollider>();
+        inRoomChecker = GetComponent<InRoomChecker>();
 
         //State登録
         yukieStateDic.Add(EnemyState.Wandering, new YukieStateWandering());

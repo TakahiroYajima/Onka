@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// スライド・引き出し状の棚・収納の開閉を管理する
+/// </summary>
 [RequireComponent(typeof(SlidableObject))]
 public class SlidableShelfObject : StageObjectBase
 {

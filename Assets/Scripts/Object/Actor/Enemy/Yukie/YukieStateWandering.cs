@@ -36,23 +36,11 @@ public class YukieStateWandering : StateBase
         if(frameCount >= doUpdateFrameCount)
         {
             yukie.UpdatePositionXZ();
-            //yukie.raycastor.ObjectToRayAction(yukie.transform.position, yukie.player.transform.position, (RaycastHit hit) =>
-            //{
-            //    if (Utility.Instance.IsTagNameMatch(hit.transform.gameObject, "Player"))
-            //    {
-            //        yukie.SetMaxVolume(0.1f);
-            //    }
-            //    else
-            //    {
-            //        yukie.SetMaxVolume(0.03f);
-            //    }
-            //}, 100f);
-
             if (yukie.IsInSightPlayer()){
                 //壁を挟んでいないか
                 yukie.raycastor.ObjectToRayAction(yukie.transform.position, yukie.player.transform.position, (RaycastHit hit) =>
                 {
-                    if (Utility.Instance.IsTagNameMatch(hit.transform.gameObject, "Player"))
+                    if (Utility.Instance.IsTagNameMatch(hit.transform.gameObject, Tags.Player))
                     {
                         yukie.ChangeState(EnemyState.RecognizedPlayer);
                     }
@@ -75,5 +63,23 @@ public class YukieStateWandering : StateBase
     public override void EndAction()
     {
         yukie.wanderingActor.SetActive(false);
+    }
+
+    private void OnColliderEnterEvent(Collider collider)
+    {
+        switch (collider.transform.tag)
+        {
+            case Tags.Door:
+                DoorObject doorObject = collider.gameObject.GetComponent<DoorObject>();
+                if (doorObject != null)
+                {
+                    //ドアが解錠済みなら自分で開けられる
+                    if (doorObject.isUnlocked)
+                    {
+                        doorObject.OpenDoor();
+                    }
+                }
+                break;
+        }
     }
 }

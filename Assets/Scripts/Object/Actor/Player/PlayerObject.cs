@@ -4,21 +4,24 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Raycastor))]
+[RequireComponent(typeof(InRoomChecker))]
 public class PlayerObject : MonoBehaviour
 {
     [SerializeField] private FirstPersonAIO firstPersonAIO = null;
     public FirstPersonAIO FirstPersonAIO { get { return firstPersonAIO; } }
     public Raycastor raycastor { get; private set; } = null;
+    public InRoomChecker inRoomChecker { get; private set; } = null;
     public Vector3 Position { get { return transform.position; } }
 
     private Dictionary<PlayerState, StateBase> playerStateDic = new Dictionary<PlayerState, StateBase>();
     public PlayerState currentState { get; private set; } = PlayerState.Free;
 
     public UnityAction<PlayerState> onStateChangeCallback = null;
-
+    
     private void Awake()
     {
         raycastor = GetComponent<Raycastor>();
+        inRoomChecker = GetComponent<InRoomChecker>();
 
         //Stateパターン初期化
         playerStateDic.Add(PlayerState.Free, new PlayerStateFree());
@@ -54,7 +57,7 @@ public class PlayerObject : MonoBehaviour
         string tagName = collision.gameObject.tag;
         switch (tagName)
         {
-            case "Door":
+            case Tags.Door:
                 DoorObject doorObject = collision.gameObject.GetComponent<DoorObject>();
                 if (doorObject != null)
                 {

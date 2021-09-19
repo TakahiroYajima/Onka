@@ -225,6 +225,7 @@ public class ItemSettingEditor : EditorWindow
 
         FileManager.DataSave<ItemDataList>(scriptableObject, DataManager.ItemDataFileName, () =>
         {
+            DebugUtilityMenu.UpdateItemData();
             // エディタを最新の状態にする
             AssetDatabase.Refresh();
         });

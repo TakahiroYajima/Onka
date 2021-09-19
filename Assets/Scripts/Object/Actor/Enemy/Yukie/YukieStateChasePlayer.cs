@@ -12,7 +12,7 @@ public class YukieStateChasePlayer : StateBase
     private int frameCount = 0;
     private const int doUpdateFrameCount = 6;
     private float noRecognitionTime = 0f;
-    private const float ToChangeWanderingLostPlayerTime = 6f;
+    private const float ToChangeWanderingLostPlayerTime = 3f;//プレイヤーを見失ってから探索モードに戻るまでの時間
 
     public override void StartAction()
     {
@@ -43,7 +43,7 @@ public class YukieStateChasePlayer : StateBase
             yukie.UpdatePositionXZ();
             yukie.raycastor.ObjectToRayAction(yukie.transform.position, yukie.player.transform.position, (RaycastHit hit) =>
             {
-                if (Utility.Instance.IsTagNameMatch(hit.transform.gameObject, "Player"))
+                if (Utility.Instance.IsTagNameMatch(hit.transform.gameObject, Tags.Player))
                 {
                     noRecognitionTime = 0f;
                     //yukie.SetMaxVolume(1f);
@@ -71,7 +71,7 @@ public class YukieStateChasePlayer : StateBase
     {
         switch (collider.transform.tag)
         {
-            case "Player":
+            case Tags.Player:
                 Debug.Log("プレイヤーを捕まえた");
                 yukie.ChangeState(EnemyState.CaughtPlayer);
                 break;
