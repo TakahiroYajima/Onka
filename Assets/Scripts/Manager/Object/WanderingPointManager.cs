@@ -27,6 +27,10 @@ public class WanderingPointManager : SingletonMonoBehaviour<WanderingPointManage
             //    Debug.Log(s.PointNum);
             //}
             wanderingPoints.Add(selectType, select);
+            for(int j = 0; j < wanderingPoints[selectType].Count; j++)
+            {
+                wanderingPoints[selectType][j].Initialize();
+            }
         }
     }
 

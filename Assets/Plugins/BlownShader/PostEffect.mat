@@ -71,7 +71,7 @@ Material:
     - _RGBNoise: 0.0034999999
     - _ScanLineSpeed: 10
     - _ScanLineTail: 2
-    - _SinNoiseOffset: 2.9992
+    - _SinNoiseOffset: 7.653419
     - _SinNoiseScale: 0.005
     - _SinNoiseWidth: 0
     - _SmoothnessTextureChannel: 0

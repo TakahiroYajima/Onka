@@ -35,17 +35,16 @@ public class PlayerStateFree : StateBase
         //Debug.Log("playerRaycastHit : " + hit.transform.name);
         switch (hit.transform.tag)
         {
-            case "StageObject":
+            case Tags.StageObject:
                 hit.transform.GetComponent<StageObjectBase>().OnTapObject();
                 break;
-            case "Door":
+            case Tags.Door:
                 //DataManager.Instance.DoDoorUnlock(hit.transform.gameObject.GetComponent<DoorObject>().DoorOpenKey);
                 break;
-            case "KeyLock":
+            case Tags.KeyLock:
                 hit.transform.GetComponent<DoorKeyLockObject>().DoUnlockDoorKey();
                 break;
-            case "Item":
-                Debug.Log("アイテム取得 : " + hit.transform.name);
+            case Tags.Item:
                 ItemObject itemObject = hit.transform.gameObject.GetComponent<ItemObject>();
                 ItemManager.Instance.ItemGetAction(itemObject);
                 player.ChangeState(PlayerState.ItemGet);

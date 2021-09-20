@@ -19,12 +19,15 @@ public class YukieStateWandering : StateBase
     {
         yukie = StageManager.Instance.GetYukie();
         yukie.wanderingActor.SetActive(true);
-        //if (!isInitialized)
-        //{
-        //    isInitialized = true;
-        //    yukie.wanderingActor.SetWanderingID(0);
-        //}
-        yukie.wanderingActor.SetWanderingID(0);
+        if (!isInitialized)
+        {
+            isInitialized = true;
+            yukie.wanderingActor.SetWanderingID(0);
+        }
+        else
+        {
+            yukie.wanderingActor.SetWanderingID(yukie.wanderingActor.currentWanderingPointID);
+        }
         yukie.wanderingActor.SetMoveSpeed(1f);
         yukie.onColliderEnterCallback = null;
         yukie.PlaySoundLoop(0, 0.3f);

@@ -16,6 +16,7 @@ TagManager:
   - Enemy
   - SoundDistanceSystem
   - RoomCollider
+  - WanderingSystem
   layers:
   - Default
   - TransparentFX
@@ -38,7 +39,7 @@ TagManager:
   - Enemy
   - ToPlayerOnlyCollision
   - RoomCollider
-  - 
+  - WanderingSystem
   - 
   - 
   - 

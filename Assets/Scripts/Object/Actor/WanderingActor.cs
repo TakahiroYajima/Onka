@@ -16,7 +16,7 @@ public class WanderingActor : MonoBehaviour
 
     private NavMeshAgent navMeshAgent = null;
 
-    private int currentWanderingPointID = 0;//現在の目的地の配列の要素番号
+    public int currentWanderingPointID { get; private set; } = 0;//現在の目的地の配列の要素番号
     public bool isActive { get; private set; } = false;
     // Start is called before the first frame update
     void Start()
@@ -24,17 +24,17 @@ public class WanderingActor : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
-    private void Update()
-    {
-        if (isActive)
-        {
-            //目的地に着いたら次の通過点へ向かう
-            if((transform.position - WanderingPointManager.Instance.wanderingPoints[wanderingEnemyType][currentWanderingPointID].transform.position).sqrMagnitude <= 0.2f)
-            {
-                DoNextWanderingPointSet();
-            }
-        }
-    }
+    //private void Update()
+    //{
+    //    if (isActive)
+    //    {
+    //        //目的地に着いたら次の通過点へ向かう
+    //        if((transform.position - WanderingPointManager.Instance.wanderingPoints[wanderingEnemyType][currentWanderingPointID].transform.position).sqrMagnitude <= 0.2f)
+    //        {
+    //            DoNextWanderingPointSet();
+    //        }
+    //    }
+    //}
 
     public void SetActive(bool _active)
     {
@@ -49,16 +49,16 @@ public class WanderingActor : MonoBehaviour
     /// <summary>
     /// 次の徘徊通過点を設定
     /// </summary>
-    public void DoNextWanderingPointSet()
+    public void DoNextWanderingPointSet(int nextID)
     {
         
-        if(currentWanderingPointID + 1 >= WanderingPointManager.Instance.wanderingPoints[wanderingEnemyType].Count)
+        if(nextID >= WanderingPointManager.Instance.wanderingPoints[wanderingEnemyType].Count)
         {
             currentWanderingPointID = 0;
         }
         else
         {
-            currentWanderingPointID++;
+            currentWanderingPointID = nextID;
         }
         Debug.Log("次の目的地 : " + (currentWanderingPointID));
         navMeshAgent.SetDestination(WanderingPointManager.Instance.wanderingPoints[wanderingEnemyType][currentWanderingPointID].transform.position);
@@ -70,11 +70,16 @@ public class WanderingActor : MonoBehaviour
     /// <param name="targetID"></param>
     public void SetWanderingID(int targetID)
     {
-        if(targetID >= 0 && targetID < WanderingPointManager.Instance.wanderingPoints[wanderingEnemyType].Count)
+        if (targetID < 0) return;
+        if (targetID >= WanderingPointManager.Instance.wanderingPoints[wanderingEnemyType].Count)
+        {
+            currentWanderingPointID = 0;
+        }
+        else
         {
             currentWanderingPointID = targetID;
-            navMeshAgent.SetDestination(WanderingPointManager.Instance.wanderingPoints[wanderingEnemyType][currentWanderingPointID].transform.position);
-            navMeshAgent.speed = moveSpeed;
         }
+        navMeshAgent.SetDestination(WanderingPointManager.Instance.wanderingPoints[wanderingEnemyType][currentWanderingPointID].transform.position);
+        navMeshAgent.speed = moveSpeed;
     }
 }

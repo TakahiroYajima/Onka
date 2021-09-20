@@ -14,5 +14,12 @@ public class WanderingPoint : MonoBehaviour
     [SerializeField] private int pointNum = 0;
     public int PointNum { get { return pointNum; } }
 
+    [SerializeField] private WanderingCollider wanderingCollider = null;
+
+    public void Initialize()
+    {
+        if(wanderingCollider == null) { Debug.LogError("WanderingColliderが設定されていません。"); return; }
+        wanderingCollider.SetID(pointNum);
+    }
 }
 
