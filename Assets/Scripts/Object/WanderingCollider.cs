@@ -19,7 +19,7 @@ public class WanderingCollider : MonoBehaviour
         switch (other.tag)
         {
             case Tags.Enemy:
-                StageManager.Instance.GetYukie().wanderingActor.SetWanderingID(ID + 1);
+                StageManager.Instance.Yukie.wanderingActor.SetWanderingID(ID + 1);
                 break;
         }
     }

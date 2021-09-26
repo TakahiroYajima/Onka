@@ -24,10 +24,10 @@ public class RoomWanderingManager : MonoBehaviour
         switch (other.tag)
         {
             case Tags.Player:
-                StageManager.Instance.GetPlayer().inRoomChecker.SetEnterRoom(this);
+                StageManager.Instance.Player.inRoomChecker.SetEnterRoom(this);
                 break;
             case Tags.Enemy:
-                StageManager.Instance.GetYukie().inRoomChecker.SetEnterRoom(this);
+                StageManager.Instance.Yukie.inRoomChecker.SetEnterRoom(this);
                 break;
         }
     }
@@ -36,15 +36,15 @@ public class RoomWanderingManager : MonoBehaviour
         switch (other.tag)
         {
             case Tags.Player:
-                if (StageManager.Instance.GetPlayer().inRoomChecker.IsMatchExitCollider(exitColliderObj))
+                if (StageManager.Instance.Player.inRoomChecker.IsMatchExitCollider(exitColliderObj))
                 {
-                    StageManager.Instance.GetPlayer().inRoomChecker.ExitRoom(this);
+                    StageManager.Instance.Player.inRoomChecker.ExitRoom(this);
                 }
                 break;
             case Tags.Enemy:
-                if (StageManager.Instance.GetYukie().inRoomChecker.IsMatchExitCollider(exitColliderObj))
+                if (StageManager.Instance.Yukie.inRoomChecker.IsMatchExitCollider(exitColliderObj))
                 {
-                    StageManager.Instance.GetYukie().inRoomChecker.ExitRoom(this);
+                    StageManager.Instance.Yukie.inRoomChecker.ExitRoom(this);
                 }
                 break;
         }

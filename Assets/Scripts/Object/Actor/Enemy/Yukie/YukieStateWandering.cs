@@ -17,7 +17,7 @@ public class YukieStateWandering : StateBase
 
     public override void StartAction()
     {
-        yukie = StageManager.Instance.GetYukie();
+        yukie = StageManager.Instance.Yukie;
         yukie.wanderingActor.SetActive(true);
         if (!isInitialized)
         {

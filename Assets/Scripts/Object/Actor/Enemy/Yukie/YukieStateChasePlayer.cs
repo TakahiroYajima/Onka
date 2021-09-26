@@ -16,7 +16,7 @@ public class YukieStateChasePlayer : StateBase
 
     public override void StartAction()
     {
-        yukie = StageManager.Instance.GetYukie();
+        yukie = StageManager.Instance.Yukie;
         yukie.navMeshAgent.speed = yukie.runSpeed;
         yukie.onColliderEnterCallback = OnColliderEnterEvent;
         frameCount = 0;

@@ -7,7 +7,7 @@ public class PlayerStateWatchItem : StateBase
     private PlayerObject player = null;
     public override void StartAction()
     {
-        player = StageManager.Instance.GetPlayer();
+        player = StageManager.Instance.Player;
         player.FirstPersonAIO.enabled = false;
     }
 

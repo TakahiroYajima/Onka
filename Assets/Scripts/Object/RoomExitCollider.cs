@@ -14,10 +14,10 @@ public class RoomExitCollider : MonoBehaviour
         switch (other.tag)
         {
             case Tags.Player:
-                StageManager.Instance.GetPlayer().inRoomChecker.SetEnterExitColliderObj(gameObject);
+                StageManager.Instance.Player.inRoomChecker.SetEnterExitColliderObj(gameObject);
                 break;
             case Tags.Enemy:
-                StageManager.Instance.GetYukie().inRoomChecker.SetEnterExitColliderObj(gameObject);
+                StageManager.Instance.Yukie.inRoomChecker.SetEnterExitColliderObj(gameObject);
                 break;
         }
     }
@@ -26,10 +26,10 @@ public class RoomExitCollider : MonoBehaviour
         switch (other.tag)
         {
             case Tags.Player:
-                StageManager.Instance.GetPlayer().inRoomChecker.ExitEnterExitCollider();
+                StageManager.Instance.Player.inRoomChecker.ExitEnterExitCollider();
                 break;
             case Tags.Enemy:
-                StageManager.Instance.GetYukie().inRoomChecker.ExitEnterExitCollider();
+                StageManager.Instance.Yukie.inRoomChecker.ExitEnterExitCollider();
                 break;
         }
     }

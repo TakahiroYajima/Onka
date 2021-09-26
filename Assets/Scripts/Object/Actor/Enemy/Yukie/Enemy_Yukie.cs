@@ -35,7 +35,7 @@ public class Enemy_Yukie : Enemy
     {
         base.Awake();
         wanderingActor = GetComponent<WanderingActor>();
-        player = StageManager.Instance.GetPlayer();
+        player = StageManager.Instance.Player;
         raycastor = GetComponent<Raycastor>();
         capsuleCollider = GetComponent<CapsuleCollider>();
         inRoomChecker = GetComponent<InRoomChecker>();

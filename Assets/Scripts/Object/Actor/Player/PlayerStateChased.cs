@@ -8,7 +8,7 @@ public class PlayerStateChased : StateBase
 
     public override void StartAction()
     {
-        player = StageManager.Instance.GetPlayer();
+        player = StageManager.Instance.Player;
     }
 
     public override void UpdateAction()

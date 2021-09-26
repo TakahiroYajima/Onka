@@ -11,7 +11,7 @@ public class YukieStateCaughtPlayer : StateBase
 
     public override void StartAction()
     {
-        yukie = StageManager.Instance.GetYukie();
+        yukie = StageManager.Instance.Yukie;
         yukie.navMeshAgent.velocity = Vector3.zero;
         yukie.navMeshAgent.enabled = false;
         yukie.capsuleCollider.enabled = false;
