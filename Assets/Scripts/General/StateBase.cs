@@ -34,7 +34,7 @@ public abstract class StateBase
         this.Initialize();
     }
 
-    private void Initialize()
+    protected virtual void Initialize()
     {
         if (this.isInitialized)
         {

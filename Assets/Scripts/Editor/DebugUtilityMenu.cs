@@ -58,4 +58,37 @@ public class DebugUtilityMenu : MonoBehaviour
         }
         FileManager.DataSave<GameData>(data, DataManager.GameDataFileName);
     }
+    [MenuItem("Debug/GameData/イベント更新")]
+    public static void UpdateEventListData()
+    {
+        GameData data = FileManager.LoadSaveData<GameData>(DataManager.GameDataFileName);
+        if (data == null || data == default)
+        {
+            data = new GameData();
+            data.itemDataList = new ItemDataList();
+            data.itemDataList.itemDataList = new List<ItemData>();
+        }
+
+        EventDataList eventDataList = FileManager.LoadSaveData<EventDataList>(DataManager.EventDataFileName);
+        if (data == null || data == default)
+        {
+            Debug.LogError("イベントデータがありません");
+            return;
+        }
+
+        for (int i = 0; i < eventDataList.list.Count; i++)
+        {
+            EventData eData = data.eventDataList.list.FirstOrDefault(x => x.eventKey == eventDataList.list[i].eventKey);
+            if (eData == null || eData == default)
+            {
+                data.eventDataList.list.Add(eventDataList.list[i]);
+            }
+            else
+            {
+                eData.isAppeared = eventDataList.list[i].isAppeared;
+                eData.isEnded = eventDataList.list[i].isEnded;
+            }
+        }
+        FileManager.DataSave<GameData>(data, DataManager.GameDataFileName);
+    }
 }

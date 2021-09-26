@@ -65,7 +65,7 @@ public class Event_AfterGetKozoDiary3 : EventBase
 
     public void OnCollisionEnterEvent()
     {
-        if (Utility.Instance.IsTagNameMatch(collisionEnterEvent.HitCollision.gameObject, "Player"))
+        if (Utility.Instance.IsTagNameMatch(collisionEnterEvent.HitCollision.gameObject, Tags.Player))
         {
             EventManager.Instance.EventStart(managementID);
         }

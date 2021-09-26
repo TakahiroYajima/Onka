@@ -12,16 +12,19 @@ public class PlayerObject : MonoBehaviour
     public Raycastor raycastor { get; private set; } = null;
     public InRoomChecker inRoomChecker { get; private set; } = null;
     public Vector3 Position { get { return transform.position; } }
+    public Rigidbody rigidbody { get; private set; } = null;
 
     private Dictionary<PlayerState, StateBase> playerStateDic = new Dictionary<PlayerState, StateBase>();
     public PlayerState currentState { get; private set; } = PlayerState.Free;
 
     public UnityAction<PlayerState> onStateChangeCallback = null;
-    
+    public UnityAction onStateChangedInPlayerScriptOnly = null;//PlayerObjectのステートスクリプト専用のコールバック
+
     private void Awake()
     {
         raycastor = GetComponent<Raycastor>();
         inRoomChecker = GetComponent<InRoomChecker>();
+        rigidbody = GetComponent<Rigidbody>();
 
         //Stateパターン初期化
         playerStateDic.Add(PlayerState.Free, new PlayerStateFree());
@@ -50,6 +53,10 @@ public class PlayerObject : MonoBehaviour
         playerStateDic[currentState].EndAction();
         currentState = nextState;
         playerStateDic[currentState].StartAction();
+        if(onStateChangedInPlayerScriptOnly != null)
+        {
+            onStateChangedInPlayerScriptOnly();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -68,14 +75,6 @@ public class PlayerObject : MonoBehaviour
                 //firstPersonAIO.isStandable = false;
                 break;
         }
-        //if (Utility.Instance.IsTagNameMatch(collision.transform, "Door"))
-        //{
-        //    DoorObject doorObject = collision.gameObject.GetComponent<DoorObject>();
-        //    if(doorObject != null)
-        //    {
-        //        doorObject.OpenDoor();
-        //    }
-        //}
     }
 
     private void OnCollisionExit(Collision collision)

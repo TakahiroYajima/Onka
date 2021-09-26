@@ -20,6 +20,7 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
 
     public const string ResourcesPath = "Sprites/Items/";
     public UnityAction watchItemEventEndedCallback = null;
+    public ItemData currentGettingItemData { get; private set; } = null;
 
     // Start is called before the first frame update
     void Start()
@@ -59,6 +60,7 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
                 break;
         }
         Debug.Log("ItemLoad : " + ResourcesPath + _data.spriteName);
+        currentGettingItemData = _data;
         Texture2D tex = Resources.Load(ResourcesPath + _data.spriteName) as Texture2D;
         Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.zero); 
         watchItemImage.sprite = sprite;

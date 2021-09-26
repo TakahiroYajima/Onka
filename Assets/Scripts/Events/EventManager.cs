@@ -65,17 +65,17 @@ public class EventManager : SingletonMonoBehaviour<EventManager>
 
     public void EventStart(int managementID)
     {
-        Debug.Log("イベントID : " + inProgressEventArrayNum);
+        Debug.Log("イベントID : " + managementID);
         if(inProgressEventArrayNum == -1)
         {
-            if (StageManager.Instance.GetPlayer().currentState == PlayerState.Free)
+            if (StageManager.Instance.Player.currentState == PlayerState.Free)
             {
                 inProgressEventArrayNum = managementID;
                 eventObjectList[inProgressEventArrayNum].EventStart();
             }
             else
             {
-                Debug.Log("プレイヤーのStateがFreeではありません : " + StageManager.Instance.GetPlayer().currentState.ToString());
+                Debug.Log("プレイヤーのStateがFreeではありません : " + StageManager.Instance.Player.currentState.ToString());
             }
         }
         else
