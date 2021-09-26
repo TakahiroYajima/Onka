@@ -11,8 +11,12 @@ public class PlayerStateItemGet : StateBase
 
     public override void StartAction()
     {
-        player = StageManager.Instance.GetPlayer();
+        player = StageManager.Instance.Player;
         player.FirstPersonAIO.enabled = false;
+        player.onStateChangedInPlayerScriptOnly = () =>
+        {
+            EventManager.Instance.ProgressEvent();
+        };
         ItemManager.Instance.watchItemEventEndedCallback = () =>
         {
             player.ChangeState(PlayerState.Free);
@@ -39,6 +43,5 @@ public class PlayerStateItemGet : StateBase
     public override void EndAction()
     {
         player.FirstPersonAIO.enabled = true;
-        EventManager.Instance.ProgressEvent();
     }
 }

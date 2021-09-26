@@ -15,18 +15,18 @@ public class DoorKeyLockObject : MonoBehaviour
     void Start()
     {
         collider = GetComponent<Collider>();
-        if (DataManager.Instance.IsDoorKeyUnlocked(doorObject.DoorOpenKey))
-        {
-            collider.enabled = false;
-        }
+        //if (DataManager.Instance.IsKeyUnlocked(doorObject.DoorOpenKey))
+        //{
+        //    collider.enabled = false;
+        //}
     }
 
     public void DoUnlockDoorKey()
     {
-        DataManager.Instance.DoDoorUnlock(doorObject.DoorOpenKey,()=> 
-        {
-            collider.enabled = false;
-            SoundManager.Instance.PlaySeWithKey("menuse_key_unlock");
-        });
+        //DataManager.Instance.DoDoorUnlock(doorObject.DoorOpenKey,()=> 
+        //{
+        //    collider.enabled = false;
+        //    SoundManager.Instance.PlaySeWithKey("menuse_key_unlock");
+        //});
     }
 }

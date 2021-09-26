@@ -10,7 +10,7 @@ public class PlayerStateFree : StateBase
     private PlayerObject player = null;
     public override void StartAction()
     {
-        player = StageManager.Instance.GetPlayer();
+        player = StageManager.Instance.Player;
     }
 
     public override void UpdateAction()
@@ -42,12 +42,15 @@ public class PlayerStateFree : StateBase
                 //DataManager.Instance.DoDoorUnlock(hit.transform.gameObject.GetComponent<DoorObject>().DoorOpenKey);
                 break;
             case Tags.KeyLock:
-                hit.transform.GetComponent<DoorKeyLockObject>().DoUnlockDoorKey();
+                //hit.transform.GetComponent<DoorKeyLockObject>().DoUnlockDoorKey();
+                hit.transform.GetComponent<KeyLockObject>().DoUnlock();
                 break;
             case Tags.Item:
                 ItemObject itemObject = hit.transform.gameObject.GetComponent<ItemObject>();
                 ItemManager.Instance.ItemGetAction(itemObject);
                 player.ChangeState(PlayerState.ItemGet);
+                player.rigidbody.velocity = Vector3.zero;
+                player.rigidbody.angularVelocity = Vector3.zero;
                 break;
         }
     }

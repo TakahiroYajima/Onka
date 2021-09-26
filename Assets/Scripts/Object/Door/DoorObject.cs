@@ -1,19 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 [RequireComponent(typeof(BoxCollider))]
 public abstract class DoorObject : MonoBehaviour
 {
     //ドアを開けるために必要なカギのID
     [SerializeField] protected string openKey = "";
-    public string DoorOpenKey { get { return openKey; } }
+    //public string DoorOpenKey { get { return openKey; } }
+    [SerializeField] protected KeyLockTarget keyLockTarget = null;
 
     protected BoxCollider thisCollider = null;
 
     protected bool isMoving = false;
     protected bool isOpenState = false;//ドアが開いている状態か
-    public bool isUnlocked { get { return DataManager.Instance.IsDoorKeyUnlocked(openKey); } }//過去にプレイヤーがドアを開けているか（ItemのisUsedで判定）
+    //過去にプレイヤーがドアを開けているか（ItemのisUsedで判定）
+    public bool isUnlocked
+    {
+        get {
+            if (keyLockTarget == null) return true;
+            return keyLockTarget.isUnlocked;
+        }
+    }
     protected const float DistanceRequiredToCloseDoorSqrMagnitude = 100f;//自動でドアが閉まるために必要なプレイヤーとの距離：距離は10。sqrMagnitudeの計算なので 10 * 10 = 100
 
     // Start is called before the first frame update
@@ -29,12 +40,24 @@ public abstract class DoorObject : MonoBehaviour
 
     public void OpenDoor()
     {
-        if (!string.IsNullOrEmpty(openKey))
+        //if (!string.IsNullOrEmpty(openKey))
+        //{
+        //    if (!isUnlocked)
+        //    {
+        //        Debug.Log("鍵がかかっている : " + openKey);
+        //        return;
+        //    }
+        //}
+        if(keyLockTarget != null)
         {
-            if (!isUnlocked)
-            {
+            if (string.IsNullOrEmpty(keyLockTarget.UnlockKey)) { Debug.LogError("解錠キーが設定されていません"); return; }
+            if (!keyLockTarget.isUnlocked) {
                 Debug.Log("鍵がかかっている : " + openKey);
                 return;
+            }
+            else
+            {
+                Debug.Log("解錠済み : " + openKey);
             }
         }
         
@@ -53,8 +76,8 @@ public abstract class DoorObject : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(3f);
-            if ((transform.position - StageManager.Instance.GetPlayer().Position).sqrMagnitude >= DistanceRequiredToCloseDoorSqrMagnitude &&
-                 !StageManager.Instance.GetPlayer().inRoomChecker.isEnterRoom && !StageManager.Instance.GetYukie().inRoomChecker.isEnterRoom)
+            if ((transform.position - StageManager.Instance.Player.Position).sqrMagnitude >= DistanceRequiredToCloseDoorSqrMagnitude &&
+                 !StageManager.Instance.Player.inRoomChecker.isEnterRoom && !StageManager.Instance.Yukie.inRoomChecker.isEnterRoom)
             {
                 break;
             }
@@ -62,3 +85,24 @@ public abstract class DoorObject : MonoBehaviour
         CloseDoor();
     }
 }
+
+//#if UNITY_EDITOR
+//[CustomEditor(typeof(DoorObject))]
+//public class DoorObjectInspector : Editor
+//{
+//    public bool isUseKeyLock = false;
+
+//    public override void OnInspectorGUI()
+//    {
+//        DoorObject door = target as DoorObject;
+
+//        EditorGUILayout.BeginHorizontal();
+//        {
+//            isUseKeyLock = EditorGUILayout.Toggle("鍵システムを使用するか", isUseKeyLock, GUILayout.Width(120));
+//        }
+//        EditorGUILayout.EndHorizontal();
+//        EditorGUILayout.LabelField("鍵システムを使用するか");
+
+//    }
+//}
+//#endif

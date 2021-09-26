@@ -160,10 +160,10 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
         }
     }
 
-    public bool IsDoorKeyUnlocked(string _doorItemKey)
+    public bool IsKeyUnlocked(string _keyLockItemKey)
     {
-        ItemData itemData = GetItemData(_doorItemKey);
-        if (itemData == null) { Debug.LogError("ドアのアイテムが存在しません : " + _doorItemKey); return false; }
+        ItemData itemData = GetItemData(_keyLockItemKey);
+        if (itemData == null) { Debug.LogError("ドアのアイテムが存在しません : " + _keyLockItemKey); return false; }
 
         return itemData.used;//ドアのキーを使用しているかで判定
     }
