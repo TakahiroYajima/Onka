@@ -152,10 +152,10 @@ namespace SoundDistance
                 }
             }
         }
-        void OnDrawGizmos()
-        {
-            Gizmos.DrawCube(soundAncherPosition, new Vector3(0.3f, 0.3f, 0.3f));
-        }
+        //void OnDrawGizmos()
+        //{
+        //    Gizmos.DrawCube(soundAncherPosition, new Vector3(0.3f, 0.3f, 0.3f));
+        //}
         /// <summary>
         /// インスタンスIDを設定
         /// </summary>
