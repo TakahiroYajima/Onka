@@ -27,6 +27,7 @@ namespace SoundDistance
         private List<List<SoundDistancePoint>> serchEachRouteList = new List<List<SoundDistancePoint>>();//全ルート
         public List<SoundDistancePoint> calcMinDistancePoints { get; private set; } = new List<SoundDistancePoint>();//最短ルート
         private List<float> costList = new List<float>();
+        private float subCost = 0f;
         private int currentMinID = -1;
         //現在のListenerからEmitterまでの距離（ダイクストラで計算された最短距離）
         public float currentDistanceListenerToEmitter { get; private set; } = 0f;
@@ -100,6 +101,7 @@ namespace SoundDistance
         {
             currentFrame = 0;
         }
+        
         #region RouteSerch
         /// <summary>
         /// ゴールから全ての方向のルートを辿り、スタートまでの道のりをserchEachRouteListに設定する
@@ -196,6 +198,7 @@ namespace SoundDistance
         private List<SoundDistancePoint> CalcSerachSideRoute(int currentListenerOuterID, int currentListenerPointID)
         {
             List<List<SoundDistancePoint>> points = new List<List<SoundDistancePoint>>();
+            List<float> subCostList = new List<float>();
             SoundDistancePoint outer = soundDistancePoints.FirstOrDefault(x => x.ID == currentListenerOuterID);
             int routeCount = 0;
             bool isEnd = false;
@@ -205,6 +208,7 @@ namespace SoundDistance
                 if (!n.IsExist || n.IsOuter) { continue; }//ノードが無い or 外周ならcontinue
                 points.Add(new List<SoundDistancePoint>());
                 points[routeCount].Add(outer);
+                subCostList.Add(0f);
                 n.node.AddPrev(outer);
 
                 points[routeCount].Add(n.node);
@@ -230,6 +234,7 @@ namespace SoundDistance
                                 //次のノードのPrevに現在のノードを設定、距離も追加
                                 node.node.AddPrev(currentSeachPoint);
                                 points[routeCount].Add(node.node);
+                                subCostList[routeCount] += node.distanceMagnitude;
                             }
                             else
                             {
@@ -251,6 +256,8 @@ namespace SoundDistance
                 routeCount++;
             }
             points[routeCount].RemoveAt(0);//outerの情報は不要なので削除
+
+            subCost = subCostList[routeCount];
             return points[routeCount];//ルートが見つかると強制終了なので、そのままカウントを参照すればそのルートになる
         }
         /// <summary>
@@ -261,10 +268,12 @@ namespace SoundDistance
             SetAllRouteToDikstraEachOuterRouteList(emitterObj.currentOuterPointID, listenerObj.currentOuterPointID);
             //ゴールからスタートまでのルート（複数）の中から最短ルートの配列番号を取得
             currentMinID = GetMinID(costList);
+            
             //部屋の中に入るなど、外周から逸れている場合はその分のルートを計算
             if(listenerObj.currentPointID != listenerObj.currentOuterPointID)
             {
                 serchEachRouteList[currentMinID].AddRange(CalcSerachSideRoute(listenerObj.currentOuterPointID, listenerObj.currentPointID));
+                costList[currentMinID] += subCost;//逸れている分のコストを追加
             }
             //count == 0　：　Pointが同じ
             if(listenerObj.currentPointID == emitterObj.currentPointID)//if (dikstraEachRouteList.Count == 0)
@@ -516,6 +525,10 @@ namespace SoundDistance
             if(_clip == null) { Debug.LogError("AudioClipがありません"); return; }
             soundMaker.maxVolume = _maxVolume;
             soundMaker.SetClipAndPlay(_clip, 0);
+        }
+        public void StopSoundDistanceMaker()
+        {
+            soundMaker.SoundStop();
         }
         public void SetMaxVolumeToMaker(float _maxVolume)
         {
