@@ -14,16 +14,20 @@ public class YukieStateChasePlayer : StateBase
     private float noRecognitionTime = 0f;
     private const float ToChangeWanderingLostPlayerTime = 3f;//プレイヤーを見失ってから探索モードに戻るまでの時間
 
+    private bool isHitPlayer = false;//最初からプレイヤーに衝突している場合、OnColliderEnterが反応しないので、OnColliderStayを1度だけ発生させるようにするフラグ
+
     public override void StartAction()
     {
         yukie = StageManager.Instance.Yukie;
+        yukie.navMeshAgent.enabled = true;
         yukie.navMeshAgent.speed = yukie.runSpeed;
         yukie.onColliderEnterCallback = OnColliderEnterEvent;
+        yukie.onColliderStayCallback = OnColliderEnterEvent;
         frameCount = 0;
         yukie.SetMaxVolume(1f);
         yukie.PlaySoundLoop(1,1f);
         noRecognitionTime = 0f;
-        Debug.Log("プレイヤー追尾");
+        yukie.ToPlayerWallCollider.enabled = false;
     }
 
     public override void UpdateAction()
@@ -46,12 +50,10 @@ public class YukieStateChasePlayer : StateBase
                 if (Utility.Instance.IsTagNameMatch(hit.transform.gameObject, Tags.Player))
                 {
                     noRecognitionTime = 0f;
-                    //yukie.SetMaxVolume(1f);
                 }
                 else
                 {
                     noRecognitionTime += Time.deltaTime * doUpdateFrameCount;
-                    //yukie.SetMaxVolume(0.5f);
                 }
             }, 10f);
             frameCount = 0;
@@ -64,15 +66,18 @@ public class YukieStateChasePlayer : StateBase
 
     public override void EndAction()
     {
-
+        yukie.onColliderStayCallback = null;
+        yukie.ToPlayerWallCollider.enabled = true;
     }
 
     public void OnColliderEnterEvent(Collider collider)
     {
+        if (isHitPlayer) return;
+
         switch (collider.transform.tag)
         {
             case Tags.Player:
-                Debug.Log("プレイヤーを捕まえた");
+                isHitPlayer = true;
                 yukie.ChangeState(EnemyState.CaughtPlayer);
                 break;
         }

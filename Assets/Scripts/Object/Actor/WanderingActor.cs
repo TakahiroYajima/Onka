@@ -18,8 +18,8 @@ public class WanderingActor : MonoBehaviour
 
     public int currentWanderingPointID { get; private set; } = 0;//現在の目的地の配列の要素番号
     public bool isActive { get; private set; } = false;
-    // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
     }
@@ -40,10 +40,12 @@ public class WanderingActor : MonoBehaviour
     {
         //Debug.Log("徘徊モードアクティブ : " + _active);
         isActive = _active;
+        navMeshAgent.enabled = isActive;
     }
     public void SetMoveSpeed(float _speed)
     {
         moveSpeed = _speed;
+        navMeshAgent.speed = moveSpeed;
     }
 
     /// <summary>
@@ -62,7 +64,7 @@ public class WanderingActor : MonoBehaviour
         }
         Debug.Log("次の目的地 : " + (currentWanderingPointID));
         navMeshAgent.SetDestination(WanderingPointManager.Instance.wanderingPoints[wanderingEnemyType][currentWanderingPointID].transform.position);
-        navMeshAgent.speed = moveSpeed;
+        //navMeshAgent.speed = moveSpeed;
     }
     /// <summary>
     /// 徘徊通過点を強制的に設定
@@ -80,6 +82,6 @@ public class WanderingActor : MonoBehaviour
             currentWanderingPointID = targetID;
         }
         navMeshAgent.SetDestination(WanderingPointManager.Instance.wanderingPoints[wanderingEnemyType][currentWanderingPointID].transform.position);
-        navMeshAgent.speed = moveSpeed;
+        //navMeshAgent.speed = moveSpeed;
     }
 }

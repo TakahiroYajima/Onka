@@ -11,16 +11,20 @@ using SoundDistance;
 public class Enemy_Yukie : Enemy
 {
     public WanderingActor wanderingActor { get; private set; } = null;
+    public InRoomWanderingActor inRoomWanderingActor { get; private set; } = null;
     public PlayerObject player { get; private set; } = null;
     public Raycastor raycastor { get; private set; } = null;
     public CapsuleCollider capsuleCollider { get; private set; } = null;
     public InRoomChecker inRoomChecker { get; private set; } = null;
     [SerializeField] private SoundPlayerObject emitterSoundPlayer = null;
+    [SerializeField] private CapsuleCollider toPlayerWallCollider = null;//プレイヤーと一定の距離を保つためにあるコライダー
+    public CapsuleCollider ToPlayerWallCollider { get { return toPlayerWallCollider; } }
 
     public Dictionary<EnemyState, StateBase> yukieStateDic { get; private set; } = new Dictionary<EnemyState, StateBase>();
 
     public UnityAction<EnemyState> onStateChangeCallback = null;
     public UnityAction<Collider> onColliderEnterCallback = null;
+    public UnityAction<Collider> onColliderStayCallback = null;
 
     //プレイヤーとの距離計算用（Vector3では重いのでY軸を無視してVector2(x,z)に変換）
     [HideInInspector] public Vector2 yukieXZ = new Vector2(0, 0);
@@ -35,6 +39,7 @@ public class Enemy_Yukie : Enemy
     {
         base.Awake();
         wanderingActor = GetComponent<WanderingActor>();
+        inRoomWanderingActor = GetComponent<InRoomWanderingActor>();
         player = StageManager.Instance.Player;
         raycastor = GetComponent<Raycastor>();
         capsuleCollider = GetComponent<CapsuleCollider>();
@@ -42,6 +47,8 @@ public class Enemy_Yukie : Enemy
 
         //State登録
         yukieStateDic.Add(EnemyState.Wandering, new YukieStateWandering());
+        yukieStateDic.Add(EnemyState.InRoomWandering, new YukieStateInRoomWandering());
+        yukieStateDic.Add(EnemyState.RotateToPlayer, new YukieStateTurnAroundToPlayer());
         yukieStateDic.Add(EnemyState.RecognizedPlayer, new YukieStateRecognizedPlayer());
         yukieStateDic.Add(EnemyState.ChasePlayer, new YukieStateChasePlayer());
         yukieStateDic.Add(EnemyState.CaughtPlayer, new YukieStateCaughtPlayer());
@@ -51,7 +58,12 @@ public class Enemy_Yukie : Enemy
     protected override void Start()
     {
         base.Start();
-        
+
+        //コールバック登録
+        inRoomChecker.onEnterRoomAction = OnEnterRoomAction;
+        inRoomChecker.onExitRoomAction = OnExitRoomAction;
+
+        inRoomWanderingActor.SetActive(false, null);
         StartCoroutine(StartAction());
     }
 
@@ -113,6 +125,27 @@ public class Enemy_Yukie : Enemy
         return false;
     }
 
+    /// <summary>
+    /// 渡したものが視界に入っているか
+    /// </summary>
+    /// <param name="position"></param>
+    /// <returns></returns>
+    public bool IsInSight(GameObject target)
+    {
+        Vector2 targetXZ = new Vector2(target.transform.position.x, target.transform.position.z);
+        if ((yukieXZ - targetXZ).sqrMagnitude < playerDetectionDistance * playerDetectionDistance)
+        {
+            //視界に入っていたら検知
+            var positionDiff = target.transform.position - transform.position;
+            var angle = Vector3.Angle(transform.forward, positionDiff);
+            if (angle <= searchAngle)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void PlaySoundLoop(int arrayNum, float volume = 1f)
     {
         SoundDistanceManager.Instance.StartSoundDistanceMaker(emitterSoundPlayer.GetClip(arrayNum), volume);
@@ -121,6 +154,28 @@ public class Enemy_Yukie : Enemy
     {
         SoundDistanceManager.Instance.SetMaxVolumeToMaker(_volume);
     }
+    public void StopSound()
+    {
+        SoundDistanceManager.Instance.StopSoundDistanceMaker();
+    }
+
+    private void OnEnterRoomAction(RoomWanderingManager _roomWanderingManager)
+    {
+        if (currentState != EnemyState.InRoomWandering)
+        {
+            inRoomWanderingActor.currentManager = _roomWanderingManager;
+            ChangeState(EnemyState.InRoomWandering);
+        }
+    }
+
+    private void OnExitRoomAction(RoomWanderingManager _roomWanderingManager)
+    {
+        if (currentState == EnemyState.InRoomWandering)
+        {
+            ChangeState(EnemyState.Wandering);
+            inRoomWanderingActor.currentManager = null;
+        }
+    }
 
     //private void OnCollisionEnter(Collision collision)
     //{
@@ -128,7 +183,7 @@ public class Enemy_Yukie : Enemy
     //    {
     //        //onColliderEnterCallback(collision);
     //    }
-        
+
     //}
 
     private void OnTriggerEnter(Collider other)
@@ -136,6 +191,14 @@ public class Enemy_Yukie : Enemy
         if (onColliderEnterCallback != null)
         {
             onColliderEnterCallback(other);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(onColliderStayCallback != null)
+        {
+            onColliderStayCallback(other);
         }
     }
 }

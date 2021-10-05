@@ -1,16 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SoundSystem;
 
 public class Enemy_ShioriStateWalkEvent : StateBase
 {
-    private float moveSpeed = 0.6f;
-    private float endTime = 6f;
+    private float moveSpeed = 0.3f;
+    private float endTime = 10f;
     private float currentTime = 0f;
 
     public override void StartAction()
     {
         currentTime = 0f;
+        SoundManager.Instance.PlayEnvironmentWithKey("ambient_shiori", false);
+        StageManager.Instance.Shiori.SoundPlayerObject.PlaySoundLoop(0);
     }
     public override void UpdateAction()
     {
@@ -30,5 +33,7 @@ public class Enemy_ShioriStateWalkEvent : StateBase
         {
             StageManager.Instance.Shiori.onWalkEventEnded();
         }
+        SoundManager.Instance.PlayEnvironmentWithKey("ambient_in_house", false);
+        StageManager.Instance.Shiori.SoundPlayerObject.StopSound();
     }
 }

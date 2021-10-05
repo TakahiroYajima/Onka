@@ -13,13 +13,25 @@ public class WanderingCollider : MonoBehaviour
     {
         ID = _id;
     }
+    private bool isOuter = true;
+    public void SetIsOuter(bool _isOuter)
+    {
+        isOuter = _isOuter;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         switch (other.tag)
         {
             case Tags.Enemy:
-                StageManager.Instance.Yukie.wanderingActor.SetWanderingID(ID + 1);
+                if (isOuter)
+                {
+                    StageManager.Instance.Yukie.wanderingActor.SetWanderingID(ID + 1);
+                }
+                else
+                {
+                    StageManager.Instance.Yukie.inRoomWanderingActor.OnArrivaled(ID + 1);
+                }
                 break;
         }
     }

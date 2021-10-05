@@ -16,7 +16,11 @@ public class RoomWanderingManager : MonoBehaviour
     void Start()
     {
         //徘徊用の通過ポイントを敵種類ごとに保存
-        List<WanderingPoint> list = GetComponentsInChildren<WanderingPoint>().ToList();
+        wanderingPoints = GetComponentsInChildren<WanderingPoint>().ToList();
+        for(int i = 0; i < wanderingPoints.Count; i++)
+        {
+            wanderingPoints[i].Initialize(false);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -51,14 +55,14 @@ public class RoomWanderingManager : MonoBehaviour
     }
 }
 
-public enum Direction8
-{
-    F,//Foward
-    B,//Back
-    R,//RIght
-    L,//Left
-    FR,
-    FL,
-    BR,
-    BL,
-}
+//public enum Direction8
+//{
+//    F,//Foward
+//    B,//Back
+//    R,//RIght
+//    L,//Left
+//    FR,
+//    FL,
+//    BR,
+//    BL,
+//}

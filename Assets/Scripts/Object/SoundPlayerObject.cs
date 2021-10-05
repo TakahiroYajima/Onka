@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using SoundSystem;
 
 /// <summary>
 /// 音を鳴らせるオブジェクト
@@ -16,6 +17,14 @@ public class SoundPlayerObject : MonoBehaviour
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+        //for(int i = 0; i < audioClipList.Count; i++)
+        //{
+        //    SoundData soundData = DataManager.Instance.GetSoundSO().soundDataList.FirstOrDefault(x => x.soundName == audioClipList[i].name);
+        //    if(soundData != null && soundData != default)
+        //    {
+        //        soundDataList.Add(soundData);
+        //    }
+        //}
     }
     
     public AudioClip GetClip(int arrayNum)
@@ -39,20 +48,42 @@ public class SoundPlayerObject : MonoBehaviour
             audioSource.Play();
         }
     }
-    public void PlaySoundLoop(string key, float volume = 1f)
+    public void PlaySoundLoop(string key)
     {
         SoundData data = DataManager.Instance.GetSE(key);
         if (data != null)
         {
-            AudioClip clip = audioClipList.FirstOrDefault(x => x.name == data.soundName);
+            AudioClip clip = SoundManager.Instance.menuSeAudioClipList.FirstOrDefault(x => x.name == data.soundName);
             if (clip != null)
             {
-                audioSource.clip = clip;
-                audioSource.loop = true;
-                audioSource.volume = volume;
-                audioSource.Play();
+                PlayLoop(data, clip);
             }
+            else { Debug.Log("clipがありません : " + key); }
         }
+        else { Debug.Log("SoundDataがありません : " + key); }
+    }
+    public void PlayVoiceLoop(string key)
+    {
+        SoundData data = DataManager.Instance.GetVoice(key);
+        if (data != null)
+        {
+            AudioClip clip = SoundManager.Instance.voiceAudioClipList.FirstOrDefault(x => x.name == data.soundName);
+            if (clip != null)
+            {
+                PlayLoop(data, clip);
+            }
+            else { Debug.Log("clipがありません : " + key); }
+        }
+        else { Debug.Log("SoundDataがありません : " + key); }
+    }
+
+    private void PlayLoop(SoundData data, AudioClip clip)
+    {
+        audioSource.clip = clip;
+        audioSource.loop = true;
+        audioSource.volume = data.volume;
+        audioSource.spatialBlend = data.spatialBlend;
+        audioSource.Play();
     }
 
     public void StopSound()

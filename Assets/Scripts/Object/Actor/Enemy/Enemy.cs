@@ -33,8 +33,10 @@ public class Enemy : MonoBehaviour
 public enum EnemyState
 {
     Init,//初期値
-    Wandering,
-    Event,
+    Wandering,//通常の徘徊
+    InRoomWandering,//部屋内の徘徊専用
+    Event,//イベント中
+    RotateToPlayer,//プレイヤーの方へ振り向くだけの挙動（雪絵限定？）
     RecognizedPlayer,//プレイヤーを認識した際の挙動
     ChasePlayer,//プレイヤーを追いかける
     CaughtPlayer,//プレイヤーを捕まえた

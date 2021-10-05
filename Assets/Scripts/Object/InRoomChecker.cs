@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// 部屋の中に入っているかの情報を管理する
@@ -11,19 +12,32 @@ public class InRoomChecker : MonoBehaviour
     private List<RoomWanderingManager> currentEnterRoomList = new List<RoomWanderingManager>();
     public IReadOnlyList<RoomWanderingManager> CurrentEnterRoomList { get { return currentEnterRoomList; } }
     public bool isEnterRoom { get { return currentEnterRoomList.Count > 0; } }//部屋に入っているか
+
+    public UnityAction<RoomWanderingManager> onEnterRoomAction = null;
+    public UnityAction<RoomWanderingManager> onExitRoomAction = null;
     
     public void SetEnterRoom(RoomWanderingManager roomWanderingManager)
     {
         if (!currentEnterRoomList.Contains(roomWanderingManager))
         {
+            Debug.Log(transform.name + " : 部屋に入った : " + roomWanderingManager.name);
             currentEnterRoomList.Add(roomWanderingManager);
+            if(onEnterRoomAction != null)
+            {
+                onEnterRoomAction(roomWanderingManager);
+            }
         }
     }
     public void ExitRoom(RoomWanderingManager roomWanderingManager)
     {
         if (currentEnterRoomList.Contains(roomWanderingManager))
         {
+            Debug.Log(transform.name + " : 部屋から出た : " + roomWanderingManager.name);
             currentEnterRoomList.Remove(roomWanderingManager);
+            if(onExitRoomAction != null)
+            {
+                onExitRoomAction(roomWanderingManager);
+            }
         }
     }
 

@@ -16,10 +16,11 @@ public class WanderingPoint : MonoBehaviour
 
     [SerializeField] private WanderingCollider wanderingCollider = null;
 
-    public void Initialize()
+    public void Initialize(bool isOuter = true)
     {
         if(wanderingCollider == null) { Debug.LogError("WanderingColliderが設定されていません。"); return; }
         wanderingCollider.SetID(pointNum);
+        wanderingCollider.SetIsOuter(isOuter);
     }
 }
 

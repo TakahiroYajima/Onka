@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(SoundPlayerObject))]
 public class Enemy_Shiori : MonoBehaviour
 {
     private Dictionary<Enemy_ShioriState, StateBase> shioriStateDic = new Dictionary<Enemy_ShioriState, StateBase>();
     public Enemy_ShioriState currentState { get; private set; } = Enemy_ShioriState.Init;
+
+    [SerializeField] private SoundPlayerObject soundPlayerObject = null;
+    public SoundPlayerObject SoundPlayerObject { get { return soundPlayerObject; } }
 
     public UnityAction onWalkEventEnded = null;
 
