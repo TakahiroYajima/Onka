@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEditorInternal;
 
 public class ItemSettingEditor : EditorWindow
 {
@@ -39,8 +40,16 @@ public class ItemSettingEditor : EditorWindow
         }
         defaultColor = GUI.backgroundColor;
     }
-
+    
     private void OnGUI()
+    {
+        if(ItemReorderableListEditor.thisEditor == null)
+        {
+            NormalLayout();
+        }
+    }
+
+    private void NormalLayout()
     {
         if (scriptableObject == null)
         {
@@ -60,6 +69,10 @@ public class ItemSettingEditor : EditorWindow
                 if (GUILayout.Button("書き込み"))
                 {
                     Export();
+                }
+                if (GUILayout.Button("並び替え"))
+                {
+                    CreateReorderableEditor();
                 }
             }
             GUI.backgroundColor = Color.gray;
@@ -111,10 +124,10 @@ public class ItemSettingEditor : EditorWindow
                                         scriptableObject.itemDataList[findID].spriteName = EditorGUILayout.TextField("ファイル名", scriptableObject.itemDataList[findID].spriteName);
                                         scriptableObject.itemDataList[findID].description = EditorGUILayout.TextField("説明", scriptableObject.itemDataList[findID].description);
 
-                                        if(scriptableObject.itemDataList[findID].type == ItemType.WatchOnly)
+                                        if (scriptableObject.itemDataList[findID].type == ItemType.WatchOnly)
                                         {
                                             //新規作成の時は生成
-                                            if(scriptableObject.itemDataList[findID].fileItem == null) { scriptableObject.itemDataList[findID].fileItem = new FileItem(); }
+                                            if (scriptableObject.itemDataList[findID].fileItem == null) { scriptableObject.itemDataList[findID].fileItem = new FileItem(); }
                                             EditorGUILayout.BeginHorizontal(GUI.skin.box);
                                             {
                                                 GUILayout.Space(30);
@@ -229,6 +242,104 @@ public class ItemSettingEditor : EditorWindow
             // エディタを最新の状態にする
             AssetDatabase.Refresh();
         });
+    }
+    /// <summary>
+    /// 並び替えエディタの作成
+    /// </summary>
+    void CreateReorderableEditor()
+    {
+        ItemReorderableListEditor.Create();
+        ItemReorderableListEditor.thisEditor.Init(scriptableObject);
+    }
+
+    //エディタ消去時に呼び出される
+    private void OnDestroy()
+    {
+        thisEditor = null;
+    }
+}
+
+public class ItemReorderableListEditor : EditorWindow
+{
+    public static ItemReorderableListEditor thisEditor = null;
+    private ItemDataList scriptableObject = null;
+
+    private Vector2 eventScrolPos = Vector2.zero;
+    public Color defaultColor { get; private set; }
+    [SerializeField] private ReorderableList reorderableList;
+    private bool isInitialized = false;
+
+    public static void Create()
+    {
+        if (thisEditor == null)
+        {
+            thisEditor = ScriptableObject.CreateInstance<ItemReorderableListEditor>();
+        }
+        thisEditor.ShowUtility();
+
+        thisEditor.defaultColor = new Color();
+    }
+
+    public void Init(ItemDataList _scriptableObject)
+    {
+        scriptableObject = _scriptableObject;
+        defaultColor = GUI.backgroundColor;
+        CreateReorderableList();
+        isInitialized = true;
+    }
+
+    private void CreateReorderableList()
+    {
+        reorderableList = new ReorderableList(scriptableObject.itemDataList, typeof(ItemData))
+        {
+
+            //要素の追加・削除ができないようにさせる
+            onCanAddCallback = (ReorderableList list) =>
+            {
+                return false;
+            },
+            onCanRemoveCallback = (ReorderableList list) =>
+            {
+                return false;
+            },
+
+            drawHeaderCallback = (rect) =>
+            {
+                EditorGUI.LabelField(rect, "アイテムデータ");
+            },
+
+            drawElementCallback = (rect, index, isActive, isFocused) =>
+            {
+                rect.height = EditorGUIUtility.singleLineHeight;
+                EditorGUI.LabelField(rect, new GUIContent(scriptableObject.itemDataList[index].name));
+
+            },
+            //中身を表示する判定がtrueになっているかどうかで表示エリアの高さを変える
+            elementHeightCallback = (index) =>
+            {
+                return EditorGUIUtility.singleLineHeight * 1.2f;
+            },
+        };
+    }
+
+    private void OnGUI()
+    {
+        if (!isInitialized) return;
+
+        EditorGUILayout.LabelField("アイテム並び替えエディタ");
+        defaultColor = GUI.backgroundColor;
+        using (new GUILayout.VerticalScope(EditorStyles.helpBox))
+        {
+            eventScrolPos = EditorGUILayout.BeginScrollView(eventScrolPos, GUI.skin.box);
+            {
+                EditorGUILayout.BeginVertical();
+                {
+                    this.reorderableList.DoLayoutList();
+                }
+                EditorGUILayout.EndVertical();
+            }
+            EditorGUILayout.EndScrollView();
+        }
     }
 
     //エディタ消去時に呼び出される

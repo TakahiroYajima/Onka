@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEditorInternal;
 
 public class EventDataSettingEditor : EditorWindow
 {
@@ -10,6 +11,7 @@ public class EventDataSettingEditor : EditorWindow
     public Color defaultColor { get; private set; }
 
     private EventDataList scriptableObject = null;
+    [SerializeField] private ReorderableList reorderableList;
 
     [MenuItem("Editor/イベントデータ設定")]
     public static void Create()
@@ -36,6 +38,38 @@ public class EventDataSettingEditor : EditorWindow
             Import();
         }
         defaultColor = GUI.backgroundColor;
+        CreateReorderableList();
+    }
+
+    private void CreateReorderableList()
+    {
+        reorderableList = new ReorderableList(scriptableObject.list, typeof(EventData))
+        {
+
+            //要素の追加・削除ができないようにさせる
+            onCanAddCallback = (ReorderableList list) =>
+            {
+                return false;
+            },
+            onCanRemoveCallback = (ReorderableList list) =>
+            {
+                return false;
+            },
+
+            drawHeaderCallback = (rect) =>
+            {
+                EditorGUI.LabelField(rect, "イベントデータ");
+            },
+
+            drawElementCallback = (rect, index, isActive, isFocused) =>
+            {
+                rect.height = EditorGUIUtility.singleLineHeight;
+                rect = EditorGUI.PrefixLabel(rect, new GUIContent("イベントキー  " + (index + 1)));
+                scriptableObject.list[index].eventKey = EditorGUI.TextField(rect, scriptableObject.list[index].eventKey);
+                rect.y += rect.height;
+            },
+            elementHeightCallback = index => EditorGUIUtility.singleLineHeight * 2,
+        };
     }
 
     private void OnGUI()
@@ -80,10 +114,11 @@ public class EventDataSettingEditor : EditorWindow
             {
                 EditorGUILayout.BeginVertical();
                 {
-                    for (int findID = 0; findID < scriptableObject.list.Count; findID++)
-                    {
-                        scriptableObject.list[findID].eventKey = EditorGUILayout.TextField("イベントキー", scriptableObject.list[findID].eventKey);
-                    }
+                    //for (int findID = 0; findID < scriptableObject.list.Count; findID++)
+                    //{
+                    //    scriptableObject.list[findID].eventKey = EditorGUILayout.TextField("イベントキー", scriptableObject.list[findID].eventKey);
+                    //}
+                    this.reorderableList.DoLayoutList();
                 }
                 EditorGUILayout.EndVertical();
             }

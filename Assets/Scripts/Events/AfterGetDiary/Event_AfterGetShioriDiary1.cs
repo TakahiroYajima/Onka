@@ -37,12 +37,17 @@ public class Event_AfterGetShioriDiary1 : EventBase
             EventManager.Instance.EventClear(EventKey);
             Destroy(instanceAnim.gameObject);
         };
-        instanceAnim.ChangeState(Enemy_ShioriState.WalkEvent);
+        StartCoroutine(StartEvent());
         //soundPlayer.PlaySE("se_lug");
         //StartCoroutine(MoveStatus(() =>
         //{
         //    EventManager.Instance.EventClear(EventKey);
         //}));
+    }
+    private IEnumerator StartEvent()
+    {
+        yield return null;//初期化待ち
+        instanceAnim.ChangeState(Enemy_ShioriState.WalkEvent);
     }
     public override void EventUpdate()
     {

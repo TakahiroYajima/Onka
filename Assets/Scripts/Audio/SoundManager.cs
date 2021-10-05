@@ -186,7 +186,7 @@ namespace SoundSystem
             
             StartCoroutine(environmentAudioSource.PlayRandomStart(audioClip));
         }
-        public void PlayEnvironmentWithKey(string key)
+        public void PlayEnvironmentWithKey(string key, bool isRandomStart = true)
         {
             if (IsPaused) return;
 
@@ -200,7 +200,17 @@ namespace SoundSystem
                 Debug.Log(data.soundName + "は見つかりません");
                 return;
             }
-            StartCoroutine(environmentAudioSource.PlayRandomStart(audioClip, data.volume));
+            if (environmentAudioSource.isPlaying) { environmentAudioSource.Stop(); }
+            if (isRandomStart)
+            {
+                StartCoroutine(environmentAudioSource.PlayRandomStart(audioClip, data.volume));
+            }
+            else
+            {
+                //結果がlengthと同値になるとシークエラーを起こすため -0.01秒する//
+                environmentAudioSource.time = 0f;
+                environmentAudioSource.Play(audioClip, data.volume);
+            }
         }
 
         public void StopEnvironment()

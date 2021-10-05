@@ -104,15 +104,15 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
             return;
         }
         List<UseSoundNameData> clips = useSoundNameSO.GetOneSceneUseData(sceneType);
-        Debug.Log("SceneType : " + sceneType.ToString());
-        Debug.Log("SceneSoundsCount : " + useSoundNameSO.useSoundNameDataList.Count);
-        Debug.Log("thisSceneSound.Count : " + clips.Count);
+        //Debug.Log("SceneType : " + sceneType.ToString());
+        //Debug.Log("SceneSoundsCount : " + useSoundNameSO.useSoundNameDataList.Count);
+        //Debug.Log("thisSceneSound.Count : " + clips.Count);
         //foreach(var b in soundDataSO.bgmList) { Debug.Log(b.soundName); }
         List<SoundData> bgmList = new List<SoundData>();
         List<SoundData> ambientList = new List<SoundData>();
         foreach (var c in clips)
         {
-            Debug.Log(c.key);
+            //Debug.Log(c.key);
             SoundData d = GetBGM(c.key);
             if (d != null) { bgmList.Add(d); }
             SoundData a = GetAmbient(c.key);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEditor;
+using UnityEditorInternal;
 
 public class SoundSettingEditor : EditorWindow
 {
@@ -13,6 +14,8 @@ public class SoundSettingEditor : EditorWindow
 
     private SoundDataSO scriptableObject = null;
     private List<bool> settingDataActiveList = new List<bool>();
+
+    //[SerializeField] private ReorderableList reorderableList;
 
     [MenuItem("Editor/サウンドデータ設定")]
     public static void Create()
@@ -39,10 +42,99 @@ public class SoundSettingEditor : EditorWindow
             Import();
         }
         defaultColor = GUI.backgroundColor;
+        //CreateReorderableList();
     }
+
+    //private void CreateReorderableList()
+    //{
+    //    reorderableList = new ReorderableList(scriptableObject.soundDataList, typeof(SoundData))
+    //    {
+
+    //        //要素の追加・削除ができないようにさせる
+    //        onCanAddCallback = (ReorderableList list) =>
+    //        {
+    //            return false;
+    //        },
+    //        onCanRemoveCallback = (ReorderableList list) =>
+    //        {
+    //            return false;
+    //        },
+
+    //        drawHeaderCallback = (rect) =>
+    //        {
+    //            EditorGUI.LabelField(rect, "サウンドデータ");
+    //        },
+
+    //        drawElementCallback = (rect, index, isActive, isFocused) =>
+    //        {
+    //            rect.height = EditorGUIUtility.singleLineHeight;
+    //            rect = EditorGUI.PrefixLabel(rect, new GUIContent("サウンド  " + (index + 1) + " " + scriptableObject.soundDataList[index].title));
+    //            //EditorGUI.TextField(rect, scriptableObject.list[index].eventKey);
+    //            //+ - ボタン
+    //            string s = "+";
+    //            bool act = !settingDataActiveList[index];
+    //            s = GetPlusOrMinus(settingDataActiveList[index]);
+    //            if (GUI.Button(rect, s))
+    //            {
+    //                settingDataActiveList[index] = act;
+    //            }
+
+    //            rect.y += rect.height;
+    //            if (settingDataActiveList[index])
+    //            {
+    //                Rect initRect = new Rect(rect);
+    //                //プロパティを描画するごとに次のプロパティが表示できる位置までYを下げる。Xは、ラベルを描くとなぜか右にずれるので初期位置に修正させる
+    //                UnityEngine.Events.UnityAction onUpdateRectTemp = () => { rect.y += rect.height + 2; rect.x = initRect.x; };
+
+    //                rect = EditorGUI.PrefixLabel(rect, new GUIContent("Key"));
+    //                scriptableObject.soundDataList[index].key = EditorGUI.TextField(rect, scriptableObject.soundDataList[index].key);
+
+    //                onUpdateRectTemp();
+    //                rect = EditorGUI.PrefixLabel(rect, new GUIContent("Type"));
+    //                scriptableObject.soundDataList[index].type = (SoundType)EditorGUI.EnumPopup(rect, scriptableObject.soundDataList[index].type);
+
+    //                onUpdateRectTemp();
+    //                rect = EditorGUI.PrefixLabel(rect, new GUIContent("ファイル （" + scriptableObject.soundDataList[index].soundName + "）"));
+    //                AudioClip clip = null;
+    //                clip = EditorGUI.ObjectField(rect, clip, typeof(AudioClip), true) as AudioClip;
+    //                if (clip != null)
+    //                {
+    //                    scriptableObject.soundDataList[index].soundName = clip.name;
+    //                }
+
+    //                onUpdateRectTemp();
+    //                rect = EditorGUI.PrefixLabel(rect, new GUIContent("タイトル"));
+    //                scriptableObject.soundDataList[index].title = EditorGUI.TextField(rect, scriptableObject.soundDataList[index].title);
+
+    //                onUpdateRectTemp();
+    //                rect = EditorGUI.PrefixLabel(rect, new GUIContent("ボリューム "));
+    //                scriptableObject.soundDataList[index].volume = (float)EditorGUI.Slider(rect, scriptableObject.soundDataList[index].volume, 0f, 1f);
+
+    //                if (scriptableObject.soundDataList[index].type == SoundType.SE || scriptableObject.soundDataList[index].type == SoundType.Voice)
+    //                {
+    //                    onUpdateRectTemp();
+    //                    rect = EditorGUI.PrefixLabel(rect, new GUIContent("2D - 3D "));
+    //                    scriptableObject.soundDataList[index].spatialBlend = (float)EditorGUI.Slider(rect, scriptableObject.soundDataList[index].spatialBlend, 0f, 1f);
+    //                }
+    //                else
+    //                {
+    //                    scriptableObject.soundDataList[index].spatialBlend = 0f;
+    //                }
+
+    //            }
+    //        },
+    //        //中身を表示する判定がtrueになっているかどうかで表示エリアの高さを変える
+    //        elementHeightCallback = (index) => {
+    //            if (!settingDataActiveList[index]) { return EditorGUIUtility.singleLineHeight * 2; }
+    //            else { return EditorGUIUtility.singleLineHeight * 10; }
+    //            },
+    //    };
+    //}
 
     private void OnGUI()
     {
+        if (SoundReorderableEditor.thisEditor != null) return;
+
         if (scriptableObject == null)
         {
             Import();
@@ -61,6 +153,10 @@ public class SoundSettingEditor : EditorWindow
                 if (GUILayout.Button("書き込み"))
                 {
                     Export();
+                }
+                if (GUILayout.Button("並び替え"))
+                {
+                    CreateReorderableEditor();
                 }
             }
             GUI.backgroundColor = Color.gray;
@@ -84,7 +180,8 @@ public class SoundSettingEditor : EditorWindow
             {
                 EditorGUILayout.BeginVertical(GUI.skin.box);
                 {
-                    for(int findID = 0; findID < scriptableObject.soundDataList.Count; findID++)
+                    //this.reorderableList.DoLayoutList();
+                    for (int findID = 0; findID < scriptableObject.soundDataList.Count; findID++)
                     {
                         EditorGUILayout.BeginVertical(GUI.skin.box);
                         {
@@ -121,7 +218,7 @@ public class SoundSettingEditor : EditorWindow
                                         EditorGUILayout.EndHorizontal();
                                         scriptableObject.soundDataList[findID].title = EditorGUILayout.TextField("タイトル", scriptableObject.soundDataList[findID].title);
                                         scriptableObject.soundDataList[findID].volume = (float)EditorGUILayout.Slider("ボリューム", scriptableObject.soundDataList[findID].volume, 0f, 1f);
-                                        if(scriptableObject.soundDataList[findID].type == SoundType.SE || scriptableObject.soundDataList[findID].type == SoundType.Voice)
+                                        if (scriptableObject.soundDataList[findID].type == SoundType.SE || scriptableObject.soundDataList[findID].type == SoundType.Voice)
                                         {
                                             scriptableObject.soundDataList[findID].spatialBlend = (float)EditorGUILayout.Slider("2D - 3D", scriptableObject.soundDataList[findID].spatialBlend, 0f, 1f);
                                         }
@@ -192,7 +289,105 @@ public class SoundSettingEditor : EditorWindow
             AssetDatabase.Refresh();
         });
     }
-    
+    /// <summary>
+    /// 並び替えエディタの作成
+    /// </summary>
+    void CreateReorderableEditor()
+    {
+        SoundReorderableEditor.Create();
+        SoundReorderableEditor.thisEditor.Init(scriptableObject);
+    }
+
+    //エディタ消去時に呼び出される
+    private void OnDestroy()
+    {
+        thisEditor = null;
+    }
+}
+
+public class SoundReorderableEditor : EditorWindow
+{
+    public static SoundReorderableEditor thisEditor = null;
+    private SoundDataSO scriptableObject = null;
+
+    private Vector2 eventScrolPos = Vector2.zero;
+    public Color defaultColor { get; private set; }
+    [SerializeField] private ReorderableList reorderableList;
+    private bool isInitialized = false;
+
+    public static void Create()
+    {
+        if (thisEditor == null)
+        {
+            thisEditor = ScriptableObject.CreateInstance<SoundReorderableEditor>();
+        }
+        thisEditor.ShowUtility();
+
+        thisEditor.defaultColor = new Color();
+    }
+
+    public void Init(SoundDataSO _scriptableObject)
+    {
+        scriptableObject = _scriptableObject;
+        defaultColor = GUI.backgroundColor;
+        CreateReorderableList();
+        isInitialized = true;
+    }
+
+    private void CreateReorderableList()
+    {
+        reorderableList = new ReorderableList(scriptableObject.soundDataList, typeof(SoundData))
+        {
+
+            //要素の追加・削除ができないようにさせる
+            onCanAddCallback = (ReorderableList list) =>
+            {
+                return false;
+            },
+            onCanRemoveCallback = (ReorderableList list) =>
+            {
+                return false;
+            },
+
+            drawHeaderCallback = (rect) =>
+            {
+                EditorGUI.LabelField(rect, "サウンドデータ");
+            },
+
+            drawElementCallback = (rect, index, isActive, isFocused) =>
+            {
+                rect.height = EditorGUIUtility.singleLineHeight;
+                EditorGUI.LabelField(rect, new GUIContent(scriptableObject.soundDataList[index].title));
+
+            },
+            //中身を表示する判定がtrueになっているかどうかで表示エリアの高さを変える
+            elementHeightCallback = (index) =>
+            {
+                return EditorGUIUtility.singleLineHeight * 1.2f;
+            },
+        };
+    }
+
+    private void OnGUI()
+    {
+        if (!isInitialized) return;
+
+        EditorGUILayout.LabelField("サウンド並び替えエディタ");
+        defaultColor = GUI.backgroundColor;
+        using (new GUILayout.VerticalScope(EditorStyles.helpBox))
+        {
+            eventScrolPos = EditorGUILayout.BeginScrollView(eventScrolPos, GUI.skin.box);
+            {
+                EditorGUILayout.BeginVertical();
+                {
+                    this.reorderableList.DoLayoutList();
+                }
+                EditorGUILayout.EndVertical();
+            }
+            EditorGUILayout.EndScrollView();
+        }
+    }
+
     //エディタ消去時に呼び出される
     private void OnDestroy()
     {
