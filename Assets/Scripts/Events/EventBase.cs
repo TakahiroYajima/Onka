@@ -12,10 +12,9 @@ public abstract class EventBase : MonoBehaviour
     [HideInInspector] public int managementID = -1;//配列で管理する際のID
 
     /// <summary>
-    /// イベント進行のキーにより、自身のイベントが発行可能か判断する
+    /// 自身のイベントが発行可能か判断する
     /// </summary>
-    /// <param name="key"></param>
-    public abstract void ProgressEvent(string key);
+    public abstract void ProgressEvent();
 
     public abstract void EventStart();
     public abstract void EventUpdate();

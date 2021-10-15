@@ -19,7 +19,7 @@ public class Event_AfterGetKozoDiary3 : EventBase
     {
         boxCollider.enabled = false;
     }
-    public override void ProgressEvent(string key)
+    public override void ProgressEvent()
     {
         if (!EventManager.Instance.IsEventEnded(eventKey))
         {

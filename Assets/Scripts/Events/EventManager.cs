@@ -59,7 +59,7 @@ public class EventManager : SingletonMonoBehaviour<EventManager>
     {
         for (int i = 0; i < eventObjectList.Count; i++)
         {
-            eventObjectList[i].ProgressEvent("");
+            eventObjectList[i].ProgressEvent();
         }
     }
 

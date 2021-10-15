@@ -14,7 +14,7 @@ public class Event_AfterGetShioriDiary1 : EventBase
     [SerializeField] private Vector3 walkInstancePosition = Vector3.zero;
     [SerializeField] private Vector3 idleInstancePosition = Vector3.zero;
 
-    public override void ProgressEvent(string key)
+    public override void ProgressEvent()
     {
         if (!EventManager.Instance.IsEventEnded(eventKey))
         {
