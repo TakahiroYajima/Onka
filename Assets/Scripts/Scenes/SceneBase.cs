@@ -20,7 +20,10 @@ public abstract class SceneBase : SingletonMonoBehaviour<SceneBase>
     protected virtual void Initialize()
     {
         DataManager.Instance.SetCurrentSceneUseSound(thisScene);
-        SoundManager.Instance.PlayBGMWithFadeIn(sceneBGMName, 0f);
+        if (!string.IsNullOrEmpty(sceneBGMName))
+        {
+            SoundManager.Instance.PlayBGMWithFadeIn(sceneBGMName, 0f);
+        }
     }
 
     protected void ChangeScene(string name)
