@@ -72,7 +72,7 @@ public class Enemy_Yukie : Enemy
         yield return null;//他のスクリプトの初期化待ち
         currentState = EnemyState.Wandering;//デバッグ
         yukieStateDic[currentState].StartAction();
-
+        
         ChangeState(EnemyState.Wandering);
     }
 
@@ -87,6 +87,7 @@ public class Enemy_Yukie : Enemy
 
     public void ChangeState(EnemyState nextState)
     {
+        //Debug.Log("ChangeState : " + nextState);
         yukieStateDic[currentState].EndAction();
         currentState = nextState;
         yukieStateDic[currentState].StartAction();

@@ -17,6 +17,10 @@ public class YukieStateCaughtPlayer : StateBase
         yukie.capsuleCollider.enabled = false;
         yukie.onColliderEnterCallback = null;
         Debug.Log("GameOver");
+
+        //プレイヤーの背後から捕まえたかによってアクションを変える
+        //背後：噛みつかれるUIを画面に表示するだけ
+        //それ以外：プレイヤーのカメラを自分に向けさせ、獣が人間を襲う時のFPS的なアクションをさせてからゲームオーバー
     }
 
     public override void UpdateAction()

@@ -34,6 +34,7 @@ public class InRoomWanderingActor : MonoBehaviour
 
     public void SetActive(bool _active, RoomWanderingManager _manager, bool isNavMeshSetting = false)
     {
+        //Debug.Log("SetActive : " + _active.ToString() + " : " + _manager);
         currentManager = _manager;
         isActive = _active;
         if (isNavMeshSetting)
@@ -72,6 +73,7 @@ public class InRoomWanderingActor : MonoBehaviour
 
     public void MoveNext()
     {
+        if(currentManager == null) { Debug.Log("CurrentManagerがnullです"); return; }
         navMeshAgent.enabled = true;
         navMeshAgent.SetDestination(currentManager.wanderingPoints[currentWanderingPointID].transform.position);
     }

@@ -40,11 +40,11 @@ public class YukieStateInRoomWandering : StateBase
         switch (currentState)
         {
             case YukieInRoomWanderingState.Init:
-
+                yukie.inRoomWanderingActor.MoveNext();
                 currentState = YukieInRoomWanderingState.FirstWanderingMove;
                 break;
             case YukieInRoomWanderingState.FirstWanderingMove:
-                yukie.inRoomWanderingActor.MoveNext();
+                
                 break;
             case YukieInRoomWanderingState.SerachPlayerInitialize:
                 transformFoward = yukie.transform.forward;
@@ -79,6 +79,7 @@ public class YukieStateInRoomWandering : StateBase
                 DoNextState();
                 break;
             case YukieInRoomWanderingState.WanderingEnd:
+                yukie.player.RemoveChasedCount();
                 yukie.ChangeState(EnemyState.Wandering);
                 break;
             default:
@@ -88,6 +89,7 @@ public class YukieStateInRoomWandering : StateBase
 
     public override void EndAction()
     {
+        Debug.Log("EndAction ");
         yukie.inRoomWanderingActor.SetActive(false,null);
     }
 

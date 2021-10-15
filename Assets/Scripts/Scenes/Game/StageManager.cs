@@ -21,9 +21,13 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
         yukieObject.onStateChangeCallback = OnYukieStateChanged;
     }
 
-    private void OnPlayerStateChanged(PlayerState state)
+    private void OnPlayerStateChanged(PlayerState prev, PlayerState current)
     {
-        
+        if(prev == PlayerState.ItemGet && current == PlayerState.Chased){
+            //アイテム閲覧から追いかけられていたら、UIが表示されたままになっている可能性があるので、いったん初期化
+            ItemManager.Instance.WatchDiaryManager.EndWatchingItem();
+            ItemManager.Instance.FinishWatchItem(true);
+        }
     }
     private void OnYukieStateChanged(EnemyState state)
     {

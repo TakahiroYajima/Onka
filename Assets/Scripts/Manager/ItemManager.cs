@@ -12,6 +12,7 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
     [SerializeField] private GameObject itemsParent = null;
     [SerializeField] private GameObject watchItemBase = null;
     [SerializeField] private WatchDiaryManager watchDiaryManager = null;
+    public WatchDiaryManager WatchDiaryManager { get { return watchDiaryManager; } }
 
     [SerializeField] private GameObject canvasUI = null;
     [SerializeField] private Image watchItemImage = null;
@@ -21,6 +22,8 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
     public const string ResourcesPath = "Sprites/Items/";
     public UnityAction watchItemEventEndedCallback = null;
     public ItemData currentGettingItemData { get; private set; } = null;
+
+    private bool isLoopFlg = false;
 
     // Start is called before the first frame update
     void Start()
@@ -74,8 +77,9 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
 
     private IEnumerator WatchingItemUpdate(ItemData _data)
     {
+        isLoopFlg = true;
         yield return null;//同じフレーム内で行うとアイテム取得の際のクリックで次の処理に入ってしまうため、1フレーム空ける
-        while (true)
+        while (isLoopFlg)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -97,13 +101,19 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
         }
     }
 
-    public void FinishWatchItem()
+    /// <summary>
+    /// アイテム閲覧モード終了
+    /// </summary>
+    /// <param name="isEnforcement">強制で終了する場合、コールバックは呼ばない</param>
+    public void FinishWatchItem(bool isEnforcement = false)
     {
         canvasUI.SetActive(false);
+        isLoopFlg = false;
         StopCoroutine(WatchingItemUpdate(null));
         watchItemBase.SetActive(false);
         watchDiaryManager.gameObject.SetActive(false);
-        if (watchItemEventEndedCallback != null)
+
+        if (!isEnforcement && watchItemEventEndedCallback != null)
         {
             watchItemEventEndedCallback();
         }

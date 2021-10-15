@@ -19,7 +19,10 @@ public class PlayerStateItemGet : StateBase
         };
         ItemManager.Instance.watchItemEventEndedCallback = () =>
         {
-            player.ChangeState(PlayerState.Free);
+            if (player.currentState == PlayerState.ItemGet)
+            {
+                player.ChangeState(PlayerState.Free);
+            }
         };
         timeCount = 0f;
     }

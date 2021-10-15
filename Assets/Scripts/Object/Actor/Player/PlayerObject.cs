@@ -17,8 +17,12 @@ public class PlayerObject : MonoBehaviour
     private Dictionary<PlayerState, StateBase> playerStateDic = new Dictionary<PlayerState, StateBase>();
     public PlayerState currentState { get; private set; } = PlayerState.Free;
 
-    public UnityAction<PlayerState> onStateChangeCallback = null;
+    public UnityAction<PlayerState, PlayerState> onStateChangeCallback = null;
     public UnityAction onStateChangedInPlayerScriptOnly = null;//PlayerObjectのステートスクリプト専用のコールバック
+
+    public int chasedCount { get; private set; } = 0;//自分を追いかけている敵の数
+    public void AddChasedCount() { if (chasedCount == 0) { ChangeState(PlayerState.Chased); } chasedCount++; }
+    public void RemoveChasedCount() { chasedCount--; if(chasedCount < 0) { chasedCount = 0; } if (chasedCount == 0) { ChangeState(PlayerState.Free); } }
 
     private void Awake()
     {
@@ -29,6 +33,7 @@ public class PlayerObject : MonoBehaviour
         //Stateパターン初期化
         playerStateDic.Add(PlayerState.Free, new PlayerStateFree());
         playerStateDic.Add(PlayerState.ItemGet, new PlayerStateItemGet());
+        playerStateDic.Add(PlayerState.Chased, new PlayerStateChased());
         //playerStateDic.Add(PlayerState.Event, new PlayerStateWatchItem());
     }
 
@@ -50,9 +55,14 @@ public class PlayerObject : MonoBehaviour
     /// <param name="nextState"></param>
     public void ChangeState(PlayerState nextState)
     {
+        PlayerState prevState = currentState;
         playerStateDic[currentState].EndAction();
         currentState = nextState;
         playerStateDic[currentState].StartAction();
+        if(onStateChangeCallback != null)
+        {
+            onStateChangeCallback(prevState, currentState);
+        }
         if(onStateChangedInPlayerScriptOnly != null)
         {
             onStateChangedInPlayerScriptOnly();

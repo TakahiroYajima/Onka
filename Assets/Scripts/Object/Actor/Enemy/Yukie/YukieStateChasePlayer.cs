@@ -12,7 +12,7 @@ public class YukieStateChasePlayer : StateBase
     private int frameCount = 0;
     private const int doUpdateFrameCount = 6;
     private float noRecognitionTime = 0f;
-    private const float ToChangeWanderingLostPlayerTime = 3f;//プレイヤーを見失ってから探索モードに戻るまでの時間
+    private const float ToChangeWanderingLostPlayerTime = 6f;//プレイヤーを見失ってから探索モードに戻るまでの時間
 
     private bool isHitPlayer = false;//最初からプレイヤーに衝突している場合、OnColliderEnterが反応しないので、OnColliderStayを1度だけ発生させるようにするフラグ
 
@@ -28,6 +28,9 @@ public class YukieStateChasePlayer : StateBase
         yukie.PlaySoundLoop(1,1f);
         noRecognitionTime = 0f;
         yukie.ToPlayerWallCollider.enabled = false;
+
+        yukie.player.AddChasedCount();
+        //yukie.player.ChangeState(PlayerState.Chased);
     }
 
     public override void UpdateAction()
@@ -42,6 +45,7 @@ public class YukieStateChasePlayer : StateBase
                 yukie.navMeshAgent.velocity = Vector3.zero;
                 yukie.ChangeState(EnemyState.Wandering);
                 Debug.Log("プレイヤー追尾をあきらめた");
+                yukie.player.RemoveChasedCount();
                 return;
             }
             yukie.UpdatePositionXZ();
