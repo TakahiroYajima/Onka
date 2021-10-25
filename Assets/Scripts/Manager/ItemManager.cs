@@ -32,6 +32,10 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
         for(int i = 0; i < itemList.Count; i++)
         {
             itemList[i].Initialize();
+            if(itemList[i].HiddenParent != null)
+            {
+                itemList[i].transform.parent = itemList[i].HiddenParent;
+            }
         }
     }
 
