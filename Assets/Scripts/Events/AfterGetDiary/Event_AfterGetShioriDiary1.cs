@@ -30,12 +30,14 @@ public class Event_AfterGetShioriDiary1 : EventBase
     {
         Debug.Log("詩織の日記1取得後イベント");
         instanceAnim = Instantiate(shioriPrefWalk, this.transform);
+        StageManager.Instance.Shiori = instanceAnim;
         instanceAnim.transform.position = walkInstancePosition;
         instanceAnim.onWalkEventEnded = () =>
         {
             Debug.Log("詩織の日記1取得後イベントクリア");
             EventManager.Instance.EventClear(EventKey);
             Destroy(instanceAnim.gameObject);
+            StageManager.Instance.Shiori = null;
         };
         StartCoroutine(StartEvent());
         //soundPlayer.PlaySE("se_lug");

@@ -33,6 +33,7 @@ public class Enemy : MonoBehaviour
 public enum EnemyState
 {
     Init,//初期値
+    CanNotAction,//プレイヤーがメニューを開いている時など、動かしたくない時のステート
     Wandering,//通常の徘徊
     InRoomWandering,//部屋内の徘徊専用
     Event,//イベント中

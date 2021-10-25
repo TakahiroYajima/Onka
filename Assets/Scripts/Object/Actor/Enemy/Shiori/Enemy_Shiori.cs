@@ -26,7 +26,7 @@ public class Enemy_Shiori : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StageManager.Instance.Shiori = this;
+        
     }
 
     // Update is called once per frame
@@ -48,7 +48,7 @@ public class Enemy_Shiori : MonoBehaviour
 
     private void OnDestroy()
     {
-        StageManager.Instance.Shiori = null;
+        
     }
 }
 
