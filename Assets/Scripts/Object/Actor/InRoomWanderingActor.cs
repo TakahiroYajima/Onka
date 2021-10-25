@@ -20,7 +20,7 @@ public class InRoomWanderingActor : MonoBehaviour
     public int currentWanderingPointID { get; private set; } = 0;//現在の目的地の配列の要素番号
     public bool isActive { get; private set; } = false;
 
-    public UnityAction<int> onArrivaledPointCallback = null;
+    public UnityAction<int, OnWPArrivaledEventCode> onArrivaledPointCallback = null;
 
     private void Awake()
     {
@@ -52,10 +52,10 @@ public class InRoomWanderingActor : MonoBehaviour
     /// 徘徊通過点到着・次の徘徊通過点を設定
     /// </summary>
     /// <param name="nextTargetID"></param>
-    public void OnArrivaled(int nextTargetID)
+    public void OnArrivaled(int nextTargetID, OnWPArrivaledEventCode _eventCode)
     {
         if (!isActive) return;
-        if (nextTargetID < 0) return;
+        if (nextTargetID < 0 || nextTargetID == currentWanderingPointID) return;
         if (nextTargetID >= currentManager.wanderingPoints.Count)
         {
             currentWanderingPointID = 0;
@@ -67,7 +67,7 @@ public class InRoomWanderingActor : MonoBehaviour
         
         if (onArrivaledPointCallback != null)
         {
-            onArrivaledPointCallback(currentWanderingPointID);
+            onArrivaledPointCallback(currentWanderingPointID, _eventCode);
         }
     }
 

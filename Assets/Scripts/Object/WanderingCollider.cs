@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// 徘徊アクター通過地点の当たり判定
@@ -8,31 +9,21 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider))]
 public class WanderingCollider : MonoBehaviour
 {
-    public int ID { get; private set; }
-    public void SetID(int _id)
-    {
-        ID = _id;
-    }
-    private bool isOuter = true;
-    public void SetIsOuter(bool _isOuter)
-    {
-        isOuter = _isOuter;
-    }
+    
+
+    public UnityAction onArrivaledEvent = null;
 
     private void OnTriggerEnter(Collider other)
     {
         switch (other.tag)
         {
             case Tags.Enemy:
-                if (isOuter)
+                if(onArrivaledEvent != null)
                 {
-                    StageManager.Instance.Yukie.wanderingActor.SetWanderingID(ID + 1);
-                }
-                else
-                {
-                    StageManager.Instance.Yukie.inRoomWanderingActor.OnArrivaled(ID + 1);
+                    onArrivaledEvent();
                 }
                 break;
         }
     }
 }
+
