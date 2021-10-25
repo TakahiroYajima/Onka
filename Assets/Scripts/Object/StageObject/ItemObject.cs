@@ -8,6 +8,8 @@ public class ItemObject : MonoBehaviour
     public string ItemKey { get { return itemKey; } }
     private Collider thisCollider = null;
     [SerializeField] private bool isHiddenItem = false;//どこかにしまってあるアイテムか
+    [SerializeField] private Transform hiddenMoveParentTransform = null;//アイテムを隠すとき、Parentを設定する必要がある場合（引き出しの中にあるものなど）に設定
+    public Transform HiddenParent { get { return hiddenMoveParentTransform; } }
 
     // Start is called before the first frame update
     void Start()
