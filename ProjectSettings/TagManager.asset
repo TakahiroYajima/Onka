@@ -17,6 +17,7 @@ TagManager:
   - SoundDistanceSystem
   - RoomCollider
   - WanderingSystem
+  - SaveObject
   layers:
   - Default
   - TransparentFX

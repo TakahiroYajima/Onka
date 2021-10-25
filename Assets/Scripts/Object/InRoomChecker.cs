@@ -20,7 +20,7 @@ public class InRoomChecker : MonoBehaviour
     {
         if (!currentEnterRoomList.Contains(roomWanderingManager))
         {
-            Debug.Log(transform.name + " : 部屋に入った : " + roomWanderingManager.name);
+            //Debug.Log(transform.name + " : 部屋に入った : " + roomWanderingManager.name);
             currentEnterRoomList.Add(roomWanderingManager);
             if(onEnterRoomAction != null)
             {
@@ -32,7 +32,7 @@ public class InRoomChecker : MonoBehaviour
     {
         if (currentEnterRoomList.Contains(roomWanderingManager))
         {
-            Debug.Log(transform.name + " : 部屋から出た : " + roomWanderingManager.name);
+            //Debug.Log(transform.name + " : 部屋から出た : " + roomWanderingManager.name);
             currentEnterRoomList.Remove(roomWanderingManager);
             if(onExitRoomAction != null)
             {
