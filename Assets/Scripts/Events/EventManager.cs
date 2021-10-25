@@ -28,7 +28,7 @@ public class EventManager : SingletonMonoBehaviour<EventManager>
         if (eventDataList == null || eventDataList == default || eventDataList.list.Count == 0)
         {
             Debug.Log("イベント情報ファイル:GameDataに無かったのでファイルからロード");
-            eventDataList = FileManager.LoadSaveData<EventDataList>(DataManager.EventDataFileName);
+            eventDataList = FileManager.LoadSaveData<EventDataList>(SaveType.Normal, DataManager.EventDataFileName);
             if (eventDataList == null || eventDataList == default || eventDataList.list.Count == 0)
             {
                 Debug.Log("イベント情報ファイル:ファイルにも無かったので新規作成");
@@ -37,7 +37,7 @@ public class EventManager : SingletonMonoBehaviour<EventManager>
                 {
                     eventDataList.list.Add(new EventData(eventObjectList[i].EventKey));
                 }
-                FileManager.DataSave<EventDataList>(eventDataList, DataManager.EventDataFileName);//念のため、一覧データもセーブ
+                FileManager.DataSave<EventDataList>(eventDataList, SaveType.Normal, DataManager.EventDataFileName);//念のため、一覧データもセーブ
             }
             DataManager.Instance.SetNewEventDataList(eventDataList);
             DataManager.Instance.SaveGameData();

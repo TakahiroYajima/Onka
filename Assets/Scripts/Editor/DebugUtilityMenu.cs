@@ -9,7 +9,7 @@ public class DebugUtilityMenu : MonoBehaviour
     [MenuItem("Debug/GameData/データ初期化")]
     public static void InitGameData()
     {
-        GameData data = FileManager.LoadSaveData<GameData>(DataManager.GameDataFileName);
+        GameData data = FileManager.LoadSaveData<GameData>(SaveType.Normal, DataManager.GameDataFileName);
         if(data == null || data == default)
         {
             Debug.Log("データがないので初期化の必要はありません。");
@@ -17,7 +17,7 @@ public class DebugUtilityMenu : MonoBehaviour
         else
         {
             data.AllInitialize();
-            FileManager.DataSave<GameData>(data, DataManager.GameDataFileName);
+            FileManager.DataSave<GameData>(data, SaveType.Normal, DataManager.GameDataFileName);
             AssetDatabase.Refresh();
         }
     }
@@ -25,7 +25,7 @@ public class DebugUtilityMenu : MonoBehaviour
     [MenuItem("Debug/GameData/アイテム更新")]
     public static void UpdateItemData()
     {
-        GameData data = FileManager.LoadSaveData<GameData>(DataManager.GameDataFileName);
+        GameData data = FileManager.LoadSaveData<GameData>(SaveType.Normal, DataManager.GameDataFileName);
         if (data == null || data == default)
         {
             data = new GameData();
@@ -33,7 +33,7 @@ public class DebugUtilityMenu : MonoBehaviour
             data.itemDataList.itemDataList = new List<ItemData>();
         }
 
-        ItemDataList itemDataList = FileManager.LoadSaveData<ItemDataList>(DataManager.ItemDataFileName);
+        ItemDataList itemDataList = FileManager.LoadSaveData<ItemDataList>(SaveType.Normal, DataManager.ItemDataFileName);
         if (data == null || data == default)
         {
             Debug.LogError("アイテムデータがありません");
@@ -56,12 +56,12 @@ public class DebugUtilityMenu : MonoBehaviour
                 iData.fileItem = itemDataList.itemDataList[i].fileItem;
             }
         }
-        FileManager.DataSave<GameData>(data, DataManager.GameDataFileName);
+        FileManager.DataSave<GameData>(data, SaveType.Normal, DataManager.GameDataFileName);
     }
     [MenuItem("Debug/GameData/イベント更新")]
     public static void UpdateEventListData()
     {
-        GameData data = FileManager.LoadSaveData<GameData>(DataManager.GameDataFileName);
+        GameData data = FileManager.LoadSaveData<GameData>(SaveType.Normal, DataManager.GameDataFileName);
         if (data == null || data == default)
         {
             data = new GameData();
@@ -69,7 +69,7 @@ public class DebugUtilityMenu : MonoBehaviour
             data.itemDataList.itemDataList = new List<ItemData>();
         }
 
-        EventDataList eventDataList = FileManager.LoadSaveData<EventDataList>(DataManager.EventDataFileName);
+        EventDataList eventDataList = FileManager.LoadSaveData<EventDataList>(SaveType.Normal, DataManager.EventDataFileName);
         if (data == null || data == default)
         {
             Debug.LogError("イベントデータがありません");
@@ -89,6 +89,6 @@ public class DebugUtilityMenu : MonoBehaviour
                 eData.isEnded = eventDataList.list[i].isEnded;
             }
         }
-        FileManager.DataSave<GameData>(data, DataManager.GameDataFileName);
+        FileManager.DataSave<GameData>(data, SaveType.Normal, DataManager.GameDataFileName);
     }
 }

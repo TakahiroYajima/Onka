@@ -6,4 +6,5 @@
     public const string Item = "Item";
     public const string KeyLock = "KeyLock";
     public const string StageObject = "StageObject";
+    public const string SaveObject = "SaveObject";
 }

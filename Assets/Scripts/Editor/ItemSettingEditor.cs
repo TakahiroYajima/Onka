@@ -29,7 +29,7 @@ public class ItemSettingEditor : EditorWindow
 
     private void Init()
     {
-        scriptableObject = FileManager.LoadSaveData<ItemDataList>(DataManager.ItemDataFileName);
+        scriptableObject = FileManager.LoadSaveData<ItemDataList>(SaveType.Normal, DataManager.ItemDataFileName);
         if (scriptableObject == null)
         {
             scriptableObject = new ItemDataList();
@@ -212,10 +212,10 @@ public class ItemSettingEditor : EditorWindow
     {
         if (scriptableObject == null)
         {
-            scriptableObject = FileManager.LoadSaveData<ItemDataList>(DataManager.ItemDataFileName);
+            scriptableObject = FileManager.LoadSaveData<ItemDataList>(SaveType.Normal, DataManager.ItemDataFileName);
         }
 
-        ItemDataList sData = FileManager.LoadSaveData<ItemDataList>(DataManager.ItemDataFileName);
+        ItemDataList sData = FileManager.LoadSaveData<ItemDataList>(SaveType.Normal, DataManager.ItemDataFileName);
         if (scriptableObject == null || scriptableObject == default) { return; }
 
         settingDataActiveList.Clear();
@@ -236,7 +236,7 @@ public class ItemSettingEditor : EditorWindow
         }
         scriptableObject.Save();//データ調整
 
-        FileManager.DataSave<ItemDataList>(scriptableObject, DataManager.ItemDataFileName, () =>
+        FileManager.DataSave<ItemDataList>(scriptableObject, SaveType.Normal, DataManager.ItemDataFileName, () =>
         {
             DebugUtilityMenu.UpdateItemData();
             // エディタを最新の状態にする

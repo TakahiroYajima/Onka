@@ -5,13 +5,26 @@ using UnityEngine;
 using UnityEngine.Events;
 using Encrypter;
 
+public enum SaveType
+{
+    Normal,
+    PlayerData,
+    GeneralPlayerData,//1度取得すれば取得済みフラグが立つもの
+}
+
 public sealed class FileManager
 {
-    const string SaveFilePath = "/SaveData";
     const string EncryptKey = "1234567890ABCDEF";
     const string srcIV = "QAWSEDRFTGYHUJIK";
 
-    public static void DataSave<Types>(Types saveClass, string fileName, UnityAction onComplete = null)
+    static readonly Dictionary<SaveType, string> saveFolderPath = new Dictionary<SaveType, string>()
+    {
+        {SaveType.Normal, "/SaveData" },
+        {SaveType.PlayerData,"/SaveData/PlayerData" },
+        {SaveType.GeneralPlayerData, "/SaveData/GeneralPlayerData" }
+    };
+
+    public static void DataSave<Types>(Types saveClass, SaveType saveType, string fileName, UnityAction onComplete = null)
     {
         string json = JsonUtility.ToJson(saveClass);
         Debug.Log("SaveData : " + json);
@@ -20,7 +33,7 @@ public sealed class FileManager
         string outJson = "";
         EncryptUtility.EncryptAesBase64(json, EncryptKey, iv, out outJson);
         //セーブ
-        Save(fileName, outJson, onComplete);
+        Save(saveType, fileName, outJson, onComplete);
     }
     /// <summary>
     /// ファイルをロード。存在しなければdefaultを返す
@@ -28,10 +41,9 @@ public sealed class FileManager
     /// <typeparam name="Types"></typeparam>
     /// <param name="fileName"></param>
     /// <returns></returns>
-    public static Types LoadSaveData<Types>(string fileName)
+    public static Types LoadSaveData<Types>(SaveType saveType, string fileName)
     {
-        string path = Application.dataPath + SaveFilePath + "/" + fileName;
-        string base64 = Read(fileName);
+        string base64 = Read(saveType, fileName);
         if (string.IsNullOrEmpty(base64))
         {
             return default;
@@ -52,9 +64,9 @@ public sealed class FileManager
         }
     }
 
-    private static void Save(string fileName, string json, UnityAction onComplete = null)
+    private static void Save(SaveType saveType, string fileName, string json, UnityAction onComplete = null)
     {
-        string filePath = Application.dataPath + SaveFilePath;
+        string filePath = Application.dataPath + saveFolderPath[saveType];
         string path = filePath + "/" + fileName;
         //ディレクトリが無ければ作成
         if (!Directory.Exists(filePath))
@@ -68,9 +80,9 @@ public sealed class FileManager
             onComplete();
         }
     }
-    private static string Read(string fileName)
+    private static string Read(SaveType saveType, string fileName)
     {
-        string filePath = Application.dataPath + SaveFilePath;
+        string filePath = Application.dataPath + saveFolderPath[saveType];
         string path = filePath + "/" + fileName;
         string data;
         if (!Directory.Exists(filePath))

@@ -52,6 +52,9 @@ public class PlayerStateFree : StateBase
                 player.rigidbody.velocity = Vector3.zero;
                 player.rigidbody.angularVelocity = Vector3.zero;
                 break;
+            case Tags.SaveObject:
+                StageManager.Instance.StartSaveAction();
+                break;
         }
     }
 }

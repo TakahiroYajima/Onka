@@ -32,7 +32,7 @@ public class SoundSettingEditor : EditorWindow
 
     private void Init()
     {
-        scriptableObject = FileManager.LoadSaveData<SoundDataSO>(DataManager.SoundDataFileName);
+        scriptableObject = FileManager.LoadSaveData<SoundDataSO>(SaveType.Normal, DataManager.SoundDataFileName);
         if (scriptableObject == null)
         {
             scriptableObject = new SoundDataSO();
@@ -259,10 +259,10 @@ public class SoundSettingEditor : EditorWindow
     {
         if (scriptableObject == null)
         {
-            scriptableObject = FileManager.LoadSaveData<SoundDataSO>(DataManager.SoundDataFileName);
+            scriptableObject = FileManager.LoadSaveData<SoundDataSO>(SaveType.Normal, DataManager.SoundDataFileName);
         }
 
-        SoundDataSO sData = FileManager.LoadSaveData<SoundDataSO>(DataManager.SoundDataFileName);
+        SoundDataSO sData = FileManager.LoadSaveData<SoundDataSO>(SaveType.Normal, DataManager.SoundDataFileName);
         if (scriptableObject == null || scriptableObject == default) { return; }
 
         settingDataActiveList.Clear();
@@ -283,7 +283,7 @@ public class SoundSettingEditor : EditorWindow
         }
         scriptableObject.SplitSoundDatas();
 
-        FileManager.DataSave<SoundDataSO>(scriptableObject, DataManager.SoundDataFileName, () =>
+        FileManager.DataSave<SoundDataSO>(scriptableObject, SaveType.Normal, DataManager.SoundDataFileName, () =>
         {
             // エディタを最新の状態にする
             AssetDatabase.Refresh();

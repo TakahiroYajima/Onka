@@ -28,7 +28,7 @@ public class EventDataSettingEditor : EditorWindow
 
     private void Init()
     {
-        scriptableObject = FileManager.LoadSaveData<EventDataList>(DataManager.EventDataFileName);
+        scriptableObject = FileManager.LoadSaveData<EventDataList>(SaveType.Normal, DataManager.EventDataFileName);
         if (scriptableObject == null)
         {
             scriptableObject = new EventDataList();
@@ -133,7 +133,7 @@ public class EventDataSettingEditor : EditorWindow
     {
         if (scriptableObject == null)
         {
-            scriptableObject = FileManager.LoadSaveData<EventDataList>(DataManager.EventDataFileName);
+            scriptableObject = FileManager.LoadSaveData<EventDataList>(SaveType.Normal, DataManager.EventDataFileName);
         }
 
         //EventDataList eventData = FileManager.LoadSaveData<EventDataList>(DataManager.EventDataFileName);
@@ -151,7 +151,7 @@ public class EventDataSettingEditor : EditorWindow
         }
         //scriptableObject.SplitSoundDatas();
 
-        FileManager.DataSave<EventDataList>(scriptableObject, DataManager.EventDataFileName, () =>
+        FileManager.DataSave<EventDataList>(scriptableObject, SaveType.Normal, DataManager.EventDataFileName, () =>
         {
             // エディタを最新の状態にする
             AssetDatabase.Refresh();
