@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 [RequireComponent(typeof(Raycastor))]
 [RequireComponent(typeof(InRoomChecker))]
+[RequireComponent(typeof(CapsuleCollider))]
 public class PlayerObject : MonoBehaviour
 {
     [SerializeField] private FirstPersonAIO firstPersonAIO = null;
@@ -13,6 +14,8 @@ public class PlayerObject : MonoBehaviour
     public InRoomChecker inRoomChecker { get; private set; } = null;
     public Vector3 Position { get { return transform.position; } }
     public Rigidbody rigidbody { get; private set; } = null;
+    private CapsuleCollider capsuleCollider = null;
+    public float colliderHeightHalf { get { return capsuleCollider.height * 0.48f; } }//0.5だと完全に頂点になるため、若干下げる
 
     private Dictionary<PlayerState, StateBase> playerStateDic = new Dictionary<PlayerState, StateBase>();
     public PlayerState currentState { get; private set; } = PlayerState.Free;
@@ -29,11 +32,13 @@ public class PlayerObject : MonoBehaviour
         raycastor = GetComponent<Raycastor>();
         inRoomChecker = GetComponent<InRoomChecker>();
         rigidbody = GetComponent<Rigidbody>();
+        capsuleCollider = GetComponent<CapsuleCollider>();
 
         //Stateパターン初期化
         playerStateDic.Add(PlayerState.Free, new PlayerStateFree());
         playerStateDic.Add(PlayerState.ItemGet, new PlayerStateItemGet());
         playerStateDic.Add(PlayerState.Chased, new PlayerStateChased());
+        playerStateDic.Add(PlayerState.InMenu, new PlayerStateInMenu());
         //playerStateDic.Add(PlayerState.Event, new PlayerStateWatchItem());
     }
 
@@ -102,6 +107,7 @@ public class PlayerObject : MonoBehaviour
 public enum PlayerState
 {
     Free,
+    InMenu,
     Event,
     ItemGet,
     Chased,//敵に追われているとき

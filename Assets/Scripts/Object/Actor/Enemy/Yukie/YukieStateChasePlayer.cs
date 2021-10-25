@@ -30,7 +30,6 @@ public class YukieStateChasePlayer : StateBase
         yukie.ToPlayerWallCollider.enabled = false;
 
         yukie.player.AddChasedCount();
-        //yukie.player.ChangeState(PlayerState.Chased);
     }
 
     public override void UpdateAction()
@@ -48,7 +47,7 @@ public class YukieStateChasePlayer : StateBase
                 yukie.player.RemoveChasedCount();
                 return;
             }
-            yukie.UpdatePositionXZ();
+            
             yukie.raycastor.ObjectToRayAction(yukie.transform.position, yukie.player.transform.position, (RaycastHit hit) =>
             {
                 if (Utility.Instance.IsTagNameMatch(hit.transform.gameObject, Tags.Player))

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// プレイヤーを追いかけている途中で部屋に入った時、プレイヤーを探したりするアクション
@@ -11,6 +12,7 @@ public class YukieStateInRoomWandering : StateBase
     private Enemy_Yukie yukie = null;
 
     private YukieInRoomWanderingState currentState = YukieInRoomWanderingState.SerachPlayerInitialize;
+    private int frameCount = 0;
 
     //SerachPlayerToLeft & Right
     private const float rotationAngle = 60f;
@@ -19,23 +21,64 @@ public class YukieStateInRoomWandering : StateBase
     private Vector3 transformFoward;
     private Vector3 transformRight;
     private Vector3 transformLeft;
-    //private Vector3 currentTargetPosition;
     private Vector3 targetDireciton;
-    private float rotationSpeed = 2f;
+    private float rotationSpeed = 1.4f;
+    private UnityAction<RaycastHit> serachedAction = null;//プレイヤーを探すコールバック（複数回記述するのが嫌なのでコールバックにした）
+    private const float NoticeProvocationTime = 3f;//プレイヤーに気付くまでの時間
+
+    //各アクションの要素
+    private UnityAction RotationActionOnComplete = null;//RotationAction()完了後のコールバック
 
     public override void StartAction()
     {
         yukie = StageManager.Instance.Yukie;
+        yukie.provokedSystem.Initialize(NoticeProvocationTime, () =>
+        {
+            //currentState = YukieInRoomWanderingState.RotateToPlayer;
+            yukie.ChangeState(EnemyState.RotateToPlayer);
+        });
+
+        if (serachedAction == null)
+        {
+            serachedAction = (RaycastHit hit) =>
+            {
+                if (Utility.Instance.IsTagNameMatch(hit.transform.gameObject, Tags.Player))
+                {
+                    yukie.ChangeState(EnemyState.RecognizedPlayer);//プレイヤーを目視できていたら追いかけるステートへ
+                }
+            };
+        }
 
         currentState = YukieInRoomWanderingState.Init;
-        yukie.inRoomWanderingActor.onArrivaledPointCallback = OnArrivaledPointCallback;
+        SetInRoomWanderingActorArrivaledCallback();
+        yukie.inRoomWanderingActor.Initialize();
         yukie.inRoomWanderingActor.SetActive(true, yukie.inRoomChecker.CurrentEnterRoomList[yukie.inRoomChecker.CurrentEnterRoomList.Count - 1], true);
         Debug.Log("Yukie:InRoomStart : " + yukie.inRoomChecker.CurrentEnterRoomList[yukie.inRoomChecker.CurrentEnterRoomList.Count - 1]);
+    }
+    private void SetInRoomWanderingActorArrivaledCallback(bool isSetMyMethod = true)
+    {
+        if (isSetMyMethod) yukie.inRoomWanderingActor.onArrivaledPointCallback = OnArrivaledPointCallback;
+        else yukie.inRoomWanderingActor.onArrivaledPointCallback = null;
+    }
+
+    private void InitTransforms()
+    {
+        transformFoward = yukie.transform.forward;
+        transformRight = Quaternion.AngleAxis(-rotationAngle, Vector3.up) * yukie.transform.forward;//yukie.transform.right + transformFoward;
+        transformLeft = Quaternion.AngleAxis(rotationAngle, Vector3.up) * yukie.transform.forward;//-yukie.transform.right + transformFoward;
     }
 
     public override void UpdateAction()
     {
-        SerachPlayerUpdate();
+        if (frameCount >= Enemy_Yukie.doUpdateFrameCount)
+        {
+            SerachPlayerUpdate();
+            frameCount = 0;
+        }
+        else
+        {
+            frameCount++;
+        }
         //Debug.Log(currentState.ToString());
         switch (currentState)
         {
@@ -47,30 +90,31 @@ public class YukieStateInRoomWandering : StateBase
                 
                 break;
             case YukieInRoomWanderingState.SerachPlayerInitialize:
-                transformFoward = yukie.transform.forward;
-                transformRight = Quaternion.AngleAxis(-rotationAngle, Vector3.up) * yukie.transform.forward;//yukie.transform.right + transformFoward;
-                transformLeft = Quaternion.AngleAxis(rotationAngle, Vector3.up) * yukie.transform.forward;//-yukie.transform.right + transformFoward;
-                Debug.Log(yukie.transform.position + " : " + (yukie.transform.position + transformRight) + " : " + (yukie.transform.position + transformLeft));
+                InitTransforms();
+                //Debug.Log(yukie.transform.position + " : " + (yukie.transform.position + transformRight) + " : " + (yukie.transform.position + transformLeft));
                 targetDireciton = transformLeft;
                 yukie.StopSound();
                 FirstSerachPlayer();
+                RotationActionOnComplete = DoNextState;
                 break;
             case YukieInRoomWanderingState.SerachPlayerToLeft:
-                RotationAction();
+                RotationAction(RotationActionOnComplete);
                 break;
             case YukieInRoomWanderingState.SerachPlayerMiddleInit:
                 targetDireciton = transformRight;
+                RotationActionOnComplete = DoNextState;
                 DoNextState();
                 break;
             case YukieInRoomWanderingState.SerachPlayerToRight:
-                RotationAction();
+                RotationAction(RotationActionOnComplete);
                 break;
             case YukieInRoomWanderingState.SerachPlayerEndInit:
                 targetDireciton = transformFoward;
+                RotationActionOnComplete = DoNextState;
                 DoNextState();
                 break;
             case YukieInRoomWanderingState.SerachPlayerEndRotation:
-                RotationAction();
+                RotationAction(RotationActionOnComplete);
                 break;
             case YukieInRoomWanderingState.DoWanderingInit:
                 yukie.PlaySoundLoop(0, 0.3f);
@@ -82,6 +126,12 @@ public class YukieStateInRoomWandering : StateBase
                 yukie.player.RemoveChasedCount();
                 yukie.ChangeState(EnemyState.Wandering);
                 break;
+            //case YukieInRoomWanderingState.RotateToPlayer:
+            //    yukie.TurnAroundToTargetAngle_Update(yukie.player.transform.position, () =>
+            //    {
+            //        yukie.ChangeState(EnemyState.ChasePlayer);
+            //    });
+            //    break;
             default:
                 break;
         }
@@ -120,17 +170,19 @@ public class YukieStateInRoomWandering : StateBase
     {
         if (yukie.IsInSightPlayer())
         {
-            yukie.raycastor.ObjectToRayAction(yukie.transform.position, yukie.player.transform.position, (RaycastHit hit) =>
-            {
-                if (Utility.Instance.IsTagNameMatch(hit.transform.gameObject, Tags.Player))
-                {
-                    yukie.ChangeState(EnemyState.RecognizedPlayer);//プレイヤーを目視できていたら追いかけるステートへ
-                }
-            }, 12f);
+            if (yukie.raycastor.IsRaycastHitObjectMatch(yukie.transform.position, yukie.player.transform.position, Tags.Player, 12f))
+                yukie.ChangeState(EnemyState.RecognizedPlayer);
+            else if(yukie.raycastor.IsRaycastHitObjectMatch(yukie.transform.position, yukie.player.transform.position + new Vector3(0f,yukie.player.colliderHeightHalf, 0f), Tags.Player, 12f))
+                yukie.ChangeState(EnemyState.RecognizedPlayer);
+            //yukie.raycastor.ObjectToRayAction(yukie.transform.position, yukie.player.transform.position, serachedAction, 12f);
+        }
+        else
+        {
+            yukie.provokedSystem.ProvokedUpdate_ToPlayer_6Frame(yukie.player.transform.position);
         }
     }
 
-    private void RotationAction()
+    private void RotationAction(UnityAction onComplete)
     {
         float dot = Vector3.Dot(yukie.transform.forward, targetDireciton);
 
@@ -138,8 +190,7 @@ public class YukieStateInRoomWandering : StateBase
         //Debug.Log("InRoomRotationAction : " + currentState.ToString() + " : " + deg);
         if (deg <= rotationSpeed)
         {
-            //yukie.transform.LookAt(targetDireciton);
-            DoNextState();
+            onComplete();
         }
         else
         {
@@ -152,25 +203,74 @@ public class YukieStateInRoomWandering : StateBase
     /// 徘徊通過地点に到達した時のコールバック
     /// </summary>
     /// <param name="nextTargetID"></param>
-    private void OnArrivaledPointCallback(int nextTargetID)
+    private void OnArrivaledPointCallback(int nextTargetID, OnWPArrivaledEventCode _eventCode)
     {
-        
-        if(nextTargetID == 1)
+        UnityAction callback = () =>
         {
-            //最初
-            if (currentState == YukieInRoomWanderingState.FirstWanderingMove)
+            if (!yukie.inRoomWanderingActor.enabled)
             {
-                currentState = YukieInRoomWanderingState.SerachPlayerInitialize;
+                yukie.inRoomWanderingActor.enabled = true;
+                yukie.navMeshAgent.enabled = true;
             }
-            //徘徊し終わった
-            else if(currentState == YukieInRoomWanderingState.WanderingInRoom)
+            if (nextTargetID == 1)
             {
-                currentState = YukieInRoomWanderingState.WanderingEnd;
+                //最初
+                if (currentState == YukieInRoomWanderingState.FirstWanderingMove)
+                {
+                    currentState = YukieInRoomWanderingState.SerachPlayerInitialize;
+                }
+                //徘徊し終わった
+                else if (currentState == YukieInRoomWanderingState.WanderingInRoom)
+                {
+                    currentState = YukieInRoomWanderingState.WanderingEnd;
+                }
             }
+            else
+            {
+                yukie.inRoomWanderingActor.MoveNext();
+            }
+        };
+
+        if(_eventCode == OnWPArrivaledEventCode.None)
+        {
+            callback();
         }
         else
         {
-            yukie.inRoomWanderingActor.MoveNext();
+            yukie.inRoomWanderingActor.enabled = false;
+            yukie.navMeshAgent.enabled = false;
+            SetInRoomWanderingActorArrivaledCallback(false);
+            switch (_eventCode)
+            {
+                case OnWPArrivaledEventCode.Survey:
+                    InitTransforms();
+                    break;
+                case OnWPArrivaledEventCode.Survey_RightOnly:
+                    InitTransforms();
+                    targetDireciton = transformLeft;
+                    currentState = YukieInRoomWanderingState.SerachPlayerToLeft;
+                    RotationActionOnComplete = ()=>
+                    {
+                        currentState = YukieInRoomWanderingState.None;
+                        RotationActionOnComplete = null;
+                        GeneralCoroutine.Instance.Wait(0.7f, () =>
+                        {
+                            currentState = YukieInRoomWanderingState.SerachPlayerEndRotation;
+                            targetDireciton = transformFoward;
+                            RotationActionOnComplete = () => {
+                                RotationActionOnComplete = null;
+                                currentState = YukieInRoomWanderingState.None;
+                                GeneralCoroutine.Instance.Wait(0.35f, () =>
+                                {
+                                    currentState = YukieInRoomWanderingState.WanderingInRoom;
+                                    SetInRoomWanderingActorArrivaledCallback();
+                                    callback();
+                                });
+                            };
+                        });
+                    };
+                    break;
+            }
         }
     }
 
@@ -186,7 +286,8 @@ public class YukieStateInRoomWandering : StateBase
 
 public enum YukieInRoomWanderingState
 {
-    Init = 0,//初期化
+    None = 0,
+    Init,//初期化
     FirstWanderingMove,//最初にIDが0の地点まで移動する（部屋に入る動作）
     SerachPlayerInitialize,//プレイヤーを探す
     SerachPlayerToLeft,//自分の左側を向く
@@ -197,4 +298,6 @@ public enum YukieInRoomWanderingState
     DoWanderingInit,//徘徊前初期化
     WanderingInRoom,//徘徊
     WanderingEnd,//徘徊終了、部屋を出る
+
+    //RotateToPlayer,//プレイヤーの方を向く
 }

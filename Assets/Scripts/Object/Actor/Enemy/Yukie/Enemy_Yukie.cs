@@ -8,6 +8,7 @@ using SoundDistance;
 [RequireComponent(typeof(Raycastor))]
 [RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(InRoomChecker))]
+[RequireComponent(typeof(ProvokedSystem))]
 public class Enemy_Yukie : Enemy
 {
     public WanderingActor wanderingActor { get; private set; } = null;
@@ -16,6 +17,7 @@ public class Enemy_Yukie : Enemy
     public Raycastor raycastor { get; private set; } = null;
     public CapsuleCollider capsuleCollider { get; private set; } = null;
     public InRoomChecker inRoomChecker { get; private set; } = null;
+    public ProvokedSystem provokedSystem { get; private set; } = null;
     [SerializeField] private SoundPlayerObject emitterSoundPlayer = null;
     [SerializeField] private CapsuleCollider toPlayerWallCollider = null;//プレイヤーと一定の距離を保つためにあるコライダー
     public CapsuleCollider ToPlayerWallCollider { get { return toPlayerWallCollider; } }
@@ -27,13 +29,16 @@ public class Enemy_Yukie : Enemy
     public UnityAction<Collider> onColliderStayCallback = null;
 
     //プレイヤーとの距離計算用（Vector3では重いのでY軸を無視してVector2(x,z)に変換）
-    [HideInInspector] public Vector2 yukieXZ = new Vector2(0, 0);
-    [HideInInspector] public Vector2 playerXZ = new Vector2(0, 0);
+    private Vector2 yukieXZ = new Vector2(0, 0);
+    private Vector2 playerXZ = new Vector2(0, 0);
     //プレイヤー検知用
     private float playerDetectionDistance = 8f;
     private float searchAngle = 60f;
-
-    
+    private float rotationSpeed = 3f;
+    public const int doUpdateFrameCount = 6;
+    //プレイヤーが自分の視界の範囲外をうろつく＝挑発しているので、それに対する不意打ち要素
+    private const float NoticeProvocationTime = 10f;//挑発に気付くまでの時間
+    private float provocationingTime = 0f;//プレイヤーに挑発されている時間
 
     protected override void Awake()
     {
@@ -44,6 +49,7 @@ public class Enemy_Yukie : Enemy
         raycastor = GetComponent<Raycastor>();
         capsuleCollider = GetComponent<CapsuleCollider>();
         inRoomChecker = GetComponent<InRoomChecker>();
+        provokedSystem = GetComponent<ProvokedSystem>();
 
         //State登録
         yukieStateDic.Add(EnemyState.Wandering, new YukieStateWandering());
@@ -52,6 +58,7 @@ public class Enemy_Yukie : Enemy
         yukieStateDic.Add(EnemyState.RecognizedPlayer, new YukieStateRecognizedPlayer());
         yukieStateDic.Add(EnemyState.ChasePlayer, new YukieStateChasePlayer());
         yukieStateDic.Add(EnemyState.CaughtPlayer, new YukieStateCaughtPlayer());
+        yukieStateDic.Add(EnemyState.CanNotAction, new YukieStateCanNotAction());
     }
 
     // Start is called before the first frame update
@@ -100,7 +107,7 @@ public class Enemy_Yukie : Enemy
     /// <summary>
     /// プレイヤーの位置情報と自分の位置情報を更新（Vector2(x,z)変換）
     /// </summary>
-    public void UpdatePositionXZ()
+    private void UpdatePositionXZ()
     {
         yukieXZ.x = transform.position.x;
         yukieXZ.y = transform.position.z;
@@ -113,6 +120,7 @@ public class Enemy_Yukie : Enemy
     /// </summary>
     public bool IsInSightPlayer()
     {
+        UpdatePositionXZ();
         if ((yukieXZ - playerXZ).sqrMagnitude < playerDetectionDistance * playerDetectionDistance)
         {
             //視界に入っていたら検知
@@ -133,6 +141,7 @@ public class Enemy_Yukie : Enemy
     /// <returns></returns>
     public bool IsInSight(GameObject target)
     {
+        UpdatePositionXZ();
         Vector2 targetXZ = new Vector2(target.transform.position.x, target.transform.position.z);
         if ((yukieXZ - targetXZ).sqrMagnitude < playerDetectionDistance * playerDetectionDistance)
         {
@@ -146,7 +155,32 @@ public class Enemy_Yukie : Enemy
         }
         return false;
     }
+    /// <summary>
+    /// 指定された方向へ向く（Y軸は雪絵と同じになる）
+    /// </summary>
+    /// <param name="targetPosition"></param>
+    /// <param name="onRotationEnded"></param>
+    public void TurnAroundToTargetAngle_Update(Vector3 targetPosition, UnityAction onRotationEnded)
+    {
+        Vector3 playerPos = new Vector3(targetPosition.x, transform.position.y, targetPosition.z);
+        Vector3 targetDir = playerPos - transform.position;
+        Vector3 normalized = targetDir.normalized;
+        float dot = Vector3.Dot(transform.forward, normalized);
 
+        float deg = Mathf.Acos(dot) * Mathf.Rad2Deg;
+        if (deg <= rotationSpeed)
+        {
+            transform.LookAt(playerPos);
+            onRotationEnded();
+        }
+        else
+        {
+            Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, rotationSpeed * Time.deltaTime, 0f);
+            transform.rotation = Quaternion.LookRotation(newDir);
+        }
+    }
+
+    #region サウンド関連
     public void PlaySoundLoop(int arrayNum, float volume = 1f)
     {
         SoundDistanceManager.Instance.StartSoundDistanceMaker(emitterSoundPlayer.GetClip(arrayNum), volume);
@@ -159,7 +193,9 @@ public class Enemy_Yukie : Enemy
     {
         SoundDistanceManager.Instance.StopSoundDistanceMaker();
     }
+    #endregion
 
+    #region コライダーイベント関連
     private void OnEnterRoomAction(RoomWanderingManager _roomWanderingManager)
     {
         if (currentState != EnemyState.InRoomWandering)
@@ -202,4 +238,5 @@ public class Enemy_Yukie : Enemy
             onColliderStayCallback(other);
         }
     }
+    #endregion
 }
