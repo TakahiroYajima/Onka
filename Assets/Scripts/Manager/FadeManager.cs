@@ -20,12 +20,20 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager> {
     }
 
     private readonly Dictionary<FadeColorType, Color> _colorDict = new Dictionary<FadeColorType, Color>() {
+        {FadeColorType.None, Color.black },
         {FadeColorType.Black, Color.black },
         {FadeColorType.White, Color.white },
     };
 
     public void FadeIn(FadeColorType colorType = FadeColorType.Black, float duration = DefaultDuration, UnityAction onComplete = null) {
         if (!this._colorDict.ContainsKey(colorType)) {
+            return;
+        }
+        if (colorType == FadeColorType.None) {
+            if (onComplete != null)
+            {
+                onComplete();
+            }
             return;
         }
         this._image.enabled = true;
@@ -44,12 +52,20 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager> {
         if (!this._colorDict.ContainsKey(colorType)) {
             return;
         }
+        if (colorType == FadeColorType.None)
+        {
+            if (onComplete != null)
+            {
+                onComplete();
+            }
+            return;
+        }
         this._image.enabled = true;
         Color c = this._colorDict[colorType];
         this._image.color = new Color(c.r, c.g, c.b, 0);
         StartCoroutine(FadeAction(_image, FadeType.Out, 1f, () =>
         {
-            this._image.enabled = false;
+            //this._image.enabled = false;
             if (onComplete != null)
             {
                 onComplete();
@@ -57,7 +73,7 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager> {
         }));
     }
 
-    private IEnumerator FadeAction(Image _image, FadeType _type, float _duration, UnityAction onComplete = null)
+    public IEnumerator FadeAction(Image _image, FadeType _type, float _duration, UnityAction onComplete = null)
     {
         Color color = _image.color;
         float currentTime = 0f;
@@ -77,6 +93,30 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager> {
             yield return null;
         }
         if(onComplete != null)
+        {
+            onComplete();
+        }
+    }
+    public IEnumerator FadeAction(Text _text, FadeType _type, float _duration, UnityAction onComplete = null)
+    {
+        Color color = _text.color;
+        float currentTime = 0f;
+        while (currentTime < _duration)
+        {
+            float dir = Time.deltaTime / _duration;
+            if (_type == FadeType.In)
+            {
+                color.a -= dir;
+            }
+            else
+            {
+                color.a += dir;
+            }
+            _text.color = color;
+            currentTime += dir;
+            yield return null;
+        }
+        if (onComplete != null)
         {
             onComplete();
         }

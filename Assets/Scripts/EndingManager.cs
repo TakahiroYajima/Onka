@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class EndingManager : SingletonMonoBehaviour<EndingManager>
 {
-    [SerializeField] private AudioSource myAudioSource = null;
     [SerializeField] private GameObject panel = null;
 
     private bool actioning = false;
@@ -22,22 +22,21 @@ public class EndingManager : SingletonMonoBehaviour<EndingManager>
         
     }
 
-    public void StartEnding()
+    public void StartEnding(UnityAction onComplete)
     {
         panel.SetActive(true);
         if (!actioning)
         {
             actioning = true;
             staffRollTexts = new StaffRollTextCoreator().Create();
-            myAudioSource.Play();
-            StartCoroutine(EndingEvent());
+            StartCoroutine(EndingEvent(onComplete));
         }
     }
     /// <summary>
     /// スタッフロールを垂れ流す（表示してはフェードアウトを繰り返す）
     /// </summary>
     /// <returns></returns>
-    private IEnumerator EndingEvent()
+    private IEnumerator EndingEvent(UnityAction onComplete)
     {
         for(int i = 0; i < staffRollTexts.Count; i++)
         {
@@ -45,12 +44,14 @@ public class EndingManager : SingletonMonoBehaviour<EndingManager>
             yield return StartCoroutine(StaffRollItemFadeAction());
             yield return new WaitForSeconds(0.7f);
         }
-        FadeManager.instance.FadeOut(FadeManager.FadeColorType.Black, 2f);
-        yield return StartCoroutine(AudioFadeOut(3f));
+        
         yield return new WaitForSeconds(2f);
          actioning = false;
         //終了
-        //GameSceneManager.Instance.FinishEnding();
+        if(onComplete != null)
+        {
+            onComplete();
+        }
     }
 
     /// <summary>
@@ -122,21 +123,6 @@ public class EndingManager : SingletonMonoBehaviour<EndingManager>
             instanceStaffRollList[i].gameObject.SetActive(false);
         }
     }
-
-    private IEnumerator AudioFadeOut(float _in_out_time = 2f)
-    {
-        float volume = myAudioSource.volume;
-        float initVolume = volume;
-        float currentTime = initVolume;
-        currentTime = 0f;
-        while (volume > 0)
-        {
-            volume = initVolume - currentTime / _in_out_time;
-            myAudioSource.volume = volume;
-            currentTime += Time.deltaTime;
-            yield return null;
-        }
-    }
 }
 
 public class StaffRollData
@@ -166,26 +152,26 @@ public class StaffRollTextCoreator
     {
         List<StaffRollTexts> returnList = new List<StaffRollTexts>()
         {
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Death Islet", "")}),
+            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("怨 禍", "")}),
             new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Appearance", "")}),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Player","You")}),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Syatyou","_K")}),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Assets","")}),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Asset Store", "https://assetstore.unity.com/") }),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("MusMus", "https://musmus.main.jp/")}),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("DOVA-SYNDROME", "https://dova-s.jp/")}),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Maoudamashii", "https://maou.audio/") }),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("KMF", "http://www.kazamit.com/index.php?p=1") }),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Komori", "https://taira-komori.jpn.org/horror01.html") }),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Pocket Sound", "https://pocket-se.info/") }),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("The match makers", "http://osabisi.sakura.ne.jp/m2/") }),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Other", "Yajima") }),
+            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Player : You", "")}),
+            //new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Syatyou","_K")}),
+            //new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Assets","")}),
+            //new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Asset Store", "https://assetstore.unity.com/") }),
+            //new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("MusMus", "https://musmus.main.jp/")}),
+            //new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("DOVA-SYNDROME", "https://dova-s.jp/")}),
+            //new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Maoudamashii", "https://maou.audio/") }),
+            //new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("KMF", "http://www.kazamit.com/index.php?p=1") }),
+            //new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Komori", "https://taira-komori.jpn.org/horror01.html") }),
+            //new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Pocket Sound", "https://pocket-se.info/") }),
+            //new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("The match makers", "http://osabisi.sakura.ne.jp/m2/") }),
+            //new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Other", "Yajima") }),
             new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Staff","")}),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Planning","Yajima")}),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Programing","Yajima")}),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Design","Yajima")}),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("CreateTool","Unity")}),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Presents","Yajima")}),
+            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Planning : Yajin", "")}),
+            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Programing : Yajin", "") }),
+            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Design : Yajin", "") }),
+            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("CreateTool : Unity", "")}),
+            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Presents : Yajin", "") }),
             new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Thank you for playing.", "")}),
         };
         return returnList;
