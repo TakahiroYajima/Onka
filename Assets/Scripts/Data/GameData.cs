@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Onka.Manager.Event;
 
 [System.Serializable]
 public class GameData

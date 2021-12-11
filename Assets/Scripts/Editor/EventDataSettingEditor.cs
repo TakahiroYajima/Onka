@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
+using Onka.Manager.Event;
 
 public class EventDataSettingEditor : EditorWindow
 {
@@ -49,11 +50,11 @@ public class EventDataSettingEditor : EditorWindow
             //要素の追加・削除ができないようにさせる
             onCanAddCallback = (ReorderableList list) =>
             {
-                return false;
+                return true;
             },
             onCanRemoveCallback = (ReorderableList list) =>
             {
-                return false;
+                return true;
             },
 
             drawHeaderCallback = (rect) =>

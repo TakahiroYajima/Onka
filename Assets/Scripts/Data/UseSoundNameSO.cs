@@ -26,5 +26,7 @@ public enum SceneType
 {
     Initialize,
     Title,
+    Opening,
     Game,
+    Ending,
 }
