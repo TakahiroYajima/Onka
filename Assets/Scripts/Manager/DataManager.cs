@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using SoundSystem;
+using Onka.Manager.Event;
 
 public class DataManager : SingletonMonoBehaviour<DataManager>
 {
