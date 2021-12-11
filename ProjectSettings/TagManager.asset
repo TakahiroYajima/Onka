@@ -18,6 +18,9 @@ TagManager:
   - RoomCollider
   - WanderingSystem
   - SaveObject
+  - KeyHole
+  - Number
+  - KeyLockTouchable
   layers:
   - Default
   - TransparentFX
@@ -41,7 +44,7 @@ TagManager:
   - ToPlayerOnlyCollision
   - RoomCollider
   - WanderingSystem
-  - 
+  - KeyLockTouchable
   - 
   - 
   - 
