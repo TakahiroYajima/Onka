@@ -9,19 +9,25 @@ using UnityEngine;
 public class SwingableShelfObject : StageObjectBase
 {
     [SerializeField] private SwingableObject door = null;
+    private KeyHoleTarget keyHoleTarget = null;
     private KeyLockTarget keyLockTarget = null;
 
     private void Awake()
     {
+        keyHoleTarget = GetComponent<KeyHoleTarget>();
         keyLockTarget = GetComponent<KeyLockTarget>();
     }
 
     public override void OnTapObject()
     {
         //throw new System.NotImplementedException();
+        if(keyHoleTarget != null)
+        {
+            if (!keyHoleTarget.isUnlocked) return;
+        }
         if(keyLockTarget != null)
         {
-            if (!keyLockTarget.isUnlocked) return;
+            if(!keyLockTarget.isUnlocked) return;
         }
         if (!door.isMoving)
         {

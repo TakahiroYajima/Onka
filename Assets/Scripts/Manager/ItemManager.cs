@@ -122,4 +122,9 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
             watchItemEventEndedCallback();
         }
     }
+    public void FinishWatchingItemEnforcement()
+    {
+        watchDiaryManager.EndWatchingItem();
+        FinishWatchItem();
+    }
 }

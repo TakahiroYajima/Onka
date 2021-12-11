@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Onka.Manager.Event;
 
 public class PlayerStateItemGet : StateBase
 {
@@ -12,17 +13,18 @@ public class PlayerStateItemGet : StateBase
     public override void StartAction()
     {
         player = StageManager.Instance.Player;
-        player.FirstPersonAIO.enabled = false;
-        player.onStateChangedInPlayerScriptOnly = () =>
-        {
-            EventManager.Instance.ProgressEvent();
-        };
+        player.ForcedStopFPS();
+        //player.onStateChangedInPlayerScriptOnly = () =>
+        //{
+        //    EventManager.Instance.ProgressEvent();
+        //};
         ItemManager.Instance.watchItemEventEndedCallback = () =>
         {
             if (player.currentState == PlayerState.ItemGet)
             {
                 player.ChangeState(PlayerState.Free);
             }
+            EventManager.Instance.ProgressEvent();
         };
         timeCount = 0f;
     }
@@ -46,5 +48,6 @@ public class PlayerStateItemGet : StateBase
     public override void EndAction()
     {
         player.FirstPersonAIO.enabled = true;
+        player.onStateChangedInPlayerScriptOnly = null;
     }
 }

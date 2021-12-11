@@ -24,7 +24,12 @@ public class DialogManager : SingletonMonoBehaviour<DialogManager>
 
     public void CloseCheck()
     {
-        if(dialogParent.childCount == 0)
+        StartCoroutine(CloseCheckCoroutine());
+    }
+    private IEnumerator CloseCheckCoroutine()
+    {
+        yield return null;
+        if (dialogParent.childCount == 0)
         {
             canvas.gameObject.SetActive(false);
         }

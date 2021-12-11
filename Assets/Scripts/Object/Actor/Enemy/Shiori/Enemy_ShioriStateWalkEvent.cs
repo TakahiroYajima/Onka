@@ -34,6 +34,6 @@ public class Enemy_ShioriStateWalkEvent : StateBase
             StageManager.Instance.Shiori.onWalkEventEnded();
         }
         SoundManager.Instance.PlayEnvironmentWithKey("ambient_in_house", false);
-        StageManager.Instance.Shiori.SoundPlayerObject.StopSound();
+        //StageManager.Instance.Shiori.SoundPlayerObject.StopSound();
     }
 }

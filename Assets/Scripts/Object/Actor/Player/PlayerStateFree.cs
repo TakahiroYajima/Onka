@@ -41,16 +41,17 @@ public class PlayerStateFree : StateBase
             case Tags.Door:
                 //DataManager.Instance.DoDoorUnlock(hit.transform.gameObject.GetComponent<DoorObject>().DoorOpenKey);
                 break;
-            case Tags.KeyLock:
+            case Tags.KeyHole:
                 //hit.transform.GetComponent<DoorKeyLockObject>().DoUnlockDoorKey();
-                hit.transform.GetComponent<KeyLockObject>().DoUnlock();
+                hit.transform.GetComponent<KeyHoleObject>().DoUnlock();
+                break;
+            case Tags.KeyLock:
+                hit.transform.GetComponent<KeyLockObject>().TapObject();
                 break;
             case Tags.Item:
                 ItemObject itemObject = hit.transform.gameObject.GetComponent<ItemObject>();
                 ItemManager.Instance.ItemGetAction(itemObject);
                 player.ChangeState(PlayerState.ItemGet);
-                player.rigidbody.velocity = Vector3.zero;
-                player.rigidbody.angularVelocity = Vector3.zero;
                 break;
             case Tags.SaveObject:
                 StageManager.Instance.StartSaveAction();

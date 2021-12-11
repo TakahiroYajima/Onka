@@ -69,6 +69,7 @@ namespace SoundDistance
                 }
             }
             OuterCircumference *= 0.5f;//双方追加している関係で /2 する
+            //Debug.Log("初期化　外周の距離：" + OuterCircumference);
         }
         
         // Update is called once per frame
@@ -273,10 +274,29 @@ namespace SoundDistance
             if(listenerObj.currentPointID != listenerObj.currentOuterPointID)
             {
                 serchEachRouteList[currentMinID].AddRange(CalcSerachSideRoute(listenerObj.currentOuterPointID, listenerObj.currentPointID));
+                if(costList.Count == 0)
+                {
+                    for(int i = 0; i < currentMinID + 1; i++)
+                    {
+                        costList.Add(0f);
+                    }
+                }
                 costList[currentMinID] += subCost;//逸れている分のコストを追加
+                //if (costList.Count > currentMinID)
+                //{
+                //    costList[currentMinID] += subCost;//逸れている分のコストを追加
+                //}
             }
+            //if (costList.Count == 0)
+            //{
+            //    for (int i = 0; i < currentMinID + 1; i++)
+            //    {
+            //        costList.Add(0f);
+            //    }
+            //}
+            //Debug.Log("現在のコスト : " + costList[currentMinID]);
             //count == 0　：　Pointが同じ
-            if(listenerObj.currentPointID == emitterObj.currentPointID)//if (dikstraEachRouteList.Count == 0)
+            if (listenerObj.currentPointID == emitterObj.currentPointID)//if (dikstraEachRouteList.Count == 0)
             {
                 SetSoundMakerTargetPosition(emitterObj.transform.position);
                 calcMinDistancePoints.Clear();

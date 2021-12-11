@@ -8,7 +8,7 @@ using SoundSystem;
 /// </summary>
 public abstract class SceneBase : SingletonMonoBehaviour<SceneBase>
 {
-    [SerializeField] protected string sceneBGMName = "";
+    [SerializeField] protected string sceneBGMKey = "";
     [SerializeField] protected SceneType thisScene;
 
     protected virtual void Start()
@@ -20,9 +20,9 @@ public abstract class SceneBase : SingletonMonoBehaviour<SceneBase>
     protected virtual void Initialize()
     {
         DataManager.Instance.SetCurrentSceneUseSound(thisScene);
-        if (!string.IsNullOrEmpty(sceneBGMName))
+        if (!string.IsNullOrEmpty(sceneBGMKey))
         {
-            SoundManager.Instance.PlayBGMWithFadeIn(sceneBGMName, 0f);
+            SoundManager.Instance.PlayBGMWithKeyAndFadeIn(sceneBGMKey, 0f);
         }
     }
 

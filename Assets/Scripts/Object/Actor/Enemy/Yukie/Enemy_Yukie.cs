@@ -18,9 +18,13 @@ public class Enemy_Yukie : Enemy
     public CapsuleCollider capsuleCollider { get; private set; } = null;
     public InRoomChecker inRoomChecker { get; private set; } = null;
     public ProvokedSystem provokedSystem { get; private set; } = null;
+    public MovingObject movingObject { get; private set; } = null;
+    public Rigidbody rigidbody { get; private set; } = null;
     [SerializeField] private SoundPlayerObject emitterSoundPlayer = null;
     [SerializeField] private CapsuleCollider toPlayerWallCollider = null;//プレイヤーと一定の距離を保つためにあるコライダー
     public CapsuleCollider ToPlayerWallCollider { get { return toPlayerWallCollider; } }
+    [SerializeField] private Transform faceTransform = null;
+    public Transform FaceTransform { get { return faceTransform; } }
 
     public Dictionary<EnemyState, StateBase> yukieStateDic { get; private set; } = new Dictionary<EnemyState, StateBase>();
 
@@ -50,6 +54,8 @@ public class Enemy_Yukie : Enemy
         capsuleCollider = GetComponent<CapsuleCollider>();
         inRoomChecker = GetComponent<InRoomChecker>();
         provokedSystem = GetComponent<ProvokedSystem>();
+        movingObject = GetComponent<MovingObject>();
+        rigidbody = GetComponent<Rigidbody>();
 
         //State登録
         yukieStateDic.Add(EnemyState.Wandering, new YukieStateWandering());

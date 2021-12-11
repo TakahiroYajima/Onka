@@ -38,8 +38,8 @@ public class PlayerStateChased : StateBase
             case Tags.StageObject:
                 hit.transform.GetComponent<StageObjectBase>().OnTapObject();
                 break;
-            case Tags.KeyLock:
-                hit.transform.GetComponent<KeyLockObject>().DoUnlock();
+            case Tags.KeyHole:
+                hit.transform.GetComponent<KeyHoleObject>().DoUnlock();
                 break;
         }
     }

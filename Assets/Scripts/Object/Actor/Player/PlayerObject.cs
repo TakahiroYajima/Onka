@@ -10,11 +10,15 @@ public class PlayerObject : MonoBehaviour
 {
     [SerializeField] private FirstPersonAIO firstPersonAIO = null;
     public FirstPersonAIO FirstPersonAIO { get { return firstPersonAIO; } }
+    [SerializeField] private GameObject cameraObj = null;
+    public GameObject CameraObj { get { return cameraObj; } }
     public Raycastor raycastor { get; private set; } = null;
     public InRoomChecker inRoomChecker { get; private set; } = null;
     public Vector3 Position { get { return transform.position; } }
+    public Vector3 eyePosition { get { return transform.position + new Vector3(0,0.7f,0); } }
     public Rigidbody rigidbody { get; private set; } = null;
-    private CapsuleCollider capsuleCollider = null;
+    public MovingObject cameraMovingObject { get; private set; } = null;
+    public CapsuleCollider capsuleCollider { get; private set; } = null;
     public float colliderHeightHalf { get { return capsuleCollider.height * 0.48f; } }//0.5だと完全に頂点になるため、若干下げる
 
     private Dictionary<PlayerState, StateBase> playerStateDic = new Dictionary<PlayerState, StateBase>();
@@ -33,13 +37,17 @@ public class PlayerObject : MonoBehaviour
         inRoomChecker = GetComponent<InRoomChecker>();
         rigidbody = GetComponent<Rigidbody>();
         capsuleCollider = GetComponent<CapsuleCollider>();
+        cameraMovingObject = cameraObj.GetComponent<MovingObject>();
 
         //Stateパターン初期化
+        playerStateDic.Clear();
         playerStateDic.Add(PlayerState.Free, new PlayerStateFree());
         playerStateDic.Add(PlayerState.ItemGet, new PlayerStateItemGet());
+        playerStateDic.Add(PlayerState.SolveKeylock, new PlayerStateKeylock());
         playerStateDic.Add(PlayerState.Chased, new PlayerStateChased());
+        playerStateDic.Add(PlayerState.Arrested, new PlayerStateArrested());
         playerStateDic.Add(PlayerState.InMenu, new PlayerStateInMenu());
-        //playerStateDic.Add(PlayerState.Event, new PlayerStateWatchItem());
+        playerStateDic.Add(PlayerState.Event, new PlayerStateEvent());
     }
 
     // Start is called before the first frame update
@@ -72,6 +80,18 @@ public class PlayerObject : MonoBehaviour
         {
             onStateChangedInPlayerScriptOnly();
         }
+    }
+
+    public void TurnAroundCamera_Update(Vector3 targetPosition, float rotateSpeed)
+    {
+        cameraMovingObject.TurnAroundSmooth_Update(targetPosition, rotateSpeed);
+    }
+
+    public void ForcedStopFPS()
+    {
+        firstPersonAIO.enabled = false;
+        rigidbody.velocity = Vector3.zero;
+        rigidbody.angularVelocity = Vector3.zero;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -110,5 +130,8 @@ public enum PlayerState
     InMenu,
     Event,
     ItemGet,
+    SolveKeylock,//ナンバーロックを解いている時
     Chased,//敵に追われているとき
+    Arrested,//敵に捕まった時
+    GameOver,
 }

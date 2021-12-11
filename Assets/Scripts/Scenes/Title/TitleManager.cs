@@ -9,10 +9,22 @@ public class TitleManager : SceneBase
     protected override void Start()
     {
         base.Initialize();
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void PressStartButton()
     {
-        SceneControlManager.Instance.ChangeSceneWithFade("Game");
+        SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Opening",true, null, FadeManager.FadeColorType.Black, FadeManager.FadeColorType.None);
+    }
+
+    public void PressLoadButton()
+    {
+        SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Game", true, null, FadeManager.FadeColorType.Black, FadeManager.FadeColorType.Black);
+    }
+
+    public void Debug_Ending()
+    {
+        SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Ending", true, null, FadeManager.FadeColorType.Black, FadeManager.FadeColorType.None);
     }
 }

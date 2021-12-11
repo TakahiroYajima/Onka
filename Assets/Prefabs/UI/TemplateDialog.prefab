@@ -231,6 +231,7 @@ GameObject:
   - component: {fileID: 1604817266807293352}
   - component: {fileID: 791422894180638271}
   - component: {fileID: 7449370195659143416}
+  - component: {fileID: 8405410227218174419}
   m_Layer: 5
   m_Name: NoButton
   m_TagString: Untagged
@@ -349,6 +350,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8405410227218174419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4536827550039837590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: debb9493b3d4a8943a8461894cbb126d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 4871535796654732504}
+  button: {fileID: 7449370195659143416}
 --- !u!1 &4996326165509080349
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,8 +415,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   messageText: {fileID: 6116347143129735058}
-  yesButton: {fileID: 3134642382268546373}
-  noButton: {fileID: 7449370195659143416}
+  yesButton: {fileID: 2974863862698616494}
+  noButton: {fileID: 8405410227218174419}
 --- !u!1 &6733456511184442450
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,6 +507,7 @@ GameObject:
   - component: {fileID: 2853344757210853892}
   - component: {fileID: 8896024577190764381}
   - component: {fileID: 3134642382268546373}
+  - component: {fileID: 2974863862698616494}
   m_Layer: 5
   m_Name: YesButton
   m_TagString: Untagged
@@ -610,3 +626,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2974863862698616494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6921530112619747495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: debb9493b3d4a8943a8461894cbb126d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 7029639053199956126}
+  button: {fileID: 3134642382268546373}
