@@ -11,18 +11,25 @@ public abstract class DoorObject : MonoBehaviour
     //ドアを開けるために必要なカギのID
     [SerializeField] protected string openKey = "";
     //public string DoorOpenKey { get { return openKey; } }
+    [SerializeField] protected KeyHoleTarget keyHoleTarget = null;
     [SerializeField] protected KeyLockTarget keyLockTarget = null;
 
     protected BoxCollider thisCollider = null;
 
     protected bool isMoving = false;
     protected bool isOpenState = false;//ドアが開いている状態か
+
+    bool isKeyHoleUnlocked = true;
+    bool isKeyLockUnlocked = true;
+
     //過去にプレイヤーがドアを開けているか（ItemのisUsedで判定）
     public bool isUnlocked
     {
         get {
-            if (keyLockTarget == null) return true;
-            return keyLockTarget.isUnlocked;
+            if (keyHoleTarget == null && keyLockTarget == null) return true;
+            else if (keyHoleTarget != null && keyLockTarget == null) return keyHoleTarget.isUnlocked;
+            else if (keyLockTarget != null && keyHoleTarget == null) return keyLockTarget.isUnlocked;
+            else return keyHoleTarget.isUnlocked && keyLockTarget.isUnlocked;
         }
     }
     protected const float DistanceRequiredToCloseDoorSqrMagnitude = 100f;//自動でドアが閉まるために必要なプレイヤーとの距離：距離は10。sqrMagnitudeの計算なので 10 * 10 = 100
@@ -40,28 +47,33 @@ public abstract class DoorObject : MonoBehaviour
 
     public void OpenDoor()
     {
-        //if (!string.IsNullOrEmpty(openKey))
-        //{
-        //    if (!isUnlocked)
-        //    {
-        //        Debug.Log("鍵がかかっている : " + openKey);
-        //        return;
-        //    }
-        //}
-        if(keyLockTarget != null)
+        isKeyHoleUnlocked = true;
+        isKeyLockUnlocked = true;
+        if (keyHoleTarget != null)
         {
-            if (string.IsNullOrEmpty(keyLockTarget.UnlockKey)) { Debug.LogError("解錠キーが設定されていません"); return; }
-            if (!keyLockTarget.isUnlocked) {
+            if (string.IsNullOrEmpty(keyHoleTarget.UnlockKey)) { Debug.LogError("解錠キーが設定されていません"); return; }
+            if (!keyHoleTarget.isUnlocked) {
                 Debug.Log("鍵がかかっている : " + openKey);
-                return;
+                isKeyHoleUnlocked = false;
             }
             else
             {
                 Debug.Log("解錠済み : " + openKey);
             }
         }
-        
-        OpenAction();
+        if(keyLockTarget != null)
+        {
+            if (string.IsNullOrEmpty(keyLockTarget.UnlockTargetKey)) { Debug.LogError("解錠キーが設定されていません"); return; }
+            if (!keyLockTarget.isUnlocked)
+            {
+                Debug.Log("鍵がかかっている : " + openKey);
+                isKeyLockUnlocked = false;
+            }
+        }
+        if (isKeyHoleUnlocked && isKeyLockUnlocked)
+        {
+            OpenAction();
+        }
     }
     /// <summary>
     /// 実際にドアを開ける

@@ -15,7 +15,7 @@ public class Raycastor : MonoBehaviour
     {
         RaycastHit hit;
         Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-        Debug.DrawRay(ray.origin, ray.direction * RayDirection, Color.red, 0.5f, false);
+        //Debug.DrawRay(ray.origin, ray.direction * RayDirection, Color.red, 0.5f, false);
 
         if (Physics.Raycast(ray, out hit, RayDirection))
         {
@@ -60,6 +60,22 @@ public class Raycastor : MonoBehaviour
             {
                 return true;
             }
+        }
+        return false;
+    }
+    /// <summary>
+    /// カメラからRayを飛ばして当たった対象のタグが指定したタグと一致しているか
+    /// </summary>
+    /// <param name="targetTag"></param>
+    /// <param name="rayDirection"></param>
+    /// <returns></returns>
+    public bool IsRaycastHitObjectMatchFromScreen(string targetTag, float rayDirection = RayDirection)
+    {
+        RaycastHit hit;
+        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit, rayDirection))
+        {
+            return Utility.Instance.IsTagNameMatch(hit.transform.gameObject, targetTag);
         }
         return false;
     }

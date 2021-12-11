@@ -75,4 +75,16 @@ public class Utility
         }
         return false;
     }
+
+    /// <summary>
+    /// 視界に入っていたらtrueを返す
+    /// </summary>
+    /// <param name="myObject"></param>
+    /// <param name="targetObject"></param>
+    /// <param name="searchMaxAngle"></param>
+    /// <returns></returns>
+    public bool IsInSightAngle(GameObject myObject, GameObject targetObject, float searchMaxAngle)
+    {
+        return Vector3.Angle(myObject.transform.forward, (targetObject.transform.position - myObject.transform.position)) <= searchMaxAngle;
+    }
 }
