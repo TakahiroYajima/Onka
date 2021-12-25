@@ -13,7 +13,7 @@ public class ItemObject : MonoBehaviour
     public Transform HiddenParent { get { return hiddenMoveParentTransform; } }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         thisCollider = GetComponent<Collider>();
         if(thisCollider == null)
@@ -21,17 +21,17 @@ public class ItemObject : MonoBehaviour
             Debug.Log("アイテムにコライダーがありません : " + this.name);
             thisCollider = this.gameObject.AddComponent<BoxCollider>();
         }
+    }
 
+    public void Initialize()
+    {
         //最初からアイテムを取得できないようにする
         if (isHiddenItem)
         {
             thisCollider.enabled = false;
         }
         gameObject.SetActive(!isDefaultInactive);
-    }
 
-    public void Initialize()
-    {
         ItemData _itemData = DataManager.Instance.GetItemData(itemKey);
         if(_itemData != null)
         {

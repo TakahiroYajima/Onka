@@ -8,7 +8,7 @@ public class Event_YukieHintEnded : EventBase
 {
     public SoundDistancePoint kitchenSoundPoint = null;
     public SoundDistancePoint drawingRoomSoundPoint = null;
-    public ItemObject kozoHatsuRoomKeyObject = null;
+    //public ItemObject kozoHatsuRoomKeyObject = null;
 
     protected override void EventActive()
     {

@@ -87,7 +87,7 @@ public class PlayerObject : MonoBehaviour
         {
             onStateChangedInPlayerScriptOnly();
         }
-        Debug.Log("PlayerState :: " + currentState.ToString());
+        //Debug.Log("PlayerState :: " + currentState.ToString());
     }
 
     public void TurnAroundCamera_Update(Vector3 targetPosition, float rotateSpeed)

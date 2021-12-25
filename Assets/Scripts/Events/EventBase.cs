@@ -29,7 +29,6 @@ public abstract class EventBase : MonoBehaviour
             EventManager.Instance.ClearedEventDestroy(managementID);
             return;
         }
-        if (EventManager.Instance.IsAnyEventEnabled) return;
         if (instanceEventActor != null)
         {
             InitiationContact();
@@ -81,7 +80,7 @@ public abstract class EventBase : MonoBehaviour
     /// </summary>
     public void InitiationContact()
     {
-        EventManager.Instance.EventStart(managementID);
+        EventManager.Instance.RequestEventStart(managementID);
     }
 
     public void SetCanBeStarted(bool _canBeStarted)

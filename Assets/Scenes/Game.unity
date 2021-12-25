@@ -63035,8 +63035,8 @@ Transform:
   m_Children:
   - {fileID: 471478688}
   - {fileID: 1715719521}
-  - {fileID: 1736057924}
   - {fileID: 1963469244}
+  - {fileID: 1736057924}
   - {fileID: 169558713}
   - {fileID: 1970282496}
   - {fileID: 1238602646}
@@ -65637,7 +65637,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1673132283}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1736057925
 MonoBehaviour:
@@ -65656,7 +65656,6 @@ MonoBehaviour:
   needItemKeys: []
   needEventKeys:
   - Event_YukieHint
-  - Event_KozoRoomKeyActive
   managementID: -1
   eventActorPref: {fileID: 8746935285130205783, guid: 9eee6c563dd4cf64e876da74e78f7c2b,
     type: 3}
@@ -74988,7 +74987,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1673132283}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1963469245
 MonoBehaviour:

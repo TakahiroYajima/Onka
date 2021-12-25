@@ -32,17 +32,17 @@ public class EA_YukieHintEnded : EventActorBase
         SoundDistanceManager.Instance.isActive = true;
 
         //孝蔵と初の寝室の鍵をアクティブにする
-        eventBase.kozoHatsuRoomKeyObject.gameObject.SetActive(true);
+        //eventBase.kozoHatsuRoomKeyObject.gameObject.SetActive(true);
     }
 
     public override void EventUpdate()
     {
         base.EventUpdate();
         //鍵を取得するまでイベントクリアにはならない
-        if (DataManager.Instance.GetItemData(eventBase.kozoHatsuRoomKeyObject.ItemKey).geted)
-        {
-            FinishEvent();
-        }
+        //if (DataManager.Instance.GetItemData(eventBase.kozoHatsuRoomKeyObject.ItemKey).geted)
+        //{
+        //    FinishEvent();
+        //}
     }
 
     public override void EventEnd()
@@ -57,7 +57,7 @@ public class EA_YukieHintEnded : EventActorBase
             SoundDistanceManager.Instance.Maker.StopAction();
             SoundDistanceManager.Instance.Maker.SetVolume(0f);
             SoundManager.Instance.StopEnvironment();
-            
+            FinishEvent();
         }
     }
 }

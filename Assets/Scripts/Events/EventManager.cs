@@ -14,8 +14,8 @@ namespace Onka.Manager.Event
         private List<EventBase> eventObjectList = new List<EventBase>();
         private List<EventBase> doingEventList = new List<EventBase>();//実行中のイベント
 
-        private int inProgressEventArrayNum = -1;
-        public bool IsAnyEventEnabled { get { return inProgressEventArrayNum > -1; } }
+        //private int inProgressEventArrayNum = -1;
+        public bool IsAnyEventEnabled { get { return doingEventList.Count > 0; /*inProgressEventArrayNum > -1;*/ } }
 
         public void Initialize()
         {
@@ -53,9 +53,18 @@ namespace Onka.Manager.Event
 
         private void Update()
         {
-            if (inProgressEventArrayNum >= 0 && inProgressEventArrayNum < eventObjectList.Count)
+            //if (inProgressEventArrayNum >= 0 && inProgressEventArrayNum < eventObjectList.Count)
+            //{
+            //    eventObjectList[inProgressEventArrayNum].EventUpdate();
+            //}
+            if(doingEventList.Count > 0)
             {
-                eventObjectList[inProgressEventArrayNum].EventUpdate();
+                for(int i = 0; i < doingEventList.Count; i++)
+                {
+                    //Debug.Log("doing : " + i + " : " + doingEventList[i].EventKey);
+                    if(doingEventList[i] == null) { continue; }
+                    doingEventList[i].EventUpdate();
+                }
             }
         }
         /// <summary>
@@ -72,19 +81,30 @@ namespace Onka.Manager.Event
             }
         }
 
-        public void EventStart(int managementID)
+        /// <summary>
+        /// イベント開始リクエスト
+        /// </summary>
+        /// <param name="managementID"></param>
+        /// <param name="isSingleOnlyEvent"></param>
+        public void RequestEventStart(int managementID, bool isSingleOnlyEvent = false)
         {
             if(eventObjectList[managementID] == null) { Debug.LogError("イベントが存在しません : " + managementID.ToString()); return; }
 
             Debug.Log("イベント : " + managementID + " : " + eventObjectList[managementID].EventKey + " : " + eventObjectList[managementID].canBeStarted);
-            if (inProgressEventArrayNum == -1)
+            //if (inProgressEventArrayNum == -1 || !doingEventList.Contains(eventObjectList[managementID]))
+            //{
+            if(isSingleOnlyEvent && IsAnyEventEnabled) { Debug.LogError("単一のみのイベントがある中、進行中のイベントがあります : "); foreach(var e in doingEventList) { Debug.LogError(e.EventKey); } }
+            if(!doingEventList.Contains(eventObjectList[managementID]))
             {
                 if (StageManager.Instance.Player.isEventEnabled)
                 {
                     if (eventObjectList[managementID].canBeStarted)
                     {
-                        inProgressEventArrayNum = managementID;
-                        eventObjectList[inProgressEventArrayNum].EventStart();
+                        //inProgressEventArrayNum = managementID;
+                        //eventObjectList[inProgressEventArrayNum].EventStart();
+                        doingEventList.Add(eventObjectList[managementID]);
+                        Debug.Log("AddEvent : " + eventObjectList[managementID].EventKey);
+                        eventObjectList[managementID].EventStart();
                     }
                 }
                 else
@@ -94,7 +114,8 @@ namespace Onka.Manager.Event
             }
             else
             {
-                Debug.Log("イベントが被っています : " + managementID.ToString() + " key : " + eventObjectList[inProgressEventArrayNum].EventKey);
+                Debug.Log("イベントが被っています : " + managementID.ToString() + " key : " + eventObjectList[managementID].EventKey);
+                //Debug.Log("イベントが被っています : " + managementID.ToString() + " key : " + eventObjectList[inProgressEventArrayNum].EventKey);
             }
         }
 
@@ -108,9 +129,19 @@ namespace Onka.Manager.Event
             if (data != null)
             {
                 data.isEnded = true;
-                eventObjectList[inProgressEventArrayNum].EventEnd();
-                ClearedEventDestroy(inProgressEventArrayNum);
-                inProgressEventArrayNum = -1;
+                EventBase eventBase = doingEventList.FirstOrDefault(e => e.EventKey == key);
+                //Debug.Log("EventClear() : " + key);
+                if(eventBase != null)
+                {
+                    //Debug.Log("RemoveEvent : " + eventBase.EventKey);
+                    doingEventList.Remove(eventBase);
+                    eventBase.EventEnd();
+                }
+                else { Debug.LogError("クリアするイベントのキーが一致しません : " + key); }
+                ClearedEventDestroy(key);
+                //eventObjectList[inProgressEventArrayNum].EventEnd();
+                //ClearedEventDestroy(inProgressEventArrayNum);
+                //inProgressEventArrayNum = -1;
                 ProgressEvent();
             }
             else
@@ -123,9 +154,27 @@ namespace Onka.Manager.Event
         {
             if (arrayNum < 0 || arrayNum >= eventObjectList.Count) return;
             if (eventObjectList[arrayNum] == null) return;
-            Debug.Log("EventDestroy : " + eventObjectList[arrayNum].EventKey);
+            //Debug.Log("EventDestroy : " + eventObjectList[arrayNum].EventKey);
+            if(doingEventList.FirstOrDefault(e => e.EventKey == eventObjectList[arrayNum].EventKey))
+            {
+                doingEventList.Remove(eventObjectList[arrayNum]);
+            }
             Destroy(eventObjectList[arrayNum].gameObject);
             eventObjectList[arrayNum] = null;
+        }
+        public void ClearedEventDestroy(string key)
+        {
+            int arrayNum = -1;
+            for(int i = 0; i < eventObjectList.Count; i++)
+            {
+                if(eventObjectList[i] == null) { continue; }
+                if(eventObjectList[i].EventKey == key)
+                {
+                    arrayNum = i;
+                    break;
+                }
+            }
+            ClearedEventDestroy(arrayNum);
         }
 
         public bool IsEventEnded(string key)
