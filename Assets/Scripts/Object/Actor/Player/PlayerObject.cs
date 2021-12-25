@@ -22,14 +22,18 @@ public class PlayerObject : MonoBehaviour
     public float colliderHeightHalf { get { return capsuleCollider.height * 0.48f; } }//0.5だと完全に頂点になるため、若干下げる
 
     private Dictionary<PlayerState, StateBase> playerStateDic = new Dictionary<PlayerState, StateBase>();
-    public PlayerState currentState { get; private set; } = PlayerState.Free;
+    public PlayerState currentState { get; private set; } = PlayerState.Init;
 
     public UnityAction<PlayerState, PlayerState> onStateChangeCallback = null;
     public UnityAction onStateChangedInPlayerScriptOnly = null;//PlayerObjectのステートスクリプト専用のコールバック
 
-    public int chasedCount { get; private set; } = 0;//自分を追いかけている敵の数
-    public void AddChasedCount() { if (chasedCount == 0) { ChangeState(PlayerState.Chased); } chasedCount++; }
-    public void RemoveChasedCount() { chasedCount--; if(chasedCount < 0) { chasedCount = 0; } if (chasedCount == 0) { ChangeState(PlayerState.Free); } }
+    private List<Enemy> chasedEnemys = new List<Enemy>();
+    public int chasedCount { get { return chasedEnemys.Count; } }//自分を追いかけている敵の数
+    public void AddChasedCount(Enemy _enemy) { if (chasedCount == 0) { ChangeState(PlayerState.Chased); } if (!chasedEnemys.Contains(_enemy)) { chasedEnemys.Add(_enemy); } ; Debug.Log("AddChasedCount current : " + chasedCount.ToString()); }
+    public void RemoveChasedCount(Enemy _enemy) { if (chasedEnemys.Contains(_enemy)) { chasedEnemys.Remove(_enemy); } Debug.Log("RemoveChasedCount current : " + chasedCount.ToString()); OrganizeChasedEnemys(); if (chasedCount == 0) { ChangeState(PlayerState.Free); } }
+    private void OrganizeChasedEnemys() { foreach(Enemy e in chasedEnemys) { if(e == null) { chasedEnemys.Remove(e); } } }
+
+    public bool isEventEnabled { get { return currentState == PlayerState.Init || currentState == PlayerState.Free; } }
 
     private void Awake()
     {
@@ -41,6 +45,7 @@ public class PlayerObject : MonoBehaviour
 
         //Stateパターン初期化
         playerStateDic.Clear();
+        playerStateDic.Add(PlayerState.Init, new PlayerStateInit());
         playerStateDic.Add(PlayerState.Free, new PlayerStateFree());
         playerStateDic.Add(PlayerState.ItemGet, new PlayerStateItemGet());
         playerStateDic.Add(PlayerState.SolveKeylock, new PlayerStateKeylock());
@@ -48,6 +53,8 @@ public class PlayerObject : MonoBehaviour
         playerStateDic.Add(PlayerState.Arrested, new PlayerStateArrested());
         playerStateDic.Add(PlayerState.InMenu, new PlayerStateInMenu());
         playerStateDic.Add(PlayerState.Event, new PlayerStateEvent());
+
+        currentState = PlayerState.Init;
     }
 
     // Start is called before the first frame update
@@ -80,6 +87,7 @@ public class PlayerObject : MonoBehaviour
         {
             onStateChangedInPlayerScriptOnly();
         }
+        Debug.Log("PlayerState :: " + currentState.ToString());
     }
 
     public void TurnAroundCamera_Update(Vector3 targetPosition, float rotateSpeed)
@@ -126,6 +134,7 @@ public class PlayerObject : MonoBehaviour
 
 public enum PlayerState
 {
+    Init,
     Free,
     InMenu,
     Event,

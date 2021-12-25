@@ -11,11 +11,13 @@ namespace SoundDistance
     /// </summary>
     public class SoundDistanceManager : SingletonMonoBehaviour<SoundDistanceManager>
     {
+        [HideInInspector] public bool isActive = false;
         [SerializeField] private SoundDistanceListener listenerObj = null;//音を聞く側
         public SoundDistanceListener Listener { get { return listenerObj; } }
         [SerializeField] private SoundDistanceEmitter emitterObj = null;//音を発する側
         public SoundDistanceEmitter Emitter { get { return emitterObj; } }
         [SerializeField] private SoundDistanceMakerObj soundMaker = null;//listenerObjから音の方向に位置取り、サウンドを鳴らすオブジェクト
+        public SoundDistanceMakerObj Maker { get { return soundMaker; } }
 
         [SerializeField, Range(0, 1f)] private float canNotHearRatio = 0.6f;//音が聞こえなくなる距離の割合（外周に対してどれだけEmitterとListenerが離れていれば音が聞こえなくなるかの割合）
         public float CanNotHearRatio { get { return canNotHearRatio; } }
@@ -39,12 +41,7 @@ namespace SoundDistance
         private bool isActionFrame { get { return currentFrame >= ActionFrameNum; } }
         #endregion
 
-        void Start()
-        {
-            Initialize();
-        }
-
-        private void Initialize()
+        public void Initialize()
         {
             soundDistancePoints.Clear();
             soundDistancePoints = transform.GetComponentsInChildren<SoundDistancePoint>().ToList();
@@ -75,7 +72,7 @@ namespace SoundDistance
         // Update is called once per frame
         void Update()
         {
-            if (!IsAllInitSeted()) return;
+            if (!IsAllInitSeted() || !isActive) return;
             if (DoUpdateFrameAndJudge())
             {
                 CalcRouteSeachUpdate();
@@ -102,7 +99,28 @@ namespace SoundDistance
         {
             currentFrame = 0;
         }
-        
+
+        #region Optional Setter
+        /// <summary>
+        /// 機能をオフにする
+        /// </summary>
+        /// <param name="listenerID"></param>
+        /// <param name="emitterID"></param>
+        public void SetInactive(int listenerID = 0, int emitterID = 0)
+        {
+            isActive = false;
+            Maker.StopAction();Maker.SetVolume(0f);
+            Maker.SetVolume(0f);
+            Listener.SetCurrentPointID(listenerID);
+            Emitter.SetPointID(emitterID);
+        }
+        public void SetEachIDs(int listenerID, int emitterID)
+        {
+            Listener.SetCurrentPointID(listenerID);
+            Emitter.SetPointID(emitterID);
+        }
+        #endregion
+
         #region RouteSerch
         /// <summary>
         /// ゴールから全ての方向のルートを辿り、スタートまでの道のりをserchEachRouteListに設定する

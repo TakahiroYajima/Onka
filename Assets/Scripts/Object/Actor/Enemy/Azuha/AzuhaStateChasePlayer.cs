@@ -20,7 +20,7 @@ public class AzuhaStateChasePlayer : StateBase
         //azuha.onColliderEnterCallback = OnColliderEnterEvent;
         azuha.onCollsionEnterCallback = OnCollisionEnterEvent;
         azuha.soundPlayerObject.PlaySE(0);
-        StageManager.Instance.Player.AddChasedCount();
+        StageManager.Instance.Player.AddChasedCount(azuha);
     }
 
     public override void UpdateAction()
@@ -32,7 +32,7 @@ public class AzuhaStateChasePlayer : StateBase
     public override void EndAction()
     {
         azuha.soundPlayerObject.StopSound();
-        StageManager.Instance.Player.RemoveChasedCount();
+        StageManager.Instance.Player.RemoveChasedCount(azuha);
         azuha.walkAnimObj.enabled = false;
     }
 

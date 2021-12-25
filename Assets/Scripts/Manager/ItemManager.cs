@@ -25,17 +25,16 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
 
     private bool isLoopFlg = false;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Initialize()
     {
         itemList = itemsParent.GetComponentsInChildren<ItemObject>().ToList();
-        for(int i = 0; i < itemList.Count; i++)
+        for (int i = 0; i < itemList.Count; i++)
         {
-            itemList[i].Initialize();
-            if(itemList[i].HiddenParent != null)
+            if (itemList[i].HiddenParent != null)
             {
                 itemList[i].transform.parent = itemList[i].HiddenParent;
             }
+            itemList[i].Initialize();
         }
     }
 

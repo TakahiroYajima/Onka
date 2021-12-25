@@ -29,12 +29,14 @@ public class YukieStateChasePlayer : StateBase
         noRecognitionTime = 0f;
         yukie.ToPlayerWallCollider.enabled = false;
 
-        yukie.player.AddChasedCount();
+        yukie.player.AddChasedCount(yukie);
     }
 
     public override void UpdateAction()
     {
         yukie.navMeshAgent.SetDestination(yukie.player.transform.position);
+
+        if (yukie.isEternalChaseMode) return;//永久追尾モードなら追いかけ続ける
 
         //プレイヤーをToChangeWanderingLostPlayerTime秒間認識しなかったら徘徊モードに戻る
         if (frameCount >= doUpdateFrameCount)
@@ -44,7 +46,7 @@ public class YukieStateChasePlayer : StateBase
                 yukie.navMeshAgent.velocity = Vector3.zero;
                 yukie.ChangeState(EnemyState.Wandering);
                 Debug.Log("プレイヤー追尾をあきらめた");
-                yukie.player.RemoveChasedCount();
+                yukie.player.RemoveChasedCount(yukie);
                 return;
             }
             

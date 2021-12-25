@@ -42,6 +42,7 @@ namespace SoundDistance
 
         void LateUpdate()
         {
+            if (!isActionable) return;
             UpdatePosition();
             UpdateAudioMaker();
         }
@@ -51,8 +52,6 @@ namespace SoundDistance
         /// </summary>
         private void UpdatePosition()
         {
-            if (!isActionable) return;
-
             Vector3 direction = (currentTargetPosition - SoundDistanceManager.Instance.Listener.transform.position).normalized;
             Vector3 moveTarget = SoundDistanceManager.Instance.Listener.transform.position + direction;
 
@@ -99,6 +98,13 @@ namespace SoundDistance
         {
             audioSource.Stop();
             audioSource.clip = null;
+        }
+        public void SoundPlay()
+        {
+            if (audioSource.clip != null)
+            {
+                audioSource.Play();
+            }
         }
         public void SoundStop()
         {

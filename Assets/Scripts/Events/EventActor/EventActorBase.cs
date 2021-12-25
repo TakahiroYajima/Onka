@@ -18,7 +18,7 @@ public abstract class EventActorBase : MonoBehaviour
     protected abstract void Initialize();
 
     public abstract void EventStart();
-    public abstract void EventUpdate();
+    public virtual void EventUpdate() { }
     public abstract void EventEnd();
 
     public virtual void FinishEvent()

@@ -24,11 +24,20 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     protected override void Awake()
     {
         base.Awake();
-        soundDataSO = FileManager.LoadSaveData<SoundDataSO>(SaveType.Normal, SoundDataFileName);
+        InitializeDataLoad();
+    }
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        SoundManager.Instance.InitSeLoad();
+    }
+
+    public void InitializeDataLoad()
+    {
+        soundDataSO = FileManager.LoadSaveData<SoundDataSO>(SaveType.Normal, SoundDataFileName);
         useSoundNameSO = FileManager.LoadSaveData<UseSoundNameSO>(SaveType.Normal, UseSoundNameFileName);
         itemDatalist = FileManager.LoadSaveData<ItemDataList>(SaveType.Normal, ItemDataFileName);
-
         //ゲーム中のデータをロード。なければ新規作成
         gameData = FileManager.LoadSaveData<GameData>(SaveType.Normal, GameDataFileName);
         if (gameData == null || gameData == default)
@@ -41,11 +50,6 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        SoundManager.Instance.InitSeLoad();
-    }
     //----------------------------------------------------
     //SoundDataSO
     //----------------------------------------------------

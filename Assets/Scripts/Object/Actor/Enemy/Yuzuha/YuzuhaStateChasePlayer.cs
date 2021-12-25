@@ -19,7 +19,7 @@ public class YuzuhaStateChasePlayer : StateBase
         yuzuha.walkAnimObj.AnimOn();
         //yuzuha.onColliderEnterCallback = OnColliderEnterEvent;
         yuzuha.onCollsionEnterCallback = OnCollisionEnterEvent;
-        StageManager.Instance.Player.AddChasedCount();
+        StageManager.Instance.Player.AddChasedCount(yuzuha);
     }
 
     public override void UpdateAction()
@@ -30,7 +30,7 @@ public class YuzuhaStateChasePlayer : StateBase
 
     public override void EndAction()
     {
-        StageManager.Instance.Player.RemoveChasedCount();
+        StageManager.Instance.Player.RemoveChasedCount(yuzuha);
         yuzuha.walkAnimObj.enabled = false;
     }
 

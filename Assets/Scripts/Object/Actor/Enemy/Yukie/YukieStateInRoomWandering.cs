@@ -123,7 +123,7 @@ public class YukieStateInRoomWandering : StateBase
                 DoNextState();
                 break;
             case YukieInRoomWanderingState.WanderingEnd:
-                yukie.player.RemoveChasedCount();
+                yukie.player.RemoveChasedCount(yukie);
                 yukie.ChangeState(EnemyState.Wandering);
                 break;
             //case YukieInRoomWanderingState.RotateToPlayer:
@@ -139,7 +139,6 @@ public class YukieStateInRoomWandering : StateBase
 
     public override void EndAction()
     {
-        Debug.Log("EndAction ");
         yukie.inRoomWanderingActor.SetActive(false,null);
     }
 

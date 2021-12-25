@@ -44,6 +44,9 @@ public class Enemy_Yukie : Enemy
     private const float NoticeProvocationTime = 10f;//挑発に気付くまでの時間
     private float provocationingTime = 0f;//プレイヤーに挑発されている時間
 
+    //特定ステート内フラグ
+    public bool isEternalChaseMode = false;//追いかけるステートの時、プレイヤーが部屋に隠れるまで見失わないようにするか
+
     protected override void Awake()
     {
         base.Awake();
@@ -58,6 +61,7 @@ public class Enemy_Yukie : Enemy
         rigidbody = GetComponent<Rigidbody>();
 
         //State登録
+        yukieStateDic.Add(EnemyState.Init, new YukieStateInit());
         yukieStateDic.Add(EnemyState.Wandering, new YukieStateWandering());
         yukieStateDic.Add(EnemyState.InRoomWandering, new YukieStateInRoomWandering());
         yukieStateDic.Add(EnemyState.RotateToPlayer, new YukieStateTurnAroundToPlayer());
@@ -65,6 +69,8 @@ public class Enemy_Yukie : Enemy
         yukieStateDic.Add(EnemyState.ChasePlayer, new YukieStateChasePlayer());
         yukieStateDic.Add(EnemyState.CaughtPlayer, new YukieStateCaughtPlayer());
         yukieStateDic.Add(EnemyState.CanNotAction, new YukieStateCanNotAction());
+
+        currentState = EnemyState.Init;
     }
 
     // Start is called before the first frame update
@@ -77,17 +83,17 @@ public class Enemy_Yukie : Enemy
         inRoomChecker.onExitRoomAction = OnExitRoomAction;
 
         inRoomWanderingActor.SetActive(false, null);
-        StartCoroutine(StartAction());
+        //StartCoroutine(StartAction());
     }
 
-    private IEnumerator StartAction()
-    {
-        yield return null;//他のスクリプトの初期化待ち
-        currentState = EnemyState.Wandering;//デバッグ
-        yukieStateDic[currentState].StartAction();
+    //private IEnumerator StartAction()
+    //{
+    //    yield return null;//他のスクリプトの初期化待ち
+    //    currentState = EnemyState.Init;//デバッグ
+    //    yukieStateDic[currentState].StartAction();
         
-        ChangeState(EnemyState.Wandering);
-    }
+    //    ChangeState(EnemyState.Wandering);
+    //}
 
     // Update is called once per frame
     void Update()
@@ -101,6 +107,8 @@ public class Enemy_Yukie : Enemy
     public void ChangeState(EnemyState nextState)
     {
         //Debug.Log("ChangeState : " + nextState);
+        if (!gameObject.activeSelf) return;
+
         yukieStateDic[currentState].EndAction();
         currentState = nextState;
         yukieStateDic[currentState].StartAction();

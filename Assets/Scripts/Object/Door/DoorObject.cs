@@ -18,6 +18,7 @@ public abstract class DoorObject : MonoBehaviour
 
     protected bool isMoving = false;
     protected bool isOpenState = false;//ドアが開いている状態か
+    public bool isForceOpenable = false;//イベントなどで強制的にドアを開けられるようにするか
 
     bool isKeyHoleUnlocked = true;
     bool isKeyLockUnlocked = true;
@@ -47,6 +48,12 @@ public abstract class DoorObject : MonoBehaviour
 
     public void OpenDoor()
     {
+        if (isForceOpenable)
+        {
+            OpenAction();
+            return;
+        }
+
         isKeyHoleUnlocked = true;
         isKeyLockUnlocked = true;
         if (keyHoleTarget != null)
@@ -89,12 +96,17 @@ public abstract class DoorObject : MonoBehaviour
         {
             yield return new WaitForSeconds(3f);
             if ((transform.position - StageManager.Instance.Player.Position).sqrMagnitude >= DistanceRequiredToCloseDoorSqrMagnitude &&
-                 !StageManager.Instance.Player.inRoomChecker.isEnterRoom && !StageManager.Instance.Yukie.inRoomChecker.isEnterRoom)
+                 !StageManager.Instance.Player.inRoomChecker.isEnterRoom && !StageManager.Instance.Yukie.inRoomChecker.isEnterRoom &&
+                 isOpenState)
             {
                 break;
             }
         }
-        CloseDoor();
+        //強制でドアを閉める処理対策のため、一旦確認を入れる
+        if (isOpenState)
+        {
+            CloseDoor();
+        }
     }
 }
 

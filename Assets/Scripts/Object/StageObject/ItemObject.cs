@@ -7,6 +7,7 @@ public class ItemObject : MonoBehaviour
     [SerializeField] private string itemKey = "";
     public string ItemKey { get { return itemKey; } }
     private Collider thisCollider = null;
+    [SerializeField] private bool isDefaultInactive = false;//デフォルトで非表示にするか
     [SerializeField] private bool isHiddenItem = false;//どこかにしまってあるアイテムか
     [SerializeField] private Transform hiddenMoveParentTransform = null;//アイテムを隠すとき、Parentを設定する必要がある場合（引き出しの中にあるものなど）に設定
     public Transform HiddenParent { get { return hiddenMoveParentTransform; } }
@@ -26,6 +27,7 @@ public class ItemObject : MonoBehaviour
         {
             thisCollider.enabled = false;
         }
+        gameObject.SetActive(!isDefaultInactive);
     }
 
     public void Initialize()

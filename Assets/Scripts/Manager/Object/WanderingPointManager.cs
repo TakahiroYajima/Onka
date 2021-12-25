@@ -13,7 +13,7 @@ public class WanderingPointManager : SingletonMonoBehaviour<WanderingPointManage
     public Dictionary<WanderingEnemyType, List<WanderingPoint>> wanderingPoints { get; private set; } = new Dictionary<WanderingEnemyType, List<WanderingPoint>>();
 
     // Start is called before the first frame update
-    void Start()
+    public void Initialize()
     {
         //徘徊用の通過ポイントを敵種類ごとに保存
         List<WanderingPoint> list = GetComponentsInChildren<WanderingPoint>().ToList();

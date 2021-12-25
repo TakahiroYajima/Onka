@@ -12,12 +12,12 @@ namespace Onka.Manager.Event
     {
         private EventDataList eventDataList = null;
         private List<EventBase> eventObjectList = new List<EventBase>();
+        private List<EventBase> doingEventList = new List<EventBase>();//実行中のイベント
 
         private int inProgressEventArrayNum = -1;
         public bool IsAnyEventEnabled { get { return inProgressEventArrayNum > -1; } }
 
-        // Start is called before the first frame update
-        void Start()
+        public void Initialize()
         {
             eventObjectList = GetComponentsInChildren<EventBase>().ToList();
             for (int i = 0; i < eventObjectList.Count; i++)
@@ -26,7 +26,6 @@ namespace Onka.Manager.Event
             }
 
             FirstInitializeSetting();
-            ProgressEvent();
         }
 
         public void FirstInitializeSetting()
@@ -77,10 +76,10 @@ namespace Onka.Manager.Event
         {
             if(eventObjectList[managementID] == null) { Debug.LogError("イベントが存在しません : " + managementID.ToString()); return; }
 
-            Debug.Log("イベント : " + managementID + " : " + eventObjectList[managementID].canBeStarted);
+            Debug.Log("イベント : " + managementID + " : " + eventObjectList[managementID].EventKey + " : " + eventObjectList[managementID].canBeStarted);
             if (inProgressEventArrayNum == -1)
             {
-                if (StageManager.Instance.Player.currentState == PlayerState.Free)
+                if (StageManager.Instance.Player.isEventEnabled)
                 {
                     if (eventObjectList[managementID].canBeStarted)
                     {
@@ -90,7 +89,7 @@ namespace Onka.Manager.Event
                 }
                 else
                 {
-                    Debug.Log("プレイヤーのStateがFreeではありません : " + StageManager.Instance.Player.currentState.ToString());
+                    Debug.Log("プレイヤーのStateからイベント拒否 : " + StageManager.Instance.Player.currentState.ToString());
                 }
             }
             else
@@ -124,6 +123,7 @@ namespace Onka.Manager.Event
         {
             if (arrayNum < 0 || arrayNum >= eventObjectList.Count) return;
             if (eventObjectList[arrayNum] == null) return;
+            Debug.Log("EventDestroy : " + eventObjectList[arrayNum].EventKey);
             Destroy(eventObjectList[arrayNum].gameObject);
             eventObjectList[arrayNum] = null;
         }

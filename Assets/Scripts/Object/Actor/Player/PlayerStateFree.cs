@@ -11,6 +11,7 @@ public class PlayerStateFree : StateBase
     public override void StartAction()
     {
         player = StageManager.Instance.Player;
+        player.FirstPersonAIO.enabled = true;
     }
 
     public override void UpdateAction()
@@ -42,7 +43,7 @@ public class PlayerStateFree : StateBase
                 //DataManager.Instance.DoDoorUnlock(hit.transform.gameObject.GetComponent<DoorObject>().DoorOpenKey);
                 break;
             case Tags.KeyHole:
-                //hit.transform.GetComponent<DoorKeyLockObject>().DoUnlockDoorKey();
+                //Debug.Log("KeyHole : " + hit.transform.parent.GetComponent<KeyHoleTarget>().UnlockKey);
                 hit.transform.GetComponent<KeyHoleObject>().DoUnlock();
                 break;
             case Tags.KeyLock:

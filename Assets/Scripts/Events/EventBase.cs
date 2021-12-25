@@ -8,6 +8,7 @@ using Onka.Manager.Event;
 /// </summary>
 public abstract class EventBase : MonoBehaviour
 {
+    [SerializeField] protected bool isNeedEventActor = true;//eventActorPrefが必要なイベントか
     [SerializeField] protected string eventKey = "";
     public string EventKey { get { return eventKey; } }
     [SerializeField] protected string[] needItemKeys = null;//このイベントが発生するのに必要なアイテムキー
@@ -69,8 +70,11 @@ public abstract class EventBase : MonoBehaviour
     /// </summary>
     protected virtual void EventActive()
     {
-        instanceEventActor = Instantiate(eventActorPref, transform) as EventActorBase;
-        instanceEventActor.Standby(this);
+        if (isNeedEventActor)
+        {
+            instanceEventActor = Instantiate(eventActorPref, transform) as EventActorBase;
+            instanceEventActor.Standby(this);
+        }
     }
     /// <summary>
     /// EventManagerにイベント開始の連絡をする
@@ -85,10 +89,19 @@ public abstract class EventBase : MonoBehaviour
         canBeStarted = _canBeStarted;
     }
 
-    public abstract void EventStart();
+    public virtual void EventStart()
+    {
+        if (isNeedEventActor && instanceEventActor != null)
+        {
+            instanceEventActor.EventStart();
+        }
+    }
     public virtual void EventUpdate()
     {
-
+        if (isNeedEventActor && instanceEventActor != null)
+        {
+            instanceEventActor.EventUpdate();
+        }
     }
     /// <summary>
     /// EventManagerにイベント終了の連絡をする
@@ -97,5 +110,12 @@ public abstract class EventBase : MonoBehaviour
     {
         EventManager.Instance.EventClear(EventKey);
     }
-    public abstract void EventEnd();
+    public virtual void EventEnd()
+    {
+        if (isNeedEventActor && instanceEventActor != null)
+        {
+            instanceEventActor.EventEnd();
+            Destroy(instanceEventActor.gameObject);
+        }
+    }
 }

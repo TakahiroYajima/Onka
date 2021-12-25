@@ -27,7 +27,7 @@ public sealed class FileManager
     public static void DataSave<Types>(Types saveClass, SaveType saveType, string fileName, UnityAction onComplete = null)
     {
         string json = JsonUtility.ToJson(saveClass);
-        Debug.Log("SaveData : " + json);
+        //Debug.Log("SaveData : " + json);
         //暗号化
         string iv = EncryptUtility.CalcMd5Str(srcIV, srcIV.Length);
         string outJson = "";
@@ -53,7 +53,7 @@ public sealed class FileManager
         string iv = EncryptUtility.CalcMd5Str(srcIV, srcIV.Length);
         string outJson = "";
         EncryptUtility.DecryptAesBase64(base64, EncryptKey, iv, out outJson);
-        Debug.Log("LoadData : " + outJson);
+        //Debug.Log("LoadData : " + outJson);
         if (!string.IsNullOrEmpty(outJson))
         {
             return JsonUtility.FromJson<Types>(outJson);

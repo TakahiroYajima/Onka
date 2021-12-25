@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SoundSystem;
+using SoundDistance;
 
 public class StageManager : SingletonMonoBehaviour<StageManager>
 {
@@ -18,12 +20,7 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
     private EnemyState prevAzuhaState = EnemyState.Init;
     private EnemyState prevYuzuhaState = EnemyState.Init;
 
-    private void Start()
-    {
-        Initialize();
-    }
-
-    private void Initialize()
+    public void Initialize()
     {
         if (playerObject != null)
         {
@@ -49,6 +46,12 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
     private void OnYukieStateChanged(EnemyState state)
     {
 
+    }
+
+    public void InactiveYukie(int initPointID = 0)
+    {
+        SoundDistanceManager.Instance.SetInactive(initPointID, initPointID);
+        Yukie.gameObject.SetActive(false);
     }
 
     public void StartSaveAction()

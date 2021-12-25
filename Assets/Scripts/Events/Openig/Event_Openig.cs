@@ -8,22 +8,28 @@ public class Event_Openig : EventBase
 {
     public enum OpeningEventState
     {
-        Init,
-        UntilInHouse,//外から玄関に入るまで
+        Init = 0,
+        UntilInHouse = 1,//外から玄関に入るまで
 
         End,
     }
-    private OpeningEventState currentState = OpeningEventState.Init;
+    [HideInInspector] public OpeningEventState currentState = OpeningEventState.Init;
 
-    public SoundDistanceManager soundDistanceManager = null;
+    public SoundDistancePoint initSoundPoint = null;
+    
+    public DoorObject endranceDoor = null;
 
     protected override void EventActive()
     {
         base.EventActive();
+        instanceEventActor.gameObject.GetComponent<EA_Openig>().eventBase = this;
         InitiationContact();
     }
     public override void EventStart()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        currentState = OpeningEventState.Init;
         instanceEventActor.EventStart();
     }
     public override void EventUpdate()
@@ -35,10 +41,6 @@ public class Event_Openig : EventBase
         Destroy(instanceEventActor.gameObject);
     }
 
-    public void ChangeState()
-    {
-
-    }
     public void ChangeNextState()
     {
         int nextID = (int)currentState + 1;
