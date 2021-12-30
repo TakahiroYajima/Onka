@@ -81,7 +81,7 @@ namespace SoundDistance
             {
                 SetCurrentDistanceListenerToEmitter(costList, currentMinID);
             }
-
+            //Debug.Log("SD_IDs emitter : " + emitterObj.currentOuterPointID + " " + emitterObj.currentPointID + " listener : " + listenerObj.currentOuterPointID + " " + listenerObj.currentPointID);
         }
         
         private bool IsAllInitSeted()
@@ -118,6 +118,17 @@ namespace SoundDistance
         {
             Listener.SetCurrentPointID(listenerID);
             Emitter.SetPointID(emitterID);
+        }
+        /// <summary>
+        /// 音の設定（ボリューム）を先にさせておくため、一度強制で計算させる
+        /// </summary>
+        public void ForceInitCalc()
+        {
+            CalcRouteSeachUpdate();
+            if (currentMinID > -1)
+            {
+                SetCurrentDistanceListenerToEmitter(costList, currentMinID);
+            }
         }
         #endregion
 

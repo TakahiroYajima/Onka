@@ -20,21 +20,18 @@ public class EA_YukieHintEnded : EventActorBase
     {
         kitchenCollider.enabled = true;
         SoundManager.Instance.PlayEnvironmentWithKey("ambient_in_house");
-
         //キッチンの方から雪絵の声が聞こえるようにする
         StageManager.Instance.Yukie.transform.position = new Vector3(eventBase.kitchenSoundPoint.transform.position.x, StageManager.Instance.Yukie.transform.position.y, eventBase.kitchenSoundPoint.transform.position.z + 2f);
         SoundDistanceManager.Instance.Emitter.SetPointID(eventBase.kitchenSoundPoint.ID);
+        SoundDistanceManager.Instance.Listener.SetCurrentPointID(eventBase.drawingRoomSoundPoint.ID);
+        SoundDistanceManager.Instance.ForceInitCalc();
+        SoundDistanceManager.Instance.Maker.SetVolume(0f);
+        SoundDistanceManager.Instance.isActive = true;
         StageManager.Instance.Yukie.PlaySoundLoop(0);
         StageManager.Instance.Yukie.gameObject.SetActive(false);
-
-        SoundDistanceManager.Instance.Listener.SetCurrentPointID(eventBase.drawingRoomSoundPoint.ID);
         SoundDistanceManager.Instance.Maker.DoAction();
-        SoundDistanceManager.Instance.isActive = true;
-
-        //孝蔵と初の寝室の鍵をアクティブにする
-        //eventBase.kozoHatsuRoomKeyObject.gameObject.SetActive(true);
     }
-
+    
     public override void EventUpdate()
     {
         base.EventUpdate();

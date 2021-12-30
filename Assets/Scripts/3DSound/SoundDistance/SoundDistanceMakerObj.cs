@@ -38,11 +38,13 @@ namespace SoundDistance
         private void Awake()
         {
             audioSource = GetComponent<AudioSource>();
+            audioSource.volume = 0f;
         }
 
         void LateUpdate()
         {
             if (!isActionable) return;
+            //Debug.Log("SDM " + audioSource.isPlaying + " volume : " + audioSource.volume);
             UpdatePosition();
             UpdateAudioMaker();
         }
@@ -86,6 +88,7 @@ namespace SoundDistance
             if (ratio >= 0.97f) { volume = maxVolume; }
             else { volume = fx01 * maxVolume; }
             audioSource.volume = volume;
+            //Debug.Log("UpdateAudioMaker : " + volume + ":" + SoundDistanceManager.Instance.currentDistanceListenerToEmitter + ":" + SoundDistanceManager.Instance.CanNotHearRatio + ":" + SoundDistanceManager.Instance.OuterCircumference);
         }
 
         public void SetClipAndPlay(AudioClip clip, float currentTime = 0f)
@@ -99,13 +102,13 @@ namespace SoundDistance
             audioSource.Stop();
             audioSource.clip = null;
         }
-        public void SoundPlay()
-        {
-            if (audioSource.clip != null)
-            {
-                audioSource.Play();
-            }
-        }
+        //public void SoundPlay()
+        //{
+        //    if (audioSource.clip != null)
+        //    {
+        //        audioSource.Play();
+        //    }
+        //}
         public void SoundStop()
         {
             audioSource.Stop();
