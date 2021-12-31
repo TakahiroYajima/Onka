@@ -149,6 +149,10 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     {
         return gameData.itemDataList.itemDataList.FirstOrDefault(x => x.key == _key);
     }
+    public IReadOnlyList<ItemData> GetAllItemData()
+    {
+        return gameData.itemDataList.itemDataList;
+    }
     /// <summary>
     /// アイテムのデータ更新（ゲーム内のみ。セーブ無し）
     /// </summary>

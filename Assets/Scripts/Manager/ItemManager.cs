@@ -10,14 +10,15 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
 {
     private List<ItemObject> itemList = new List<ItemObject>();
     [SerializeField] private GameObject itemsParent = null;
-    [SerializeField] private GameObject watchItemBase = null;
+    [SerializeField] private OneItemViewer oneItemViewerPref = null;
+    private OneItemViewer instancedOneItemViewer = null;
     [SerializeField] private WatchDiaryManager watchDiaryManager = null;
     public WatchDiaryManager WatchDiaryManager { get { return watchDiaryManager; } }
 
     [SerializeField] private GameObject canvasUI = null;
-    [SerializeField] private Image watchItemImage = null;
-    [SerializeField] private Text itemNameText = null;
-    [SerializeField] private Text itemContentText = null;
+    //[SerializeField] private Image watchItemImage = null;
+    //[SerializeField] private Text itemNameText = null;
+    //[SerializeField] private Text itemContentText = null;
 
     public const string ResourcesPath = "Sprites/Items/";
     public UnityAction watchItemEventEndedCallback = null;
@@ -65,17 +66,26 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
             case ItemType.WatchOnly:
                 break;
         }
-        Debug.Log("ItemLoad : " + ResourcesPath + _data.spriteName);
+        //Debug.Log("ItemLoad : " + ResourcesPath + _data.spriteName);
         currentGettingItemData = _data;
-        Texture2D tex = Resources.Load(ResourcesPath + _data.spriteName) as Texture2D;
-        Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.zero); 
-        watchItemImage.sprite = sprite;
-        itemNameText.text = _data.name;
-        itemContentText.text = _data.description;
+        //Texture2D tex = Resources.Load(ResourcesPath + _data.spriteName) as Texture2D;
+        //Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.zero);
+        Sprite sprite = LoadResourceSprite(_data.spriteName);//sprite;
+        //itemNameText.text = _data.name;
+        //itemContentText.text = _data.description;
         canvasUI.SetActive(true);
-        watchItemBase.SetActive(true);
+        instancedOneItemViewer = Instantiate(oneItemViewerPref, canvasUI.transform);
+        instancedOneItemViewer.ViewItem(sprite, _data.name, _data.description);
+        //oneItemViewerPref.SetActive(true);
         SoundManager.Instance.PlaySeWithKey("menuse_enter");
         StartCoroutine(WatchingItemUpdate(_data));
+    }
+
+    public Sprite LoadResourceSprite(string spriteName)
+    {
+        Texture2D tex = Resources.Load(ResourcesPath + spriteName) as Texture2D;
+        Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.zero);
+        return sprite;
     }
 
     private IEnumerator WatchingItemUpdate(ItemData _data)
@@ -90,7 +100,8 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
                 {
                     case ItemType.WatchOnly:
                         watchDiaryManager.gameObject.SetActive(true);
-                        watchItemBase.SetActive(false);
+                        //oneItemViewerPref.SetActive(false);
+                        instancedOneItemViewer.CloseView();
                         watchDiaryManager.StartWatchDiary(_data);
                         break;
                     default:
@@ -113,7 +124,8 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
         canvasUI.SetActive(false);
         isLoopFlg = false;
         StopCoroutine(WatchingItemUpdate(null));
-        watchItemBase.SetActive(false);
+        //oneItemViewerPref.SetActive(false);
+        if(instancedOneItemViewer != null) { instancedOneItemViewer.CloseView(); }
         watchDiaryManager.gameObject.SetActive(false);
 
         if (!isEnforcement && watchItemEventEndedCallback != null)

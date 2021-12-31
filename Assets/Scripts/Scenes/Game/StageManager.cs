@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using SoundSystem;
 using SoundDistance;
+using Onka.Manager.Menu;
+using Onka.Manager.InputKey;
 
 public class StageManager : SingletonMonoBehaviour<StageManager>
 {
@@ -13,6 +15,24 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
     public Enemy_Shiori Shiori = null;
     public Enemy_Azuha Azuha = null;
     public Enemy_Yuzuha Yuzuha = null;
+
+    //FirstPersonAIOのUI
+    [HideInInspector] public GameObject Crosshair { get; private set; } = null;
+    public void FindCrosshair()
+    {
+        if (Crosshair == null)
+        {
+            Crosshair = GameObject.Find("Crosshair");
+        }
+    }
+    public void SetCrosshairActive(bool _isActive)
+    {
+        FindCrosshair();
+        if (Crosshair != null)
+        {
+            Crosshair.SetActive(_isActive);
+        }
+    }
 
     private PlayerState prevPlayerState = PlayerState.Free;
     private EnemyState prevYukieState = EnemyState.Init;
@@ -30,11 +50,24 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
         {
             yukieObject.onStateChangeCallback = OnYukieStateChanged;
         }
+        InStageMenuManager.Instance.onOpenedMenu = OpenedMenuAction;
+        InStageMenuManager.Instance.onClosedMenu = ClosedMenuAction;
+        InputKeyManager.Instance.onEscKeyPress = OnEscKeyPress;
+        InputKeyManager.Instance.onF12KeyPress = OnF12KeyPress;
     }
 
     private void OnPlayerStateChanged(PlayerState prev, PlayerState current)
     {
-        if(prev == PlayerState.ItemGet && current == PlayerState.Chased){
+        if (current == PlayerState.Free)
+        {
+            InStageMenuManager.Instance.SetMenuActivable(true);
+        }
+        else if(current != PlayerState.InMenu)
+        {
+            InStageMenuManager.Instance.SetMenuActivable(false);
+        }
+
+        if (prev == PlayerState.ItemGet && current == PlayerState.Chased){
             //アイテム閲覧から追いかけられていたら、UIが表示されたままになっている可能性があるので、いったん初期化
             ItemManager.Instance.WatchDiaryManager.EndWatchingItem();
             ItemManager.Instance.FinishWatchItem(true);
@@ -54,14 +87,67 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
         Yukie.gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// Escキーを押した時の挙動（メニュー表示）
+    /// </summary>
+    private void OnEscKeyPress()
+    {
+        if (playerObject.currentState == PlayerState.Free && !InStageMenuManager.Instance.isInMenu)
+        {
+            InStageMenuManager.Instance.OpenMenu();
+        }
+        else if (playerObject.currentState == PlayerState.InMenu && InStageMenuManager.Instance.isInMenu)
+        {
+            //InStageMenuManager.Instance.CloseMenu();
+        }
+    }
+    private void OnF12KeyPress()
+    {
+        if(Cursor.lockState == CursorLockMode.Locked)
+        {
+            InGameUtil.DoCursorFree();
+        }
+        else
+        {
+            InGameUtil.DoCursorLock();
+        }
+    }
+    private void OpenedMenuAction()
+    {
+        SetCrosshairActive(false);
+        InGameUtil.DoCursorFree();
+        if (playerObject != null)
+        {
+            playerObject.ChangeState(PlayerState.InMenu);
+            playerObject.ForcedStopFPS();
+        }
+        if (Yukie != null)
+        {
+            prevYukieState = yukieObject.currentState;
+            yukieObject.ChangeState(EnemyState.CanNotAction);
+        }
+    }
+    private void ClosedMenuAction()
+    {
+        SetCrosshairActive(true);
+        InGameUtil.DoCursorLock();
+        if (playerObject != null)
+        {
+            playerObject.ChangeState(PlayerState.Free);
+        }
+        if (Yukie != null)
+        {
+            yukieObject.ChangeState(prevYukieState);
+        }
+    }
+
     public void StartSaveAction()
     {
         prevPlayerState = playerObject.currentState;
         prevYukieState = yukieObject.currentState;
         playerObject.ChangeState(PlayerState.InMenu);
         yukieObject.ChangeState(EnemyState.CanNotAction);
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        InGameUtil.DoCursorFree();
         DialogManager.Instance.OpenTemplateDialog("セーブしますか？", TempDialogType.YesOrNo, SaveAction);
     }
 
@@ -77,8 +163,7 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
     }
     private void EndSaveAction()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        InGameUtil.DoCursorLock();
         playerObject.ChangeState(prevPlayerState);
         yukieObject.ChangeState(prevYukieState);
     }

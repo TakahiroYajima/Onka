@@ -27,8 +27,7 @@ public class Event_Openig : EventBase
     }
     public override void EventStart()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        InGameUtil.DoCursorLock();
         currentState = OpeningEventState.Init;
         instanceEventActor.EventStart();
     }

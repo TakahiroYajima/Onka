@@ -5,6 +5,7 @@ using UnityEngine;
 using SoundSystem;
 using SoundDistance;
 using Onka.Manager.Event;
+using Onka.Manager.Menu;
 
 public class GameSceneManager : SceneBase
 {
@@ -16,17 +17,18 @@ public class GameSceneManager : SceneBase
     protected override void Start()
     {
         base.Initialize();
+        InStageMenuManager.Instance.Initialize();
         WanderingPointManager.Instance.Initialize();
         StageManager.Instance.Initialize();
         EventManager.Instance.Initialize();
         ItemManager.Instance.Initialize();
-        SoundDistance.SoundDistanceManager.Instance.Initialize();
+        SoundDistanceManager.Instance.Initialize();
 
-        GC.Collect();
+        InGameUtil.GCCollect();
 
         StartScene();
     }
-
+    
     private void StartScene()
     {
         //オープニングイベント終了済み
@@ -65,5 +67,30 @@ public class GameSceneManager : SceneBase
         }
 
         EventManager.Instance.ProgressEvent();
+    }
+}
+
+public class InGameUtil
+{
+    /// <summary>
+    /// カーソルを操作可能にする
+    /// </summary>
+    public static void DoCursorFree()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+    /// <summary>
+    /// カーソルを操作不可にする
+    /// </summary>
+    public static void DoCursorLock()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    public static void GCCollect()
+    {
+        GC.Collect();
     }
 }

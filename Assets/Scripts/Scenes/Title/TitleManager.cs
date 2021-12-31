@@ -10,8 +10,7 @@ public class TitleManager : SceneBase
     {
         base.Initialize();
         DataManager.Instance.InitializeDataLoad();
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        InGameUtil.DoCursorFree();
     }
 
     public void PressStartButton()

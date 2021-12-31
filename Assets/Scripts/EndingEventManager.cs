@@ -65,8 +65,7 @@ public class EndingEventManager : MonoBehaviour
     
     private IEnumerator EventAction()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        InGameUtil.DoCursorLock();
         yield return null;
         //フェードイン
         FadeManager.Instance.FadeIn(FadeManager.FadeColorType.Black, 2f);

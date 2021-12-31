@@ -20,6 +20,9 @@ public class SavePointObj : MonoBehaviour
 
     private void SaveAction(bool isSave)
     {
-        DataManager.Instance.SaveGameData();
+        if (isSave)
+        {
+            DataManager.Instance.SaveGameData();
+        }
     }
 }

@@ -5,21 +5,16 @@ using UnityEngine;
 public class PlayerStateKeylock : StateBase
 {
     private PlayerObject player = null;
-    GameObject Crosshair = null;
     public override void StartAction()
     {
         player = StageManager.Instance.Player;
         player.ForcedStopFPS();
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        if (Crosshair == null)
+        InGameUtil.DoCursorFree();
+        if (StageManager.Instance.Crosshair == null)
         {
-            Crosshair = GameObject.Find("Crosshair");
+            StageManager.Instance.FindCrosshair();
         }
-        if(Crosshair != null)
-        {
-            Crosshair.SetActive(false);
-        }
+        StageManager.Instance.SetCrosshairActive(false);
     }
 
     public override void UpdateAction()
@@ -33,12 +28,8 @@ public class PlayerStateKeylock : StateBase
     public override void EndAction()
     {
         player.FirstPersonAIO.enabled = true;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        if (Crosshair != null)
-        {
-            Crosshair.SetActive(true);
-        }
+        InGameUtil.DoCursorLock();
+        StageManager.Instance.SetCrosshairActive(true);
     }
 
     private void RayOperation(RaycastHit hit)

@@ -49,8 +49,7 @@ public class GameOverManager : SingletonMonoBehaviour<GameOverManager>
         SoundManager.Instance.PlayBGMWithKey("bgm_gameover");
         yield return StartCoroutine(FadeManager.Instance.FadeAction(gameOverText, FadeType.Out, 2f));
         yield return new WaitForSeconds(1.5f);
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        InGameUtil.DoCursorFree();
         DialogManager.Instance.OpenTemplateDialog("タイトルへ", TempDialogType.InButtonMessage, BackToTitleCallback);
     }
 
