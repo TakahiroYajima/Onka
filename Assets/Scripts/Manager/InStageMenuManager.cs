@@ -15,6 +15,7 @@ namespace Onka.Manager.Menu
         [SerializeField] private Transform instanceParent = null;
 
         [SerializeField] private InStageMenuView menuView = null;
+        [SerializeField] private OperationDescriptionView operationDescriptionViewPref = null;
         [SerializeField] private ItemListViewer itemListViewerPref = null;
 
         public UnityAction onOpenedMenu { private get; set; } = null;
@@ -28,6 +29,7 @@ namespace Onka.Manager.Menu
 
         public void Initialize()
         {
+            menuView.onClickOperateGuideButton = OpenOperationDesctiption;
             menuView.onClickItemButton = OpenItemListView;
             menuView.onClickBackToTitleButton = OpenBackToTitleDialog;
             menuView.onClickCanselButton = CloseMenu;
@@ -38,12 +40,21 @@ namespace Onka.Manager.Menu
             isActivable = _isActivable;
             inactiveImage.gameObject.SetActive(!_isActivable);
         }
+        public void ShowGuide()
+        {
+            menuGuideImage.gameObject.SetActive(true);
+        }
+        public void HideGuide()
+        {
+            menuGuideImage.gameObject.SetActive(false);
+        }
 
         public void OpenMenu()
         {
             if (isInMenu) return;
             isInMenu = true;
             menuView.gameObject.SetActive(true);
+            HideGuide();
             if (onOpenedMenu != null)
             {
                 onOpenedMenu();
@@ -55,11 +66,22 @@ namespace Onka.Manager.Menu
             if (!isInMenu) return;
             isInMenu = false;
             menuView.gameObject.SetActive(false);
+            ShowGuide();
             if (onClosedMenu != null)
             {
                 onClosedMenu();
             }
             InGameUtil.GCCollect();
+        }
+
+        private void OpenOperationDesctiption()
+        {
+            OperationDescriptionView v = Instantiate(operationDescriptionViewPref, instanceParent);
+            v.InitAndShow(()=>
+            {
+                menuView.gameObject.SetActive(true);
+            });
+            menuView.gameObject.SetActive(false);
         }
 
         private void OpenItemListView()
