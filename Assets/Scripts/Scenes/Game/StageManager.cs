@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using SoundSystem;
 using SoundDistance;
 using Onka.Manager.Menu;
@@ -16,23 +17,7 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
     public Enemy_Azuha Azuha = null;
     public Enemy_Yuzuha Yuzuha = null;
 
-    //FirstPersonAIOのUI
-    [HideInInspector] public GameObject Crosshair { get; private set; } = null;
-    public void FindCrosshair()
-    {
-        if (Crosshair == null)
-        {
-            Crosshair = GameObject.Find("Crosshair");
-        }
-    }
-    public void SetCrosshairActive(bool _isActive)
-    {
-        FindCrosshair();
-        if (Crosshair != null)
-        {
-            Crosshair.SetActive(_isActive);
-        }
-    }
+    
 
     private PlayerState prevPlayerState = PlayerState.Free;
     private EnemyState prevYukieState = EnemyState.Init;
@@ -114,7 +99,7 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
     }
     private void OpenedMenuAction()
     {
-        SetCrosshairActive(false);
+        CrosshairManager.Instance.SetCrosshairActive(false);
         InGameUtil.DoCursorFree();
         if (playerObject != null)
         {
@@ -129,7 +114,7 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
     }
     private void ClosedMenuAction()
     {
-        SetCrosshairActive(true);
+        CrosshairManager.Instance.SetCrosshairActive(true);
         InGameUtil.DoCursorLock();
         if (playerObject != null)
         {
@@ -177,7 +162,7 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
         }
         if (Shiori != null)
         {
-            prevShioriState = Shiori.currentState;
+            prevShioriState = Shiori.currentShioriState;
             Shiori.ChangeState(Enemy_ShioriState.Init);
         }
         if (Azuha != null)
@@ -212,7 +197,7 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
         }
     }
 
-    public void StartGameOverDataControl()
+    public void AllEnemyInactive()
     {
         if(Yukie != null)
         {

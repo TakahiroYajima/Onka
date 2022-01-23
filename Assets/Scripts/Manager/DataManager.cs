@@ -191,10 +191,10 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
 
     public void ItemGetAction(ItemData _item, UnityAction<ItemData> onComplete = null)
     {
-        ItemData itemData = gameData.itemDataList.itemDataList.FirstOrDefault(x => x.key == _item.key);
-        if(itemData == null) { Debug.LogError("アイテムがありません : " + _item.key); return; }
+        //ItemData itemData = gameData.itemDataList.itemDataList.FirstOrDefault(x => x.key == _item.key);
+        if(_item == null) { Debug.LogError("アイテムがありません : " + _item.key); return; }
 
-        itemData.geted = true;
+        _item.geted = true;
         if (onComplete != null)
         {
             onComplete(_item);
@@ -259,5 +259,23 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
             }
         });
     }
+
+
+
+
+
+    #region Debug
+    //----------------------------------------------------
+    //デバッグ用
+    //----------------------------------------------------
+    public List<ItemData> GetAllItemData_Debug()
+    {
+        return gameData.itemDataList.itemDataList;
+    }
+    public List<EventData> GetAllEventData_Debug()
+    {
+        return gameData.eventDataList.list;
+    }
+    #endregion
 }
 

@@ -38,19 +38,43 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
             itemList[i].Initialize();
         }
     }
-
-    public void ItemGetAction(ItemObject itemObject)
+    /// <summary>
+    /// アイテムを取得する。ギミック付きなら解かせる。解けていれば入手
+    /// </summary>
+    /// <param name="itemObject"></param>
+    /// <param name="isGetedAction"></param>
+    public void ItemGetAction(ItemObject itemObject, UnityAction<bool> isGetedAction)
     {
         ItemData data = DataManager.Instance.GetItemData(itemObject.ItemKey);
         if(data != null)
         {
-            DataManager.Instance.ItemGetAction(data, itemObject.OnGetedItemCallback);
-            DisplayItem(data);
+            if (itemObject.isGimmickItem && itemObject.gimmickEvent != null)
+            {
+                itemObject.gimmickEvent.ForceStartEvent(() =>
+                {
+                    NormalItemGetAction(data, itemObject, isGetedAction);
+                });
+            }
+            else
+            {
+                NormalItemGetAction(data, itemObject, isGetedAction);
+            }
         }
         else
         {
             Debug.LogError("取得したアイテムは存在しないか、キーが間違っています。 " + itemObject.ItemKey);
         }
+    }
+
+    private void GimickItemAction(ItemData data, ItemObject itemObject, UnityAction<bool> isGetedAction)
+    {
+
+    }
+    private void NormalItemGetAction(ItemData data, ItemObject itemObject, UnityAction<bool> isGetedAction)
+    {
+        isGetedAction(true);
+        DataManager.Instance.ItemGetAction(data, itemObject.OnGetedItemCallback);
+        DisplayItem(data);
     }
 
     public void DisplayItem(ItemData _data)

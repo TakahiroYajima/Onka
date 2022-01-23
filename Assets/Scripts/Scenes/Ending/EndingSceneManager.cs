@@ -11,6 +11,6 @@ public class EndingSceneManager : SceneBase
     {
         base.Initialize();
         endingEventManager.Initialize(camera);
-        endingEventManager.StartAction();
+        endingEventManager.StartAction(EndingEventType.EndingScene);
     }
 }

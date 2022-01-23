@@ -15,6 +15,19 @@ public class SceneControlManager : SingletonMonoBehaviour<SceneControlManager>
         
     }
 
+    public void ChangeScene(string sceneName, bool isBGMStop = true, UnityAction onComplete = null, FadeManager.FadeColorType fadeOutColorType = FadeManager.FadeColorType.None, FadeManager.FadeColorType fadeInColorType = FadeManager.FadeColorType.None)
+    {
+        if (isBGMStop)
+        {
+            SoundManager.Instance.StopBGMWithFadeOut(1f);
+        }
+        FadeManager.Instance.FadeOut(fadeOutColorType, 1f, () =>
+        {
+            SceneManager.LoadScene(sceneName);
+            FadeManager.Instance.FadeIn(fadeInColorType, 1f, onComplete);
+        });
+    }
+
     public void ChangeSceneWithFade(string sceneName, bool isBGMStop = true, UnityAction onComplete = null)
     {
         if (isBGMStop)

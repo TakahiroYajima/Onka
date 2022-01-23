@@ -19,7 +19,7 @@ public class OpeningEventManager : MonoBehaviour
         if (!isPlaying)
         {
             isPlaying = true;
-            SoundManager.Instance.PlayBGMWithFadeIn(bgm);
+            SoundManager.Instance.PlayBGMWithFadeIn(bgm, 2f, 0.1f);
             FadeManager.Instance.FadeIn(FadeManager.FadeColorType.Black, 2f, () =>
             {
                 StartCoroutine(EventAction());

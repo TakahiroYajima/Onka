@@ -106,7 +106,7 @@ public class Enemy_Yukie : Enemy
 
     public void ChangeState(EnemyState nextState)
     {
-        //Debug.Log("ChangeState : " + nextState);
+        //Debug.Log("Yukie_ChangeState : " + nextState);
         if (!gameObject.activeSelf) return;
 
         yukieStateDic[currentState].EndAction();

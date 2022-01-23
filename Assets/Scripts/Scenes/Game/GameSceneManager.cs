@@ -63,6 +63,13 @@ public class GameSceneManager : SceneBase
             Vector3 yukiePos = new Vector3(yukieInitInstancePoints[arrayNum].transform.position.x, StageManager.Instance.Yukie.transform.position.y, yukieInitInstancePoints[arrayNum].transform.position.z);
             StageManager.Instance.Yukie.transform.position = yukiePos;
             StageManager.Instance.Yukie.wanderingActor.SetWanderingID(yukieInitWanderingPoints[arrayNum].PointNum);
+            StageManager.Instance.Yukie.ChangeState(EnemyState.Wandering);
+
+            SoundDistanceManager.Instance.Emitter.SetPointID(yukieInitInstancePoints[0].ID);
+            SoundDistanceManager.Instance.Listener.SetCurrentPointID(savePointSDP.ID);
+            SoundDistanceManager.Instance.Maker.SetVolume(0f);
+            SoundDistanceManager.Instance.ForceInitCalc();
+            SoundDistanceManager.Instance.isActive = true;
             SoundManager.Instance.PlayEnvironmentWithKey("ambient_in_house");
         }
 

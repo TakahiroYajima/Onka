@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,9 +8,9 @@ using UnityEngine.Events;
 public class Raycastor : MonoBehaviour
 {
     [SerializeField] private Camera camera = null;
-    private const float RayDirection = 3f;
+    private const float RayDirection = 2f;
 
-    public void ScreenToRayAction(UnityAction<RaycastHit> hitCallback)
+    public void ScreenToRayAction(UnityAction<RaycastHit> hitCallback, UnityAction noHitCallback = null)
     {
         RaycastHit hit;
         Ray ray = camera.ScreenPointToRay(Input.mousePosition);
@@ -20,6 +19,29 @@ public class Raycastor : MonoBehaviour
         if (Physics.Raycast(ray, out hit, RayDirection))
         {
             hitCallback(hit);
+        }
+        else
+        {
+            if(noHitCallback != null) { noHitCallback(); }
+        }
+    }
+
+    public void ScreenToRayActionIgnorePlayer(UnityAction<RaycastHit> hitCallback, UnityAction noHitCallback = null)
+    {
+        var hits = Physics.RaycastAll(camera.transform.position + (camera.transform.forward * 1.3f), camera.transform.forward, RayDirection).ToList();
+        if(hits == null || hits == default) { noHitCallback(); return; }
+        if (hits.Count == 0) { noHitCallback(); return; }
+        if(hits[0].transform.tag == Tags.Player)
+        {
+            if (hits.Count > 1)
+            {
+                hitCallback(hits[1]);
+            }
+            else { noHitCallback(); }
+        }
+        else
+        {
+            hitCallback(hits[0]);
         }
     }
 

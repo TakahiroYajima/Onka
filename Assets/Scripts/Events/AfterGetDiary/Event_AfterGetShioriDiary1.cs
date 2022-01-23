@@ -8,9 +8,12 @@ using UnityEngine.Events;
 /// </summary>
 public class Event_AfterGetShioriDiary1 : EventBase
 {
+    public Event_AnyItemActive azuyuzuKeyActiveEvent = null;
+
     protected override void EventActive()
     {
         base.EventActive();
+        instanceEventActor.GetComponent<EA_AfterGetShioriDiary3>().eventBase = this;
         InitiationContact();
     }
 

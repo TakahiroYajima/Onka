@@ -10,11 +10,11 @@ public class PlayerStateKeylock : StateBase
         player = StageManager.Instance.Player;
         player.ForcedStopFPS();
         InGameUtil.DoCursorFree();
-        if (StageManager.Instance.Crosshair == null)
+        if (CrosshairManager.Instance.Crosshair == null)
         {
-            StageManager.Instance.FindCrosshair();
+            CrosshairManager.Instance.FindCrosshair();
         }
-        StageManager.Instance.SetCrosshairActive(false);
+        CrosshairManager.Instance.SetCrosshairActive(false);
     }
 
     public override void UpdateAction()
@@ -29,7 +29,7 @@ public class PlayerStateKeylock : StateBase
     {
         player.FirstPersonAIO.enabled = true;
         InGameUtil.DoCursorLock();
-        StageManager.Instance.SetCrosshairActive(true);
+        CrosshairManager.Instance.SetCrosshairActive(true);
     }
 
     private void RayOperation(RaycastHit hit)

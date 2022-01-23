@@ -7,6 +7,7 @@ public class EA_AfterGetShioriDiary3 : EventActorBase
     [SerializeField] private Enemy_Shiori shioriPrefWalk = null;
     private Enemy_Shiori instanceAnim = null;
     [SerializeField] private Vector3 walkInstancePosition = Vector3.zero;
+    public Event_AfterGetShioriDiary1 eventBase = null;
 
     protected override void Initialize()
     {
@@ -14,13 +15,16 @@ public class EA_AfterGetShioriDiary3 : EventActorBase
     }
     public override void EventStart()
     {
-        Debug.Log("詩織の日記1取得後イベントスタート");
         instanceAnim = Instantiate(shioriPrefWalk, this.transform);
         StageManager.Instance.Shiori = instanceAnim;
         instanceAnim.transform.position = walkInstancePosition;
         instanceAnim.onWalkEventEnded = () =>
         {
             Debug.Log("詩織の日記1取得後イベントクリア");
+            //彩珠波と柚子羽の部屋の鍵を落とすため、位置を設定
+            Vector3 keyPos = new Vector3(instanceAnim.transform.position.x, instanceAnim.transform.position.y + 1f, instanceAnim.transform.position.z);
+            eventBase.azuyuzuKeyActiveEvent.SetItemPosition(keyPos);
+
             parent.EventClearContact();
             Destroy(instanceAnim.gameObject);
             StageManager.Instance.Shiori = null;

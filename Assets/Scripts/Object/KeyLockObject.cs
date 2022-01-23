@@ -6,26 +6,36 @@ using UnityEngine;
 public abstract class KeyLockObject : MonoBehaviour
 {
     [SerializeField] protected bool isAfterClearEnactive = false;//クリア後に非表示にさせるか。falseの場合はコライダーのみオフになる
-    protected KeyLockTarget keyLockTarget = null;
+    protected List<KeyLockTarget> keyLockTargetList = new List<KeyLockTarget>();
     private Collider collider = null;
     protected Vector3 initPosition;
     protected Quaternion initRotation;
     public float distanceFromCamera = 0.1f;//カメラの前に表示する時の適切な距離
+    //private List<GameObject> rendererObjectsChildList = new List<GameObject>();
+    private GameObject childObject = null;
 
     protected virtual void Awake()
     {
         collider = GetComponent<Collider>();
         initPosition = transform.position;
         initRotation = transform.rotation;
+        childObject = transform.GetChild(0).gameObject;//子オブジェクトは1つの想定。さらにオブジェクトがある場合は、その子オブジェクトとして生成させる必要がある
     }
 
     public void SetInitialize(KeyLockTarget _keyLockTarget)
     {
-        keyLockTarget = _keyLockTarget;
-        if (DataManager.Instance.IsKeyUnlocked(keyLockTarget.UnlockTargetKey))
+        keyLockTargetList.Add(_keyLockTarget);
+        //設計ミスにより、複数扉を開けられるキーロック機能は設定されるたびにいちいち初期化し直さないといけない
+        collider.enabled = false;
+        DoEnactive();
+        for (int i = 0; i < keyLockTargetList.Count; i++)
         {
-            collider.enabled = false;
-            DoEnactive();
+            //ひとまず、最初は非表示→何か未解決な要素があったら表示させるという、めんどくさい仕様に…
+            if (!DataManager.Instance.IsKeyUnlocked(_keyLockTarget.UnlockTargetKey))
+            {
+                collider.enabled = true;
+                childObject.SetActive(true);
+            }
         }
     }
 
@@ -50,7 +60,8 @@ public abstract class KeyLockObject : MonoBehaviour
     {
         if (isAfterClearEnactive)
         {
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
+            childObject.SetActive(false);
         }
     }
 }

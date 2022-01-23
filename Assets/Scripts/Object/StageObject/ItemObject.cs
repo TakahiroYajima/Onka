@@ -6,12 +6,19 @@ public class ItemObject : MonoBehaviour
 {
     [SerializeField] private string itemKey = "";
     public string ItemKey { get { return itemKey; } }
+
+    //ギミックを解いて入手するアイテム設定
+    [SerializeField] private ItemGimickType gimmickType = ItemGimickType.None;
+    public ItemGimickType GimmickType { get { return gimmickType; } }
+    public bool isGimmickItem { get { return gimmickType != ItemGimickType.None; } }
+    public EventBase gimmickEvent = null;
+
     private Collider thisCollider = null;
     [SerializeField] private bool isDefaultInactive = false;//デフォルトで非表示にするか
     [SerializeField] private bool isHiddenItem = false;//どこかにしまってあるアイテムか
     [SerializeField] private Transform hiddenMoveParentTransform = null;//アイテムを隠すとき、Parentを設定する必要がある場合（引き出しの中にあるものなど）に設定
     public Transform HiddenParent { get { return hiddenMoveParentTransform; } }
-
+    
     // Start is called before the first frame update
     void Awake()
     {
@@ -41,7 +48,7 @@ public class ItemObject : MonoBehaviour
             }
         }
     }
-
+    
     /// <summary>
     /// 引き出しを開けたときなどに設定するコールバック
     /// </summary>
@@ -56,7 +63,7 @@ public class ItemObject : MonoBehaviour
     {
         thisCollider.enabled = false;
     }
-
+    
     public void OnGetedItemCallback(ItemData _itemData)
     {
         switch (_itemData.type)
@@ -75,4 +82,11 @@ public class ItemObject : MonoBehaviour
                 break;
         }
     }
+}
+
+public enum ItemGimickType
+{
+    None,
+    HighAltitude,//高所（棒か何かで取る）
+    Eraser,//消しゴムで消すと何か見えてくるやつ
 }

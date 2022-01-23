@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(SoundPlayerObject))]
-public class Enemy_Shiori : MonoBehaviour
+public class Enemy_Shiori : Enemy
 {
     private Dictionary<Enemy_ShioriState, StateBase> shioriStateDic = new Dictionary<Enemy_ShioriState, StateBase>();
-    public Enemy_ShioriState currentState { get; private set; } = Enemy_ShioriState.Init;
+    public Enemy_ShioriState currentShioriState { get; private set; } = Enemy_ShioriState.Init;
 
     [SerializeField] private SoundPlayerObject soundPlayerObject = null;
     public SoundPlayerObject SoundPlayerObject { get { return soundPlayerObject; } }
@@ -20,7 +20,7 @@ public class Enemy_Shiori : MonoBehaviour
         shioriStateDic.Add(Enemy_ShioriState.WalkEvent, new Enemy_ShioriStateWalkEvent());
         shioriStateDic.Add(Enemy_ShioriState.BeingNearEvent, new Enemy_ShioriStateBeingNearEvent());
 
-        currentState = Enemy_ShioriState.Init;
+        currentShioriState = Enemy_ShioriState.Init;
     }
 
     // Start is called before the first frame update
@@ -32,7 +32,7 @@ public class Enemy_Shiori : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        shioriStateDic[currentState].UpdateAction();
+        shioriStateDic[currentShioriState].UpdateAction();
     }
 
     /// <summary>
@@ -41,9 +41,9 @@ public class Enemy_Shiori : MonoBehaviour
     /// <param name="nextState"></param>
     public void ChangeState(Enemy_ShioriState nextState)
     {
-        shioriStateDic[currentState].EndAction();
-        currentState = nextState;
-        shioriStateDic[currentState].StartAction();
+        shioriStateDic[currentShioriState].EndAction();
+        currentShioriState = nextState;
+        shioriStateDic[currentShioriState].StartAction();
     }
 
     private void OnDestroy()

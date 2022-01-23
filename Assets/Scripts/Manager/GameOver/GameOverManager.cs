@@ -28,7 +28,7 @@ public class GameOverManager : SingletonMonoBehaviour<GameOverManager>
         isDoingAction = true;
         instanceEvent = Instantiate(gameOverEventPrefs.GetTable()[type], transform);
         instanceEvent.Initialize();
-        StageManager.Instance.StartGameOverDataControl();
+        StageManager.Instance.AllEnemyInactive();
         StartCoroutine(StartGameOverAction());
     }
 

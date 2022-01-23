@@ -122,6 +122,13 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager> {
         }
     }
 
+    public void BlackOut()
+    {
+        Color c = this._colorDict[FadeColorType.Black];
+        this._image.color = new Color(c.r, c.g, c.b, 1f);
+        this._image.enabled = true;
+    }
+
     public void HideFade() {
         this._image.enabled = false;
     }

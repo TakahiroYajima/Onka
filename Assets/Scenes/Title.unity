@@ -1498,6 +1498,41 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8885981594171327339}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &814214695
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 814214696}
+  m_Layer: 5
+  m_Name: SelectSaveDataBase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &814214696
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 814214695}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1996994514}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &817146278 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 431888, guid: d9d02704e9e85234892800b43585122b,
@@ -2955,6 +2990,7 @@ RectTransform:
   - {fileID: 738225908}
   - {fileID: 250019256}
   - {fileID: 573362479}
+  - {fileID: 814214696}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3515,6 +3551,7 @@ MonoBehaviour:
   openKey: 
   keyHoleTarget: {fileID: 0}
   keyLockTarget: {fileID: 0}
+  isForceOpenable: 0
   doorAnimation: {fileID: 35762631}
   openAnim: {fileID: 7400000, guid: 45548ae1f97435a4b8ceff4e75646c20, type: 2}
   closeAnim: {fileID: 7400000, guid: 1e405b39b79f3164e812ceed51d4304d, type: 2}
@@ -14105,6 +14142,7 @@ MonoBehaviour:
   openKey: 
   keyHoleTarget: {fileID: 0}
   keyLockTarget: {fileID: 0}
+  isForceOpenable: 0
   doorAnimation: {fileID: 2107958814}
   openAnim: {fileID: 7400000, guid: 45548ae1f97435a4b8ceff4e75646c20, type: 2}
   closeAnim: {fileID: 7400000, guid: 1e405b39b79f3164e812ceed51d4304d, type: 2}
@@ -18361,6 +18399,7 @@ MonoBehaviour:
   openKey: 
   keyHoleTarget: {fileID: 0}
   keyLockTarget: {fileID: 0}
+  isForceOpenable: 0
   doorAnimation: {fileID: 845693979}
   openAnim: {fileID: 7400000, guid: 45548ae1f97435a4b8ceff4e75646c20, type: 2}
   closeAnim: {fileID: 7400000, guid: 1e405b39b79f3164e812ceed51d4304d, type: 2}
@@ -19806,6 +19845,7 @@ MonoBehaviour:
   openKey: 
   keyHoleTarget: {fileID: 0}
   keyLockTarget: {fileID: 0}
+  isForceOpenable: 0
   doorAnimation: {fileID: 745614418}
   openAnim: {fileID: 7400000, guid: 45548ae1f97435a4b8ceff4e75646c20, type: 2}
   closeAnim: {fileID: 7400000, guid: 1e405b39b79f3164e812ceed51d4304d, type: 2}
@@ -21766,6 +21806,7 @@ MonoBehaviour:
   openKey: key_underground
   keyHoleTarget: {fileID: 0}
   keyLockTarget: {fileID: 0}
+  isForceOpenable: 0
   openSlideDirection: 2
   slideDistance: 2
   moveTransform: {fileID: 1411290794}
@@ -21901,6 +21942,7 @@ MonoBehaviour:
   openKey: key_entrance
   keyHoleTarget: {fileID: 0}
   keyLockTarget: {fileID: 0}
+  isForceOpenable: 0
   doorAnimation: {fileID: 293689456}
   openAnim: {fileID: 7400000, guid: 45548ae1f97435a4b8ceff4e75646c20, type: 2}
   closeAnim: {fileID: 7400000, guid: 1e405b39b79f3164e812ceed51d4304d, type: 2}

@@ -60,12 +60,12 @@ public abstract class DoorObject : MonoBehaviour
         {
             if (string.IsNullOrEmpty(keyHoleTarget.UnlockKey)) { Debug.LogError("解錠キーが設定されていません"); return; }
             if (!keyHoleTarget.isUnlocked) {
-                Debug.Log("鍵がかかっている : " + openKey);
+                //Debug.Log("鍵がかかっている : " + openKey);
                 isKeyHoleUnlocked = false;
             }
             else
             {
-                Debug.Log("解錠済み : " + openKey);
+                //Debug.Log("解錠済み : " + openKey);
             }
         }
         if(keyLockTarget != null)
@@ -73,7 +73,7 @@ public abstract class DoorObject : MonoBehaviour
             if (string.IsNullOrEmpty(keyLockTarget.UnlockTargetKey)) { Debug.LogError("解錠キーが設定されていません"); return; }
             if (!keyLockTarget.isUnlocked)
             {
-                Debug.Log("鍵がかかっている : " + openKey);
+                //Debug.Log("鍵がかかっている : " + openKey);
                 isKeyLockUnlocked = false;
             }
         }
@@ -94,6 +94,8 @@ public abstract class DoorObject : MonoBehaviour
         //プレイヤーがドアから離れている且つプレイヤーと雪絵が部屋の外にいる時にドアを閉める（雪絵のNavMeshが途切れてしまうため、その対策）
         while (true)
         {
+            if (!isOpenState) break;
+
             yield return new WaitForSeconds(3f);
             if ((transform.position - StageManager.Instance.Player.Position).sqrMagnitude >= DistanceRequiredToCloseDoorSqrMagnitude &&
                  !StageManager.Instance.Player.inRoomChecker.isEnterRoom && !StageManager.Instance.Yukie.inRoomChecker.isEnterRoom &&

@@ -8,10 +8,12 @@ using UnityEngine;
 public class PlayerStateFree : StateBase
 {
     private PlayerObject player = null;
+    private int frameCount = 0;
     public override void StartAction()
     {
         player = StageManager.Instance.Player;
         player.FirstPersonAIO.enabled = true;
+        frameCount = 0;
     }
 
     public override void UpdateAction()
@@ -19,12 +21,46 @@ public class PlayerStateFree : StateBase
         if (Input.GetMouseButtonDown(0))
         {
             player.raycastor.ScreenToRayAction(ClickAction);
+            return;
         }
+        if (frameCount >= 6)
+        {
+            player.raycastor.ScreenToRayAction(SerchRay, MissSerchRay);
+            frameCount = 0;
+        }
+        else { frameCount++; }
     }
 
     public override void EndAction()
     {
         
+    }
+
+    public void SerchRay(RaycastHit hit)
+    {
+        //Debug.Log("Serch : " + hit.transform.tag);
+        switch (hit.transform.tag)
+        {
+            case Tags.StageObject:
+            case Tags.SaveObject:
+            case Tags.Item:
+            case Tags.KeyLock:
+                CrosshairManager.Instance.ChangeCenterSprites(CrosshairType.Tapable);
+                break;
+            //case Tags.Door:
+            //    CrosshairManager.Instance.ChangeCenterSprites(CrosshairType.Door);
+            //    break;
+            case Tags.KeyHole:
+                CrosshairManager.Instance.ChangeCenterSprites(CrosshairType.DoorKey);
+                break;
+            default:
+                CrosshairManager.Instance.ChangeCenterSprites(CrosshairType.Normal);
+                break;
+        }
+    }
+    private void MissSerchRay()
+    {
+        CrosshairManager.Instance.ChangeCenterSprites(CrosshairType.Normal);
     }
 
     /// <summary>
@@ -51,12 +87,20 @@ public class PlayerStateFree : StateBase
                 break;
             case Tags.Item:
                 ItemObject itemObject = hit.transform.gameObject.GetComponent<ItemObject>();
-                ItemManager.Instance.ItemGetAction(itemObject);
-                player.ChangeState(PlayerState.ItemGet);
+                ItemManager.Instance.ItemGetAction(itemObject, GetItemAction);
+                
                 break;
             case Tags.SaveObject:
                 StageManager.Instance.StartSaveAction();
                 break;
+        }
+    }
+
+    private void GetItemAction(bool _isSuccess)
+    {
+        if (_isSuccess)
+        {
+            player.ChangeState(PlayerState.ItemGet);
         }
     }
 }

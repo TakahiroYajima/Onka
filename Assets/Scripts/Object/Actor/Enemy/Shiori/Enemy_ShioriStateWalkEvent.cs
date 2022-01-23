@@ -12,6 +12,7 @@ public class Enemy_ShioriStateWalkEvent : StateBase
     public override void StartAction()
     {
         currentTime = 0f;
+        StageManager.Instance.Player.AddChasedCount(StageManager.Instance.Shiori);
         SoundManager.Instance.PlayEnvironmentWithKey("ambient_shiori", false);
         StageManager.Instance.Shiori.SoundPlayerObject.PlaySoundLoop(0);
     }
@@ -29,10 +30,12 @@ public class Enemy_ShioriStateWalkEvent : StateBase
     }
     public override void EndAction()
     {
-        if(StageManager.Instance.Shiori.onWalkEventEnded != null)
+        StageManager.Instance.Player.RemoveChasedCount(StageManager.Instance.Shiori);
+        if (StageManager.Instance.Shiori.onWalkEventEnded != null)
         {
             StageManager.Instance.Shiori.onWalkEventEnded();
         }
+        
         SoundManager.Instance.PlayEnvironmentWithKey("ambient_in_house", false);
         //StageManager.Instance.Shiori.SoundPlayerObject.StopSound();
     }

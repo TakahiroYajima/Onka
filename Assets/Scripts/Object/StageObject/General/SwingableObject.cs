@@ -41,8 +41,8 @@ public class SwingableObject : MonoBehaviour
     {
         if (!isMoving)
         {
-            if(isOpenState) StartCoroutine(DoSwing(false, () => { ClosedCallback.Invoke(); }));
-            else            StartCoroutine(DoSwing(true, () => { OpenedCallback.Invoke(); }));
+            if (isOpenState) { ClosedCallback.Invoke(); StartCoroutine(DoSwing(false, () => {  })); }//本当は閉鎖前のコールバックを作るべきだった
+            else { StartCoroutine(DoSwing(true, () => { OpenedCallback.Invoke(); })); }
         }
     }
 

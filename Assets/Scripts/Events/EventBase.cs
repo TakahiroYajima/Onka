@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Onka.Manager.Event;
 
 /// <summary>
@@ -8,6 +9,7 @@ using Onka.Manager.Event;
 /// </summary>
 public abstract class EventBase : MonoBehaviour
 {
+    [SerializeField] protected bool isAutoEvent = true;//フラグによって自動で発動するイベントか（falseの場合は、どこかでForceStartEvent()を呼ぶ必要がある）
     [SerializeField] protected bool isNeedEventActor = true;//eventActorPrefが必要なイベントか
     [SerializeField] protected string eventKey = "";
     public string EventKey { get { return eventKey; } }
@@ -18,6 +20,19 @@ public abstract class EventBase : MonoBehaviour
     [SerializeField] protected EventActorBase eventActorPref = null;
     protected EventActorBase instanceEventActor = null;
     public bool canBeStarted { get; protected set; } = true;//EventStartが呼ばれたときにスタートできるか
+
+    protected UnityAction onEventStartedCallback = null;
+    public void AddOnEventActiveCallback(UnityAction callback)
+    {
+        if (onEventStartedCallback == null) { onEventStartedCallback = callback; }
+        else { onEventStartedCallback += callback; }
+    }
+    protected UnityAction onEventEndCallback = null;
+    public void AddOnEventEndCallback(UnityAction callback)
+    {
+        if(onEventEndCallback == null) { onEventEndCallback = callback; }
+        else { onEventEndCallback += callback; }
+    }
 
     /// <summary>
     /// 自身のイベントが発行可能か判断する
@@ -35,33 +50,56 @@ public abstract class EventBase : MonoBehaviour
             return;
         }
 
+        if (!isAutoEvent) return;
+
         if (!EventManager.Instance.IsEventEnded(eventKey))
         {
-            //必要なアイテムが全てそろっていたら次へ
-            if (needItemKeys != null)
+            if (IsStartableEvent())
             {
-                for (int i = 0; i < needItemKeys.Length; i++)
+                //条件を満たしているのでイベント発生
+                EventActive();
+            }
+        }
+    }
+    private bool IsStartableEvent()
+    {
+        //必要なアイテムが全てそろっていたら次へ
+        if (needItemKeys != null)
+        {
+            for (int i = 0; i < needItemKeys.Length; i++)
+            {
+                if (!DataManager.Instance.GetItemData(needItemKeys[i]).geted)
                 {
-                    if (!DataManager.Instance.GetItemData(needItemKeys[i]).geted)
-                    {
-                        return;
-                    }
+                    return false;
                 }
             }
+        }
 
-            //必要なイベントが全て終了していたら次へ
-            if (needEventKeys != null)
+        //必要なイベントが全て終了していたら次へ
+        if (needEventKeys != null)
+        {
+            for (int i = 0; i < needEventKeys.Length; i++)
             {
-                for (int i = 0; i < needEventKeys.Length; i++)
+                if (!EventManager.Instance.IsEventEnded(needEventKeys[i]))
                 {
-                    if (!EventManager.Instance.IsEventEnded(needEventKeys[i]))
-                    {
-                        return;
-                    }
+                    return false;
                 }
             }
-            //条件を満たしているのでイベント発生
+        }
+        return true;
+    }
+    /// <summary>
+    /// 外部から呼び出す専用
+    /// 任意のタイミングで発行するイベントを開始する
+    /// </summary>
+    public void ForceStartEvent(UnityAction onComplete)
+    {
+        if (isAutoEvent) return;
+        if (IsStartableEvent())
+        {
+            onEventEndCallback = onComplete;
             EventActive();
+            InitiationContact();
         }
     }
     /// <summary>
@@ -94,6 +132,10 @@ public abstract class EventBase : MonoBehaviour
         {
             instanceEventActor.EventStart();
         }
+        if(onEventStartedCallback != null)
+        {
+            onEventStartedCallback();
+        }
     }
     public virtual void EventUpdate()
     {
@@ -115,6 +157,10 @@ public abstract class EventBase : MonoBehaviour
         {
             instanceEventActor.EventEnd();
             Destroy(instanceEventActor.gameObject);
+        }
+        if(onEventEndCallback != null)
+        {
+            onEventEndCallback();
         }
     }
 }

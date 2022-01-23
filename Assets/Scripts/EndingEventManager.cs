@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using SoundSystem;
 
 public class EndingEventManager : MonoBehaviour
@@ -20,6 +21,7 @@ public class EndingEventManager : MonoBehaviour
     [SerializeField] private GameObject turnTarget_yukieDir = null;//雪絵の方向
 
     [SerializeField] private AudioClip footStepClip = null;//ここでしか使わないのでデータでなくても良い方針で
+    [SerializeField] private AudioClip ambientClip = null;
 
     private CRT tvEffect = null;
 
@@ -54,25 +56,135 @@ public class EndingEventManager : MonoBehaviour
         tvEffect.enabled = false;
     }
 
-    public void StartAction()
+    public void StartAction(EndingEventType type, UnityAction onComplete = null)
     {
         if (!isPlaying)
         {
             isPlaying = true;
-            StartCoroutine(EventAction());
+            if (type == EndingEventType.EndingScene)
+            {
+                StartCoroutine(EndingEventAction());
+            }
+            else
+            {
+                StartCoroutine(FinalEventAction(onComplete));
+            }
         }
     }
-    
-    private IEnumerator EventAction()
+    /// <summary>
+    /// イベントの挙動
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator FinalEventAction(UnityAction onComplete)
     {
         InGameUtil.DoCursorLock();
         yield return null;
-        //フェードイン
+        yield return StartCoroutine(Words(new List<string>() { "……", "………", "……悪かった","俺が悪かった……","金が……","金が足りなかったんだよ……！！",
+        "助けてくれるって言うから話をしたのに……","でもあんたらは焦る俺を笑うかのように幸せな姿を見せつけて！！","すぐに金が必要だったんだよ……","俺は……！！"}));
+        yield return StartCoroutine(StartupHatsu());
+        //ドアの方を向く
+        StartCoroutine(mainCamera.TurnAroundSmooth_Coroutine(turnTarget_DoorDir.transform.position, 12f));
+        yield return new WaitForSeconds(0.7f);
+        //ドアの窓の向こうに初（カメラズーム）
+        yield return StartCoroutine(zoom.ZoomIn());
+        //主人公「！！」
+        yield return StartCoroutine(Words(new List<string>() { "!!" }));
+        StartCoroutine(mainCamera.TurnAroundSmooth_Coroutine(mainCamera.transform.position + Vector3.forward, 12f));
+
+        //カメラズームを戻す
+        yield return StartCoroutine(zoom.ZoomOut());
+        yield return new WaitForSeconds(0.35f);
+        //主人公が後ずさり
+        yield return StartCoroutine(SteppingBackFootStep());
+
+        yield return StartCoroutine(StartupAzuYuzu());
+        //笑い声に気づき右を向く
+        yield return new WaitForSeconds(1f);
+        yield return StartCoroutine(mainCamera.TurnAroundSmooth_Coroutine(turnTarget_AzuhaYuzuhaDir.transform.position, 12f));
+        //部屋に彩珠波と柚子羽
+        //主人公「！！」
+        yield return StartCoroutine(Words(new List<string>() { "!!" }));
+
+        //左を向くと孝蔵と詩織がゆっくり迫ってくる。右からは信之
+        Vector3 kozoPos = new Vector3(-3f, kozo.transform.position.y, 2f);
+        StartupKozo(kozoPos);
+        shiori.gameObject.SetActive(true);
+        shiori.transform.position = new Vector3(-4f, shiori.transform.position.y, 1.6f);
+        StartCoroutine(StartShioriUpdate());
+        yield return StartCoroutine(mainCamera.TurnAroundSmooth_Coroutine(new Vector3(shiori.transform.position.x, mainCamera.transform.position.y, shiori.transform.position.z + 0.5f), 12f));
+
+        yield return new WaitForSeconds(1f);
+
+        Vector3 nobuyukiPos = new Vector3(3f, nobuyuki.transform.position.y, -1.6f);
+        StartupNobuyuki(nobuyukiPos);
+        nobuyukiPos.y = mainCamera.transform.position.y;
+        yield return StartCoroutine(mainCamera.TurnAroundSmooth_Coroutine(nobuyukiPos, 12f));
+        yield return new WaitForSeconds(1f);
+        yield return StartCoroutine(mainCamera.TurnAroundSmooth_Coroutine(mainCamera.transform.position + Vector3.forward, 12f));
+        //後ずさり
+        yield return StartCoroutine(SteppingBackFootStep());
+
+        yield return StartCoroutine(mainCamera.TurnAroundSmooth_Coroutine(mainCamera.transform.position + new Vector3(-1, 0, 1), 12f));
+        yield return StartCoroutine(mainCamera.TurnAroundSmooth_Coroutine(mainCamera.transform.position + new Vector3(1, 0, 1), 12f));
+        yield return StartCoroutine(mainCamera.TurnAroundSmooth_Coroutine(mainCamera.transform.position + new Vector3(0.03f, 0, 1), 12f));
+        StartCoroutine(LastSteppingBack());
+
+        yield return new WaitForSeconds(2.7f);
+        //雪絵が迫る
+        yukie.gameObject.SetActive(true);
+        yukie.transform.position = new Vector3(yukie.transform.position.x, yukie.transform.position.y + 0.2f, yukie.transform.position.z);
+        Vector3 yukieMoveTarget = new Vector3(mainCamera.transform.position.x, yukie.transform.position.y, mainCamera.transform.position.z - 1f);
+        StartCoroutine(yukie.MoveWithTime(yukieMoveTarget, 1.1f, () =>
+        {
+            StartCoroutine(FinalEventActionEnded(onComplete));
+        }));
+
+        yield return new WaitForSeconds(0.3f);
+        yukieSound.PlaySoundLoop(0);
+        //タイミングで振り返り
+        StartCoroutine(mainCamera.TurnAroundToTargetAngle_Coroutine(turnTarget_yukieDir.transform.position, 10f));
+        StartCoroutine(YukieSoundVolumeAction(0.35f));
+    }
+
+    private IEnumerator FinalEventActionEnded(UnityAction onComplete)
+    {
+        FadeManager.Instance.BlackOut();
+        yukieSound.StopSound();
+        yield return new WaitForSeconds(2f);
+        if (onComplete != null)
+        {
+            onComplete();
+        }
+    }
+    /// <summary>
+    /// エンディングの挙動
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator EndingEventAction()
+    {
+        InGameUtil.DoCursorLock();
+        SoundManager.Instance.PlayBGMWithFadeIn(ambientClip);
+        //フェードイン（Wordの方で背景を黒くしているため、まだ暗いままになる）
+        FadeManager.Instance.FadeIn(FadeManager.FadeColorType.Black, 0.1f);
+        UIBackgroundManager.Instance.ShowPanel();
+        yield return new WaitForSeconds(3f);
+        yield return StartCoroutine(Words(new List<string>()
+        {
+            "- 富豪宅で男性惨殺か -",
+            "今日未明、榊原宅の庭で男性の遺体が発見された。",
+            @"男性はこの付近に住む探偵 -----さんで
+先日の榊原一家殺害事件の調査をしていた。",
+            @"警察はこの事件の犯人が-----さんを殺害したとみて
+捜査を進めている。"}));
+        SoundManager.Instance.StopBGMWithFadeOut();
+        FadeManager.Instance.FadeOut(FadeManager.FadeColorType.Black, 2f);
+        yield return new WaitForSeconds(3f);
+        UIBackgroundManager.Instance.HidePanel();
         FadeManager.Instance.FadeIn(FadeManager.FadeColorType.Black, 2f);
         yield return new WaitForSeconds(2f);
 
         //主人公の妻のセリフ
-        yield return StartCoroutine(Words(new List<string>() { "ありえない", "あの人があんなに無惨に殺されるなんて！！" }));
+        yield return StartCoroutine(Words(new List<string>() { "ありえない", "夫が…あの人があんなに無惨に殺されたのに！！","警察は全く捜査してくれない……！！","私が……私がこの目で真実を……" }));
 
         yield return StartCoroutine(StartupHatsu());
         //ドアの方を向く
@@ -295,13 +407,26 @@ public class EndingEventManager : MonoBehaviour
 
     private void FinishEventCallback()
     {
-        StartCoroutine(FinishEventCoroutine());
+        StartCoroutine(FinishEventCoroutine(()=>
+        {
+            SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Title", true, null, FadeManager.FadeColorType.None, FadeManager.FadeColorType.Black);
+        }));
     }
-    private IEnumerator FinishEventCoroutine()
+    private IEnumerator FinishEventCoroutine(UnityAction onComplete)
     {
         FadeManager.Instance.FadeOut(FadeManager.FadeColorType.Black, 2f);
         SoundManager.Instance.StopBGMWithFadeOut(3f);
         yield return new WaitForSeconds(3f);
         isPlaying = false;
+        if(onComplete != null)
+        {
+            onComplete();
+        }
     }
+}
+
+public enum EndingEventType
+{
+    FinalEvent,
+    EndingScene,
 }
