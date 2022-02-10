@@ -13,6 +13,7 @@ public class PlayerStateFree : StateBase
     {
         player = StageManager.Instance.Player;
         player.FirstPersonAIO.enabled = true;
+        CrosshairManager.Instance.FindCrosshair();
         frameCount = 0;
     }
 
@@ -20,12 +21,12 @@ public class PlayerStateFree : StateBase
     {
         if (Input.GetMouseButtonDown(0))
         {
-            player.raycastor.ScreenToRayAction(ClickAction);
+            player.raycastor.ScreenToRayActionWithLayerMask(LayerMaskData.FromPlayerRayMask, ClickAction);
             return;
         }
         if (frameCount >= 6)
         {
-            player.raycastor.ScreenToRayAction(SerchRay, MissSerchRay);
+            player.raycastor.ScreenToRayActionWithLayerMask(LayerMaskData.FromPlayerRayMask, SerchRay, MissSerchRay);
             frameCount = 0;
         }
         else { frameCount++; }
@@ -38,7 +39,7 @@ public class PlayerStateFree : StateBase
 
     public void SerchRay(RaycastHit hit)
     {
-        //Debug.Log("Serch : " + hit.transform.tag);
+        //Debug.Log("Serch : " + LayerMask.LayerToName(hit.transform.gameObject.layer) + " : " + hit.transform.gameObject.name);
         switch (hit.transform.tag)
         {
             case Tags.StageObject:

@@ -8,12 +8,13 @@ public class PlayerStateInMenu : StateBase
     public override void StartAction()
     {
         player = StageManager.Instance.Player;
+        player.ForcedStopFPS();
         player.FirstPersonAIO.enabled = false;
     }
 
     public override void UpdateAction()
     {
-
+        player.ForcedStopFPS();
     }
 
     public override void EndAction()

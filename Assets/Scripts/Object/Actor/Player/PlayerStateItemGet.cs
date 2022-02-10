@@ -31,18 +31,7 @@ public class PlayerStateItemGet : StateBase
 
     public override void UpdateAction()
     {
-        //if(timeCount <= waitTime)
-        //{
-        //    timeCount += Time.deltaTime;
-        //}
-        //else
-        //{
-        //    if (Input.GetMouseButtonDown(0))
-        //    {
-        //        ItemManager.Instance.FinishWatchItem();
-        //        player.ChangeState(PlayerState.Free);
-        //    }
-        //}
+        player.ForcedStopFPS();
     }
 
     public override void EndAction()

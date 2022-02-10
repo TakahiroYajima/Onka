@@ -21,7 +21,7 @@ public class PlayerStateKeylock : StateBase
     {
         if (Input.GetMouseButtonDown(0))
         {
-            player.raycastor.ScreenToRayAction(RayOperation);
+            player.raycastor.ScreenToRayActionWithLayerMask(LayerMaskData.FromPlayerRayMask, RayOperation);
         }
     }
 

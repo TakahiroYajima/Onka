@@ -29,8 +29,18 @@ public class PlayerObject : MonoBehaviour
 
     private List<Enemy> chasedEnemys = new List<Enemy>();
     public int chasedCount { get { return chasedEnemys.Count; } }//自分を追いかけている敵の数
-    public void AddChasedCount(Enemy _enemy) { if (chasedCount == 0) { ChangeState(PlayerState.Chased); } if (!chasedEnemys.Contains(_enemy)) { chasedEnemys.Add(_enemy); } ; Debug.Log("AddChasedCount current : " + chasedCount.ToString()); }
-    public void RemoveChasedCount(Enemy _enemy) { if (chasedEnemys.Contains(_enemy)) { chasedEnemys.Remove(_enemy); } Debug.Log("RemoveChasedCount current : " + chasedCount.ToString()); OrganizeChasedEnemys(); if (chasedCount == 0) { ChangeState(PlayerState.Free); } }
+    public void AddChasedCount(Enemy _enemy)
+    {
+        if (chasedCount == 0) { ChangeState(PlayerState.Chased); }
+        if (!chasedEnemys.Contains(_enemy)) { chasedEnemys.Add(_enemy); }
+        //Debug.Log("AddChasedCount current : " + chasedCount.ToString());
+    }
+    public void RemoveChasedCount(Enemy _enemy)
+    {
+        if (chasedEnemys.Contains(_enemy)) { chasedEnemys.Remove(_enemy); }
+        //Debug.Log("RemoveChasedCount current : " + chasedCount.ToString()); OrganizeChasedEnemys();
+        if (chasedCount == 0) { ChangeState(PlayerState.Free); }
+    }
     private void OrganizeChasedEnemys() { foreach(Enemy e in chasedEnemys) { if(e == null) { chasedEnemys.Remove(e); } } }
 
     public bool isEventEnabled { get { return currentState == PlayerState.Init || currentState == PlayerState.Free; } }
@@ -101,11 +111,23 @@ public class PlayerObject : MonoBehaviour
         rigidbody.velocity = Vector3.zero;
         rigidbody.angularVelocity = Vector3.zero;
     }
+    /// <summary>
+    /// プレイヤーの視界に入っているか
+    /// </summary>
+    /// <param name="judgePos"></param>
+    /// <param name="searchAngle"></param>
+    /// <returns></returns>
+    public bool IsInSightFromPlayer(Vector3 judgePos, float searchAngle = 60f)
+    {
+        //視界に入っていたら検知
+        var positionDiff = judgePos - transform.position;
+        var angle = Vector3.Angle(transform.forward, positionDiff);
+        return angle <= searchAngle;
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
-        string tagName = collision.gameObject.tag;
-        switch (tagName)
+        switch (collision.gameObject.tag)
         {
             case Tags.Door:
                 DoorObject doorObject = collision.gameObject.GetComponent<DoorObject>();
@@ -120,16 +142,28 @@ public class PlayerObject : MonoBehaviour
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
-        string tagName = collision.gameObject.tag;
-        switch (tagName)
+        if(collision.gameObject.tag == Tags.Door)
         {
-            case "CrouchingArea":
-                //firstPersonAIO.isStandable = true;
-                break;
+            DoorObject doorObject = collision.gameObject.GetComponent<DoorObject>();
+            if (doorObject != null)
+            {
+                doorObject.OpenDoor();
+            }
         }
     }
+
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    string tagName = collision.gameObject.tag;
+    //    switch (tagName)
+    //    {
+    //        case "CrouchingArea":
+    //            //firstPersonAIO.isStandable = true;
+    //            break;
+    //    }
+    //}
 }
 
 public enum PlayerState

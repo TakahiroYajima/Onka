@@ -12,7 +12,8 @@ public class PlayerStateArrested : StateBase
         player.capsuleCollider.enabled = false;
         player.rigidbody.velocity = Vector3.zero;
         player.rigidbody.angularVelocity = Vector3.zero;
-        player.rigidbody.isKinematic = true;    
+        player.rigidbody.isKinematic = true;
+        CrosshairManager.Instance.SetCrosshairActive(false);
     }
 
     public override void UpdateAction()

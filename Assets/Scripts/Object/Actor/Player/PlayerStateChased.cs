@@ -8,18 +8,26 @@ using UnityEngine;
 public class PlayerStateChased : StateBase
 {
     private PlayerObject player = null;
+    private int frameCount = 0;
 
     public override void StartAction()
     {
         player = StageManager.Instance.Player;
+        CrosshairManager.Instance.ChangeCenterSprites(CrosshairType.Normal);
     }
 
     public override void UpdateAction()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            player.raycastor.ScreenToRayAction(ClickAction);
+            player.raycastor.ScreenToRayActionWithLayerMask(LayerMaskData.FromPlayerRayMask, ClickAction);
         }
+        if (frameCount >= 6)
+        {
+            player.raycastor.ScreenToRayActionWithLayerMask(LayerMaskData.FromPlayerRayMask, SerchRay, MissSerchRay);
+            frameCount = 0;
+        }
+        else { frameCount++; }
     }
 
     public override void EndAction()
@@ -42,5 +50,25 @@ public class PlayerStateChased : StateBase
                 hit.transform.GetComponent<KeyHoleObject>().DoUnlock();
                 break;
         }
+    }
+    public void SerchRay(RaycastHit hit)
+    {
+        //Debug.Log("Serch : " + hit.transform.tag);
+        switch (hit.transform.tag)
+        {
+            case Tags.StageObject:
+                CrosshairManager.Instance.ChangeCenterSprites(CrosshairType.Tapable);
+                break;
+            case Tags.KeyHole:
+                CrosshairManager.Instance.ChangeCenterSprites(CrosshairType.DoorKey);
+                break;
+            default:
+                CrosshairManager.Instance.ChangeCenterSprites(CrosshairType.Normal);
+                break;
+        }
+    }
+    private void MissSerchRay()
+    {
+        CrosshairManager.Instance.ChangeCenterSprites(CrosshairType.Normal);
     }
 }
