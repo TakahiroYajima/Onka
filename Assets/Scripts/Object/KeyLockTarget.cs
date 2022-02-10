@@ -42,5 +42,6 @@ public class KeyLockTarget : MonoBehaviour
             Debug.LogError("取得したアイテムは存在しないか、キーが間違っています。 " + unlockTargetKey);
         }
         SolveKeylockManager.Instance.FinishUnlockEvent();
+        Onka.Manager.Event.EventManager.Instance.ProgressEvent();
     }
 }

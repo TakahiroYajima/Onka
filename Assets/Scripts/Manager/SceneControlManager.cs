@@ -19,7 +19,7 @@ public class SceneControlManager : SingletonMonoBehaviour<SceneControlManager>
     {
         if (isBGMStop)
         {
-            SoundManager.Instance.StopBGMWithFadeOut(1f);
+            StopBGMAndEnvironment();
         }
         FadeManager.Instance.FadeOut(fadeOutColorType, 1f, () =>
         {
@@ -32,7 +32,7 @@ public class SceneControlManager : SingletonMonoBehaviour<SceneControlManager>
     {
         if (isBGMStop)
         {
-            SoundManager.Instance.StopBGMWithFadeOut(1f);
+            StopBGMAndEnvironment();
         }
         FadeManager.Instance.FadeOut(FadeManager.FadeColorType.Black, 1f, () =>
         {
@@ -45,7 +45,7 @@ public class SceneControlManager : SingletonMonoBehaviour<SceneControlManager>
     {
         if (isBGMStop)
         {
-            SoundManager.Instance.StopBGMWithFadeOut(1f);
+            StopBGMAndEnvironment();
         }
         FadeManager.Instance.FadeOut(fadeOutColorType, 1f, () =>
         {
@@ -56,6 +56,12 @@ public class SceneControlManager : SingletonMonoBehaviour<SceneControlManager>
             });
             //StartCoroutine(ChangeSceneAsyncCoroutine(sceneName, onComplete, fadeInColorType));
         });
+    }
+
+    private void StopBGMAndEnvironment()
+    {
+        SoundManager.Instance.StopBGMWithFadeOut(1f);
+        SoundManager.Instance.StopEnvironment();
     }
 
     //private IEnumerator ChangeSceneAsyncCoroutine(string sceneName, UnityAction onComplete = null, FadeManager.FadeColorType fadeInColorType = FadeManager.FadeColorType.None)

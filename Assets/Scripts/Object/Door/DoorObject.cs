@@ -19,6 +19,7 @@ public abstract class DoorObject : MonoBehaviour
     protected bool isMoving = false;
     protected bool isOpenState = false;//ドアが開いている状態か
     public bool isForceOpenable = false;//イベントなどで強制的にドアを開けられるようにするか
+    [HideInInspector] public bool isEternalClosed = false;//一切開けられないようにするか（イベント用）
 
     bool isKeyHoleUnlocked = true;
     bool isKeyLockUnlocked = true;
@@ -48,6 +49,8 @@ public abstract class DoorObject : MonoBehaviour
 
     public void OpenDoor()
     {
+        if (isEternalClosed) return;
+
         if (isForceOpenable)
         {
             OpenAction();

@@ -26,7 +26,7 @@ public class CrosshairManager : SingletonMonoBehaviour<CrosshairManager>
         FindCrosshair();
         if (Crosshair != null)
         {
-            Crosshair.SetActive(_isActive);
+            crosshairImage.enabled = _isActive;
         }
     }
     public void SetCrosshairSprite(Sprite sprite)

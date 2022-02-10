@@ -36,7 +36,7 @@ public class GameSceneManager : SceneBase
         {
             //セーブ地点から再開
             StageManager.Instance.Player.transform.position = restartPosition.transform.position;
-            StageManager.Instance.Player.transform.rotation = Quaternion.Euler(0f, 90f, 0f);//セーブポイントの方を向かせる
+            StageManager.Instance.Player.transform.rotation = Quaternion.Euler(0f, 180f, 0f);//セーブポイントの方を向かせる
             StageManager.Instance.Player.ChangeState(PlayerState.Free);
         }
         //オープニングイベントだけ終了済み
@@ -73,7 +73,7 @@ public class GameSceneManager : SceneBase
             SoundManager.Instance.PlayEnvironmentWithKey("ambient_in_house");
         }
 
-        EventManager.Instance.ProgressEvent();
+        EventManager.Instance.InitProgressEach();
     }
 }
 
