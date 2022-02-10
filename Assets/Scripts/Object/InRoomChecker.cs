@@ -8,7 +8,7 @@ using UnityEngine.Events;
 /// </summary>
 public class InRoomChecker : MonoBehaviour
 {
-    //部屋に入っている時の情報
+    //部屋に入っている時の情報（部屋のさらに奥の部屋に入る事を想定してリストで管理）
     private List<RoomWanderingManager> currentEnterRoomList = new List<RoomWanderingManager>();
     public IReadOnlyList<RoomWanderingManager> CurrentEnterRoomList { get { return currentEnterRoomList; } }
     public bool isEnterRoom { get { return currentEnterRoomList.Count > 0; } }//部屋に入っているか

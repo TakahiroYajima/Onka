@@ -201,6 +201,7 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
     {
         if(Yukie != null)
         {
+            yukieObject.StopSound();
             yukieObject.gameObject.SetActive(false);
         }
         if(Shiori != null)

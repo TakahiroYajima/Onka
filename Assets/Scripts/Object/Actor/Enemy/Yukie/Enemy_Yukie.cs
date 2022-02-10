@@ -25,6 +25,8 @@ public class Enemy_Yukie : Enemy
     public CapsuleCollider ToPlayerWallCollider { get { return toPlayerWallCollider; } }
     [SerializeField] private Transform faceTransform = null;
     public Transform FaceTransform { get { return faceTransform; } }
+    [SerializeField] private Transform eyeTransform = null;
+    public Transform EyeTransform { get { return eyeTransform; } }
 
     public Dictionary<EnemyState, StateBase> yukieStateDic { get; private set; } = new Dictionary<EnemyState, StateBase>();
 
@@ -45,7 +47,8 @@ public class Enemy_Yukie : Enemy
     private float provocationingTime = 0f;//プレイヤーに挑発されている時間
 
     //特定ステート内フラグ
-    public bool isEternalChaseMode = false;//追いかけるステートの時、プレイヤーが部屋に隠れるまで見失わないようにするか
+    [HideInInspector] public bool isEternalChaseMode = false;//追いかけるステートの時、プレイヤーが部屋に隠れるまで見失わないようにするか
+    [HideInInspector] public bool isIgnoreInRoom = false;//部屋の中に入ってもプレイヤーを見失わずに強制で追いかけるか
 
     protected override void Awake()
     {
@@ -195,8 +198,14 @@ public class Enemy_Yukie : Enemy
     }
 
     #region サウンド関連
+    public void PlaySoundOne(int arrayNum, float volume = 1f)
+    {
+        emitterSoundPlayer.audioSource.loop = false;
+        SoundDistanceManager.Instance.StartSoundDistanceMaker(emitterSoundPlayer.GetClip(arrayNum), volume);
+    }
     public void PlaySoundLoop(int arrayNum, float volume = 1f)
     {
+        emitterSoundPlayer.audioSource.loop = true;
         SoundDistanceManager.Instance.StartSoundDistanceMaker(emitterSoundPlayer.GetClip(arrayNum), volume);
     }
     public void SetMaxVolume(float _volume)

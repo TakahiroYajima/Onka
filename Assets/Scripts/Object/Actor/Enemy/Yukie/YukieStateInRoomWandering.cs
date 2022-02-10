@@ -23,7 +23,7 @@ public class YukieStateInRoomWandering : StateBase
     private Vector3 transformLeft;
     private Vector3 targetDireciton;
     private float rotationSpeed = 1.4f;
-    private UnityAction<RaycastHit> serachedAction = null;//プレイヤーを探すコールバック（複数回記述するのが嫌なのでコールバックにした）
+    //private UnityAction<RaycastHit> serachedAction = null;//プレイヤーを探すコールバック（複数回記述するのが嫌なのでコールバックにした）
     private const float NoticeProvocationTime = 3f;//プレイヤーに気付くまでの時間
 
     //各アクションの要素
@@ -32,29 +32,40 @@ public class YukieStateInRoomWandering : StateBase
     public override void StartAction()
     {
         yukie = StageManager.Instance.Yukie;
+        if (yukie.isIgnoreInRoom)
+        {
+            yukie.ChangeState(EnemyState.ChasePlayer);
+            return;
+        }
         yukie.provokedSystem.Initialize(NoticeProvocationTime, () =>
         {
             //currentState = YukieInRoomWanderingState.RotateToPlayer;
             yukie.ChangeState(EnemyState.RotateToPlayer);
-        });
+        }, yukie.EyeTransform);
 
-        if (serachedAction == null)
-        {
-            serachedAction = (RaycastHit hit) =>
-            {
-                if (Utility.Instance.IsTagNameMatch(hit.transform.gameObject, Tags.Player))
-                {
-                    yukie.ChangeState(EnemyState.RecognizedPlayer);//プレイヤーを目視できていたら追いかけるステートへ
-                }
-            };
-        }
+        //if (serachedAction == null)
+        //{
+        //    serachedAction = (RaycastHit hit) =>
+        //    {
+        //        if (Utility.Instance.IsTagNameMatch(hit.transform.gameObject, Tags.Player))
+        //        {
+        //            yukie.ChangeState(EnemyState.RecognizedPlayer);//プレイヤーを目視できていたら追いかけるステートへ
+        //        }
+        //    };
+        //}
+
+
 
         currentState = YukieInRoomWanderingState.Init;
         SetInRoomWanderingActorArrivaledCallback();
         yukie.inRoomWanderingActor.Initialize();
         yukie.inRoomWanderingActor.SetActive(true, yukie.inRoomChecker.CurrentEnterRoomList[yukie.inRoomChecker.CurrentEnterRoomList.Count - 1], true);
-        Debug.Log("Yukie:InRoomStart : " + yukie.inRoomChecker.CurrentEnterRoomList[yukie.inRoomChecker.CurrentEnterRoomList.Count - 1]);
+        //Debug.Log("Yukie:InRoomStart : " + yukie.inRoomChecker.CurrentEnterRoomList[yukie.inRoomChecker.CurrentEnterRoomList.Count - 1]);
     }
+    /// <summary>
+    /// 徘徊通過点に到着した時のコールバックを設定
+    /// </summary>
+    /// <param name="isSetMyMethod"></param>
     private void SetInRoomWanderingActorArrivaledCallback(bool isSetMyMethod = true)
     {
         if (isSetMyMethod) yukie.inRoomWanderingActor.onArrivaledPointCallback = OnArrivaledPointCallback;
@@ -145,21 +156,18 @@ public class YukieStateInRoomWandering : StateBase
     private void FirstSerachPlayer()
     {
         //まだプレイヤーを目視できているか判定
-        yukie.raycastor.ObjectToRayAction(yukie.transform.position, yukie.player.transform.position, (RaycastHit hit) =>
+        if (IsPlayerHitSerchRay(yukie.player.transform.position))
+            yukie.ChangeState(EnemyState.RecognizedPlayer);//プレイヤーを目視できていたら追いかけるステートへ
+        else if (IsPlayerHitSerchRay(yukie.player.transform.position + new Vector3(0f, yukie.player.colliderHeightHalf, 0f)))
+            yukie.ChangeState(EnemyState.RecognizedPlayer);
+        else
         {
-            if (Utility.Instance.IsTagNameMatch(hit.transform.gameObject, Tags.Player))
-            {
-                yukie.ChangeState(EnemyState.RecognizedPlayer);//プレイヤーを目視できていたら追いかけるステートへ
-            }
-            else
-            {
-                //プレイヤーを目視できていなかったらこのまま部屋内徘徊へ
-                yukie.navMeshAgent.velocity = Vector3.zero;
-                yukie.navMeshAgent.SetDestination(yukie.transform.position);
+            //プレイヤーを目視できていなかったらこのまま部屋内徘徊へ
+            yukie.navMeshAgent.velocity = Vector3.zero;
+            yukie.navMeshAgent.SetDestination(yukie.transform.position);
 
-                currentState = YukieInRoomWanderingState.SerachPlayerToLeft;
-            }
-        }, 12f);
+            currentState = YukieInRoomWanderingState.SerachPlayerToLeft;
+        }
     }
 
     /// <summary>
@@ -169,16 +177,24 @@ public class YukieStateInRoomWandering : StateBase
     {
         if (yukie.IsInSightPlayer())
         {
-            if (yukie.raycastor.IsRaycastHitObjectMatch(yukie.transform.position, yukie.player.transform.position, Tags.Player, 12f))
+            if (IsPlayerHitSerchRay(yukie.player.transform.position))
+                yukie.ChangeState(EnemyState.RecognizedPlayer);//プレイヤーを目視できていたら追いかけるステートへ
+            else if (IsPlayerHitSerchRay(yukie.player.transform.position + new Vector3(0f, yukie.player.colliderHeightHalf, 0f)))
                 yukie.ChangeState(EnemyState.RecognizedPlayer);
-            else if(yukie.raycastor.IsRaycastHitObjectMatch(yukie.transform.position, yukie.player.transform.position + new Vector3(0f,yukie.player.colliderHeightHalf, 0f), Tags.Player, 12f))
-                yukie.ChangeState(EnemyState.RecognizedPlayer);
-            //yukie.raycastor.ObjectToRayAction(yukie.transform.position, yukie.player.transform.position, serachedAction, 12f);
         }
         else
         {
             yukie.provokedSystem.ProvokedUpdate_ToPlayer_6Frame(yukie.player.transform.position);
         }
+    }
+    /// <summary>
+    /// 雪絵の目の位置からRayを飛ばし、プレイヤーに当たったかの判定を返す
+    /// </summary>
+    /// <param name="targetPos"></param>
+    /// <returns></returns>
+    private bool IsPlayerHitSerchRay(Vector3 targetPos)
+    {
+        return yukie.raycastor.IsRaycastHitObjectMatchWithLayerMask(yukie.EyeTransform.position, targetPos, Tags.Player, LayerMaskData.SerchToPlayerMask, 12f);
     }
 
     private void RotationAction(UnityAction onComplete)

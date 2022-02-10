@@ -34,7 +34,7 @@ public class YukieStateWandering : StateBase
         yukie.provokedSystem.Initialize(10f, () =>
         {
             yukie.ChangeState(EnemyState.RotateToPlayer);
-        });
+        }, yukie.EyeTransform);
     }
 
     public override void UpdateAction()

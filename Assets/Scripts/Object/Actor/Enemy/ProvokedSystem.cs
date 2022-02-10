@@ -14,30 +14,39 @@ public class ProvokedSystem : MonoBehaviour
     
     //ターゲットが自分の視界の範囲外をうろつく＝挑発しているので、それに対する不意打ち要素
     private float NoticeProvocationTime = 10f;//挑発に気付くまでの時間
-    public float provocationingTime = 0f;//ターゲットに挑発されている時間
+    [HideInInspector] public float provocationingTime = 0f;//ターゲットに挑発されている時間
+    [HideInInspector] public Transform rayStartPointTransform = null;//Rayを発射する地点
 
     private UnityAction PreciseSerachedPlayer_True = null;
 
-    public void Initialize(float _noticeProvocationTime, UnityAction _onNoticed)
+    public void Initialize(float _noticeProvocationTime, UnityAction _onNoticed, Transform _rayStartPointTransform = null)
     {
         NoticeProvocationTime = _noticeProvocationTime;
         onNoticedAction = _onNoticed;
         provocationingTime = 0f;
+        if(_rayStartPointTransform == null)
+        {
+            rayStartPointTransform = transform;
+        }
+        else
+        {
+            rayStartPointTransform = _rayStartPointTransform;
+        }
     }
 
     void Awake()
     {
         raycastor = GetComponent<Raycastor>();
-        PreciseSerachedPlayer_True = () =>
-        {
-            provocationingTime += Time.deltaTime * Enemy_Yukie.doUpdateFrameCount;
-            if (provocationingTime >= NoticeProvocationTime)
-            {
-                //さんざん煽られた or 部屋内徘徊中にプレイヤーを察知したので何かする（不意打ち要素・実況者殺し）
-                onNoticedAction();
-                provocationingTime = 0f;
-            }
-        };
+        //PreciseSerachedPlayer_True = () =>
+        //{
+        //    provocationingTime += Time.deltaTime * Enemy_Yukie.doUpdateFrameCount;
+        //    if (provocationingTime >= NoticeProvocationTime)
+        //    {
+        //        //さんざん煽られた or 部屋内徘徊中にプレイヤーを察知したので何かする（不意打ち要素・実況者殺し）
+        //        onNoticedAction();
+        //        provocationingTime = 0f;
+        //    }
+        //};
     }
 
     /// <summary>
@@ -53,7 +62,7 @@ public class ProvokedSystem : MonoBehaviour
         //}
         //frameCount = 0;
 
-        raycastor.ObjectToRayAction(transform.position, targetPosition, (RaycastHit hit) =>
+        raycastor.ObjectToRayAction(rayStartPointTransform.position, targetPosition, (RaycastHit hit) =>
         {
             if (Utility.Instance.IsTagNameMatch(hit.transform.gameObject, Tags.Player))
             {
@@ -73,27 +82,27 @@ public class ProvokedSystem : MonoBehaviour
         }, 6f);//6メートル以内なら煽りと判断
     }
 
-    public void ProvokedUpdate_ToPlayer_Vertical_6Frame(Vector3 targetPosition)
-    {
-        raycastor.ObjectToRayAction(transform.position, targetPosition, (RaycastHit hit) =>
-        {
-            if (Utility.Instance.IsTagNameMatch(hit.transform.gameObject, Tags.Player))
-            {
-                provocationingTime += Time.deltaTime * Enemy_Yukie.doUpdateFrameCount;
-                if (provocationingTime >= NoticeProvocationTime)
-                {
-                    //さんざん煽られた or 部屋内徘徊中にプレイヤーを察知したので何かする（不意打ち要素・実況者殺し）
-                    onNoticedAction();
-                    provocationingTime = 0f;
-                }
-            }
-            else
-            {
-                provocationingTime -= Time.deltaTime * Enemy_Yukie.doUpdateFrameCount;
-                if (provocationingTime < 0f) { provocationingTime = 0f; }
-            }
-        }, 6f);//6メートル以内なら煽りと判断
-    }
+    //public void ProvokedUpdate_ToPlayer_Vertical_6Frame(Vector3 targetPosition)
+    //{
+    //    raycastor.ObjectToRayAction(rayStartPointTransform.position, targetPosition, (RaycastHit hit) =>
+    //    {
+    //        if (Utility.Instance.IsTagNameMatch(hit.transform.gameObject, Tags.Player))
+    //        {
+    //            provocationingTime += Time.deltaTime * Enemy_Yukie.doUpdateFrameCount;
+    //            if (provocationingTime >= NoticeProvocationTime)
+    //            {
+    //                //さんざん煽られた or 部屋内徘徊中にプレイヤーを察知したので何かする（不意打ち要素・実況者殺し）
+    //                onNoticedAction();
+    //                provocationingTime = 0f;
+    //            }
+    //        }
+    //        else
+    //        {
+    //            provocationingTime -= Time.deltaTime * Enemy_Yukie.doUpdateFrameCount;
+    //            if (provocationingTime < 0f) { provocationingTime = 0f; }
+    //        }
+    //    }, 6f);//6メートル以内なら煽りと判断
+    //}
 
     /// <summary>
     /// さらに精密にプレイヤーを察知させる

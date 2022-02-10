@@ -19,7 +19,7 @@ public class YukieStateCaughtPlayer : StateBase
         yukie.capsuleCollider.enabled = false;
         yukie.ToPlayerWallCollider.enabled = false;
         yukie.onColliderEnterCallback = null;
-        Debug.Log("GameOver");
+        //Debug.Log("GameOver");
 
         yukie.player.ChangeState(PlayerState.Arrested);
         //プレイヤーの背後から捕まえたかによってアクションを変える

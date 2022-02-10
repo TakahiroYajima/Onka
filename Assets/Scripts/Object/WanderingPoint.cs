@@ -39,7 +39,9 @@ public class WanderingPoint : MonoBehaviour
         }
     }
 }
-
+/// <summary>
+/// 徘徊の通過ポイントに到達した際の挙動を決める列挙
+/// </summary>
 public enum OnWPArrivaledEventCode
 {
     None,//イベント無し

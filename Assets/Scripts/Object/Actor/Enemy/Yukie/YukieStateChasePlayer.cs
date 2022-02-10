@@ -45,8 +45,9 @@ public class YukieStateChasePlayer : StateBase
             {
                 yukie.navMeshAgent.velocity = Vector3.zero;
                 yukie.ChangeState(EnemyState.Wandering);
-                Debug.Log("プレイヤー追尾をあきらめた");
+                //Debug.Log("プレイヤー追尾をあきらめた");
                 yukie.player.RemoveChasedCount(yukie);
+                frameCount = 0;
                 return;
             }
             
