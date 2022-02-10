@@ -45,8 +45,8 @@ TagManager:
   - RoomCollider
   - WanderingSystem
   - KeyLockTouchable
-  - 
-  - 
+  - RaycastWall
+  - KeyHole
   - 
   - 
   - 
