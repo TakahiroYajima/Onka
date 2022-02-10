@@ -5,9 +5,9 @@ using UnityEngine;
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
 
-    // Start is called before the first frame update
-    void Start()
+    protected override void Awake()
     {
-        
+        base.Awake();
+        LayerMaskData.Initialize();
     }
 }
