@@ -86,11 +86,21 @@ public class SoundPlayerObject : MonoBehaviour
         audioSource.Play();
     }
 
+    public void VolumeUpWithFade(float fadeTime = 1f, float endVolume = 1f)
+    {
+        StartCoroutine(audioSource.VolumeUpWithFade(fadeTime, endVolume));
+    }
+
     public void StopSound()
     {
         audioSource.Stop();
     }
 
+    public void StopSoundWithFadeOut(float fadeTime = 1f)
+    {
+        StartCoroutine(audioSource.StopWithFadeOut(fadeTime));
+    }
+    
     public void PlaySE(string key)
     {
         SoundData data = DataManager.Instance.GetSE(key);

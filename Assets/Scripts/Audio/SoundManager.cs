@@ -437,7 +437,20 @@ namespace SoundSystem
             
             voiceAudioSource.PlayScheduled (AudioSettings.dspTime + delayTime);
         }
-        
+        public void PlayVoiceClip(AudioClip voice, float volume = 1f)
+        {
+            voiceAudioSource.clip = voice;
+            voiceAudioSource.volume = volume;
+            voiceAudioSource.loop = false;//念のため
+            voiceAudioSource.Play();
+        }
+        public void StopVoice()
+        {
+            if (voiceAudioSource.isPlaying)
+            {
+                voiceAudioSource.Stop();
+            }
+        }
     }
 
 }

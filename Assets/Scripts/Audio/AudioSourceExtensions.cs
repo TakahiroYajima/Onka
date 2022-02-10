@@ -50,6 +50,20 @@ namespace SoundSystem
             audioSource.volume = targetVolume;
         }
         
+        public static IEnumerator VolumeUpWithFade(this AudioSource audioSource, float fadeTime = 0.1f, float endVolume = 1.0f)
+        {
+            //目標ボリュームを補正//
+            float targetVolume = Mathf.Clamp01(endVolume);
+            //フェード時間がおかしかった場合は補正//
+            fadeTime = fadeTime < 0.1f ? 0.1f : fadeTime;
+            float startVolume = audioSource.volume;
+            for (float t = 0f; t < fadeTime; t += Time.deltaTime)
+            {
+                audioSource.volume = Mathf.Lerp(startVolume, targetVolume, Mathf.Clamp01(t / fadeTime));
+                yield return null;
+            }
+            audioSource.volume = targetVolume;
+        }
         
         public static IEnumerator StopWithFadeOut(this AudioSource audioSource, float fadeTime = 0.1f)
         {
