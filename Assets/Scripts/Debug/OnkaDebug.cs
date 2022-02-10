@@ -35,7 +35,7 @@ public class OnkaDebug : MonoBehaviour
     {
         foreach (var eventData in DataManager.Instance.GetAllEventData_Debug())
         {
-            if (eventData.eventKey != "Event_AfterOutHouse" && eventData.eventKey != "Event_NoteFinalActive")
+            if (eventData.eventKey != "Event_AfterOutHouse" && eventData.eventKey != "Event_NoteFinalActive" && eventData.eventKey != "Event_AftertGetEntranceKey")
             {
                 eventData.isEnded = true;
             }

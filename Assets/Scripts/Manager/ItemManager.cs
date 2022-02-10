@@ -66,10 +66,6 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
         }
     }
 
-    private void GimickItemAction(ItemData data, ItemObject itemObject, UnityAction<bool> isGetedAction)
-    {
-
-    }
     private void NormalItemGetAction(ItemData data, ItemObject itemObject, UnityAction<bool> isGetedAction)
     {
         isGetedAction(true);
