@@ -35,6 +35,24 @@ public abstract class EventBase : MonoBehaviour
     }
 
     /// <summary>
+    /// 最初の初期化の段階でクリア済みかを判定。クリアしていたらクリア後の状態にする（オブジェクトの移動など）
+    /// </summary>
+    public void InitProgress()
+    {
+        if (EventManager.Instance.IsEventEnded(eventKey))
+        {
+            AlreadyClearedMove();
+        }
+    }
+    /// <summary>
+    /// 既にクリアしていた時に呼び出される（クリア後の状態にする）
+    /// </summary>
+    protected virtual void AlreadyClearedMove()
+    {
+
+    }
+
+    /// <summary>
     /// 自身のイベントが発行可能か判断する
     /// </summary>
     public void ProgressEvent()

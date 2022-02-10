@@ -25,7 +25,6 @@ public class EA_AfterGetHatsuDiary3 : EventActorBase
 
     public override void EventStart()
     {
-        Debug.Log("初イベントスタート");
         canvasObj.renderMode = RenderMode.ScreenSpaceCamera;
         canvasObj.worldCamera = eventBase.WorldCamera;
         StartCoroutine(HatsuEvent(() =>
@@ -48,7 +47,16 @@ public class EA_AfterGetHatsuDiary3 : EventActorBase
         
         Vector2 underPos = initPos;
         underPos.y -= 30f;
-        yield return new WaitForSeconds(3f);
+        float t = 0f;
+        while(t < 3f)
+        {
+            if(StageManager.Instance.Player.currentState == PlayerState.Free ||
+                StageManager.Instance.Player.currentState == PlayerState.Chased)
+            {
+                t += Time.deltaTime;
+            }
+            yield return null;
+        }
         //プレイヤーがアイテムを見ていたら強制で通常の状態に戻す
         if(StageManager.Instance.Player.currentState == PlayerState.ItemGet)
         {

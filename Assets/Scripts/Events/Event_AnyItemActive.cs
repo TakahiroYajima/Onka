@@ -10,6 +10,17 @@ public class Event_AnyItemActive : EventBase
     [SerializeField] private ItemObject itemObject = null;
     public void SetItemPosition(Vector3 pos) { itemObject.transform.position = pos; }
 
+    protected override void AlreadyClearedMove()
+    {
+        //永久に存在するアイテム（日記など）は、表示させて終了
+        switch (DataManager.Instance.GetItemData(itemObject.ItemKey).type)
+        {
+            case ItemType.WatchOnly:
+                itemObject.gameObject.SetActive(true);
+                break;
+        }
+    }
+
     protected override void EventActive()
     {
         base.EventActive();

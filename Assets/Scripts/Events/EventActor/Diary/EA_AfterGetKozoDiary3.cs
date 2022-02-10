@@ -43,7 +43,7 @@ public class EA_AfterGetKozoDiary3 : EventActorBase
             currentTime += Time.deltaTime;
             yield return null;
         }
-        eventBase.MoveObject.rotation = Quaternion.Euler(0, 45, 0);
+        eventBase.MoveObject.rotation = eventBase.moveObjectFinishedRotationEular;
         onComplete();
     }
 

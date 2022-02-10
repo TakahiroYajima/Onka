@@ -11,6 +11,7 @@ public class Event_AfterGetKozoDiary3 : EventBase
     //地下にあるキメラみたいな像を動かす。音も鳴らす（ビビらせ要員）
     [SerializeField] private Transform moveObject = null;
     public Transform MoveObject { get { return moveObject; } }
+    public Quaternion moveObjectFinishedRotationEular = Quaternion.Euler(0, 45, 0);
 
     protected override void EventActive()
     {
@@ -31,5 +32,9 @@ public class Event_AfterGetKozoDiary3 : EventBase
         Destroy(instanceEventActor.gameObject);
     }
 
-    
+    protected override void AlreadyClearedMove()
+    {
+        base.AlreadyClearedMove();
+        moveObject.rotation = moveObjectFinishedRotationEular;
+    }
 }

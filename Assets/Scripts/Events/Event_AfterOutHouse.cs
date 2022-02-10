@@ -21,6 +21,7 @@ public class Event_AfterOutHouse : EventBase
     {
         fieldColliderBase.SetActive(false);
         entranceDoor.CloseDoor();
+        CrosshairManager.Instance.SetCrosshairActive(false);
         base.EventStart();
     }
 }

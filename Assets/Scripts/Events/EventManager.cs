@@ -68,6 +68,20 @@ namespace Onka.Manager.Event
             }
         }
         /// <summary>
+        /// 初期化時限定
+        /// </summary>
+        public void InitProgressEach()
+        {
+            for (int i = 0; i < eventObjectList.Count; i++)
+            {
+                if (eventObjectList[i] != null)
+                {
+                    eventObjectList[i].InitProgress();
+                    eventObjectList[i].ProgressEvent();
+                }
+            }
+        }
+        /// <summary>
         /// イベント出現判定を更新
         /// </summary>
         public void ProgressEvent()

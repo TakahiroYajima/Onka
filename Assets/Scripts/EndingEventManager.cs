@@ -15,6 +15,14 @@ public class EndingEventManager : MonoBehaviour
     [SerializeField] private WalkAnimObj nobuyuki = null;
     [SerializeField] private WalkAnimObj azuha = null;
     [SerializeField] private WalkAnimObj yuzuha = null;
+    //各敵のサウンド再生機能
+    private SoundPlayerObject yukieSoundPlayer = null;
+    private SoundPlayerObject shioriSoundPlayer = null;
+    private SoundPlayerObject kozoSoundPlayer = null;
+    private SoundPlayerObject hatsuSoundPlayer = null;
+    private SoundPlayerObject nobuyukiSoundPlayer = null;
+    private SoundPlayerObject azuhaSoundPlayer = null;
+    private SoundPlayerObject yuzuhaSoundPlayer = null;
 
     [SerializeField] private GameObject turnTarget_DoorDir = null;//ドアの窓の方向
     [SerializeField] private GameObject turnTarget_AzuhaYuzuhaDir = null;//彩珠波と柚子羽がいる窓の方向
@@ -24,8 +32,6 @@ public class EndingEventManager : MonoBehaviour
     [SerializeField] private AudioClip ambientClip = null;
 
     private CRT tvEffect = null;
-
-    SoundPlayerObject yukieSound = null;
 
     private bool isPlaying = false;
 
@@ -43,7 +49,13 @@ public class EndingEventManager : MonoBehaviour
         tvEffect = cameraObj.GetComponent<CRT>();
         if(tvEffect == null) { tvEffect = cameraObj.AddComponent<CRT>(); }
 
-        yukieSound = yukie.GetComponent<SoundPlayerObject>();
+        yukieSoundPlayer = yukie.GetComponent<SoundPlayerObject>();
+        shioriSoundPlayer = shiori.GetComponent<SoundPlayerObject>();
+        kozoSoundPlayer = kozo.GetComponent<SoundPlayerObject>();
+        hatsuSoundPlayer = hatsu.GetComponent<SoundPlayerObject>();
+        nobuyukiSoundPlayer = nobuyuki.GetComponent<SoundPlayerObject>();
+        azuhaSoundPlayer = azuha.GetComponent<SoundPlayerObject>();
+        yuzuhaSoundPlayer = yuzuha.GetComponent<SoundPlayerObject>();
 
         kozo.gameObject.SetActive(false);
         hatsu.gameObject.SetActive(false);
@@ -82,6 +94,7 @@ public class EndingEventManager : MonoBehaviour
         yield return StartCoroutine(Words(new List<string>() { "……", "………", "……悪かった","俺が悪かった……","金が……","金が足りなかったんだよ……！！",
         "助けてくれるって言うから話をしたのに……","でもあんたらは焦る俺を笑うかのように幸せな姿を見せつけて！！","すぐに金が必要だったんだよ……","俺は……！！"}));
         yield return StartCoroutine(StartupHatsu());
+        yield return new WaitForSeconds(0.7f);
         //ドアの方を向く
         StartCoroutine(mainCamera.TurnAroundSmooth_Coroutine(turnTarget_DoorDir.transform.position, 12f));
         yield return new WaitForSeconds(0.7f);
@@ -136,11 +149,12 @@ public class EndingEventManager : MonoBehaviour
         Vector3 yukieMoveTarget = new Vector3(mainCamera.transform.position.x, yukie.transform.position.y, mainCamera.transform.position.z - 1f);
         StartCoroutine(yukie.MoveWithTime(yukieMoveTarget, 1.1f, () =>
         {
+            StopAllVoice();
             StartCoroutine(FinalEventActionEnded(onComplete));
         }));
 
         yield return new WaitForSeconds(0.3f);
-        yukieSound.PlaySoundLoop(0);
+        yukieSoundPlayer.PlaySoundLoop(0);
         //タイミングで振り返り
         StartCoroutine(mainCamera.TurnAroundToTargetAngle_Coroutine(turnTarget_yukieDir.transform.position, 10f));
         StartCoroutine(YukieSoundVolumeAction(0.35f));
@@ -149,7 +163,6 @@ public class EndingEventManager : MonoBehaviour
     private IEnumerator FinalEventActionEnded(UnityAction onComplete)
     {
         FadeManager.Instance.BlackOut();
-        yukieSound.StopSound();
         yield return new WaitForSeconds(2f);
         if (onComplete != null)
         {
@@ -163,7 +176,7 @@ public class EndingEventManager : MonoBehaviour
     private IEnumerator EndingEventAction()
     {
         InGameUtil.DoCursorLock();
-        SoundManager.Instance.PlayBGMWithFadeIn(ambientClip);
+        SoundManager.Instance.PlayBGMWithFadeIn(ambientClip,2f,0.1f);
         //フェードイン（Wordの方で背景を黒くしているため、まだ暗いままになる）
         FadeManager.Instance.FadeIn(FadeManager.FadeColorType.Black, 0.1f);
         UIBackgroundManager.Instance.ShowPanel();
@@ -187,6 +200,7 @@ public class EndingEventManager : MonoBehaviour
         yield return StartCoroutine(Words(new List<string>() { "ありえない", "夫が…あの人があんなに無惨に殺されたのに！！","警察は全く捜査してくれない……！！","私が……私がこの目で真実を……" }));
 
         yield return StartCoroutine(StartupHatsu());
+        yield return new WaitForSeconds(0.7f);
         //ドアの方を向く
         StartCoroutine(mainCamera.TurnAroundSmooth_Coroutine(turnTarget_DoorDir.transform.position, 12f));
         yield return new WaitForSeconds(0.7f);
@@ -215,8 +229,9 @@ public class EndingEventManager : MonoBehaviour
         //左を向くと孝蔵と詩織がゆっくり迫ってくる。右からは信之
         Vector3 kozoPos = new Vector3(-3f, kozo.transform.position.y, 2f);
         StartupKozo(kozoPos);
-        shiori.gameObject.SetActive(true);
-        shiori.transform.position = new Vector3(-4f, shiori.transform.position.y, 1.6f);
+        Vector3 shioriPos = new Vector3(-4f, shiori.transform.position.y, 1.6f);
+        StartupShiori(shioriPos);
+        
         StartCoroutine(StartShioriUpdate());
         yield return StartCoroutine(mainCamera.TurnAroundSmooth_Coroutine(new Vector3(shiori.transform.position.x, mainCamera.transform.position.y, shiori.transform.position.z + 0.5f), 12f));
 
@@ -231,6 +246,8 @@ public class EndingEventManager : MonoBehaviour
         //後ずさり
         yield return StartCoroutine(SteppingBackFootStep());
 
+        VolumeUpWithFade_OtherYukie(1f);
+
         yield return StartCoroutine(mainCamera.TurnAroundSmooth_Coroutine(mainCamera.transform.position + new Vector3(-1,0,1), 12f));
         yield return StartCoroutine(mainCamera.TurnAroundSmooth_Coroutine(mainCamera.transform.position + new Vector3(1, 0, 1), 12f));
         yield return StartCoroutine(mainCamera.TurnAroundSmooth_Coroutine(mainCamera.transform.position + new Vector3(0.03f, 0, 1), 12f));
@@ -238,18 +255,20 @@ public class EndingEventManager : MonoBehaviour
 
         //BGM鳴り出す
         SoundManager.Instance.PlayBGMWithKey("bgm_ending");
+        StopVoices_Fade_OtherYukie(2f);
         
-        yield return new WaitForSeconds(2.7f);
+        yield return new WaitForSecondsRealtime(2.85f);
         //雪絵が迫る
         yukie.gameObject.SetActive(true);
         Vector3 yukieMoveTarget = new Vector3(mainCamera.transform.position.x, yukie.transform.position.y, mainCamera.transform.position.z - 1.3f);
-        StartCoroutine(yukie.MoveWithTime(yukieMoveTarget, 1.1f, ()=>
+        StartCoroutine(yukie.MoveWithTime(yukieMoveTarget, 1f, ()=>
         {
+            StopAllVoice();
             StartCoroutine(StartEndrollEvent());
         }));
 
         yield return new WaitForSeconds(0.3f);
-        yukieSound.PlaySoundLoop(0);
+        yukieSoundPlayer.PlaySoundLoop(0);
         //タイミングで振り返り
         StartCoroutine(mainCamera.TurnAroundToTargetAngle_Coroutine(turnTarget_yukieDir.transform.position, 10f));
         StartCoroutine(YukieSoundVolumeAction(0.35f));
@@ -304,7 +323,7 @@ public class EndingEventManager : MonoBehaviour
         //テレビの砂嵐効果でエンディング
         tvEffect.enabled = true;
         yield return new WaitForSeconds(0.05f);
-        yukieSound.StopSound();
+        
         kozo.AnimOff();
         kozo.animatorEnabled = false;
         nobuyuki.AnimOff();
@@ -329,6 +348,13 @@ public class EndingEventManager : MonoBehaviour
         kozo.transform.position = kozoPos;
         StartCoroutine(KozoUpdate());
         kozo.AnimOn();
+        kozoSoundPlayer.PlaySoundLoop(0, 0.7f);
+    }
+    private void StartupShiori(Vector3 shioriPos)
+    {
+        shiori.gameObject.SetActive(true);
+        shiori.transform.position = shioriPos;
+        shioriSoundPlayer.PlaySoundLoop(0, 0.7f);
     }
     private IEnumerator StartupHatsu()
     {
@@ -336,6 +362,7 @@ public class EndingEventManager : MonoBehaviour
         yield return null;
         hatsu.animatorEnabled = false;
         hatsu.transform.LookAt(new Vector3(mainCamera.transform.position.x, hatsu.transform.position.y, mainCamera.transform.position.z));
+        hatsuSoundPlayer.PlaySoundLoop(0, 0.2f);
     }
     private IEnumerator StartupAzuYuzu()
     {
@@ -344,9 +371,11 @@ public class EndingEventManager : MonoBehaviour
         yield return null;
         azuha.animatorEnabled = false;
         azuha.transform.LookAt(new Vector3(mainCamera.transform.position.x, azuha.transform.position.y, mainCamera.transform.position.z));
+        azuhaSoundPlayer.PlaySoundLoop(0, 0.7f);
 
         yuzuha.animatorEnabled = false;
         yuzuha.transform.LookAt(new Vector3(mainCamera.transform.position.x, yuzuha.transform.position.y, mainCamera.transform.position.z));
+        yuzuhaSoundPlayer.PlaySoundLoop(0, 0.15f);
     }
     private void StartupNobuyuki(Vector3 nobuyukiPos)
     {
@@ -354,6 +383,7 @@ public class EndingEventManager : MonoBehaviour
         nobuyuki.transform.position = nobuyukiPos;
         StartCoroutine(NobuyukiUpdate());
         nobuyuki.AnimOn();
+        nobuyukiSoundPlayer.PlaySoundLoop(0, 0.15f);
     }
 
     private IEnumerator YukieSoundVolumeAction(float toMaxTime)
@@ -363,12 +393,12 @@ public class EndingEventManager : MonoBehaviour
         float powValue = 0f;
         while(volume < 1f)
         {
-            yukieSound.SetVolume(volume);
+            yukieSoundPlayer.SetVolume(volume);
             powValue += Time.deltaTime / toMaxTime;
             volume = powValue * powValue;
             yield return null;
         }
-        yukieSound.SetVolume(1f);
+        yukieSoundPlayer.SetVolume(1f);
     }
 
     private bool isKozoUpdate = false;
@@ -403,6 +433,36 @@ public class EndingEventManager : MonoBehaviour
             shiori.MoveToTargetDir_Update(dir, 0.2f);
             yield return null;
         }
+    }
+
+    private void VolumeUpWithFade_OtherYukie(float fadeTime = 1f)
+    {
+        kozoSoundPlayer.VolumeUpWithFade(fadeTime, kozoSoundPlayer.audioSource.volume * 1.5f);
+        hatsuSoundPlayer.VolumeUpWithFade(fadeTime, hatsuSoundPlayer.audioSource.volume * 1.5f);
+        shioriSoundPlayer.VolumeUpWithFade(fadeTime, shioriSoundPlayer.audioSource.volume * 1.5f);
+        nobuyukiSoundPlayer.VolumeUpWithFade(fadeTime, nobuyukiSoundPlayer.audioSource.volume * 1.5f);
+        azuhaSoundPlayer.VolumeUpWithFade(fadeTime, azuhaSoundPlayer.audioSource.volume * 1.5f);
+        yuzuhaSoundPlayer.VolumeUpWithFade(fadeTime, yuzuhaSoundPlayer.audioSource.volume * 1.5f);
+    }
+
+    private void StopAllVoice()
+    {
+        yukieSoundPlayer.StopSound();
+        kozoSoundPlayer.StopSound();
+        hatsuSoundPlayer.StopSound();
+        shioriSoundPlayer.StopSound();
+        nobuyukiSoundPlayer.StopSound();
+        azuhaSoundPlayer.StopSound();
+        yuzuhaSoundPlayer.StopSound();
+    }
+    private void StopVoices_Fade_OtherYukie(float fadeTime = 1f)
+    {
+        kozoSoundPlayer.StopSoundWithFadeOut(fadeTime);
+        hatsuSoundPlayer.StopSoundWithFadeOut(fadeTime);
+        shioriSoundPlayer.StopSoundWithFadeOut(fadeTime);
+        nobuyukiSoundPlayer.StopSoundWithFadeOut(fadeTime);
+        azuhaSoundPlayer.StopSoundWithFadeOut(fadeTime);
+        yuzuhaSoundPlayer.StopSoundWithFadeOut(fadeTime); 
     }
 
     private void FinishEventCallback()
