@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class ItemListViewer : MonoBehaviour
 {
+    [SerializeField] private bool deleteWhenClosed = true;
     [SerializeField] private ItemViewerOneItem itemPref = null;
     private List<ItemViewerOneItem> instancedList = new List<ItemViewerOneItem>();
     [SerializeField] private GameObject baseObject = null;
@@ -16,14 +17,20 @@ public class ItemListViewer : MonoBehaviour
     public UnityAction onViewed = null;
     public UnityAction onClosed = null;
 
+    public enum ViewMode
+    {
+        Master,
+        Playing,
+    }
+
     public void Initialize()
     {
         DestroyList();
     }
 
-    public void ViewList()
+    public void ViewList(ViewMode viewMode)
     {
-        InstanceList();
+        InstanceList(viewMode);
         baseObject.SetActive(true);
         if (onViewed != null)
         {
@@ -37,25 +44,34 @@ public class ItemListViewer : MonoBehaviour
         {
             onClosed();
         }
-        Destroy(gameObject);
+        if (deleteWhenClosed)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
     
-    private void InstanceList()
+    private void InstanceList(ViewMode viewMode)
     {
         if(instancedList.Count > 0)
         {
             DestroyList();
         }
-        
-        for (int i = 0; i < DataManager.Instance.GetAllItemData().Count; i++)
+        IReadOnlyList<ItemData> itemList = null;
+        if(viewMode == ViewMode.Master) { itemList = DataManager.Instance.GetGeneralItemDataList(); }
+        else { itemList = DataManager.Instance.GetAllItemData(); }
+        for (int i = 0; i < itemList.Count; i++)
         {
             Sprite itemSprite = defaultSprite;
             string itemName = "？？？";
             instancedList.Add(Instantiate(itemPref, listParent));
-            ItemData itemData = DataManager.Instance.GetAllItemData()[i];
+            ItemData itemData = itemList[i];
             if (itemData.geted)
             {
-                itemSprite = ItemManager.Instance.LoadResourceSprite(itemData.spriteName);
+                itemSprite = ResourceManager.LoadResourceSprite(ResourceManager.ItemResourcePath, itemData.spriteName);
                 itemName = itemData.name;
             }
             else
@@ -63,7 +79,15 @@ public class ItemListViewer : MonoBehaviour
                 itemSprite = defaultSprite;
                 itemName = "？？？";
             }
-            instancedList[i].Initialize(itemSprite, itemName, ()=> { if (itemData.geted) { DisplayItem(itemSprite, itemData); } });
+            if (itemData.geted)
+            {
+                instancedList[i].Initialize(itemSprite, itemName, () => { DisplayItem(itemSprite, itemData); });
+            }
+            else
+            {
+                instancedList[i].Initialize(itemSprite, itemName, null);
+            }
+                
         }
     }
     private void DestroyList()

@@ -20,7 +20,6 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
     //[SerializeField] private Text itemNameText = null;
     //[SerializeField] private Text itemContentText = null;
 
-    public const string ResourcesPath = "Sprites/Items/";
     public UnityAction watchItemEventEndedCallback = null;
     public ItemData currentGettingItemData { get; private set; } = null;
 
@@ -90,7 +89,7 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
         currentGettingItemData = _data;
         //Texture2D tex = Resources.Load(ResourcesPath + _data.spriteName) as Texture2D;
         //Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.zero);
-        Sprite sprite = LoadResourceSprite(_data.spriteName);//sprite;
+        Sprite sprite = ResourceManager.LoadResourceSprite(ResourceManager.ItemResourcePath, _data.spriteName);//sprite;
         //itemNameText.text = _data.name;
         //itemContentText.text = _data.description;
         canvasUI.SetActive(true);
@@ -99,13 +98,6 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
         //oneItemViewerPref.SetActive(true);
         SoundManager.Instance.PlaySeWithKey("menuse_enter");
         StartCoroutine(WatchingItemUpdate(_data));
-    }
-
-    public Sprite LoadResourceSprite(string spriteName)
-    {
-        Texture2D tex = Resources.Load(ResourcesPath + spriteName) as Texture2D;
-        Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), Vector2.zero);
-        return sprite;
     }
 
     private IEnumerator WatchingItemUpdate(ItemData _data)

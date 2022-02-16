@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using SoundSystem;
 
 public class ItemViewerOneItem : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class ItemViewerOneItem : MonoBehaviour
         if (onPress != null)
         {
             itemButton.onClick.AddListener(onPress);
+            itemButton.onClick.AddListener(() => { SoundManager.Instance.PlaySeWithKey("menuse_book_page"); });
             itemButton.transition = Selectable.Transition.ColorTint;
         }
         else

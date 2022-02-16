@@ -88,7 +88,7 @@ namespace Onka.Manager.Menu
         {
             ItemListViewer v = Instantiate(itemListViewerPref, instanceParent);
             v.Initialize();
-            v.ViewList();
+            v.ViewList(ItemListViewer.ViewMode.Playing);
         }
         private void OpenBackToTitleDialog()
         {
