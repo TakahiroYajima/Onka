@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SoundDistance;
 
 public class EA_FirstChasedFromYukie : EventActorBase
 {
+    [HideInInspector] public Event_FirstChasedFromYukie eventBase = null;
     [SerializeField] private GameObject firstYukiePosition = null;
 
     protected override void Initialize()
@@ -13,6 +15,12 @@ public class EA_FirstChasedFromYukie : EventActorBase
 
     public override void EventStart()
     {
+        SoundDistanceManager.Instance.Emitter.SetPointID(eventBase.soundPointSDP.ID);
+        SoundDistanceManager.Instance.Listener.SetCurrentPointID(eventBase.soundPointSDP.ID);
+        SoundDistanceManager.Instance.Maker.SetVolume(0f);
+        SoundDistanceManager.Instance.ForceInitCalc();
+        SoundDistanceManager.Instance.isActive = true;
+
         StageManager.Instance.Yukie.isEternalChaseMode = true;
         StageManager.Instance.Yukie.transform.position = firstYukiePosition.transform.position;
         StageManager.Instance.Yukie.gameObject.SetActive(true);

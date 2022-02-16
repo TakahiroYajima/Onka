@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SoundDistance;
+using SoundSystem;
 
 public class EA_Openig : EventActorBase
 {
@@ -51,7 +51,9 @@ public class EA_Openig : EventActorBase
         eventBase.endranceDoor.isForceOpenable = false;
         StageManager.Instance.Player.ForcedStopFPS();
         eventBase.endranceDoor.CloseDoor();
-        yield return new WaitForSeconds(1.4f);
+        yield return new WaitForSecondsRealtime(0.5f);
+        SoundManager.Instance.PlaySeWithKeyOne("se_door_close");
+        yield return new WaitForSecondsRealtime(0.9f);
         StageManager.Instance.Player.FirstPersonAIO.enabled = true;
         eventBase.EventClearContact();
     }
