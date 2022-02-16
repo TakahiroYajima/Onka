@@ -16,8 +16,21 @@ namespace SoundSystem
             
                 audioSource.Play();
             }
-        } 
-        
+        }
+
+        public static void PlayOneShot(this AudioSource audioSource, AudioClip audioClip = null, float volume = 1f)
+        {
+            if (audioClip != null)
+            {
+                audioSource.clip = audioClip;
+
+                //ボリュームが適切な値になるように調整//
+                audioSource.volume = Mathf.Clamp01(volume);
+
+                audioSource.PlayOneShot();
+            }
+        }
+
         public static IEnumerator PlayRandomStart(this AudioSource audioSource, AudioClip audioClip, float volume = 1f)
         {
             if (audioClip == null) yield break;

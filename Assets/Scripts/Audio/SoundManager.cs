@@ -143,7 +143,7 @@ namespace SoundSystem
             List<SoundData> seList = DataManager.Instance.GetSoundSO().menuSeList;
             foreach (var se in seList)
             {
-                //Debug.Log("SE追加 : " + se.key);
+                //Debug.Log("SE追加 : " + se.key + " : " + se.soundName);
                 menuSeAudioClipList.Add(Resources.Load("Sounds/SE/" + se.soundName) as AudioClip);
             }
         }
@@ -188,6 +188,18 @@ namespace SoundSystem
             }
             float volume = DataManager.Instance.GetMenuSE(key).volume;
             menuSeAudioSource.Play(audioClip, volume);
+        }
+        public void PlaySeWithKeyOne(string key)
+        {
+            var audioClip = menuSeAudioClipList.FirstOrDefault(clip => clip.name == DataManager.Instance.GetMenuSE(key).soundName);
+
+            if (audioClip == null)
+            {
+                Debug.Log(key + "は見つかりません");
+                return;
+            }
+            float volume = DataManager.Instance.GetMenuSE(key).volume;
+            menuSeAudioSource.PlayOneShot(audioClip, volume);
         }
 
         public void StopSE()
