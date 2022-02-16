@@ -75,13 +75,13 @@ namespace SoundDistance
             if (!IsAllInitSeted() || !isActive) return;
             if (DoUpdateFrameAndJudge())
             {
+                //Debug.Log($"SD_IDs emitter : {emitterObj.currentOuterPointID} {emitterObj.currentPointID} listener : {listenerObj.currentOuterPointID} {listenerObj.currentPointID}");
                 CalcRouteSeachUpdate();
             }
             if(currentMinID > -1)
             {
                 SetCurrentDistanceListenerToEmitter(costList, currentMinID);
             }
-            //Debug.Log("SD_IDs emitter : " + emitterObj.currentOuterPointID + " " + emitterObj.currentPointID + " listener : " + listenerObj.currentOuterPointID + " " + listenerObj.currentPointID);
         }
         
         private bool IsAllInitSeted()
@@ -230,6 +230,7 @@ namespace SoundDistance
             List<List<SoundDistancePoint>> points = new List<List<SoundDistancePoint>>();
             List<float> subCostList = new List<float>();
             SoundDistancePoint outer = soundDistancePoints.FirstOrDefault(x => x.ID == currentListenerOuterID);
+            //Debug.Log($"outer : {outer.ID}");
             int routeCount = 0;
             bool isEnd = false;
             foreach (Direction d in Enum.GetValues(typeof(Direction)))
@@ -242,13 +243,15 @@ namespace SoundDistance
                 n.node.AddPrev(outer);
 
                 points[routeCount].Add(n.node);
+                //for(int routes = 0; routes < points[routeCount].Count; routes++) { Debug.Log($"points[{routeCount}][{routes}] : {points[routeCount][routes].ID}"); }
 
-                for (int i = 1; true; i++)
+                for (int i = 0; i < points[routeCount].Count; i++)
                 {
                     SoundDistancePoint currentSeachPoint = points[routeCount][i];
+                    //Debug.Log($"serchSub : {currentSeachPoint.ID} {currentListenerPointID}");
                     //スタート地点に来ていたら終了
                     if (currentSeachPoint.ID == currentListenerPointID) { isEnd = true; break; }
-
+                    
                     int missingCount = 0;
                     //全ての方向のデータ分を回す
                     foreach (Direction d2 in Enum.GetValues(typeof(Direction)))
@@ -259,6 +262,7 @@ namespace SoundDistance
                         {
                             //逆走できないようにする(Prevに設定されていない場所だけ追加できる)
                             bool isAddable = currentSeachPoint.prevPointList.FirstOrDefault(x => x.ID == node.node.ID) == null;
+                            //Debug.Log($"subCostAdd? : {isAddable} {node.distanceMagnitude}");
                             if (isAddable)
                             {
                                 //次のノードのPrevに現在のノードを設定、距離も追加
@@ -286,7 +290,7 @@ namespace SoundDistance
                 routeCount++;
             }
             points[routeCount].RemoveAt(0);//outerの情報は不要なので削除
-
+            //for (int i = 0; i < subCostList.Count; i++) { Debug.Log($"subCost[{i}] : {subCostList[i]}"); }
             subCost = subCostList[routeCount];
             return points[routeCount];//ルートが見つかると強制終了なので、そのままカウントを参照すればそのルートになる
         }
@@ -310,6 +314,7 @@ namespace SoundDistance
                         costList.Add(0f);
                     }
                 }
+                //Debug.Log($"逸れている分のコストを追加 : {subCost} -> {costList[currentMinID]}");
                 costList[currentMinID] += subCost;//逸れている分のコストを追加
                 //if (costList.Count > currentMinID)
                 //{
