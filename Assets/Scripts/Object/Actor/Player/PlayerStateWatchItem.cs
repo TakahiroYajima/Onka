@@ -5,9 +5,13 @@ using UnityEngine;
 public class PlayerStateWatchItem : StateBase
 {
     private PlayerObject player = null;
+    public PlayerStateWatchItem(PlayerObject _player)
+    {
+        player = _player;
+    }
+
     public override void StartAction()
     {
-        player = StageManager.Instance.Player;
         player.FirstPersonAIO.enabled = false;
     }
 

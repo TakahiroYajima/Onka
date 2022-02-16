@@ -5,9 +5,13 @@ using UnityEngine;
 public class PlayerStateEvent : StateBase
 {
     private PlayerObject player = null;
+    public PlayerStateEvent(PlayerObject _player)
+    {
+        player = _player;
+    }
+
     public override void StartAction()
     {
-        player = StageManager.Instance.Player;
         player.ForcedStopFPS();
     }
 

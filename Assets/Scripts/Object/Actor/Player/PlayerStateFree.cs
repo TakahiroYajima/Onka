@@ -9,9 +9,14 @@ public class PlayerStateFree : StateBase
 {
     private PlayerObject player = null;
     private int frameCount = 0;
+
+    public PlayerStateFree(PlayerObject _player)
+    {
+        player = _player;
+    }
+
     public override void StartAction()
     {
-        player = StageManager.Instance.Player;
         player.FirstPersonAIO.enabled = true;
         CrosshairManager.Instance.FindCrosshair();
         frameCount = 0;

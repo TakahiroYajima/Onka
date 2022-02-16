@@ -10,9 +10,13 @@ public class PlayerStateItemGet : StateBase
     private float timeCount = 0f;
     private const float waitTime = 1f;
 
+    public PlayerStateItemGet(PlayerObject _player)
+    {
+        player = _player;
+    }
+
     public override void StartAction()
     {
-        player = StageManager.Instance.Player;
         player.ForcedStopFPS();
         //player.onStateChangedInPlayerScriptOnly = () =>
         //{

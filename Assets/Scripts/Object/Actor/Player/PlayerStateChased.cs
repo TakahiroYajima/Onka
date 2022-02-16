@@ -10,9 +10,13 @@ public class PlayerStateChased : StateBase
     private PlayerObject player = null;
     private int frameCount = 0;
 
+    public PlayerStateChased(PlayerObject _player)
+    {
+        player = _player;
+    }
+
     public override void StartAction()
     {
-        player = StageManager.Instance.Player;
         CrosshairManager.Instance.ChangeCenterSprites(CrosshairType.Normal);
     }
 

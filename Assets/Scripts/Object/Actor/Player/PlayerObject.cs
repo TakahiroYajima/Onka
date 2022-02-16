@@ -55,14 +55,14 @@ public class PlayerObject : MonoBehaviour
 
         //Stateパターン初期化
         playerStateDic.Clear();
-        playerStateDic.Add(PlayerState.Init, new PlayerStateInit());
-        playerStateDic.Add(PlayerState.Free, new PlayerStateFree());
-        playerStateDic.Add(PlayerState.ItemGet, new PlayerStateItemGet());
-        playerStateDic.Add(PlayerState.SolveKeylock, new PlayerStateKeylock());
-        playerStateDic.Add(PlayerState.Chased, new PlayerStateChased());
-        playerStateDic.Add(PlayerState.Arrested, new PlayerStateArrested());
-        playerStateDic.Add(PlayerState.InMenu, new PlayerStateInMenu());
-        playerStateDic.Add(PlayerState.Event, new PlayerStateEvent());
+        playerStateDic.Add(PlayerState.Init, new PlayerStateInit(this));
+        playerStateDic.Add(PlayerState.Free, new PlayerStateFree(this));
+        playerStateDic.Add(PlayerState.ItemGet, new PlayerStateItemGet(this));
+        playerStateDic.Add(PlayerState.SolveKeylock, new PlayerStateKeylock(this));
+        playerStateDic.Add(PlayerState.Chased, new PlayerStateChased(this));
+        playerStateDic.Add(PlayerState.Arrested, new PlayerStateArrested(this));
+        playerStateDic.Add(PlayerState.InMenu, new PlayerStateInMenu(this));
+        playerStateDic.Add(PlayerState.Event, new PlayerStateEvent(this));
 
         currentState = PlayerState.Init;
     }

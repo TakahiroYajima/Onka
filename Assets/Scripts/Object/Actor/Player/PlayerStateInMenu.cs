@@ -5,9 +5,13 @@ using UnityEngine;
 public class PlayerStateInMenu : StateBase
 {
     private PlayerObject player = null;
+    public PlayerStateInMenu(PlayerObject _player)
+    {
+        player = _player;
+    }
+
     public override void StartAction()
     {
-        player = StageManager.Instance.Player;
         player.ForcedStopFPS();
         player.FirstPersonAIO.enabled = false;
     }

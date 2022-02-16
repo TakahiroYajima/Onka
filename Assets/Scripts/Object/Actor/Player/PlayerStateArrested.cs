@@ -5,9 +5,12 @@ using UnityEngine;
 public class PlayerStateArrested : StateBase
 {
     private PlayerObject player = null;
+    public PlayerStateArrested(PlayerObject _player)
+    {
+        player = _player;
+    }
     public override void StartAction()
     {
-        player = StageManager.Instance.Player;
         player.FirstPersonAIO.enabled = false;
         player.capsuleCollider.enabled = false;
         player.rigidbody.velocity = Vector3.zero;

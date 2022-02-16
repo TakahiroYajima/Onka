@@ -5,9 +5,13 @@ using UnityEngine;
 public class PlayerStateKeylock : StateBase
 {
     private PlayerObject player = null;
+    public PlayerStateKeylock(PlayerObject _player)
+    {
+        player = _player;
+    }
+
     public override void StartAction()
     {
-        player = StageManager.Instance.Player;
         player.ForcedStopFPS();
         InGameUtil.DoCursorFree();
         if (CrosshairManager.Instance.Crosshair == null)
