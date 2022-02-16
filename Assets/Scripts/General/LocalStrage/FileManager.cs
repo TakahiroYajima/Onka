@@ -8,8 +8,9 @@ using Encrypter;
 public enum SaveType
 {
     Normal,
-    PlayerData,
+    PlayerData,//セーブデータ
     GeneralPlayerData,//1度取得すれば取得済みフラグが立つもの
+    MasterData,//最初からあり、更新できないもの
 }
 
 public sealed class FileManager
@@ -21,7 +22,8 @@ public sealed class FileManager
     {
         {SaveType.Normal, "/SaveData" },
         {SaveType.PlayerData,"/SaveData/PlayerData" },
-        {SaveType.GeneralPlayerData, "/SaveData/GeneralPlayerData" }
+        {SaveType.GeneralPlayerData, "/SaveData/GeneralPlayerData" },
+        {SaveType.MasterData, "/SaveData/MasterData" }
     };
 
     public static void DataSave<Types>(Types saveClass, SaveType saveType, string fileName, UnityAction onComplete = null)
@@ -62,6 +64,16 @@ public sealed class FileManager
         {
             return default;
         }
+    }
+
+    public static bool Exists(SaveType saveType, string fileName)
+    {
+        string filePath = Application.dataPath + saveFolderPath[saveType];
+        string path = filePath + "/" + fileName;
+        if (!Directory.Exists(filePath)) return false;
+        if (!File.Exists(path)) return false;
+
+        return true;
     }
 
     private static void Save(SaveType saveType, string fileName, string json, UnityAction onComplete = null)
