@@ -10,6 +10,7 @@ public class DialogManager : SingletonMonoBehaviour<DialogManager>
     [SerializeField] private Transform dialogParent = null;
 
     [SerializeField] private TemplateDialog templateDialogPref = null;
+    [SerializeField] private TemplateDialog templateMessageBoxDialogPref = null;
 
     // Start is called before the first frame update
     void Start()
@@ -41,12 +42,19 @@ public class DialogManager : SingletonMonoBehaviour<DialogManager>
         TemplateDialog instance = Instantiate(templateDialogPref, dialogParent);
         instance.Open(message, tempDialogType, callback);
     }
-    
+
+    public void OpenTemplateMessageBoxDialog(string message, TempDialogType tempDialogType, UnityAction<bool> callback)
+    {
+        BeforeOpenCheck();
+        TemplateDialog instance = Instantiate(templateMessageBoxDialogPref, dialogParent);
+        instance.Open(message, tempDialogType, callback);
+    }
+
     //public void CloseAllDialogs()
     //{
     //    foreach(Transform child in dialogParent)
     //    {
-            
+
     //    }
     //}
 }

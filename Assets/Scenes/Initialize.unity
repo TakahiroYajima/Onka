@@ -663,6 +663,8 @@ MonoBehaviour:
   dialogParent: {fileID: 829778504}
   templateDialogPref: {fileID: 6312251671537314032, guid: 192cf37dbd2ce734987c6f76bab68b83,
     type: 3}
+  templateMessageBoxDialogPref: {fileID: 4577437014258911138, guid: 4764420f3b23c664f8d4b3c793793b02,
+    type: 3}
 --- !u!4 &769907411
 Transform:
   m_ObjectHideFlags: 0
