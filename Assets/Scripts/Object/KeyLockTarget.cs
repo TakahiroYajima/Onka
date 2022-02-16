@@ -35,7 +35,7 @@ public class KeyLockTarget : MonoBehaviour
         if (data != null)
         {
             DataManager.Instance.ItemGetAction(data);
-            DataManager.Instance.ItemUseAction(data);
+            DataManager.Instance.SetUsedItem(data);
         }
         else
         {

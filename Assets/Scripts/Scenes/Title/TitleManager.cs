@@ -10,7 +10,6 @@ public class TitleManager : SceneBase
     protected override void Start()
     {
         base.Initialize();
-        //DataManager.Instance.InitializeDataLoad();
         InGameUtil.DoCursorFree();
     }
 
