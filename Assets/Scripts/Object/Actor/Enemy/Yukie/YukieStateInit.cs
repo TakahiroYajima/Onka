@@ -6,10 +6,13 @@ public class YukieStateInit : StateBase
 {
     private Enemy_Yukie yukie = null;
 
+    public YukieStateInit(Enemy_Yukie _yukie)
+    {
+        yukie = _yukie;
+    }
 
     public override void StartAction()
     {
-        yukie = StageManager.Instance.Yukie;
         yukie.navMeshAgent.enabled = false;
         yukie.wanderingActor.SetActive(false);
         yukie.inRoomWanderingActor.SetActive(false, null);

@@ -16,9 +16,13 @@ public class YukieStateChasePlayer : StateBase
 
     private bool isHitPlayer = false;//最初からプレイヤーに衝突している場合、OnColliderEnterが反応しないので、OnColliderStayを1度だけ発生させるようにするフラグ
 
+    public YukieStateChasePlayer(Enemy_Yukie _yukie)
+    {
+        yukie = _yukie;
+    }
+
     public override void StartAction()
     {
-        yukie = StageManager.Instance.Yukie;
         yukie.navMeshAgent.enabled = true;
         yukie.navMeshAgent.speed = yukie.runSpeed;
         yukie.onColliderEnterCallback = OnColliderEnterEvent;

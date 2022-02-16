@@ -9,9 +9,13 @@ public class YukieStateRecognizedPlayer : StateBase
 {
     private Enemy_Yukie yukie = null;
 
+    public YukieStateRecognizedPlayer(Enemy_Yukie _yukie)
+    {
+        yukie = _yukie;
+    }
+
     public override void StartAction()
     {
-        yukie = StageManager.Instance.Yukie;
         yukie.ChangeState(EnemyState.ChasePlayer);
     }
 

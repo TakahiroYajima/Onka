@@ -5,9 +5,13 @@ public class YukieStateTurnAroundToPlayer : StateBase
 {
     private Enemy_Yukie yukie = null;
 
+    public YukieStateTurnAroundToPlayer(Enemy_Yukie _yukie)
+    {
+        yukie = _yukie;
+    }
+
     public override void StartAction()
     {
-        yukie = StageManager.Instance.Yukie;
         yukie.wanderingActor.SetActive(false);
     }
 

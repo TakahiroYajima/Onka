@@ -34,17 +34,18 @@ public class Enemy_Yukie : Enemy
     public UnityAction<Collider> onColliderEnterCallback = null;
     public UnityAction<Collider> onColliderStayCallback = null;
 
-    //プレイヤーとの距離計算用（Vector3では重いのでY軸を無視してVector2(x,z)に変換）
+    //プレイヤーとの距離計算用（Y軸を無視してVector2(x,z)に変換）
     private Vector2 yukieXZ = new Vector2(0, 0);
     private Vector2 playerXZ = new Vector2(0, 0);
-    //プレイヤー検知用
+
+    //挑発されている際のプレイヤー検知用
     private float playerDetectionDistance = 8f;
     private float searchAngle = 60f;
     private float rotationSpeed = 3f;
-    public const int doUpdateFrameCount = 6;
+    public const int doUpdateFrameCount = 6;//Rayは重いので6フレームに1回処理
+
     //プレイヤーが自分の視界の範囲外をうろつく＝挑発しているので、それに対する不意打ち要素
     private const float NoticeProvocationTime = 10f;//挑発に気付くまでの時間
-    private float provocationingTime = 0f;//プレイヤーに挑発されている時間
 
     //特定ステート内フラグ
     [HideInInspector] public bool isEternalChaseMode = false;//追いかけるステートの時、プレイヤーが部屋に隠れるまで見失わないようにするか
@@ -64,14 +65,14 @@ public class Enemy_Yukie : Enemy
         rigidbody = GetComponent<Rigidbody>();
 
         //State登録
-        yukieStateDic.Add(EnemyState.Init, new YukieStateInit());
-        yukieStateDic.Add(EnemyState.Wandering, new YukieStateWandering());
-        yukieStateDic.Add(EnemyState.InRoomWandering, new YukieStateInRoomWandering());
-        yukieStateDic.Add(EnemyState.RotateToPlayer, new YukieStateTurnAroundToPlayer());
-        yukieStateDic.Add(EnemyState.RecognizedPlayer, new YukieStateRecognizedPlayer());
-        yukieStateDic.Add(EnemyState.ChasePlayer, new YukieStateChasePlayer());
-        yukieStateDic.Add(EnemyState.CaughtPlayer, new YukieStateCaughtPlayer());
-        yukieStateDic.Add(EnemyState.CanNotAction, new YukieStateCanNotAction());
+        yukieStateDic.Add(EnemyState.Init, new YukieStateInit(this));
+        yukieStateDic.Add(EnemyState.Wandering, new YukieStateWandering(this));
+        yukieStateDic.Add(EnemyState.InRoomWandering, new YukieStateInRoomWandering(this));
+        yukieStateDic.Add(EnemyState.RotateToPlayer, new YukieStateTurnAroundToPlayer(this));
+        yukieStateDic.Add(EnemyState.RecognizedPlayer, new YukieStateRecognizedPlayer(this));
+        yukieStateDic.Add(EnemyState.ChasePlayer, new YukieStateChasePlayer(this));
+        yukieStateDic.Add(EnemyState.CaughtPlayer, new YukieStateCaughtPlayer(this));
+        yukieStateDic.Add(EnemyState.CanNotAction, new YukieStateCanNotAction(this));
 
         currentState = EnemyState.Init;
     }
@@ -86,17 +87,7 @@ public class Enemy_Yukie : Enemy
         inRoomChecker.onExitRoomAction = OnExitRoomAction;
 
         inRoomWanderingActor.SetActive(false, null);
-        //StartCoroutine(StartAction());
     }
-
-    //private IEnumerator StartAction()
-    //{
-    //    yield return null;//他のスクリプトの初期化待ち
-    //    currentState = EnemyState.Init;//デバッグ
-    //    yukieStateDic[currentState].StartAction();
-        
-    //    ChangeState(EnemyState.Wandering);
-    //}
 
     // Update is called once per frame
     void Update()
@@ -236,15 +227,6 @@ public class Enemy_Yukie : Enemy
             inRoomWanderingActor.currentManager = null;
         }
     }
-
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if(onColliderEnterCallback != null)
-    //    {
-    //        //onColliderEnterCallback(collision);
-    //    }
-
-    //}
 
     private void OnTriggerEnter(Collider other)
     {

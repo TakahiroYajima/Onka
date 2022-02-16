@@ -29,9 +29,13 @@ public class YukieStateInRoomWandering : StateBase
     //各アクションの要素
     private UnityAction RotationActionOnComplete = null;//RotationAction()完了後のコールバック
 
+    public YukieStateInRoomWandering(Enemy_Yukie _yukie)
+    {
+        yukie = _yukie;
+    }
+
     public override void StartAction()
     {
-        yukie = StageManager.Instance.Yukie;
         if (yukie.isIgnoreInRoom)
         {
             yukie.ChangeState(EnemyState.ChasePlayer);

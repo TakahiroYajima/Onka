@@ -11,9 +11,13 @@ public class YukieStateCaughtPlayer : StateBase
     Vector3 playerDir;
     bool isFrontCaught = false;//プレイヤーの前から捕まえたか
 
+    public YukieStateCaughtPlayer(Enemy_Yukie _yukie)
+    {
+        yukie = _yukie;
+    }
+
     public override void StartAction()
     {
-        yukie = StageManager.Instance.Yukie;
         yukie.navMeshAgent.velocity = Vector3.zero;
         yukie.navMeshAgent.enabled = false;
         yukie.capsuleCollider.enabled = false;

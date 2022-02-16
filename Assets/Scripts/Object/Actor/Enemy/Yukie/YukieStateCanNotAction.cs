@@ -6,10 +6,13 @@ public class YukieStateCanNotAction : StateBase
 {
     private Enemy_Yukie yukie = null;
 
+    public YukieStateCanNotAction(Enemy_Yukie _yukie)
+    {
+        yukie = _yukie;
+    }
 
     public override void StartAction()
     {
-        yukie = StageManager.Instance.Yukie;
         yukie.navMeshAgent.enabled = false;
     }
 
