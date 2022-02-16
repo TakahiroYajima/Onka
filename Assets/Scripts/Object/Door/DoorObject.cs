@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SoundSystem;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -54,6 +55,7 @@ public abstract class DoorObject : MonoBehaviour
         if (isForceOpenable)
         {
             OpenAction();
+            SoundManager.Instance.PlaySeWithKeyOne("se_door_open");
             return;
         }
 
@@ -83,6 +85,7 @@ public abstract class DoorObject : MonoBehaviour
         if (isKeyHoleUnlocked && isKeyLockUnlocked)
         {
             OpenAction();
+            SoundManager.Instance.PlaySeWithKeyOne("se_door_open");
         }
     }
     /// <summary>
