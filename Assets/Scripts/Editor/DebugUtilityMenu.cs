@@ -5,6 +5,7 @@ using System.Text;
 using UnityEngine;
 using UnityEditor;
 using Onka.Manager.Event;
+using Onka.Manager.Data;
 
 public class DebugUtilityMenu : MonoBehaviour
 {

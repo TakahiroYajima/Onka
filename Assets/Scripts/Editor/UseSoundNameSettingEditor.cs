@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEditor;
+using Onka.Manager.Data;
 
 public class UseSoundNameSettingEditor : EditorWindow
 {

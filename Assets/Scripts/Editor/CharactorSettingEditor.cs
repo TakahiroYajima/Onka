@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
+using Onka.Manager.Data;
 
 public class CharactorSettingEditor : EditorWindow
 {

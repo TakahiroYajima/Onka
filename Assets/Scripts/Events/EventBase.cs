@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Onka.Manager.Event;
+using Onka.Manager.Data;
 
 /// <summary>
 /// ステージ上のイベント用スクリプトの基底クラス

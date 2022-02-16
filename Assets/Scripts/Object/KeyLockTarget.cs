@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Onka.Manager.Data;
+
 /// <summary>
 /// ナンバーロックなど、解く専用の鍵のターゲット
 /// KeyHoleTargetと同じように使う

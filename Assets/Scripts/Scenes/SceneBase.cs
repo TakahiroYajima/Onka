@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SoundSystem;
+using Onka.Manager.Data;
 
 /// <summary>
 /// シーンマネージャースクリプトの基底クラス

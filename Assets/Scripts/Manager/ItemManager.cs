@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using SoundSystem;
+using Onka.Manager.Data;
 
 public class ItemManager : SingletonMonoBehaviour<ItemManager>
 {
@@ -16,10 +17,7 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
     public WatchDiaryManager WatchDiaryManager { get { return watchDiaryManager; } }
 
     [SerializeField] private GameObject canvasUI = null;
-    //[SerializeField] private Image watchItemImage = null;
-    //[SerializeField] private Text itemNameText = null;
-    //[SerializeField] private Text itemContentText = null;
-
+    
     public UnityAction watchItemEventEndedCallback = null;
     public ItemData currentGettingItemData { get; private set; } = null;
 

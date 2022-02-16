@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using Onka.Manager.Data;
 
 public class SelectSaveDataView : MonoBehaviour
 {

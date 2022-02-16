@@ -6,6 +6,7 @@ using SoundSystem;
 using SoundDistance;
 using Onka.Manager.Menu;
 using Onka.Manager.InputKey;
+using Onka.Manager.Data;
 
 public class StageManager : SingletonMonoBehaviour<StageManager>
 {

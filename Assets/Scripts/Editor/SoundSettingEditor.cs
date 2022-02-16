@@ -4,6 +4,7 @@ using System.IO;
 using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
+using Onka.Manager.Data;
 
 public class SoundSettingEditor : EditorWindow
 {

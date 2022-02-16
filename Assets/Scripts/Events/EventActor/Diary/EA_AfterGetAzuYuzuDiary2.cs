@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SoundSystem;
+using Onka.Manager.Data;
 
 /// <summary>
 /// 1階倉庫部屋で彩珠波と柚子羽の日記2を見た後、部屋の奥から柚子羽が追いかけてくるイベント

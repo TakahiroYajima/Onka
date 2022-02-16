@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
 using Onka.Manager.Event;
+using Onka.Manager.Data;
 
 public class EventDataSettingEditor : EditorWindow
 {

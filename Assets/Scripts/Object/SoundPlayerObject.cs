@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using SoundSystem;
+using Onka.Manager.Data;
 
 /// <summary>
 /// 音を鳴らせるオブジェクト
