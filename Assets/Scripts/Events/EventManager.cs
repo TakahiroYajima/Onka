@@ -34,7 +34,7 @@ namespace Onka.Manager.Event
             if (eventDataList == null || eventDataList == default || eventDataList.list.Count == 0)
             {
                 //Debug.Log("イベント情報ファイル:GameDataに無かったのでファイルからロード");
-                eventDataList = FileManager.LoadSaveData<EventDataList>(SaveType.Normal, DataManager.EventDataFileName);
+                eventDataList = FileManager.LoadSaveData<EventDataList>(SaveType.MasterData, DataManager.EventDataFileName);
                 if (eventDataList == null || eventDataList == default || eventDataList.list.Count == 0)
                 {
                     //Debug.Log("イベント情報ファイル:ファイルにも無かったので新規作成");
@@ -43,7 +43,8 @@ namespace Onka.Manager.Event
                     {
                         eventDataList.list.Add(new EventData(eventObjectList[i].EventKey));
                     }
-                    FileManager.DataSave<EventDataList>(eventDataList, SaveType.Normal, DataManager.EventDataFileName);//念のため、一覧データもセーブ
+                    //DataManager.Instance.SetNewEventDataList(eventDataList);
+                    //DataManager.Instance.SaveEventData();//念のため、一覧データもセーブ
                 }
                 DataManager.Instance.SetNewEventDataList(eventDataList);
                 DataManager.Instance.SaveGameData();
@@ -104,7 +105,7 @@ namespace Onka.Manager.Event
         {
             if(eventObjectList[managementID] == null) { Debug.LogError("イベントが存在しません : " + managementID.ToString()); return; }
 
-            Debug.Log("イベント : " + managementID + " : " + eventObjectList[managementID].EventKey + " : " + eventObjectList[managementID].canBeStarted);
+            //Debug.Log("イベント : " + managementID + " : " + eventObjectList[managementID].EventKey + " : " + eventObjectList[managementID].canBeStarted);
             //if (inProgressEventArrayNum == -1 || !doingEventList.Contains(eventObjectList[managementID]))
             //{
             if(isSingleOnlyEvent && IsAnyEventEnabled) { Debug.LogError("単一のみのイベントがある中、進行中のイベントがあります : "); foreach(var e in doingEventList) { Debug.LogError(e.EventKey); } }
@@ -117,18 +118,18 @@ namespace Onka.Manager.Event
                         //inProgressEventArrayNum = managementID;
                         //eventObjectList[inProgressEventArrayNum].EventStart();
                         doingEventList.Add(eventObjectList[managementID]);
-                        Debug.Log("AddEvent : " + eventObjectList[managementID].EventKey);
+                        //Debug.Log("AddEvent : " + eventObjectList[managementID].EventKey);
                         eventObjectList[managementID].EventStart();
                     }
                 }
                 else
                 {
-                    Debug.Log("プレイヤーのStateからイベント拒否 : " + StageManager.Instance.Player.currentState.ToString());
+                    //Debug.Log("プレイヤーのStateからイベント拒否 : " + StageManager.Instance.Player.currentState.ToString());
                 }
             }
             else
             {
-                Debug.Log("イベントが被っています : " + managementID.ToString() + " key : " + eventObjectList[managementID].EventKey);
+                //Debug.Log("イベントが被っています : " + managementID.ToString() + " key : " + eventObjectList[managementID].EventKey);
                 //Debug.Log("イベントが被っています : " + managementID.ToString() + " key : " + eventObjectList[inProgressEventArrayNum].EventKey);
             }
         }

@@ -14,6 +14,8 @@ public class EventDataSettingEditor : EditorWindow
     private EventDataList scriptableObject = null;
     [SerializeField] private ReorderableList reorderableList;
 
+    private readonly SaveType saveType = SaveType.MasterData;
+
     [MenuItem("Editor/イベントデータ設定")]
     public static void Create()
     {
@@ -29,7 +31,7 @@ public class EventDataSettingEditor : EditorWindow
 
     private void Init()
     {
-        scriptableObject = FileManager.LoadSaveData<EventDataList>(SaveType.Normal, DataManager.EventDataFileName);
+        scriptableObject = FileManager.LoadSaveData<EventDataList>(saveType, DataManager.EventDataFileName);
         if (scriptableObject == null)
         {
             scriptableObject = new EventDataList();
@@ -134,7 +136,7 @@ public class EventDataSettingEditor : EditorWindow
     {
         if (scriptableObject == null)
         {
-            scriptableObject = FileManager.LoadSaveData<EventDataList>(SaveType.Normal, DataManager.EventDataFileName);
+            scriptableObject = FileManager.LoadSaveData<EventDataList>(saveType, DataManager.EventDataFileName);
         }
 
         //EventDataList eventData = FileManager.LoadSaveData<EventDataList>(DataManager.EventDataFileName);
@@ -152,8 +154,9 @@ public class EventDataSettingEditor : EditorWindow
         }
         //scriptableObject.SplitSoundDatas();
 
-        FileManager.DataSave<EventDataList>(scriptableObject, SaveType.Normal, DataManager.EventDataFileName, () =>
+        FileManager.DataSave<EventDataList>(scriptableObject, saveType, DataManager.EventDataFileName, () =>
         {
+            DebugUtilityMenu.SetUpdatedEventDataToAllSaveDataAndBackgroundData();
             // エディタを最新の状態にする
             AssetDatabase.Refresh();
         });

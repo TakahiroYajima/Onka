@@ -14,6 +14,8 @@ public class UseSoundNameSettingEditor : EditorWindow
     private UseSoundNameSO scriptableObject = null;
     private List<bool> settingDataActiveList = new List<bool>();
 
+    private readonly SaveType saveType = SaveType.MasterData;
+
     [MenuItem("Editor/シーン別使用サウンド設定")]
     public static void Create()
     {
@@ -29,7 +31,7 @@ public class UseSoundNameSettingEditor : EditorWindow
 
     private void Init()
     {
-        scriptableObject = FileManager.LoadSaveData<UseSoundNameSO>(SaveType.Normal, DataManager.UseSoundNameFileName);
+        scriptableObject = FileManager.LoadSaveData<UseSoundNameSO>(saveType, DataManager.UseSoundNameFileName);
         if (scriptableObject == null || scriptableObject == default)
         {
             scriptableObject = new UseSoundNameSO();
@@ -147,7 +149,7 @@ public class UseSoundNameSettingEditor : EditorWindow
             scriptableObject = new UseSoundNameSO();
         }
 
-        UseSoundNameSO sData = FileManager.LoadSaveData<UseSoundNameSO>(SaveType.Normal, DataManager.UseSoundNameFileName);
+        UseSoundNameSO sData = FileManager.LoadSaveData<UseSoundNameSO>(saveType, DataManager.UseSoundNameFileName);
         Debug.Log(sData.useSoundNameDataList.Count);
         if (sData == null || sData == default) { return; }
 
@@ -169,7 +171,7 @@ public class UseSoundNameSettingEditor : EditorWindow
             scriptableObject = new UseSoundNameSO();//ScriptableObject.CreateInstance<UseSoundNameSO>();
         }
 
-        FileManager.DataSave<UseSoundNameSO>(scriptableObject, SaveType.Normal, DataManager.UseSoundNameFileName, () =>
+        FileManager.DataSave<UseSoundNameSO>(scriptableObject, saveType, DataManager.UseSoundNameFileName, () =>
         {
             // エディタを最新の状態にする
             AssetDatabase.Refresh();

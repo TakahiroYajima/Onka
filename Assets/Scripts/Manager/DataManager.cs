@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Events;
 using SoundSystem;
@@ -8,18 +9,36 @@ using Onka.Manager.Event;
 
 public class DataManager : SingletonMonoBehaviour<DataManager>
 {
-    private SoundDataSO soundDataSO = null;
-    private UseSoundNameSO useSoundNameSO = null;
-    private ItemDataList itemDatalist = null;
+    private SoundDataSO soundDataSOMasterData = null;
+    private UseSoundNameSO useSoundNameSOMasterData = null;
+    private ItemDataList itemDatalistMasterData = null;
+    private EventDataList eventDataListMasterData = null;
 
-    private GameData gameData = null;
+    private GameData generalGameData = null;//1度クリアしたイベントや取得したアイテムを保存するためのバックグラウンドセーブデータ
+    private GameData playingGameData = null;//プレイ中のゲームデータ
+    private List<GameData> loadedAllGameDataList = new List<GameData>();
+    private int currentSelectLoadDataArrayNum = 0;//ロードしたゲームデータのリスト番号
+    public const int MaxSaveDataCount = 3;
+
+    public GameData GetGeneralPlayerData()
+    {
+        return generalGameData;
+    }
+    public IReadOnlyList<ItemData> GetGeneralItemDataList()
+    {
+        return generalGameData.itemDataList.itemDataList;
+    }
 
     public const string SoundDataFileName = "SoundData.txt";
     public const string UseSoundNameFileName = "UseSoundName.txt";
     public const string ItemDataFileName = "ItemData.txt";
+    public const string CharactorDataFileName = "CharactorData.txt";
 
     public const string GameDataFileName = "GameData.txt";
+    public const string GameDataBaseFileName = "GameData";
     public const string EventDataFileName = "EventData.txt";
+
+    public const string SaveDateTimeFormat = "yyyy/MM/dd HH:mm:ss";
 
     protected override void Awake()
     {
@@ -35,18 +54,174 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
 
     public void InitializeDataLoad()
     {
-        soundDataSO = FileManager.LoadSaveData<SoundDataSO>(SaveType.Normal, SoundDataFileName);
-        useSoundNameSO = FileManager.LoadSaveData<UseSoundNameSO>(SaveType.Normal, UseSoundNameFileName);
-        itemDatalist = FileManager.LoadSaveData<ItemDataList>(SaveType.Normal, ItemDataFileName);
+        soundDataSOMasterData = FileManager.LoadSaveData<SoundDataSO>(SaveType.MasterData, SoundDataFileName);
+        useSoundNameSOMasterData = FileManager.LoadSaveData<UseSoundNameSO>(SaveType.MasterData, UseSoundNameFileName);
+        itemDatalistMasterData = FileManager.LoadSaveData<ItemDataList>(SaveType.MasterData, ItemDataFileName);
+        eventDataListMasterData = FileManager.LoadSaveData<EventDataList>(SaveType.MasterData, DataManager.EventDataFileName);
         //ゲーム中のデータをロード。なければ新規作成
-        gameData = FileManager.LoadSaveData<GameData>(SaveType.Normal, GameDataFileName);
-        if (gameData == null || gameData == default)
+        //playingGameData = FileManager.LoadSaveData<GameData>(SaveType.Normal, GameDataFileName);
+        //if (playingGameData == null || playingGameData == default)
+        //{
+        //    playingGameData = new GameData();
+        //    playingGameData.itemDataList = new ItemDataList();
+        //    playingGameData.itemDataList.itemDataList = new List<ItemData>(itemDatalistMasterData.itemDataList);
+        //    playingGameData.AllInitialize();
+        //    SaveGameData();
+        //}
+        generalGameData = FileManager.LoadSaveData<GameData>(SaveType.GeneralPlayerData, GameDataFileName);
+        LoadAllSavedGameData();
+    }
+    private void LoadAllSavedGameData()
+    {
+        loadedAllGameDataList.Clear();
+        StringBuilder fileName = new StringBuilder();
+        for (int i = 0; i < MaxSaveDataCount; i++)
         {
-            gameData = new GameData();
-            gameData.itemDataList = new ItemDataList();
-            gameData.itemDataList.itemDataList = new List<ItemData>(itemDatalist.itemDataList);
-            gameData.AllInitialize();
-            SaveGameData();
+            fileName.Append(GameDataBaseFileName);
+            fileName.Append(i.ToString());
+            fileName.Append(".txt");
+            if(FileManager.Exists(SaveType.PlayerData, fileName.ToString()))
+            {
+                Debug.Log($"{fileName.ToString()} ロード");
+                loadedAllGameDataList.Add(FileManager.LoadSaveData<GameData>(SaveType.PlayerData, fileName.ToString()));
+            }
+            else
+            {
+                //存在しないので作成
+                loadedAllGameDataList.Add(new GameData());
+                loadedAllGameDataList[i].itemDataList = new ItemDataList();
+                loadedAllGameDataList[i].itemDataList.itemDataList = new List<ItemData>(itemDatalistMasterData.itemDataList);
+                loadedAllGameDataList[i].AllInitialize();
+            }
+            fileName.Clear();
+        }
+    }
+
+    //----------------------------------------------------
+    //GameData関連
+    //----------------------------------------------------
+    /// <summary>
+    /// データをセーブ
+    /// </summary>
+    /// <param name="onComplete"></param>
+    //public void SaveGameData(UnityAction onComplete = null)
+    //{
+    //    FileManager.DataSave<GameData>(playingGameData, SaveType.Normal, GameDataFileName, () =>
+    //    {
+    //        Debug.Log("ゲームデータセーブ完了");
+    //        if (onComplete != null)
+    //        {
+    //            onComplete();
+    //        }
+    //    });
+    //}
+
+    
+   
+    /// <summary>
+    /// 遊ぶゲームデータを設定
+    /// </summary>
+    /// <param name="_selectSaveDataArrayNum"></param>
+    public void SelectPlayGameData(int _selectSaveDataArrayNum)
+    {
+        currentSelectLoadDataArrayNum = _selectSaveDataArrayNum;
+        playingGameData = loadedAllGameDataList[currentSelectLoadDataArrayNum];
+    }
+    /// <summary>
+    /// 新規作成、まっさらな状態に上書き
+    /// </summary>
+    /// <param name="_selectSaveDataArrayNum"></param>
+    public void NewCreateGameDataAndSave(int _selectSaveDataArrayNum, UnityAction onComplete = null)
+    {
+        loadedAllGameDataList[currentSelectLoadDataArrayNum] = GetInitializedData();
+        currentSelectLoadDataArrayNum = _selectSaveDataArrayNum;
+        playingGameData = loadedAllGameDataList[currentSelectLoadDataArrayNum];
+        SaveGameData(onComplete);
+    }
+
+    private GameData GetInitializedData()
+    {
+        GameData data = new GameData();
+        data.itemDataList = itemDatalistMasterData;
+        data.eventDataList = eventDataListMasterData;
+        data.AllInitialize();
+        return data;
+    }
+
+    public bool IsAfterFirstSavedCurrentSelectData()
+    {
+        EventData data = playingGameData.eventDataList.list.FirstOrDefault(x => x.eventKey == "Event_Opnening");
+        if (data == null || data == default) return false;
+        return data.isEnded;
+    }
+    /// <summary>
+    /// データをセーブ
+    /// </summary>
+    /// <param name="onComplete"></param>
+    public void SaveGameData(UnityAction onComplete = null)
+    {
+        StringBuilder fileName = new StringBuilder();
+        fileName.Append(GameDataBaseFileName);
+        fileName.Append(currentSelectLoadDataArrayNum.ToString());
+        fileName.Append(".txt");
+        System.DateTime dateTime = System.DateTime.Now;
+        string parceDate = dateTime.ToString(SaveDateTimeFormat);
+        playingGameData.saveDate = parceDate;
+        FileManager.DataSave<GameData>(playingGameData, SaveType.PlayerData, fileName.ToString(), () =>
+        {
+            UpdateAndSaveGeneralPlayerData(onComplete);
+        });
+    }
+
+    /// <summary>
+    /// ゲームデータが更新されたことでバックグラウンドセーブデータも更新する
+    /// </summary>
+    private void UpdateAndSaveGeneralPlayerData(UnityAction onComplete = null)
+    {
+        for(int i = 0; i < playingGameData.itemDataList.itemDataList.Count; i++)
+        {
+            ItemData item = generalGameData.itemDataList.itemDataList.FirstOrDefault(x => x.key == playingGameData.itemDataList.itemDataList[i].key);
+            if (item == null || item == default) continue;
+
+            if (!playingGameData.itemDataList.itemDataList[i].geted) continue;
+
+            item.geted = playingGameData.itemDataList.itemDataList[i].geted;
+            item.used = playingGameData.itemDataList.itemDataList[i].used;
+        }
+        for (int i = 0; i < playingGameData.eventDataList.list.Count; i++)
+        {
+            EventData item = generalGameData.eventDataList.list.FirstOrDefault(x => x.eventKey == playingGameData.eventDataList.list[i].eventKey);
+            if (item == null || item == default) continue;
+
+            if (!playingGameData.eventDataList.list[i].isEnded) continue;
+
+            item.isAppeared = playingGameData.eventDataList.list[i].isAppeared;
+            item.isEnded = playingGameData.eventDataList.list[i].isEnded;
+        }
+        FileManager.DataSave<GameData>(generalGameData, SaveType.GeneralPlayerData, GameDataFileName, () =>
+        {
+            Debug.Log("ゲームデータセーブ完了");
+            if (onComplete != null)
+            {
+                onComplete();
+            }
+        });
+    }
+
+    public IReadOnlyList<GameData> GetAllGameDatas()
+    {
+        return loadedAllGameDataList;
+    }
+    /// <summary>
+    /// タイトルにて、遊ぶゲームのデータを選択した際に呼び出す
+    /// </summary>
+    /// <param name="_selectArrayNum"></param>
+    public void OnSelectGameData(int _selectArrayNum)
+    {
+        if(_selectArrayNum >= 0 && _selectArrayNum < loadedAllGameDataList.Count)
+        {
+            playingGameData = loadedAllGameDataList[_selectArrayNum];
+            currentSelectLoadDataArrayNum = _selectArrayNum;
         }
     }
 
@@ -55,47 +230,47 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     //----------------------------------------------------
     public SoundDataSO GetSoundSO()
     {
-        return soundDataSO;
+        return soundDataSOMasterData;
     }
     public bool ContainsBGM(string key)
     {
-        return soundDataSO.bgmList.FirstOrDefault(x => x.key == key) != null;
+        return soundDataSOMasterData.bgmList.FirstOrDefault(x => x.key == key) != null;
     }
     public bool ContainsSE(string key)
     {
-        return soundDataSO.seList.FirstOrDefault(x => x.key == key) != null;
+        return soundDataSOMasterData.seList.FirstOrDefault(x => x.key == key) != null;
     }
     public bool ContainsMenuSE(string key)
     {
-        return soundDataSO.menuSeList.FirstOrDefault(x => x.key == key) != null;
+        return soundDataSOMasterData.menuSeList.FirstOrDefault(x => x.key == key) != null;
     }
     public bool ContainsVoice(string key)
     {
-        return soundDataSO.voiceList.FirstOrDefault(x => x.key == key) != null;
+        return soundDataSOMasterData.voiceList.FirstOrDefault(x => x.key == key) != null;
     }
     public bool ContainsAmbient(string key)
     {
-        return soundDataSO.ambientList.FirstOrDefault(x => x.key == key) != null;
+        return soundDataSOMasterData.ambientList.FirstOrDefault(x => x.key == key) != null;
     }
     public SoundData GetBGM(string key)
     {
-        return soundDataSO.bgmList.FirstOrDefault(x => x.key == key);
+        return soundDataSOMasterData.bgmList.FirstOrDefault(x => x.key == key);
     }
     public SoundData GetSE(string key)
     {
-        return soundDataSO.seList.FirstOrDefault(x => x.key == key);
+        return soundDataSOMasterData.seList.FirstOrDefault(x => x.key == key);
     }
     public SoundData GetMenuSE(string key)
     {
-        return soundDataSO.menuSeList.FirstOrDefault(x => x.key == key);
+        return soundDataSOMasterData.menuSeList.FirstOrDefault(x => x.key == key);
     }
     public SoundData GetVoice(string key)
     {
-        return soundDataSO.voiceList.FirstOrDefault(x => x.key == key);
+        return soundDataSOMasterData.voiceList.FirstOrDefault(x => x.key == key);
     }
     public SoundData GetAmbient(string key)
     {
-        return soundDataSO.ambientList.FirstOrDefault(x => x.key == key);
+        return soundDataSOMasterData.ambientList.FirstOrDefault(x => x.key == key);
     }
 
     //----------------------------------------------------
@@ -103,12 +278,12 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     //----------------------------------------------------
     public void SetCurrentSceneUseSound(SceneType sceneType)
     {
-        if(useSoundNameSO == null || useSoundNameSO == default)
+        if(useSoundNameSOMasterData == null || useSoundNameSOMasterData == default)
         {
             Debug.Log("サウンド設定がありません");
             return;
         }
-        List<UseSoundNameData> clips = useSoundNameSO.GetOneSceneUseData(sceneType);
+        List<UseSoundNameData> clips = useSoundNameSOMasterData.GetOneSceneUseData(sceneType);
         //Debug.Log("SceneType : " + sceneType.ToString());
         //Debug.Log("SceneSoundsCount : " + useSoundNameSO.useSoundNameDataList.Count);
         //Debug.Log("thisSceneSound.Count : " + clips.Count);
@@ -147,23 +322,24 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
 
     public ItemData GetItemData(string _key)
     {
-        return gameData.itemDataList.itemDataList.FirstOrDefault(x => x.key == _key);
+        return playingGameData.itemDataList.itemDataList.FirstOrDefault(x => x.key == _key);
     }
     public IReadOnlyList<ItemData> GetAllItemData()
     {
-        return gameData.itemDataList.itemDataList;
+        return playingGameData.itemDataList.itemDataList;
     }
+    
     /// <summary>
     /// アイテムのデータ更新（ゲーム内のみ。セーブ無し）
     /// </summary>
     /// <param name="_itemData"></param>
     private void UpdateItemData(ItemData _itemData)
     {
-        for(int i = 0; i < gameData.itemDataList.itemDataList.Count; i++)
+        for(int i = 0; i < playingGameData.itemDataList.itemDataList.Count; i++)
         {
-            if(gameData.itemDataList.itemDataList[i].key == _itemData.key)
+            if(playingGameData.itemDataList.itemDataList[i].key == _itemData.key)
             {
-                gameData.itemDataList.itemDataList[i] = _itemData;
+                playingGameData.itemDataList.itemDataList[i] = _itemData;
                 break;
             }
         }
@@ -215,7 +391,7 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
 
     public void ItemUseAction(ItemData _item)
     {
-        ItemData itemData = gameData.itemDataList.itemDataList.FirstOrDefault(x => x.key == _item.key);
+        ItemData itemData = playingGameData.itemDataList.itemDataList.FirstOrDefault(x => x.key == _item.key);
         if (itemData == null) { Debug.LogError("アイテムがありません : " + _item.key); return; }
 
         itemData.used = true;
@@ -234,33 +410,18 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     //----------------------------------------------------
     public EventDataList GetEventDatas()
     {
-        return gameData.eventDataList;
+        return playingGameData.eventDataList;
     }
     public void SetNewEventDataList(EventDataList eventDataList)
     {
-        gameData.eventDataList = new EventDataList(eventDataList);
+        playingGameData.eventDataList = new EventDataList(eventDataList);
     }
+    //public void SaveEventData()
+    //{
+    //    FileManager.DataSave<EventDataList>(gameData.eventDataList, SaveType.Normal, EventDataFileName);
+    //}
 
-    //----------------------------------------------------
-    //GameData本体
-    //----------------------------------------------------
-    /// <summary>
-    /// データをセーブ
-    /// </summary>
-    /// <param name="onComplete"></param>
-    public void SaveGameData(UnityAction onComplete = null)
-    {
-        FileManager.DataSave<GameData>(gameData,SaveType.Normal, GameDataFileName,()=>
-        {
-            Debug.Log("ゲームデータセーブ完了");
-            if(onComplete != null)
-            {
-                onComplete();
-            }
-        });
-    }
-
-
+    
 
 
 
@@ -270,11 +431,11 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     //----------------------------------------------------
     public List<ItemData> GetAllItemData_Debug()
     {
-        return gameData.itemDataList.itemDataList;
+        return playingGameData.itemDataList.itemDataList;
     }
     public List<EventData> GetAllEventData_Debug()
     {
-        return gameData.eventDataList.list;
+        return playingGameData.eventDataList.list;
     }
     #endregion
 }

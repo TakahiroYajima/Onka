@@ -16,6 +16,7 @@ public class SoundSettingEditor : EditorWindow
     private List<bool> settingDataActiveList = new List<bool>();
 
     //[SerializeField] private ReorderableList reorderableList;
+    private readonly SaveType saveType = SaveType.MasterData;
 
     [MenuItem("Editor/サウンドデータ設定")]
     public static void Create()
@@ -32,7 +33,7 @@ public class SoundSettingEditor : EditorWindow
 
     private void Init()
     {
-        scriptableObject = FileManager.LoadSaveData<SoundDataSO>(SaveType.Normal, DataManager.SoundDataFileName);
+        scriptableObject = FileManager.LoadSaveData<SoundDataSO>(saveType, DataManager.SoundDataFileName);
         if (scriptableObject == null)
         {
             scriptableObject = new SoundDataSO();
@@ -259,10 +260,10 @@ public class SoundSettingEditor : EditorWindow
     {
         if (scriptableObject == null)
         {
-            scriptableObject = FileManager.LoadSaveData<SoundDataSO>(SaveType.Normal, DataManager.SoundDataFileName);
+            scriptableObject = FileManager.LoadSaveData<SoundDataSO>(saveType, DataManager.SoundDataFileName);
         }
 
-        SoundDataSO sData = FileManager.LoadSaveData<SoundDataSO>(SaveType.Normal, DataManager.SoundDataFileName);
+        SoundDataSO sData = FileManager.LoadSaveData<SoundDataSO>(saveType, DataManager.SoundDataFileName);
         if (scriptableObject == null || scriptableObject == default) { return; }
 
         settingDataActiveList.Clear();
@@ -283,7 +284,7 @@ public class SoundSettingEditor : EditorWindow
         }
         scriptableObject.SplitSoundDatas();
 
-        FileManager.DataSave<SoundDataSO>(scriptableObject, SaveType.Normal, DataManager.SoundDataFileName, () =>
+        FileManager.DataSave<SoundDataSO>(scriptableObject, saveType, DataManager.SoundDataFileName, () =>
         {
             // エディタを最新の状態にする
             AssetDatabase.Refresh();

@@ -29,4 +29,5 @@ public enum SceneType
     Opening,
     Game,
     Ending,
+    Bonus,
 }

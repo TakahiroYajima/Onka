@@ -8,6 +8,7 @@ public class GameData
 {
     public ItemDataList itemDataList = null;
     public EventDataList eventDataList = null;
+    public string saveDate = "";//日にち
 
     /// <summary>
     /// データ新規作成用初期化
