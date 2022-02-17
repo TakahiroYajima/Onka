@@ -15,7 +15,6 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager> {
     [SerializeField] private Image _image;
 
     void Start() {
-        //this._image = GetComponentInChildren<Image>();
         this._image.enabled = false;
     }
 
@@ -65,7 +64,6 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager> {
         this._image.color = new Color(c.r, c.g, c.b, 0);
         StartCoroutine(FadeAction(_image, FadeType.Out, 1f, () =>
         {
-            //this._image.enabled = false;
             if (onComplete != null)
             {
                 onComplete();
