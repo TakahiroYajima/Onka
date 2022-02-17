@@ -13,9 +13,6 @@ public class BonusMenu : MonoBehaviour
     [SerializeField] private CharactorListViewer charactorListViewer = null;
 
     #region MainMenu
-    /// <summary>
-    /// タイトルへ戻るボタンクリック時
-    /// </summary>
     public void OnPressBackToTitleButton()
     {
         SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Title", true, null, FadeManager.FadeColorType.Black, FadeManager.FadeColorType.Black);
