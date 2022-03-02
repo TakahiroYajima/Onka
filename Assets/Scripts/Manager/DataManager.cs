@@ -116,8 +116,9 @@ namespace Onka.Manager.Data
         /// <param name="_selectSaveDataArrayNum"></param>
         public void NewCreateGameDataAndSave(int _selectSaveDataArrayNum, UnityAction onComplete = null)
         {
-            loadedAllGameDataList[currentSelectLoadDataArrayNum] = GetInitializedData();
+            Debug.Log($"ロード済みデータ[{_selectSaveDataArrayNum}]を新規作成");
             currentSelectLoadDataArrayNum = _selectSaveDataArrayNum;
+            loadedAllGameDataList[currentSelectLoadDataArrayNum] = GetInitializedData();
             playingGameData = loadedAllGameDataList[currentSelectLoadDataArrayNum];
             SaveGameData(onComplete);
         }
