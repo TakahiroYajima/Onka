@@ -9,6 +9,7 @@ public class GameData
     public ItemDataList itemDataList = null;
     public EventDataList eventDataList = null;
     public string saveDate = "";//日にち
+    public bool isGameCleared = false;//GeneralPlayerDataでのみ使用。1度でもゲームをクリアしていたらtrueになる
 
     /// <summary>
     /// データ新規作成用初期化

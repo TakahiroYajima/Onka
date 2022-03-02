@@ -469,6 +469,7 @@ public class EndingEventManager : MonoBehaviour
     {
         StartCoroutine(FinishEventCoroutine(()=>
         {
+            Onka.Manager.Data.DataManager.Instance.SetGameClearFlg();
             SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Title", true, null, FadeManager.FadeColorType.None, FadeManager.FadeColorType.Black);
         }));
     }
