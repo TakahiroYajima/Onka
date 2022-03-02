@@ -15,6 +15,12 @@ public class LoadingUIManager : SingletonMonoBehaviour<LoadingUIManager>
         loadingObject.SetActive(false);
     }
 
+    public void SetActive(bool _isActive)
+    {
+        loadingGauge.fillAmount = 0f;
+        loadingObject.SetActive(_isActive);
+    }
+
     public void StartLoading(AsyncOperation asyncOperation, UnityAction onComplete)
     {
         StartCoroutine(DoLoading(asyncOperation, onComplete));

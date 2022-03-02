@@ -28,18 +28,18 @@ public class SceneControlManager : SingletonMonoBehaviour<SceneControlManager>
         });
     }
 
-    public void ChangeSceneWithFade(string sceneName, bool isBGMStop = true, UnityAction onComplete = null)
-    {
-        if (isBGMStop)
-        {
-            StopBGMAndEnvironment();
-        }
-        FadeManager.Instance.FadeOut(FadeManager.FadeColorType.Black, 1f, () =>
-        {
-            SceneManager.LoadScene(sceneName);
-            FadeManager.Instance.FadeIn(FadeManager.FadeColorType.Black, 1f, onComplete);
-        });
-    }
+    //public void ChangeSceneWithFade(string sceneName, bool isBGMStop = true, UnityAction onComplete = null)
+    //{
+    //    if (isBGMStop)
+    //    {
+    //        StopBGMAndEnvironment();
+    //    }
+    //    FadeManager.Instance.FadeOut(FadeManager.FadeColorType.Black, 1f, () =>
+    //    {
+    //        SceneManager.LoadScene(sceneName);
+    //        FadeManager.Instance.FadeIn(FadeManager.FadeColorType.Black, 1f, onComplete);
+    //    });
+    //}
 
     public void ChangeSceneAsyncWithLoading(string sceneName, bool isBGMStop = true, UnityAction onComplete = null, FadeManager.FadeColorType fadeOutColorType = FadeManager.FadeColorType.None, FadeManager.FadeColorType fadeInColorType = FadeManager.FadeColorType.None)
     {
@@ -49,13 +49,24 @@ public class SceneControlManager : SingletonMonoBehaviour<SceneControlManager>
         }
         FadeManager.Instance.FadeOut(fadeOutColorType, 1f, () =>
         {
+            LoadingUIManager.Instance.SetActive(true);
             AsyncOperation async = SceneManager.LoadSceneAsync(sceneName);
+            //SceneManager.sceneLoaded += (Scene nextScene, LoadSceneMode mode) => {
+            //    FadeManager.Instance.FadeIn(fadeInColorType, 1f, onComplete);
+            //};
             LoadingUIManager.Instance.StartLoading(async, () =>
             {
-                FadeManager.Instance.FadeIn(fadeInColorType, 1f, onComplete);
+                StartCoroutine(WaitSceneLoadAfterFadeIn(async, fadeInColorType, onComplete));
+                //FadeManager.Instance.FadeIn(fadeInColorType, 1f, onComplete);
             });
             //StartCoroutine(ChangeSceneAsyncCoroutine(sceneName, onComplete, fadeInColorType));
         });
+    }
+
+    private IEnumerator WaitSceneLoadAfterFadeIn(AsyncOperation async, FadeManager.FadeColorType fadeInColorType = FadeManager.FadeColorType.None, UnityAction onComplete = null)
+    {
+        yield return async;
+        FadeManager.Instance.FadeIn(fadeInColorType, 1f, onComplete);
     }
 
     private void StopBGMAndEnvironment()
