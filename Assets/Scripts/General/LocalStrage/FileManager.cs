@@ -68,7 +68,8 @@ public sealed class FileManager
 
     public static bool Exists(SaveType saveType, string fileName)
     {
-        string filePath = Application.dataPath + saveFolderPath[saveType];
+        //Debug.Log($"{fileName } Exists {saveType.ToString()}");
+        string filePath = Application.streamingAssetsPath + saveFolderPath[saveType];
         string path = filePath + "/" + fileName;
         if (!Directory.Exists(filePath)) return false;
         if (!File.Exists(path)) return false;
@@ -78,7 +79,7 @@ public sealed class FileManager
 
     private static void Save(SaveType saveType, string fileName, string json, UnityAction onComplete = null)
     {
-        string filePath = Application.dataPath + saveFolderPath[saveType];
+        string filePath = Application.streamingAssetsPath + saveFolderPath[saveType];
         string path = filePath + "/" + fileName;
         //ディレクトリが無ければ作成
         if (!Directory.Exists(filePath))
@@ -94,7 +95,7 @@ public sealed class FileManager
     }
     private static string Read(SaveType saveType, string fileName)
     {
-        string filePath = Application.dataPath + saveFolderPath[saveType];
+        string filePath = Application.streamingAssetsPath + saveFolderPath[saveType];
         string path = filePath + "/" + fileName;
         string data;
         if (!Directory.Exists(filePath))

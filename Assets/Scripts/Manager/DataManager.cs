@@ -53,6 +53,9 @@ namespace Onka.Manager.Data
         // Start is called before the first frame update
         void Start()
         {
+            var path = UnityEngine.SceneManagement.SceneManager.GetSceneAt(0).path;
+            var fileNamepath = System.IO.Path.GetDirectoryName(path);
+            
             SoundManager.Instance.InitSeLoad();
         }
 
@@ -62,6 +65,7 @@ namespace Onka.Manager.Data
             useSoundNameSOMasterData = FileManager.LoadSaveData<UseSoundNameSO>(SaveType.MasterData, UseSoundNameFileName);
             itemDatalistMasterData = FileManager.LoadSaveData<ItemDataList>(SaveType.MasterData, ItemDataFileName);
             eventDataListMasterData = FileManager.LoadSaveData<EventDataList>(SaveType.MasterData, DataManager.EventDataFileName);
+            //Debug.Log($"MasterData : {soundDataSOMasterData} : {itemDatalistMasterData}");
 
             generalGameData = FileManager.LoadSaveData<GameData>(SaveType.GeneralPlayerData, GameDataFileName);
             LoadAllSavedGameData();
@@ -82,11 +86,13 @@ namespace Onka.Manager.Data
                 }
                 else
                 {
+                    //Debug.Log($"PlayData存在しないので作成 LoopCount : {i}");
                     //存在しないので作成
                     loadedAllGameDataList.Add(new GameData());
                     loadedAllGameDataList[i].itemDataList = new ItemDataList();
                     loadedAllGameDataList[i].itemDataList.itemDataList = new List<ItemData>(itemDatalistMasterData.itemDataList);
                     loadedAllGameDataList[i].AllInitialize();
+                    //Debug.Log($"PlayData作成完了 : {i}");
                 }
                 fileName.Clear();
             }
@@ -175,14 +181,43 @@ namespace Onka.Manager.Data
                 item.isAppeared = playingGameData.eventDataList.list[i].isAppeared;
                 item.isEnded = playingGameData.eventDataList.list[i].isEnded;
             }
+            SaveGeneralGameData(onComplete);
+        }
+
+        private void SaveGeneralGameData(UnityAction onComplete = null)
+        {
             FileManager.DataSave<GameData>(generalGameData, SaveType.GeneralPlayerData, GameDataFileName, () =>
             {
-            //Debug.Log("ゲームデータセーブ完了");
-            if (onComplete != null)
+                //Debug.Log("ゲームデータセーブ完了");
+                if (onComplete != null)
                 {
                     onComplete();
                 }
             });
+        }
+
+        public void SetGameClearFlg(UnityAction onComplete = null)
+        {
+            SetGeneralGameDataGetedItem("key_entrance");
+            SetGeneralGameDataGetedItem("note_final");
+            generalGameData.isGameCleared = true;
+            SaveGeneralGameData(onComplete);
+        }
+
+        private void SetGeneralGameDataGetedItem(string key)
+        {
+            ItemData item = generalGameData.itemDataList.itemDataList.FirstOrDefault(x => x.key == key);
+            if (item == null || item == default)
+            {
+                Debug.LogError("アイテムがありません");
+                return;
+            }
+            
+            item.geted = true;
+            if(item.type == ItemType.DoorKey || item.type == ItemType.Useable)
+            {
+                item.used = true;
+            }
         }
 
         public IReadOnlyList<GameData> GetAllGameDatas()
