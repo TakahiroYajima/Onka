@@ -12,7 +12,7 @@ public class WatchDiaryManager : MonoBehaviour
     private bool isUpdateMoving = false;
 
     private ItemData diaryData = null;
-
+    [SerializeField] private Text pageNumText = null;
     [SerializeField] private Text contentText = null;
 
     [SerializeField] private Font[] fonts;
@@ -61,6 +61,7 @@ public class WatchDiaryManager : MonoBehaviour
     private void DoOpenPage(int page)
     {
         //Debug.Log("DoOpenPage : " + page);
+        pageNumText.text = $"{page + 1} / {diaryData.fileItem.content.Count}";
         contentText.text = diaryData.fileItem.content[page];
         contentText.font = fonts[(int)diaryData.fileItem.fontType];
         contentText.color = diaryData.fileItem.GetTextColor();
