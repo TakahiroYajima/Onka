@@ -29,7 +29,7 @@ public class LoadingUIManager : SingletonMonoBehaviour<LoadingUIManager>
     private IEnumerator DoLoading(AsyncOperation asyncOperation, UnityAction onComplete)
     {
         float currentTime = 0f;
-        float needTime = 2f;
+        float needTime = 1.4f;
         float progress = 0f;
         float pTime = 0f;
         asyncOperation.allowSceneActivation = false;
