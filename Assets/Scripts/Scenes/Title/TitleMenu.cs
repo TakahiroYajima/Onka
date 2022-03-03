@@ -6,6 +6,13 @@ public class TitleMenu : MonoBehaviour
     [SerializeField] private TitleManager manager = null;
     [SerializeField] private GameObject mainMenuObj = null;
     [SerializeField] private SelectSaveDataView selectSaveDataView = null;
+    [SerializeField] private GameObject bonusButtonObj = null;
+
+    public void Initialize()
+    {
+        bonusButtonObj.SetActive(DataManager.Instance.IsGameClearedInThePast());
+
+    }
 
     public void OnPressNewGameButton()
     {
@@ -51,5 +58,10 @@ public class TitleMenu : MonoBehaviour
                 manager.PressStartButton();
             }
         }
+    }
+
+    public void OnPressQuitButton()
+    {
+        manager.PressQuitButton();
     }
 }

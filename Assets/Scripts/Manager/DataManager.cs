@@ -204,6 +204,19 @@ namespace Onka.Manager.Data
             generalGameData.isGameCleared = true;
             SaveGeneralGameData(onComplete);
         }
+        /// <summary>
+        /// 過去にゲームをクリアしたことがあるかを返す
+        /// </summary>
+        /// <returns></returns>
+        public bool IsGameClearedInThePast()
+        {
+            if (generalGameData == null)
+            {
+                Debug.LogError("generalGameData is not find");
+                return false;
+            }
+            return generalGameData.isGameCleared;
+        }
 
         private void SetGeneralGameDataGetedItem(string key)
         {

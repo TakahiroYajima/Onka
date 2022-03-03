@@ -5,11 +5,12 @@ using SoundSystem;
 
 public class TitleManager : SceneBase
 {
-
+    [SerializeField] private TitleMenu titleMenu = null;
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Initialize();
+        titleMenu.Initialize();
         InGameUtil.DoCursorFree();
     }
 
@@ -28,6 +29,15 @@ public class TitleManager : SceneBase
     public void PressBonusButton()
     {
         SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Bonus", true, null, FadeManager.FadeColorType.Black, FadeManager.FadeColorType.Black);
+    }
+
+    public void PressQuitButton()
+    {
+        SoundManager.Instance.PlaySeWithKeyOne("menuse_enter");
+        FadeManager.Instance.FadeOut(FadeManager.FadeColorType.Black, 1.4f, () =>
+         {
+             Application.Quit();
+         });
     }
 
     public void Debug_Ending()
