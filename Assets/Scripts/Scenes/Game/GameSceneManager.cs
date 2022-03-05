@@ -67,6 +67,7 @@ public class GameSceneManager : SceneBase
 
             SoundDistanceManager.Instance.Emitter.SetPointID(yukieInitInstancePoints[0].ID);
             SoundDistanceManager.Instance.Listener.SetCurrentPointID(savePointSDP.ID);
+            SoundDistanceManager.Instance.Listener.SetNextTargetPointID(savePointSDP.ID);
             SoundDistanceManager.Instance.Maker.SetVolume(0f);
             SoundDistanceManager.Instance.ForceInitCalc();
             SoundDistanceManager.Instance.isActive = true;
