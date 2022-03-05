@@ -47,11 +47,15 @@ public class GameSceneManager : SceneBase
         //応接室で雪絵の影を見るイベント終了済み
         else if (!EventManager.Instance.IsEventEnded("Event_YukieHintEnded"))
         {
+            SoundDistanceManager.Instance.Listener.SetCurrentPointID(savePointSDP.ID);
+            SoundDistanceManager.Instance.Listener.SetNextTargetPointID(savePointSDP.ID);
             StageManager.Instance.InactiveYukie();
         }
         //キッチンまで気配を追ってきたが、まだ雪絵に追いかけられていない状態
         if(EventManager.Instance.IsEventEnded("Event_YukieHintEnded") && !EventManager.Instance.IsEventEnded("Event_FirstChasedFromYukie"))
         {
+            SoundDistanceManager.Instance.Listener.SetCurrentPointID(savePointSDP.ID);
+            SoundDistanceManager.Instance.Listener.SetNextTargetPointID(savePointSDP.ID);
             StageManager.Instance.InactiveYukie();
         }
 
