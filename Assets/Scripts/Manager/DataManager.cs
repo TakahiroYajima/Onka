@@ -68,11 +68,11 @@ namespace Onka.Manager.Data
             //Debug.Log($"MasterData : {soundDataSOMasterData} : {itemDatalistMasterData}");
 
             generalGameData = FileManager.LoadSaveData<GameData>(SaveType.GeneralPlayerData, GameDataFileName);
-            LoadAllSavedGameData();
         }
-        private void LoadAllSavedGameData()
+        public void LoadAllSavedGameData()
         {
             loadedAllGameDataList.Clear();
+            InGameUtil.GCCollect();
             StringBuilder fileName = new StringBuilder();
             for (int i = 0; i < MaxSaveDataCount; i++)
             {
@@ -116,7 +116,7 @@ namespace Onka.Manager.Data
         /// <param name="_selectSaveDataArrayNum"></param>
         public void NewCreateGameDataAndSave(int _selectSaveDataArrayNum, UnityAction onComplete = null)
         {
-            Debug.Log($"ロード済みデータ[{_selectSaveDataArrayNum}]を新規作成");
+            //Debug.Log($"ロード済みデータ[{_selectSaveDataArrayNum}]を新規作成");
             currentSelectLoadDataArrayNum = _selectSaveDataArrayNum;
             loadedAllGameDataList[currentSelectLoadDataArrayNum] = GetInitializedData();
             playingGameData = loadedAllGameDataList[currentSelectLoadDataArrayNum];

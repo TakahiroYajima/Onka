@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SoundSystem;
+using Onka.Manager.Data;
 
 public class TitleManager : SceneBase
 {
@@ -10,6 +11,7 @@ public class TitleManager : SceneBase
     protected override void Start()
     {
         base.Initialize();
+        DataManager.Instance.LoadAllSavedGameData();
         titleMenu.Initialize();
         InGameUtil.DoCursorFree();
     }
