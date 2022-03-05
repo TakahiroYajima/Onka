@@ -29,7 +29,7 @@ public class SelectSaveDataViewItem : MonoBehaviour
     public void Initialize(int _id, string saveDateTime, float rateOfProgression, UnityAction<int> _onPress)
     {
         id = _id;
-        Debug.Log($"セーブデータ{id} {saveDateTime}");
+        //Debug.Log($"セーブデータ{id} {saveDateTime}");
         if (!string.IsNullOrEmpty(saveDateTime))
         {
             rateOfProgressionImage.fillAmount = rateOfProgression;

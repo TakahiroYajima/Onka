@@ -57,7 +57,7 @@ public class SelectSaveDataView : MonoBehaviour
     /// <param name="_selectSaveDataArrayNum"></param>
     private void OnPressSaveDataButton(int _selectSaveDataArrayNum)
     {
-        Debug.Log($"OnPressSaveDataButton {_selectSaveDataArrayNum} : {viewSelectType.ToString()}");
+        //Debug.Log($"OnPressSaveDataButton {_selectSaveDataArrayNum} : {viewSelectType.ToString()}");
         if(viewSelectType == ViewSelectType.NewGame)
         {
             string message = "";
