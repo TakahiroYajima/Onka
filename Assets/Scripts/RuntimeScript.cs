@@ -8,6 +8,7 @@ public class RuntimeScript : MonoBehaviour
     [RuntimeInitializeOnLoadMethod]
     static void RuntimeInit()
     {
+        Application.targetFrameRate = 60;
         if(SceneManager.GetActiveScene().name != "Initialize")
         {
             SceneManager.LoadScene("Initialize");
