@@ -88,7 +88,7 @@ namespace SoundDistance
             if (ratio >= 0.97f) { volume = maxVolume; }
             else { volume = fx01 * maxVolume; }
             audioSource.volume = volume;
-            //Debug.Log($"UpdateAudioMaker : {ratio.ToString("f2")} : {SoundDistanceManager.Instance.currentDistanceListenerToEmitter.ToString("f2")} / {SoundDistanceManager.Instance.CanNotHearRatio.ToString("f2")} / {SoundDistanceManager.Instance.OuterCircumference.ToString("f2")}");
+            //Debug.Log($"vol : {volume.ToString("f2")} ratio : {ratio.ToString("f2")} : {fx01.ToString("f2")} : {SoundDistanceManager.Instance.currentDistanceListenerToEmitter.ToString("f2")} / {SoundDistanceManager.Instance.CanNotHearRatio.ToString("f2")} / {SoundDistanceManager.Instance.OuterCircumference.ToString("f2")}");
         }
 
         public void SetClipAndPlay(AudioClip clip, float currentTime = 0f)
