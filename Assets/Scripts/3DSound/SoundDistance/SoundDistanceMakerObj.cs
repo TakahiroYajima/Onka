@@ -93,6 +93,8 @@ namespace SoundDistance
 
         public void SetClipAndPlay(AudioClip clip, float currentTime = 0f)
         {
+            if (clip == null) return;
+            if (audioSource.clip == clip) return;
             audioSource.clip = clip;
             audioSource.time = currentTime;
             audioSource.Play();
