@@ -84,8 +84,11 @@ public abstract class DoorObject : MonoBehaviour
         }
         if (isKeyHoleUnlocked && isKeyLockUnlocked)
         {
-            OpenAction();
-            SoundManager.Instance.PlaySeWithKeyOne("se_door_open");
+            if (!isMoving && !isOpenState)
+            {
+                OpenAction();
+                SoundManager.Instance.PlaySeWithKeyOne("se_door_open");
+            }
         }
     }
     /// <summary>
