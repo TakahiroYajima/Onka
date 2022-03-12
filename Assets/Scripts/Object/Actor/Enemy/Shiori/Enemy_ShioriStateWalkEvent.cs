@@ -15,6 +15,7 @@ public class Enemy_ShioriStateWalkEvent : StateBase
         StageManager.Instance.Player.AddChasedCount(StageManager.Instance.Shiori);
         SoundManager.Instance.PlayEnvironmentWithKey("ambient_shiori", false);
         StageManager.Instance.Shiori.SoundPlayerObject.PlaySoundLoop(0);
+        StageManager.Instance.Shiori.onColliderEnterEvent = OnColliderEnterEvent;
     }
     public override void UpdateAction()
     {
@@ -38,5 +39,14 @@ public class Enemy_ShioriStateWalkEvent : StateBase
         
         SoundManager.Instance.PlayEnvironmentWithKey("ambient_in_house", false);
         //StageManager.Instance.Shiori.SoundPlayerObject.StopSound();
+    }
+
+    private void OnColliderEnterEvent(Collider c)
+    {
+        if (Utility.Instance.IsTagNameMatch(c.gameObject, Tags.Player)){
+            SoundManager.Instance.StopEnvironment();
+            StageManager.Instance.Shiori.SoundPlayerObject.StopSound();
+            GameOverManager.Instance.StartGameOver(GameOverType.ShioriArrested);
+        }
     }
 }

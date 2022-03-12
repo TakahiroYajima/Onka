@@ -13,6 +13,7 @@ public class Enemy_Shiori : Enemy
     public SoundPlayerObject SoundPlayerObject { get { return soundPlayerObject; } }
 
     public UnityAction onWalkEventEnded = null;
+    public UnityAction<Collider> onColliderEnterEvent = null;
 
     private void Awake()
     {
@@ -21,12 +22,6 @@ public class Enemy_Shiori : Enemy
         shioriStateDic.Add(Enemy_ShioriState.BeingNearEvent, new Enemy_ShioriStateBeingNearEvent());
 
         currentShioriState = Enemy_ShioriState.Init;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
 
     // Update is called once per frame
@@ -49,6 +44,14 @@ public class Enemy_Shiori : Enemy
     private void OnDestroy()
     {
         
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(onColliderEnterEvent != null)
+        {
+            onColliderEnterEvent(other);
+        }
     }
 }
 
