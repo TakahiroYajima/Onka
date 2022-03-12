@@ -12,6 +12,8 @@ public abstract class KeyLockObject : MonoBehaviour
     protected Vector3 initPosition;
     protected Quaternion initRotation;
     public float distanceFromCamera = 0.1f;//カメラの前に表示する時の適切な距離
+    public Vector3 changeScaleInEvent = Vector3.one;//解錠イベント中、カメラに収まるように変化させるスケール
+    public Vector3 initScale { get; private set; } = Vector3.one;
     //private List<GameObject> rendererObjectsChildList = new List<GameObject>();
     private GameObject childObject = null;
 
@@ -21,6 +23,7 @@ public abstract class KeyLockObject : MonoBehaviour
         initPosition = transform.position;
         initRotation = transform.rotation;
         childObject = transform.GetChild(0).gameObject;//子オブジェクトは1つの想定。さらにオブジェクトがある場合は、その子オブジェクトとして生成させる必要がある
+        initScale = transform.localScale;
     }
 
     public void SetInitialize(KeyLockTarget _keyLockTarget)
@@ -50,6 +53,7 @@ public abstract class KeyLockObject : MonoBehaviour
     {
         transform.position = initPosition;
         transform.rotation = initRotation;
+        transform.localScale = initScale;
     }
     public void RemoveInitState()
     {
