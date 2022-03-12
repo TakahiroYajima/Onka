@@ -86,7 +86,7 @@ namespace SoundDistance
             float volume = 0f;
             //近ければ最大にする
             if (ratio >= 0.97f) { volume = maxVolume; }
-            else { volume = fx01 * maxVolume; }
+            else { volume = Mathf.Lerp(audioSource.volume, fx01 * maxVolume, Time.deltaTime * 3); /*Debug.Log($"vol : {audioSource.volume.ToString("f4")} :t: {volume.ToString("f4")}");*/ }//徐々に変化
             audioSource.volume = volume;
             //Debug.Log($"vol : {volume.ToString("f2")} ratio : {ratio.ToString("f2")} : {fx01.ToString("f2")} : {SoundDistanceManager.Instance.currentDistanceListenerToEmitter.ToString("f2")} / {SoundDistanceManager.Instance.CanNotHearRatio.ToString("f2")} / {SoundDistanceManager.Instance.OuterCircumference.ToString("f2")}");
         }

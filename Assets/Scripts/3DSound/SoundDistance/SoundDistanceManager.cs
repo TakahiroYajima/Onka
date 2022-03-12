@@ -37,8 +37,8 @@ namespace SoundDistance
         private float adjustmentEachMovedDistance = 0f;//PointからListenerとEmitterが移動した距離によって調整する→ボリューム変化が滑らかになる
         private int currentMinID = -1;
         //Listenerから見て、音が鳴っている方向に進んでいるか（当たり判定では細かい部分を判定できないので、作り直す）
-        private bool isListenerMoveToEmitterDirection = false;
-        private SoundDistancePoint currentEmitterDirectionPointFromListener = null;//Listenerから見て音が聞こえる方向にあるPoint（current or next）
+        //private bool isListenerMoveToEmitterDirection = false;
+        //private SoundDistancePoint currentEmitterDirectionPointFromListener = null;//Listenerから見て音が聞こえる方向にあるPoint（current or next）
         //現在のListenerからEmitterまでの距離（ダイクストラで計算された最短距離）
         public float currentDistanceListenerToEmitter { get; private set; } = 0f;
 
@@ -455,7 +455,7 @@ namespace SoundDistance
             }
 
             //Debug.Log("現在のコスト : " + costList[currentMinID]);
-            //count == 0　：　Pointが同じ
+            //同じ地点にいたらEmitterの位置を直接設定
             if (listenerObj.currentPointID == emitterObj.currentPointID)
             {
                 SetSoundMakerTargetPosition(emitterObj.transform.position);
@@ -475,18 +475,19 @@ namespace SoundDistance
         {
             if (IsInTheNoPassageOrInRoomNearOuter())
             {
-                //部屋の奥から入口まで向かっているとき
-                if (soundDistancePoints[listenerObj.nextTargetPointID].IsOuter)
-                {
-                    //出口を基準に調整
-                    currentEmitterDirectionPointFromListener = soundDistancePoints[listenerObj.currentOuterPointID];
-                    adjustmentEachMovedDistance += (listenerObj.transform.position - soundDistancePoints[listenerObj.currentOuterPointID].transform.position).sqrMagnitude;
-                }
-                else
-                {
-                    currentEmitterDirectionPointFromListener = soundDistancePoints[listenerObj.currentPointID];
-                    adjustmentEachMovedDistance -= (listenerObj.transform.position - soundDistancePoints[listenerObj.currentPointID].transform.position).sqrMagnitude;
-                }
+                adjustmentEachMovedDistance += (listenerObj.transform.position - soundDistancePoints[listenerObj.currentOuterPointID].transform.position).sqrMagnitude;
+                ////部屋の奥から入口まで向かっているとき
+                //if (soundDistancePoints[listenerObj.nextTargetPointID].IsOuter)
+                //{
+                //    //出口を基準に調整
+                //    //currentEmitterDirectionPointFromListener = soundDistancePoints[listenerObj.currentOuterPointID];
+                //    adjustmentEachMovedDistance += (listenerObj.transform.position - soundDistancePoints[listenerObj.currentOuterPointID].transform.position).sqrMagnitude;
+                //}
+                //else
+                //{
+                //    //currentEmitterDirectionPointFromListener = soundDistancePoints[listenerObj.currentPointID];
+                //    adjustmentEachMovedDistance += (listenerObj.transform.position - soundDistancePoints[listenerObj.currentPointID].transform.position).sqrMagnitude;
+                //}
                 //Debug.Log($"L:行き止まり = 遠ざかっている {adjustmentEachMovedDistance}");
                 return;
             }
@@ -494,7 +495,7 @@ namespace SoundDistance
             if (serchEachRouteList[currentMinID].Count >= 2)
             {
                 float sqrMagnitude = 0f;
-                currentEmitterDirectionPointFromListener = serchEachRouteList[currentMinID][serchEachRouteList[currentMinID].Count - 2];
+                //currentEmitterDirectionPointFromListener = serchEachRouteList[currentMinID][serchEachRouteList[currentMinID].Count - 2];
                 //startのpointがListenerのcurrentPoint
                 if (serchEachRouteList[currentMinID][serchEachRouteList[currentMinID].Count - 1].ID == listenerObj.currentPointID)
                 {
@@ -533,7 +534,7 @@ namespace SoundDistance
                 else if (serchEachRouteList[currentMinID][serchEachRouteList[currentMinID].Count - 1].ID == listenerObj.nextTargetPointID)
                 {
                     //枝分かれルートのPointからOuterのPointに向かっている状態
-                    currentEmitterDirectionPointFromListener = soundDistancePoints[listenerObj.currentOuterPointID];
+                    //currentEmitterDirectionPointFromListener = soundDistancePoints[listenerObj.currentOuterPointID];
                     adjustmentEachMovedDistance += (listenerObj.transform.position - soundDistancePoints[listenerObj.currentOuterPointID].transform.position).sqrMagnitude;
                     //Debug.LogError($"serchEachRouteList is beyond expectations data : nextID :: {serchEachRouteList[currentMinID][serchEachRouteList[currentMinID].Count - 1].ID}");
                     ////next = 向かっている
@@ -706,8 +707,6 @@ namespace SoundDistance
             //ある程度離れている場合
             if (_eachRouteList[_minID].Count >= 2)
             {
-                
-                
                 //遠ざかっているときに、「自分の2つ向こう」のpointを参照してしまうため、「自分の1つ向こう」を参照するように調整
                 if (_eachRouteList[currentMinID].Contains(soundDistancePoints[listenerObj.nextTargetPointID]))
                 {
