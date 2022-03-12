@@ -1409,6 +1409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseObject: {fileID: 4324201869665005729}
+  nameTitleObj: {fileID: 3200476263924782978}
   nameText: {fileID: 836673328310497315}
   ageText: {fileID: 407936633272360383}
   genderText: {fileID: 7757428455217299253}

@@ -123,7 +123,12 @@ public class CharactorSettingEditor : EditorWindow
                                     EditorGUILayout.BeginVertical(GUI.skin.box);
                                     {
                                         dataList.charactorDataList[findID].key = EditorGUILayout.TextField("Key", dataList.charactorDataList[findID].key);
-                                        dataList.charactorDataList[findID].name = EditorGUILayout.TextField("名前", dataList.charactorDataList[findID].name);
+                                        EditorGUILayout.BeginHorizontal();
+                                        {
+                                            dataList.charactorDataList[findID].name = EditorGUILayout.TextField("名前", dataList.charactorDataList[findID].name);
+                                            dataList.charactorDataList[findID].isCharactorName = EditorGUILayout.Toggle("名前表記？", dataList.charactorDataList[findID].isCharactorName);
+                                        }
+                                        EditorGUILayout.EndHorizontal();
                                         dataList.charactorDataList[findID].gender = (Gender)EditorGUILayout.EnumPopup("性別", dataList.charactorDataList[findID].gender);
                                         dataList.charactorDataList[findID].age = EditorGUILayout.IntField("年齢", dataList.charactorDataList[findID].age);
                                         EditorGUILayout.BeginHorizontal();

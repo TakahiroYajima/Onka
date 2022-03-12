@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class OneCharactorView : MonoBehaviour
 {
     [SerializeField] private GameObject baseObject = null;
+    [SerializeField] private GameObject nameTitleObj = null;
     [SerializeField] private Text nameText = null;
     [SerializeField] private Text ageText = null;
     [SerializeField] private Text genderText = null;
@@ -17,10 +18,12 @@ public class OneCharactorView : MonoBehaviour
 
     public void View(CharactorData _data, bool _showBackButton = false, UnityAction _onClosed = null)
     {
+        nameTitleObj.SetActive(_data.isCharactorName);
         nameText.text = _data.name;
         ageText.text = _data.age.ToString();
         genderText.text = EnumUtil.PerseGenderStr(_data.gender);
         descriptionText.text = _data.description;
+        //descriptionText.gameObject.GetComponent<HyphenationJpn>().GetText(_data.description);
         charactorImage.sprite = _data.sprite;
 
         onClosed = _onClosed;

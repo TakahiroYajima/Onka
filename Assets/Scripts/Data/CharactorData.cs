@@ -14,6 +14,7 @@ public class CharactorData
     public int id;
     public string key;
     public string name;
+    public bool isCharactorName = true;//nameが人物の名前か（例：「主人公」では人物名ではない）
     public int age;
     public Gender gender;
     public string imageName;
