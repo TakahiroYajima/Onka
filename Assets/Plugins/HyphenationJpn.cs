@@ -39,11 +39,11 @@ public class HyphenationJpn : UIBehaviour
 		UpdateText(text);
 	}
 #if UNITY_EDITOR
-    protected override void OnValidate()
-	{
-		base.OnValidate();
-		UpdateText(text);
-	}
+ //   protected override void OnValidate()
+	//{
+	//	base.OnValidate();
+	//	UpdateText(text);
+	//}
 #endif
 
     void UpdateText(string str)
