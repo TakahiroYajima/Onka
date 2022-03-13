@@ -67,7 +67,7 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
 
     }
 
-    public void InactiveYukie(int initPointID = 0)
+    public void InactiveYukieAndInitListenerPointID(int initPointID = 0)
     {
         SoundDistanceManager.Instance.SetInactive(initPointID, initPointID);
         Yukie.gameObject.SetActive(false);

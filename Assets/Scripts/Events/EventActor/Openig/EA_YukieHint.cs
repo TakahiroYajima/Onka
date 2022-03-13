@@ -34,6 +34,7 @@ public class EA_YukieHint : EventActorBase
 
     private IEnumerator EventAction()
     {
+        CrosshairManager.Instance.SetCrosshairActive(false);
         StageManager.Instance.Player.ChangeState(PlayerState.Event);
         StageManager.Instance.Yukie.transform.position = yukieFirstPosition.transform.position;
         StageManager.Instance.Yukie.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
@@ -47,7 +48,7 @@ public class EA_YukieHint : EventActorBase
 
         
         StageManager.Instance.Player.ChangeState(PlayerState.Free);
-        
+        CrosshairManager.Instance.SetCrosshairActive(true);
 
         FinishEvent();
     }

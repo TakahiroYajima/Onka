@@ -19,6 +19,5 @@ public class Event_FirstChasedFromYukie : EventBase
     public override void EventStart()
     {
         base.EventStart();
-        Debug.Log("Event_FirstChasedFromYukieスタート");
     }
 }

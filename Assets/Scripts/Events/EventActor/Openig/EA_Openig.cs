@@ -37,7 +37,7 @@ public class EA_Openig : EventActorBase
 
         //各アクターの初期化
         eventBase.endranceDoor.isForceOpenable = true;
-        StageManager.Instance.InactiveYukie();
+        StageManager.Instance.InactiveYukieAndInitListenerPointID();
         eventBase.ChangeNextState();
         yield return new WaitForSeconds(2f);//念のため
         StageManager.Instance.Player.ChangeState(PlayerState.Free);

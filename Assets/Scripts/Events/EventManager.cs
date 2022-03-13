@@ -17,6 +17,7 @@ namespace Onka.Manager.Event
 
         //private int inProgressEventArrayNum = -1;
         public bool IsAnyEventEnabled { get { return doingEventList.Count > 0; /*inProgressEventArrayNum > -1;*/ } }
+        public bool isEnable = false;
 
         public void Initialize()
         {
@@ -55,10 +56,7 @@ namespace Onka.Manager.Event
 
         private void Update()
         {
-            //if (inProgressEventArrayNum >= 0 && inProgressEventArrayNum < eventObjectList.Count)
-            //{
-            //    eventObjectList[inProgressEventArrayNum].EventUpdate();
-            //}
+            if (!isEnable) return;
             if(doingEventList.Count > 0)
             {
                 for(int i = 0; i < doingEventList.Count; i++)
@@ -88,6 +86,7 @@ namespace Onka.Manager.Event
         /// </summary>
         public void ProgressEvent()
         {
+            if (!isEnable) return;
             for (int i = 0; i < eventObjectList.Count; i++)
             {
                 if (eventObjectList[i] != null)

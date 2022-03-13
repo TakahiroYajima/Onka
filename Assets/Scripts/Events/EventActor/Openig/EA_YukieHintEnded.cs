@@ -23,11 +23,16 @@ public class EA_YukieHintEnded : EventActorBase
         //キッチンの方から雪絵の声が聞こえるようにする
         StageManager.Instance.Yukie.transform.position = new Vector3(eventBase.kitchenSoundPoint.transform.position.x, StageManager.Instance.Yukie.transform.position.y, eventBase.kitchenSoundPoint.transform.position.z + 2f);
         SoundDistanceManager.Instance.Emitter.SetPointID(eventBase.kitchenSoundPoint.ID);
-        SoundDistanceManager.Instance.Listener.SetCurrentPointID(eventBase.drawingRoomSoundPoint.ID);
+        //セーブポイントに設定されていたら途中から再開したことになるのでそのままにする
+        if(SoundDistanceManager.Instance.Listener.currentPointID != eventBase.savePointSoundPoint.ID)
+        {
+            SoundDistanceManager.Instance.Listener.SetCurrentPointID(eventBase.drawingRoomSoundPoint.ID);
+            SoundDistanceManager.Instance.Listener.SetNextTargetPointID(eventBase.drawingRoomSoundPoint.ID);
+        }
         SoundDistanceManager.Instance.ForceInitCalc();
         SoundDistanceManager.Instance.Maker.SetVolume(0f);
         SoundDistanceManager.Instance.isActive = true;
-        StageManager.Instance.Yukie.PlaySoundLoop(0);
+        StageManager.Instance.Yukie.PlaySoundLoop(0, 0.3f);
         StageManager.Instance.Yukie.gameObject.SetActive(false);
         SoundDistanceManager.Instance.Maker.DoAction();
     }

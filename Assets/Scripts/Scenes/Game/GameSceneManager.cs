@@ -42,21 +42,23 @@ public class GameSceneManager : SceneBase
         //オープニングイベントだけ終了済み
         if (!EventManager.Instance.IsEventEnded("Event_YukieHint"))
         {
-            StageManager.Instance.InactiveYukie();
+            StageManager.Instance.InactiveYukieAndInitListenerPointID();
+            SoundDistanceManager.Instance.Listener.SetCurrentPointID(savePointSDP.ID);
+            SoundDistanceManager.Instance.Listener.SetNextTargetPointID(savePointSDP.ID);
         }
         //応接室で雪絵の影を見るイベント終了済み
         else if (!EventManager.Instance.IsEventEnded("Event_YukieHintEnded"))
         {
+            StageManager.Instance.InactiveYukieAndInitListenerPointID();
             SoundDistanceManager.Instance.Listener.SetCurrentPointID(savePointSDP.ID);
             SoundDistanceManager.Instance.Listener.SetNextTargetPointID(savePointSDP.ID);
-            StageManager.Instance.InactiveYukie();
         }
         //キッチンまで気配を追ってきたが、まだ雪絵に追いかけられていない状態
         if(EventManager.Instance.IsEventEnded("Event_YukieHintEnded") && !EventManager.Instance.IsEventEnded("Event_FirstChasedFromYukie"))
         {
+            StageManager.Instance.InactiveYukieAndInitListenerPointID();
             SoundDistanceManager.Instance.Listener.SetCurrentPointID(savePointSDP.ID);
             SoundDistanceManager.Instance.Listener.SetNextTargetPointID(savePointSDP.ID);
-            StageManager.Instance.InactiveYukie();
         }
 
         //キッチンで雪絵から追いかけられ、逃げるイベント終了済み
@@ -73,11 +75,11 @@ public class GameSceneManager : SceneBase
             SoundDistanceManager.Instance.Listener.SetCurrentPointID(savePointSDP.ID);
             SoundDistanceManager.Instance.Listener.SetNextTargetPointID(savePointSDP.ID);
             SoundDistanceManager.Instance.Maker.SetVolume(0f);
-            SoundDistanceManager.Instance.ForceInitCalc();
             SoundDistanceManager.Instance.isActive = true;
+            SoundDistanceManager.Instance.ForceInitCalc();
             SoundManager.Instance.PlayEnvironmentWithKey("ambient_in_house");
         }
-
+        EventManager.Instance.isEnable = true;
         EventManager.Instance.InitProgressEach();
     }
 }

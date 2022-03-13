@@ -6546,7 +6546,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.9
+      value: 0.86
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -68233,6 +68233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDontDestroy: 0
+  isEnable: 0
 --- !u!4 &1674930557 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 416730, guid: 6ec269dfffa48cb44861f765a7ff3547,
@@ -70141,7 +70142,7 @@ PrefabInstance:
     - target: {fileID: 252629911600637343, guid: 974c90fb5c85e1145b28c692035ab2f2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 252629911600637343, guid: 974c90fb5c85e1145b28c692035ab2f2,
         type: 3}
@@ -70151,7 +70152,7 @@ PrefabInstance:
     - target: {fileID: 252629911600637343, guid: 974c90fb5c85e1145b28c692035ab2f2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 26.6
+      value: 26.3
       objectReference: {fileID: 0}
     - target: {fileID: 252629911600637343, guid: 974c90fb5c85e1145b28c692035ab2f2,
         type: 3}
@@ -71351,6 +71352,7 @@ MonoBehaviour:
     type: 3}
   kitchenSoundPoint: {fileID: 266801631}
   drawingRoomSoundPoint: {fileID: 454090123}
+  savePointSoundPoint: {fileID: 1129709414}
 --- !u!4 &1741217204 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 495036, guid: f7b0d89d9bb07a54faeb67e75329c39b,
