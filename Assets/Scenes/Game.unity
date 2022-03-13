@@ -2358,6 +2358,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!64 &68168062
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2546,6 +2547,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &70785834
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7526,6 +7529,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!114 &185260159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7571,6 +7576,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!4 &185999584 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 444242, guid: 9700464865136ae47b2f6a69a302e104,
@@ -7651,84 +7658,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 0.2, z: 0}
---- !u!1 &190962061
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 190962062}
-  - component: {fileID: 190962064}
-  - component: {fileID: 190962063}
-  m_Layer: 5
-  m_Name: ClickText
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &190962062
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 190962061}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 480883300}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: -10}
-  m_SizeDelta: {x: 1000, y: 120}
-  m_Pivot: {x: 0.5, y: 1}
---- !u!114 &190962063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 190962061}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: 58959a36c1fdc644497219ac08012608, type: 3}
-    m_FontSize: 60
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 6
-    m_MaxSize: 60
-    m_Alignment: 1
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: Click To Next
---- !u!222 &190962064
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 190962061}
-  m_CullTransparentMesh: 0
 --- !u!1001 &192908809
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9253,6 +9182,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!114 &220382596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9286,6 +9216,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!114 &220382598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9319,6 +9250,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!114 &220382600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9352,6 +9284,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!1 &220748898
 GameObject:
   m_ObjectHideFlags: 0
@@ -11636,6 +11569,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &274473164
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14889,6 +14824,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!114 &352903490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19322,6 +19258,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &462015070
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19658,6 +19596,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &472057985
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20067,83 +20007,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 286660443}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &480883299
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 480883300}
-  - component: {fileID: 480883302}
-  - component: {fileID: 480883301}
-  m_Layer: 5
-  m_Name: PageBase
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &480883300
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 480883299}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 955334053}
-  - {fileID: 190962062}
-  - {fileID: 1691497468}
-  m_Father: {fileID: 752652439}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1520, y: 800}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &480883301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 480883299}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.1509434, g: 0.1509434, b: 0.1509434, a: 1}
-  m_RaycastTarget: 1
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &480883302
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 480883299}
-  m_CullTransparentMesh: 0
 --- !u!1 &486103919 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 178878, guid: ef8881f15e1f6604aa4b58be4954d5e0,
@@ -20214,6 +20077,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &490092159
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21257,6 +21122,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!114 &530521149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21475,6 +21341,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &540141283
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22694,6 +22562,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  closeSEKey: se_slideobj_open
 --- !u!114 &578893480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23553,6 +23422,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &598364644
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24954,6 +24825,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &648204202
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25597,6 +25470,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!114 &662700856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28315,6 +28190,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &735958018
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28702,100 +28579,24 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 440733416}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &752652438
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 752652439}
-  - component: {fileID: 752652440}
-  - component: {fileID: 752652442}
-  - component: {fileID: 752652441}
-  m_Layer: 5
-  m_Name: WatchDiaryBase
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &752652439
+--- !u!224 &752652439 stripped
 RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 4695509002736265979, guid: 736cd6a575ae2ed40968f199ef160078,
+    type: 3}
+  m_PrefabInstance: {fileID: 4695509002394729068}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 752652438}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 480883300}
-  m_Father: {fileID: 1942049964}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &752652440
+--- !u!114 &752652440 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 4695509002736265972, guid: 736cd6a575ae2ed40968f199ef160078,
+    type: 3}
+  m_PrefabInstance: {fileID: 4695509002394729068}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 752652438}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d0701da38c85494c9f20532a4ed687c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pageNumText: {fileID: 1691497469}
-  contentText: {fileID: 955334054}
-  fonts:
-  - {fileID: 12800000, guid: 58959a36c1fdc644497219ac08012608, type: 3}
-  - {fileID: 12800000, guid: 09a02eced95ff2845b4ebd31f09c225a, type: 3}
-  - {fileID: 12800000, guid: 34bf66d490f76bc4ab94367911bef58c, type: 3}
---- !u!114 &752652441
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 752652438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.5882353}
-  m_RaycastTarget: 1
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &752652442
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 752652438}
-  m_CullTransparentMesh: 0
 --- !u!1001 &753093478
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31237,6 +31038,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &799381377
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31473,6 +31276,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &803689222
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32264,6 +32069,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &817061874
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -35836,6 +35643,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &903594022
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -35881,6 +35690,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &903594025
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -37057,6 +36868,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!114 &930636936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37089,6 +36902,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!114 &930636938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37121,6 +36936,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!1001 &931781250
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38056,98 +37873,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 953776259}
   m_Mesh: {fileID: 4300000, guid: 605c806a9eb55da48bd5426a1633f9fb, type: 3}
---- !u!1 &955334052
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 955334053}
-  - component: {fileID: 955334055}
-  - component: {fileID: 955334054}
-  - component: {fileID: 955334056}
-  m_Layer: 5
-  m_Name: ContentText
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &955334053
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 955334052}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 480883300}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -40, y: -60}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &955334054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 955334052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: 34bf66d490f76bc4ab94367911bef58c, type: 3}
-    m_FontSize: 40
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 3
-    m_MaxSize: 43
-    m_Alignment: 0
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1.3
-  m_Text: 
---- !u!222 &955334055
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 955334052}
-  m_CullTransparentMesh: 0
---- !u!114 &955334056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 955334052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1441abcf2adf6384fbc582bb99c2eca7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: 
 --- !u!1001 &955386685
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39318,6 +39043,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &975376168
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -39363,6 +39090,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &975376171
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -41475,6 +41204,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &1031887176
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -41824,6 +41555,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!114 &1036859135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47466,6 +47198,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!114 &1184926490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48879,6 +48612,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!114 &1217302897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49013,6 +48747,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!114 &1217996207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49134,6 +48869,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &1218900617
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -49993,6 +49730,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &1243031631
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -50705,6 +50444,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &1255289549
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -50817,6 +50558,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &1255871110
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -51471,6 +51214,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &1270041152
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -57308,6 +57053,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!114 &1379389054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57363,6 +57109,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  closeSEKey: se_slideobj_open
 --- !u!114 &1379389056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57396,6 +57143,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!114 &1379389058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57429,6 +57177,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!4 &1379389063 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400010, guid: 4df89b4a30091594a850aeacf8ace8d3,
@@ -57526,6 +57275,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!114 &1384404104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59915,6 +59665,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &1436174714
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -60574,7 +60326,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.7
+  m_Intensity: 1
   m_Range: 26
   m_SpotAngle: 66
   m_InnerSpotAngle: 6
@@ -60698,6 +60450,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!64 &1467809025
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -61040,6 +60793,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!114 &1478818108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62121,6 +61875,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &1515446261
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -62965,6 +62721,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  closeSEKey: se_slideobj_open
 --- !u!114 &1541392803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65248,6 +65005,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &1603312891
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -67090,6 +66849,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!114 &1647725021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67137,6 +66897,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!114 &1647725024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67184,6 +66945,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!114 &1647725027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69160,84 +68922,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1103273702}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1691497467
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1691497468}
-  - component: {fileID: 1691497470}
-  - component: {fileID: 1691497469}
-  m_Layer: 5
-  m_Name: PageText
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1691497468
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1691497467}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 480883300}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 10}
-  m_SizeDelta: {x: 1000, y: 120}
-  m_Pivot: {x: 0.5, y: 0}
---- !u!114 &1691497469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1691497467}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: 58959a36c1fdc644497219ac08012608, type: 3}
-    m_FontSize: 60
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 6
-    m_MaxSize: 60
-    m_Alignment: 7
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 1 / 3
---- !u!222 &1691497470
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1691497467}
-  m_CullTransparentMesh: 0
 --- !u!4 &1692259096 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 431888, guid: d9d02704e9e85234892800b43585122b,
@@ -71151,6 +70835,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &1724990133
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -74588,6 +74274,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!64 &1816230006
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -79526,6 +79213,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &1935935493
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -85112,6 +84801,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!65 &2083779444
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -87913,6 +87604,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!1 &1500086922387023
 GameObject:
   m_ObjectHideFlags: 0
@@ -87977,6 +87670,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!1 &1532758080410004
 GameObject:
   m_ObjectHideFlags: 0
@@ -94396,6 +94091,130 @@ Transform:
   m_Father: {fileID: 712111206}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 90, z: 0}
+--- !u!1001 &4695509002394729068
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1942049964}
+    m_Modifications:
+    - target: {fileID: 4695509002736265978, guid: 736cd6a575ae2ed40968f199ef160078,
+        type: 3}
+      propertyPath: m_Name
+      value: WatchDiaryBase
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695509002736265978, guid: 736cd6a575ae2ed40968f199ef160078,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695509002736265979, guid: 736cd6a575ae2ed40968f199ef160078,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695509002736265979, guid: 736cd6a575ae2ed40968f199ef160078,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695509002736265979, guid: 736cd6a575ae2ed40968f199ef160078,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695509002736265979, guid: 736cd6a575ae2ed40968f199ef160078,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695509002736265979, guid: 736cd6a575ae2ed40968f199ef160078,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695509002736265979, guid: 736cd6a575ae2ed40968f199ef160078,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695509002736265979, guid: 736cd6a575ae2ed40968f199ef160078,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695509002736265979, guid: 736cd6a575ae2ed40968f199ef160078,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695509002736265979, guid: 736cd6a575ae2ed40968f199ef160078,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695509002736265979, guid: 736cd6a575ae2ed40968f199ef160078,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695509002736265979, guid: 736cd6a575ae2ed40968f199ef160078,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695509002736265979, guid: 736cd6a575ae2ed40968f199ef160078,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695509002736265979, guid: 736cd6a575ae2ed40968f199ef160078,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695509002736265979, guid: 736cd6a575ae2ed40968f199ef160078,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695509002736265979, guid: 736cd6a575ae2ed40968f199ef160078,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695509002736265979, guid: 736cd6a575ae2ed40968f199ef160078,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695509002736265979, guid: 736cd6a575ae2ed40968f199ef160078,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695509002736265979, guid: 736cd6a575ae2ed40968f199ef160078,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695509002736265979, guid: 736cd6a575ae2ed40968f199ef160078,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695509002736265979, guid: 736cd6a575ae2ed40968f199ef160078,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4695509002736265979, guid: 736cd6a575ae2ed40968f199ef160078,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 736cd6a575ae2ed40968f199ef160078, type: 3}
 --- !u!114 &4704265195625211613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94426,6 +94245,8 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!1001 &4745260619260437136
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -95929,6 +95750,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  closeSEKey: se_slideobj_open
 --- !u!114 &5964025104331841113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96658,6 +96480,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!1 &6411160293082012608
 GameObject:
   m_ObjectHideFlags: 0
@@ -96726,6 +96549,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!1 &6411338231225355438
 GameObject:
   m_ObjectHideFlags: 0
@@ -96810,6 +96634,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!1 &6411503228410136740
 GameObject:
   m_ObjectHideFlags: 0
@@ -96911,6 +96736,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!1 &6411528847500794154
 GameObject:
   m_ObjectHideFlags: 0
@@ -96979,6 +96805,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!1 &6411709558640762526
 GameObject:
   m_ObjectHideFlags: 0
@@ -97069,6 +96896,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  closeSEKey: se_slideobj_open
 --- !u!1 &6469074988616155191
 GameObject:
   m_ObjectHideFlags: 0
@@ -97254,6 +97082,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  openSEKey: se_closet_open
+  closeSEKey: se_closet_close
 --- !u!23 &7316239935139127425
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -103148,6 +102978,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!1 &7690673840884976899
 GameObject:
   m_ObjectHideFlags: 0
@@ -103216,6 +103047,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!1 &7690673840884976903
 GameObject:
   m_ObjectHideFlags: 0
@@ -103257,6 +103089,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!114 &7690673840884976905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103371,6 +103204,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!114 &7690673840884976912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104000,6 +103834,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!1 &8037692752914516997
 GameObject:
   m_ObjectHideFlags: 0
@@ -104101,6 +103936,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!114 &8037692752914517003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104169,6 +104005,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!1 &8037692752914517007
 GameObject:
   m_ObjectHideFlags: 0
@@ -104210,6 +104047,7 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
+  closeSEKey: se_slideobj_open
 --- !u!114 &8037692752914517009
 MonoBehaviour:
   m_ObjectHideFlags: 0
