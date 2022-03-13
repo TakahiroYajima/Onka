@@ -519,11 +519,12 @@ namespace SoundDistance
                         //向かっている先のPointへの距離を取得
                         if (listenerObj.currentPointID != listenerObj.nextTargetPointID)
                         {
-                            sqrMagnitude =
-                                soundDistancePoints[Listener.nextTargetPointID]
+                            var p = soundDistancePoints[Listener.nextTargetPointID]
                                 .PointNodes.GetList().Where(x => x.Value.IsExist)
-                                .FirstOrDefault(x => x.Value.node.ID == listenerObj.currentPointID)
-                                .Value.distanceMagnitude;
+                                .FirstOrDefault(x => x.Value.node.ID == listenerObj.currentPointID);
+                            if (p != null && p != default) {
+                                sqrMagnitude = p.Value.distanceMagnitude;
+                            }
                             float pointToPlayerDistanceMagnitude = (listenerObj.transform.position - serchEachRouteList[currentMinID][serchEachRouteList[currentMinID].Count - 1].transform.position).sqrMagnitude;
                             
                             adjustmentEachMovedDistance += Mathf.Clamp(pointToPlayerDistanceMagnitude, 0f, sqrMagnitude);
