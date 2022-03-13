@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using SoundSystem;
 
 /// <summary>
 /// 開閉するオブジェクトの挙動用コンポーネント
@@ -21,6 +22,8 @@ public class SwingableObject : MonoBehaviour
     public bool isOpenState { get; private set; } = false;
 
     private float currentLocalRotation = 0f;
+    [HideInInspector] public string openSEKey = "se_closet_open";
+    [HideInInspector] public string closeSEKey = "se_closet_close";
 
     private void Start()
     {
@@ -41,8 +44,8 @@ public class SwingableObject : MonoBehaviour
     {
         if (!isMoving)
         {
-            if (isOpenState) { ClosedCallback.Invoke(); StartCoroutine(DoSwing(false, () => {  })); }//本当は閉鎖前のコールバックを作るべきだった
-            else { StartCoroutine(DoSwing(true, () => { OpenedCallback.Invoke(); })); }
+            if (isOpenState) { ClosedCallback.Invoke(); StartCoroutine(DoSwing(false, () => { SoundManager.Instance.PlaySeWithKeyOne(closeSEKey); })); }//本当は閉鎖前のコールバックを作るべきだった
+            else { SoundManager.Instance.PlaySeWithKeyOne(openSEKey); StartCoroutine(DoSwing(true, () => { OpenedCallback.Invoke(); })); }
         }
     }
 

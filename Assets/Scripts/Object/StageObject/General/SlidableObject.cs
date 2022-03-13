@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using SoundSystem;
 
 public class SlidableObject : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class SlidableObject : MonoBehaviour
     private float moveTime = 1f;
     public bool isMoving { get; private set; } = false;
     public bool isOpenState { get; private set; } = false;//開いている状態か
+
+    [HideInInspector] private string openSEKey = "se_slideobj_open";
+    [HideInInspector] public string closeSEKey = "se_slideobj_open";
 
     private void Start()
     {
@@ -40,11 +44,13 @@ public class SlidableObject : MonoBehaviour
             if (isOpenState)
             {
                 isOpenState = false;
+                SoundManager.Instance.PlaySeWithKeyOne(closeSEKey);
                 StartCoroutine(DoSlide(false, () => { ClosedCallback.Invoke(); }));
             }
             else
             {
                 isOpenState = true;
+                SoundManager.Instance.PlaySeWithKeyOne(openSEKey);
                 StartCoroutine(DoSlide(true, () => { OpenedCallback.Invoke(); }));
             }
         }

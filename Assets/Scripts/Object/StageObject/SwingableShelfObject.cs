@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SoundSystem;
 
 /// <summary>
 /// ドア状の棚・収納の開閉を管理する

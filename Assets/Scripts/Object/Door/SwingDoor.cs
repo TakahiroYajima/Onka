@@ -12,6 +12,12 @@ public class SwingDoor : DoorObject
     [SerializeField] private AnimationClip openAnim = null;
     [SerializeField] private AnimationClip closeAnim = null;
 
+    protected override void Start()
+    {
+        base.Start();
+        seKey = "se_door_open";
+    }
+
     protected override void OpenAction()
     {
         if (!isMoving && !isOpenState)

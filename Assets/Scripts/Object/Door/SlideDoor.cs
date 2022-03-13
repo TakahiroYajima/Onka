@@ -17,6 +17,12 @@ public class SlideDoor : DoorObject
     [SerializeField] private Transform moveTransform = null;
     private float moveTime = 1f;
 
+    protected override void Start()
+    {
+        base.Start();
+        seKey = "se_slidedoor_open";
+    }
+
     protected override void OpenAction()
     {
         if (!isMoving && !isOpenState)

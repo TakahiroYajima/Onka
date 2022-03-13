@@ -25,6 +25,8 @@ public abstract class DoorObject : MonoBehaviour
     bool isKeyHoleUnlocked = true;
     bool isKeyLockUnlocked = true;
 
+    protected string seKey = "se_door_open";
+
     //過去にプレイヤーがドアを開けているか（ItemのisUsedで判定）
     public bool isUnlocked
     {
@@ -38,7 +40,7 @@ public abstract class DoorObject : MonoBehaviour
     protected const float DistanceRequiredToCloseDoorSqrMagnitude = 100f;//自動でドアが閉まるために必要なプレイヤーとの距離：距離は10。sqrMagnitudeの計算なので 10 * 10 = 100
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         thisCollider = GetComponent<BoxCollider>();
         if(thisCollider == null)
@@ -55,7 +57,7 @@ public abstract class DoorObject : MonoBehaviour
         if (isForceOpenable)
         {
             OpenAction();
-            SoundManager.Instance.PlaySeWithKeyOne("se_door_open");
+            SoundManager.Instance.PlaySeWithKeyOne(seKey);
             return;
         }
 
@@ -87,7 +89,7 @@ public abstract class DoorObject : MonoBehaviour
             if (!isMoving && !isOpenState)
             {
                 OpenAction();
-                SoundManager.Instance.PlaySeWithKeyOne("se_door_open");
+                SoundManager.Instance.PlaySeWithKeyOne(seKey);
             }
         }
     }
