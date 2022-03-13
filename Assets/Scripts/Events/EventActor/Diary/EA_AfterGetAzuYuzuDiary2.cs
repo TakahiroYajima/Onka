@@ -127,7 +127,7 @@ public class EA_AfterGetAzuYuzuDiary2 : EventActorBase
         {
             parent.SetCanBeStarted(true);
             parent.InitiationContact();
-
+            StageManager.Instance.Yukie.SetVolumeONEnable(false);
             currentState = YD2State.Kagomekagome;
             SoundManager.Instance.PlayVoiceClip(kagomekagomeSound);
         }
@@ -141,6 +141,7 @@ public class EA_AfterGetAzuYuzuDiary2 : EventActorBase
         {
             if (Utility.Instance.IsTagNameMatch(kagomekagomeCollisionEnterEvent.HitCollider.gameObject, Tags.Player))
             {
+                StageManager.Instance.Yukie.SetVolumeONEnable(true);
                 currentState = YD2State.Inactive;
                 SoundManager.Instance.StopVoice();
             }
@@ -151,7 +152,6 @@ public class EA_AfterGetAzuYuzuDiary2 : EventActorBase
         if (Utility.Instance.IsTagNameMatch(yuzuhaActiveCollisionEnterEvent.HitCollision.gameObject, Tags.Player))
         {
             SoundManager.Instance.StopVoice();
-            
             currentState = YD2State.YuzuhaAppearance;
             StartCoroutine(StartupYuzu());
             kagomekagomeCollider.enabled = false;
@@ -196,6 +196,7 @@ public class EA_AfterGetAzuYuzuDiary2 : EventActorBase
             yuzuha.gameObject.SetActive(false);
             eventEndCollider.enabled = false;
             StageManager.Instance.Yuzuha = null;
+            StageManager.Instance.Yukie.SetVolumeONEnable(true);
             FinishEvent();
         }
     }

@@ -22,6 +22,7 @@ namespace SoundDistance
             isActionable = false;
             SoundStop();
         }
+        [HideInInspector] public bool isVolumeON = true;//ボリュームを0にするだけで、後は通常の処理にさせたいときはfalseにする
         
         //音が聞こえている方向にあるPointから一定距離進んだ位置情報
         public Vector3 currentTargetPosition { get; private set; } = Vector3.zero;
@@ -79,6 +80,11 @@ namespace SoundDistance
         /// </summary>
         private void UpdateAudioMaker()
         {
+            if (!isVolumeON)
+            {
+                audioSource.volume = Mathf.Lerp(audioSource.volume, 0, Time.deltaTime * 5f); ;
+                return;
+            }
             //ratio : 1~0, volume : 0~1、お互いに0と1が真逆の関係
             float ratio = Mathf.Clamp01((SoundDistanceManager.Instance.currentDistanceListenerToEmitter / SoundDistanceManager.Instance.CanNotHearRatio) / SoundDistanceManager.Instance.OuterCircumference);
             ratio = 1 - ratio;//0~1に直す

@@ -207,6 +207,10 @@ public class Enemy_Yukie : Enemy
     {
         SoundDistanceManager.Instance.StopSoundDistanceMaker();
     }
+    public void SetVolumeONEnable(bool _isEnable)
+    {
+        SoundDistanceManager.Instance.SetVolumeONEnable(_isEnable);
+    }
     #endregion
 
     #region コライダーイベント関連

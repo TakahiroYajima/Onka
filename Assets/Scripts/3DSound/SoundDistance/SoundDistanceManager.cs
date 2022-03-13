@@ -916,6 +916,10 @@ namespace SoundDistance
                 soundMaker.SoundPause();
             }
         }
+        public void SetVolumeONEnable(bool _isEnable)
+        {
+            soundMaker.isVolumeON = _isEnable;
+        }
         #endregion
     }
 }
