@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SoundSystem;
+using SoundDistance;
 
 public class EA_AfterGetEntranceKey : EventActorBase
 {
@@ -46,10 +47,19 @@ public class EA_AfterGetEntranceKey : EventActorBase
     {
         StageManager.Instance.Yukie.transform.position = firstYukiePosition.transform.position;
         StageManager.Instance.Yukie.gameObject.SetActive(true);
+
+        SoundDistanceManager.Instance.Emitter.SetPointID(eventBase.emitterPoint.ID);
+        SoundDistanceManager.Instance.Emitter.SetNextTargetPointID(eventBase.emitterNextPoint.ID);
+        SoundDistanceManager.Instance.Emitter.SetOuterPointID(eventBase.outerPoint.ID);
+        SoundDistanceManager.Instance.Listener.SetCurrentPointID(eventBase.listenerPoint.ID);
+        SoundDistanceManager.Instance.Listener.SetNextTargetPointID(eventBase.listenerNextPoint.ID);
+
+
         Vector3 lookPos = new Vector3(StageManager.Instance.Player.transform.position.x, StageManager.Instance.Yukie.transform.position.y, StageManager.Instance.Player.transform.position.z);
         StageManager.Instance.Yukie.transform.LookAt(lookPos);
         StageManager.Instance.Yukie.isEternalChaseMode = true;
         StageManager.Instance.Yukie.isIgnoreInRoom = true;
+        //「逃がさない」ボイス再生
         StageManager.Instance.Yukie.PlaySoundOne(2);
         StageManager.Instance.Player.ChangeState(PlayerState.Event);
         yield return new WaitForSecondsRealtime(3.5f);
@@ -70,6 +80,13 @@ public class EA_AfterGetEntranceKey : EventActorBase
         StageManager.Instance.Yukie.ChangeState(EnemyState.CanNotAction);
         StageManager.Instance.Yukie.StopSound();
         StageManager.Instance.Player.ChangeState(PlayerState.Event);
+        //雪絵がドアに当たるくらいプレイヤーに接近していた場合、ドアと被さるので無理やり移動させる（4fは感覚値）
+        if(StageManager.Instance.Yukie.transform.position.z < 4f)
+        {
+            Vector3 tPos = StageManager.Instance.Yukie.transform.position;
+            tPos.z = 4.3f;
+            StartCoroutine(StageManager.Instance.Yukie.movingObject.MoveWithTime(tPos, 0.3f));
+        }
         yield return new WaitForSecondsRealtime(0.5f);
         SoundManager.Instance.PlaySeWithKeyOne("se_door_close");
         yield return new WaitForSecondsRealtime(0.5f);
