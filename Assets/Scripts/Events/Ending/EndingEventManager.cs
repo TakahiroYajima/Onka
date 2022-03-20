@@ -359,7 +359,8 @@ public class EndingEventManager : MonoBehaviour
     private IEnumerator StartupHatsu()
     {
         hatsu.gameObject.SetActive(true);
-        yield return null;
+        //yield return null;
+        yield return new WaitForSeconds(0.2f);
         hatsu.animatorEnabled = false;
         hatsu.transform.LookAt(new Vector3(mainCamera.transform.position.x, hatsu.transform.position.y, mainCamera.transform.position.z));
         hatsuSoundPlayer.PlaySoundLoop(0, 0.2f);
@@ -369,11 +370,11 @@ public class EndingEventManager : MonoBehaviour
         azuha.gameObject.SetActive(true);
         yuzuha.gameObject.SetActive(true);
         yield return null;
-        azuha.animatorEnabled = false;
+        //azuha.animatorEnabled = false;
         azuha.transform.LookAt(new Vector3(mainCamera.transform.position.x, azuha.transform.position.y, mainCamera.transform.position.z));
         azuhaSoundPlayer.PlaySoundLoop(0, 0.7f);
 
-        yuzuha.animatorEnabled = false;
+        //yuzuha.animatorEnabled = false;
         yuzuha.transform.LookAt(new Vector3(mainCamera.transform.position.x, yuzuha.transform.position.y, mainCamera.transform.position.z));
         yuzuhaSoundPlayer.PlaySoundLoop(0, 0.15f);
     }
