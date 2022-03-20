@@ -36,9 +36,6 @@ namespace SoundDistance
         private float subCost = 0f;
         private float adjustmentEachMovedDistance = 0f;//PointからListenerとEmitterが移動した距離によって調整する→ボリューム変化が滑らかになる
         private int currentMinID = -1;
-        //Listenerから見て、音が鳴っている方向に進んでいるか（当たり判定では細かい部分を判定できないので、作り直す）
-        //private bool isListenerMoveToEmitterDirection = false;
-        //private SoundDistancePoint currentEmitterDirectionPointFromListener = null;//Listenerから見て音が聞こえる方向にあるPoint（current or next）
         //現在のListenerからEmitterまでの距離（ダイクストラで計算された最短距離）
         public float currentDistanceListenerToEmitter { get; private set; } = 0f;
 
@@ -86,11 +83,7 @@ namespace SoundDistance
                 //Debug.Log($"SD_IDs emitter : {emitterObj.currentOuterPointID} {emitterObj.currentPointID} listener : {listenerObj.currentOuterPointID} {listenerObj.currentPointID}");
                 CalcRouteSeachUpdate();
             }
-            //if(currentMinID > -1)
-            //{
 
-            //    SetCurrentDistanceListenerToEmitter(costList, currentMinID);
-            //}
             SetCurrentDistanceListenerToEmitter(costList, currentMinID);
         }
         
@@ -135,325 +128,284 @@ namespace SoundDistance
         public void ForceInitCalc()
         {
             CalcRouteSeachUpdate();
-            //if (currentMinID > -1)
-            //{
-            //    SetCurrentDistanceListenerToEmitter(costList, currentMinID);
-            //}
             SetCurrentDistanceListenerToEmitter(costList, currentMinID);
         }
         #endregion
 
         #region RouteSerch
         /// <summary>
+        /// ListenerからEmitterまでのルートをserchEachRouteListに設定する
+        /// </summary>
+        /// <param name="emitterCurrentPointID"></param>
+        /// <param name="listenerCurrentPointID"></param>
+        private void SetAllRouteToDikstraAllRouteList(int emitterCurrentPointID, int listenerCurrentPointID)
+        {
+            ClearAllPointPrevData();//Prev情報を初期化
+            this.serchEachRouteList.Clear();
+            this.serchEachRouteList.Add(new List<SoundDistancePoint>());
+            this.costList.Clear();
+            this.costList.Add(0f);
+
+            SoundDistancePoint goal = soundDistancePoints[emitterCurrentPointID];
+            int routeArrayNum = 0;
+            //emitterCurrentIDとlistenerCurrentIDが一致していたら同じ場所（or同じ部屋の入口）にいるのでreturn
+            if (emitterCurrentPointID == listenerCurrentPointID)
+            {
+                //goalだけは追加する
+                
+                this.serchEachRouteList[0].Add(goal);
+                return;
+            }
+
+            List<SoundDistancePoint> currentSearchList = new List<SoundDistancePoint>();//探索中のノード
+            List<SoundDistancePoint> searchedPointList = new List<SoundDistancePoint>();//次のループでcurrentSearchListに差し替えるノード
+
+            currentSearchList.Add(goal);
+            bool isEnd = false;
+            //EmitterがいるところからListenerがいるところまで
+            while (!isEnd)
+            {
+                searchedPointList.Clear();
+                if(currentSearchList.Count == 0) { break; }
+
+                for (int i = 0; i < currentSearchList.Count; i++)
+                {
+                    foreach (Direction fromGoalDirection in Enum.GetValues(typeof(Direction)))
+                    {
+                        SoundDistancePointNode n = currentSearchList[i].GetPointNode(fromGoalDirection);
+                        //逆走できないようにする(Prevに設定されていない場所だけ追加できる)
+                        if (!n.IsExist) { continue; }
+                        bool isAddable = currentSearchList[i].prevPointList.FirstOrDefault(x => x.ID == n.node.ID) == null;
+                        if (!isAddable) { continue; }
+                        n.node.AddPrev(currentSearchList[i]);
+                        searchedPointList.Add(n.node);
+                        if(n.node.ID == listenerCurrentPointID)
+                        {
+                            isEnd = true;
+                            break;
+                        }
+                    }
+                    if (isEnd) { break; }
+                }
+                currentSearchList.Clear();
+                currentSearchList = new List<SoundDistancePoint>(searchedPointList);
+
+               
+            }
+
+            SoundDistancePoint p = soundDistancePoints[listenerCurrentPointID];
+            while (true)
+            {
+                this.serchEachRouteList[routeArrayNum].Add(p);
+                if (p.ID == emitterCurrentPointID) { break; }
+                else
+                {
+                    this.costList[routeArrayNum] += (p.transform.position - p.prevPointList[0].transform.position).sqrMagnitude;
+                    p = p.prevPointList[0];
+                }
+            }
+            this.serchEachRouteList[routeArrayNum].Reverse();
+
+            //string dev = "";
+            //for(int i = 0; i < serchEachRouteList[routeArrayNum].Count; i++)
+            //{
+            //    dev += serchEachRouteList[routeArrayNum][i].gameObject.name + " ";
+            //}
+            //Debug.Log("serch : " + dev);
+            //Debug.Log("cost : " + costList[routeArrayNum]);
+        }
+
+        /// <summary>
         /// ゴールから全ての方向のルートを辿り、スタートまでの道のりをserchEachRouteListに設定する
         /// リスト順番：0←(Emitter・Listener)→List.Count
         /// </summary>
         /// <param name="emitterCurrentOuterID"></param>
         /// <param name="listenerCurrentOuterID"></param>
-        private void SetAllRouteToDikstraEachOuterRouteList(int emitterCurrentOuterID, int listenerCurrentOuterID)
-        {
-            ClearAllPointPrevData();//Prev情報を初期化
-            this.serchEachRouteList.Clear();
-            this.costList.Clear();
+        //private void SetAllRouteToDikstraEachOuterRouteList(int emitterCurrentOuterID,int emitterCurrentPointID,  int listenerCurrentOuterID)
+        //{
+        //    ClearAllPointPrevData();//Prev情報を初期化
+        //    this.serchEachRouteList.Clear();
+        //    this.costList.Clear();
 
-            SoundDistancePoint goal = soundDistancePoints.FirstOrDefault(x => x.ID == emitterCurrentOuterID);
-            int routeArrayNum = 0;
-            //emitterCurrentIDとlistenerCurrentIDが一致していたら同じ場所（or同じ部屋の入口）にいるのでreturn
-            if (emitterCurrentOuterID == listenerCurrentOuterID) {
-                //goalだけは追加する
-                this.serchEachRouteList.Add(new List<SoundDistancePoint>());
-                this.serchEachRouteList[0].Add(goal);
-                return;
-            }
+        //    SoundDistancePoint goal = soundDistancePoints.FirstOrDefault(x => x.ID == emitterCurrentOuterID);
+        //    int routeArrayNum = 0;
+        //    //emitterCurrentIDとlistenerCurrentIDが一致していたら同じ場所（or同じ部屋の入口）にいるのでreturn
+        //    if (emitterCurrentOuterID == listenerCurrentOuterID) {
+        //        if (emitterCurrentOuterID == emitterCurrentPointID)
+        //        {
+        //            //goalだけは追加する
+        //            this.serchEachRouteList.Add(new List<SoundDistancePoint>());
+        //            this.serchEachRouteList[0].Add(goal);
+        //            return;
+        //        }
+        //        else
+        //        {
+        //            //部屋の中・枝分かれルートの奥に入っていたら何も入れない
+        //            this.serchEachRouteList.Add(new List<SoundDistancePoint>());
+        //            return;
+        //        }
+        //    }
 
-            foreach (Direction fromGoalDirection in Enum.GetValues(typeof(Direction)))
-            {
-                SoundDistancePointNode n = goal.GetPointNode(fromGoalDirection);
-                if(!n.IsExist || !n.IsOuter) { continue; }
+        //    foreach (Direction fromGoalDirection in Enum.GetValues(typeof(Direction)))
+        //    {
+        //        SoundDistancePointNode n = goal.GetPointNode(fromGoalDirection);
+        //        if(!n.IsExist || !n.IsOuter) { continue; }
 
-                this.serchEachRouteList.Add(new List<SoundDistancePoint>());
-                this.serchEachRouteList[routeArrayNum].Add(goal);
-                n.node.AddPrev(goal);
-                this.costList.Add(0f);
+        //        this.serchEachRouteList.Add(new List<SoundDistancePoint>());
+        //        this.serchEachRouteList[routeArrayNum].Add(goal);
+        //        n.node.AddPrev(goal);
+        //        this.costList.Add(0f);
                 
-                //goalから1方向のルートを順番に探索するため、最初にgoalの隣のノードを追加しておく
-                this.serchEachRouteList[routeArrayNum].Add(n.node);
-                this.costList[routeArrayNum] += n.distanceMagnitude;
+        //        //goalから1方向のルートを順番に探索するため、最初にgoalの隣のノードを追加しておく
+        //        this.serchEachRouteList[routeArrayNum].Add(n.node);
+        //        this.costList[routeArrayNum] += n.distanceMagnitude;
 
-                for (int i = 1; true; i++)
-                {
-                    SoundDistancePoint currentSeachPoint = this.serchEachRouteList[routeArrayNum][i];
-                    //スタート地点に来ていたら終了
-                    if (currentSeachPoint.ID == listenerCurrentOuterID) { break; }
+        //        for (int i = 1; true; i++)
+        //        {
+        //            SoundDistancePoint currentSeachPoint = this.serchEachRouteList[routeArrayNum][i];
+        //            //スタート地点に来ていたら終了
+        //            if (currentSeachPoint.ID == listenerCurrentOuterID) { break; }
 
-                    //全ての方向のデータ分を回す
-                    foreach (Direction d in Enum.GetValues(typeof(Direction)))
-                    {
-                        SoundDistancePointNode node = currentSeachPoint.GetPointNode(d);
-                        //外周のものをルートに追加
-                        if (node.IsExist && node.IsOuter)
-                        {
-                            //逆走できないようにする(Prevに設定されていない場所だけ追加できる)
-                            bool isAddable = currentSeachPoint.prevPointList.FirstOrDefault(x => x.ID == node.node.ID) == null;
-                            if (isAddable)
-                            {
-                                //次のノードのPrevに現在のノードを設定、距離も追加
-                                node.node.AddPrev(currentSeachPoint);
-                                this.serchEachRouteList[routeArrayNum].Add(node.node);
-                                this.costList[routeArrayNum] += node.distanceMagnitude;
-                            }
-                        }
-                    }
-                }
-                routeArrayNum++;
-            }
-        }
+        //            //全ての方向のデータ分を回す
+        //            foreach (Direction d in Enum.GetValues(typeof(Direction)))
+        //            {
+        //                SoundDistancePointNode node = currentSeachPoint.GetPointNode(d);
+        //                //外周のものをルートに追加
+        //                if (node.IsExist && node.IsOuter)
+        //                {
+        //                    //逆走できないようにする(Prevに設定されていない場所だけ追加できる)
+        //                    bool isAddable = currentSeachPoint.prevPointList.FirstOrDefault(x => x.ID == node.node.ID) == null;
+        //                    if (isAddable)
+        //                    {
+        //                        //次のノードのPrevに現在のノードを設定、距離も追加
+        //                        node.node.AddPrev(currentSeachPoint);
+        //                        this.serchEachRouteList[routeArrayNum].Add(node.node);
+        //                        this.costList[routeArrayNum] += node.distanceMagnitude;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        routeArrayNum++;
+        //    }
+        //}
         /// <summary>
         /// 外周から外れた部分（部屋など）にListenerがいる時、そこから外周へ戻るまでのルートを取得
         /// </summary>
-        private List<SoundDistancePoint> CalcSerachSideRoute(int currentListenerOuterID, int currentListenerPointID)
-        {
-            List<List<SoundDistancePoint>> points = new List<List<SoundDistancePoint>>();
-            List<float> subCostList = new List<float>();
-            SoundDistancePoint outer = soundDistancePoints.FirstOrDefault(x => x.ID == currentListenerOuterID);
-            //Debug.Log($"outer : {outer.gameObject.name} ID : {currentListenerOuterID}");
-            int routeCount = 0;
-            bool isEnd = false;
-            //最後に通った外周ポイントから部屋・内廊下に枝分かれしているポイントをサーチ
-            //foreach (Direction d in Enum.GetValues(typeof(Direction)))
-            //{
-            //    SoundDistancePointNode n = outer.GetPointNode(d);
-            //    points.Add(new List<SoundDistancePoint>());
-            //    points[routeCount].Add(outer);
-            //    subCostList.Add(0f);
-            //    if (!n.IsExist || n.IsOuter) { routeCount++; continue; }//ノードが無い or 外周ならcontinue
-
-            //    n.node.AddPrev(outer);
-
-            //    points[routeCount].Add(n.node);
-            //    //for (int routes = 0; routes < points[routeCount].Count; routes++) { Debug.Log($"points[{routeCount}][{routes}] : {points[routeCount][routes].gameObject.name}"); }
-            //    //Debug.Log($"{n.node.gameObject.name}を探索 routeCount : {routeCount}");
-            //    //部屋・内廊下に枝分かれしているポイントから更に奥を探索。i=0にすると外周から探索することになるためi=1にしている
-            //    //注意：現状、枝分かれ後は1本道にしか対応していないので、編集時には注意する事
-            //    for (int i = 1; true; i++)
-            //    {
-            //        SoundDistancePoint currentSeachPoint = points[routeCount][i];
-            //        //Debug.Log($"serchSub {points[routeCount][i].gameObject.name} : {currentSeachPoint.ID} {currentListenerPointID}");
-            //        //Listenerがいる地点に来ていたら終了
-            //        if (currentSeachPoint.ID == currentListenerPointID) { isEnd = true; break; }
-
-            //        int missingCount = 0;
-            //        //全ての方向のデータ分を回す
-            //        foreach (Direction d2 in Enum.GetValues(typeof(Direction)))
-            //        {
-            //            SoundDistancePointNode node = currentSeachPoint.GetPointNode(d2);
-            //            //Debug.Log($"{node.node}");
-            //            //外周でないのものをルートに追加
-            //            if (node.IsExist && !node.IsOuter)
-            //            {
-            //                //逆走できないようにする(Prevに設定されていない場所だけ追加できる)
-            //                bool isAddable = currentSeachPoint.prevPointList.FirstOrDefault(x => x.ID == node.node.ID) == null;
-            //                //Debug.Log($"subCostAdd? : {isAddable} {node.distanceMagnitude}");
-            //                if (isAddable)
-            //                {
-            //                    //Debug.Log($"NodeAdd : {routeCount} {node.node.gameObject.name}");
-            //                    //次のノードのPrevに現在のノードを設定、距離も追加
-            //                    node.node.AddPrev(currentSeachPoint);
-            //                    points[routeCount].Add(node.node);
-            //                    subCostList[routeCount] += node.distanceMagnitude;
-            //                }
-            //                else
-            //                {
-            //                    missingCount++;
-            //                }
-            //            }
-            //            else
-            //            {
-            //                missingCount++;
-            //            }
-            //        }
-            //        //全て探索してもListenerがいなかったら次のルートへ
-            //        if(missingCount >= Enum.GetValues(typeof(Direction)).Length || i >= points[routeCount].Count)
-            //        {
-            //            break;
-            //        }
-            //    }
-            //    if (isEnd) { break; }
-            //    routeCount++;
-            //}
-            ////全方向を探索できた際、routeCountがpointsの要素数を超えてしまい、リスト参照でエラーになるので調整する
-            //if (routeCount >= points.Count) { routeCount--; }
-            ////Debug.Log($"ルート確定 : {routeCount}");
-            ////for (int i = 0; i < points.Count; i++)
-            ////{
-            ////    for (int j = 0; j < points[i].Count; j++)
-            ////    {
-            ////        Debug.Log($"points[{i}][{j}] : {points[i][j]}");
-            ////    }
-            ////}
-            ////for (int i = 0; i < points[routeCount].Count; i++) { Debug.Log($"subRoute[{i}] : {points[routeCount][i]}"); }
-            //points[routeCount].RemoveAt(0);//outerの情報は不要なので削除
-            ////for (int i = 0; i < subCostList.Count; i++) { Debug.Log($"subCost[{i}] : {subCostList[i]}"); }
-            //subCost = subCostList[routeCount];
-            ////Debug.Log($"subCost : {subCost}");
-
-            //
-            SoundDistancePoint currentPoint = soundDistancePoints.FirstOrDefault(x => x.ID == listenerObj.currentPointID);
-            foreach (Direction d in Enum.GetValues(typeof(Direction)))
-            {
-                SoundDistancePointNode n = currentPoint.GetPointNode(d);
-                points.Add(new List<SoundDistancePoint>());
-                points[routeCount].Add(currentPoint);
-                subCostList.Add(0f);
-                if (!n.IsExist) { routeCount++; continue; }//ノードが無いならcontinue
-                subCostList[routeCount] += n.distanceMagnitude;
-                //Debug.Log(n.distanceMagnitude);
-                //枝分かれする元の外周に当たったら計算完了
-                if (n.IsOuter)
-                {
-                    if(n.node.ID == currentListenerOuterID)
-                    {
-                        isEnd = true;
-                        break;
-                    }
-                }
-                //まだ枝分かれのルートなので、外周に当たるまで計算
-                n.node.AddPrev(currentPoint);
-                points[routeCount].Add(n.node);
+        //private List<SoundDistancePoint> CalcSerachSideRoute(int currentListenerOuterID, int currentListenerPointID)
+        //{
+        //    List<List<SoundDistancePoint>> points = new List<List<SoundDistancePoint>>();
+        //    List<float> subCostList = new List<float>();
+        //    SoundDistancePoint outer = soundDistancePoints.FirstOrDefault(x => x.ID == currentListenerOuterID);
+        //    //Debug.Log($"outer : {outer.gameObject.name} ID : {currentListenerOuterID}");
+        //    int routeCount = 0;
+        //    bool isEnd = false;
+            
+        //    //
+        //    SoundDistancePoint currentPoint = soundDistancePoints.FirstOrDefault(x => x.ID == listenerObj.currentPointID);
+        //    foreach (Direction d in Enum.GetValues(typeof(Direction)))
+        //    {
+        //        SoundDistancePointNode n = currentPoint.GetPointNode(d);
+        //        points.Add(new List<SoundDistancePoint>());
+        //        points[routeCount].Add(currentPoint);
+        //        subCostList.Add(0f);
+        //        if (!n.IsExist) { routeCount++; continue; }//ノードが無いならcontinue
+        //        subCostList[routeCount] += n.distanceMagnitude;
+        //        //Debug.Log(n.distanceMagnitude);
+        //        //枝分かれする元の外周に当たったら計算完了
+        //        if (n.IsOuter)
+        //        {
+        //            if(n.node.ID == currentListenerOuterID)
+        //            {
+        //                isEnd = true;
+        //                break;
+        //            }
+        //        }
+        //        //まだ枝分かれのルートなので、外周に当たるまで計算
+        //        n.node.AddPrev(currentPoint);
+        //        points[routeCount].Add(n.node);
                 
-                for (int i = 1; true; i++)
-                {
-                    SoundDistancePoint currentSeachPoint = points[routeCount][i];
-                    //枝分かれする元の外周に当たったら計算完了
-                    if (currentSeachPoint.ID == currentListenerOuterID) { isEnd = true; break; }
+        //        for (int i = 1; true; i++)
+        //        {
+        //            SoundDistancePoint currentSeachPoint = points[routeCount][i];
+        //            //枝分かれする元の外周に当たったら計算完了
+        //            if (currentSeachPoint.ID == currentListenerOuterID) { isEnd = true; break; }
 
-                    int missingCount = 0;
-                    //全ての方向のデータ分を回す
-                    foreach (Direction d2 in Enum.GetValues(typeof(Direction)))
-                    {
-                        SoundDistancePointNode node = currentSeachPoint.GetPointNode(d2);
-                        //枝分かれする元の外周に当たったら計算完了
-                        if (node.IsOuter)
-                        {
-                            if (node.node.ID == currentListenerOuterID)
-                            {
-                                isEnd = true;
-                                break;
-                            }
-                        }
-                        if (node.IsExist)
-                        {
-                            //逆走できないようにする(Prevに設定されていない場所だけ追加できる)
-                            bool isAddable = currentSeachPoint.prevPointList.FirstOrDefault(x => x.ID == node.node.ID) == null;
-                            //Debug.Log($"subCostAdd? : {isAddable} {node.distanceMagnitude}");
-                            if (isAddable)
-                            {
-                                //Debug.Log($"NodeAdd : {routeCount} {node.node.gameObject.name}");
-                                //次のノードのPrevに現在のノードを設定、距離も追加
-                                node.node.AddPrev(currentSeachPoint);
-                                points[routeCount].Add(node.node);
-                                subCostList[routeCount] += node.distanceMagnitude;
-                            }
-                            else
-                            {
-                                missingCount++;
-                            }
-                        }
-                        else
-                        {
-                            missingCount++;
-                        }
-                    }
-                    //行き止まりなら次のルートへ
-                    if (missingCount >= Enum.GetValues(typeof(Direction)).Length || i >= points[routeCount].Count || isEnd)
-                    {
-                        break;
-                    }
-                }
-                if (isEnd) { break; }
-                routeCount++;
-            }
-            //string routesStr = "";
-            //for(int i = 0; i < points[routeCount].Count; i++)
-            //{
-            //    routesStr += points[routeCount][i].gameObject.name + " ";
-            //}
-            //Debug.Log($"routes : {routesStr}");
-            subCost = subCostList[routeCount];
-            if (points[routeCount].Count >= 2)
-            {
-                points[routeCount].Reverse();
-            }
-            return points[routeCount];//ルートが見つかると強制終了なので、そのままカウントを参照すればそのルートになる
-        }
+        //            int missingCount = 0;
+        //            //全ての方向のデータ分を回す
+        //            foreach (Direction d2 in Enum.GetValues(typeof(Direction)))
+        //            {
+        //                SoundDistancePointNode node = currentSeachPoint.GetPointNode(d2);
+        //                //枝分かれする元の外周に当たったら計算完了
+        //                if (node.IsOuter)
+        //                {
+        //                    if (node.node.ID == currentListenerOuterID)
+        //                    {
+        //                        isEnd = true;
+        //                        break;
+        //                    }
+        //                }
+        //                if (node.IsExist)
+        //                {
+        //                    //逆走できないようにする(Prevに設定されていない場所だけ追加できる)
+        //                    bool isAddable = currentSeachPoint.prevPointList.FirstOrDefault(x => x.ID == node.node.ID) == null;
+        //                    //Debug.Log($"subCostAdd? : {isAddable} {node.distanceMagnitude}");
+        //                    if (isAddable)
+        //                    {
+        //                        //Debug.Log($"NodeAdd : {routeCount} {node.node.gameObject.name}");
+        //                        //次のノードのPrevに現在のノードを設定、距離も追加
+        //                        node.node.AddPrev(currentSeachPoint);
+        //                        points[routeCount].Add(node.node);
+        //                        subCostList[routeCount] += node.distanceMagnitude;
+        //                    }
+        //                    else
+        //                    {
+        //                        missingCount++;
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    missingCount++;
+        //                }
+        //            }
+        //            //行き止まりなら次のルートへ
+        //            if (missingCount >= Enum.GetValues(typeof(Direction)).Length || i >= points[routeCount].Count || isEnd)
+        //            {
+        //                break;
+        //            }
+        //        }
+        //        if (isEnd) { break; }
+        //        routeCount++;
+        //    }
+        //    //string routesStr = "";
+        //    //for(int i = 0; i < points[routeCount].Count; i++)
+        //    //{
+        //    //    routesStr += points[routeCount][i].gameObject.name + " ";
+        //    //}
+        //    //Debug.Log($"routes : {routesStr}");
+        //    subCost = subCostList[routeCount];
+        //    if (points[routeCount].Count >= 2)
+        //    {
+        //        points[routeCount].Reverse();
+        //    }
+        //    return points[routeCount];//ルートが見つかると強制終了なので、そのままカウントを参照すればそのルートになる
+        //}
+        
         /// <summary>
         /// 全ルート探索でEmitterまでの経路を計算。Listenerに音を設定させる
         /// </summary>
         private void CalcRouteSeachUpdate()
         {
             subCost = 0f;
-            SetAllRouteToDikstraEachOuterRouteList(emitterObj.currentOuterPointID, listenerObj.currentOuterPointID);
+            SetAllRouteToDikstraAllRouteList(emitterObj.currentPointID, listenerObj.currentPointID);
+            //SetAllRouteToDikstraEachOuterRouteList(emitterObj.currentOuterPointID, emitterObj.currentPointID, listenerObj.currentOuterPointID);
             //ゴールからスタートまでのルート（複数）の中から最短ルートの配列番号を取得
             currentMinID = GetMinID(costList);
-            //部屋の中に入るなど、外周から逸れている場合はその分のルートを計算
-            if (listenerObj.currentPointID != listenerObj.currentOuterPointID)
-            {
-                
-                if (soundDistancePoints[listenerObj.nextTargetPointID].IsOuter)//部屋・枝分かれルートの入口付近にいる場合は別の計算をするためスルー
-                {
-                    //一応追加しないと音が変な方向から聞こえる（SetSoundMakerTarget()で設定しているのがリストの後ろから2番目なので = currentPointが入っていること前提）
-                    serchEachRouteList[currentMinID].Add(soundDistancePoints[listenerObj.currentPointID]);
-                }
-                else
-                {
-                    serchEachRouteList[currentMinID].AddRange(CalcSerachSideRoute(listenerObj.currentOuterPointID, listenerObj.currentPointID));
-
-                    if (costList.Count == 0)
-                    {
-                        for (int i = 0; i < currentMinID + 1; i++)
-                        {
-                            costList.Add(0f);
-                        }
-                    }
-
-                    //Debug.Log($"逸れている分のコストを追加 : {subCost} -> {costList[currentMinID]}");
-                    costList[currentMinID] += subCost;//逸れている分のコストを追加
-                }
-            }
 
             //costにListenerとEmitterの移動済み距離も加味する
             adjustmentEachMovedDistance = 0f;
             CalcAdjustmentEachMovedDistanceListener();
             CalcAdjustmentEachMovedDistanceEmitter();
-
-
-            //EmitterがListener側に向かってきていたらその分距離を近づける。逆方向なら離れている分距離を追加する
-            //float distanceToCurrentPoint = (emitterObj.transform.position - soundDistancePoints[emitterObj.currentPointID].transform.position).sqrMagnitude;
-            //bool isEmitterComeOn = serchEachRouteList[currentMinID].FirstOrDefault(x => x.ID == emitterObj.nextTargetPointID) != null;
-            //if (isEmitterComeOn) adjustmentEachMovedDistance -= distanceToCurrentPoint;
-            //else adjustmentEachMovedDistance += distanceToCurrentPoint;
-
-            //行き止まり方向・部屋の中に入り、且つ枝分かれルートに当たっていない場合、その分のコストを加味する
-            //ListenerがPoint内にいない且つOuterの外にいるか、部屋の中（枝分かれルートのPointとOuterの間）にいる状態
-            //Debug.Log($"{listenerObj.currentHittingPoint == null} : {listenerObj.currentPointID == listenerObj.nextTargetPointID} {!listenerNextPoint.IsOuter && soundDistancePoints[listenerObj.currentPointID].IsOuter} {listenerNextPoint.IsOuter && !soundDistancePoints[listenerObj.currentPointID].IsOuter}");
-            if (IsInTheNoPassageOrInRoomNearOuter())
-            {
-                float distanceListenerToOuterPoint = (listenerObj.transform.position - soundDistancePoints[listenerObj.currentOuterPointID].transform.position).sqrMagnitude;
-                //Debug.Log($"distanceListenerToPoint : {distanceListenerToOuterPoint}");
-                //adjustmentEachMovedDistance += distanceListenerToOuterPoint;
-            }
-            else
-            {
-                //外周or部屋の奥にいる時（枝分かれルートの途中）
-                //Listenerの方も同様に計算
-                //ListenerがEmitterへ向かうように動いているか
-                //float distanceToCurrentPointListener = (listenerObj.transform.position - soundDistancePoints[listenerObj.currentPointID].transform.position).sqrMagnitude;
-                //bool isListenerHeadToEmitter = serchEachRouteList[currentMinID].FirstOrDefault(x => x.ID == listenerObj.nextTargetPointID) != null;//nextTargetPointIDは各Pointの当たり判定から出た時に設定される
-                //if (isListenerHeadToEmitter) adjustmentEachMovedDistance -= distanceToCurrentPointListener;
-                //else adjustmentEachMovedDistance += distanceToCurrentPointListener;
-                //Debug.Log($"player move to emitter : {isListenerHeadToEmitter}");
-            }
-
+            
             //Debug.Log("現在のコスト : " + costList[currentMinID]);
             //同じ地点にいたらEmitterの位置を直接設定
             if (listenerObj.currentPointID == emitterObj.currentPointID)
@@ -476,18 +428,6 @@ namespace SoundDistance
             if (IsInTheNoPassageOrInRoomNearOuter())
             {
                 adjustmentEachMovedDistance += (listenerObj.transform.position - soundDistancePoints[listenerObj.currentOuterPointID].transform.position).sqrMagnitude;
-                ////部屋の奥から入口まで向かっているとき
-                //if (soundDistancePoints[listenerObj.nextTargetPointID].IsOuter)
-                //{
-                //    //出口を基準に調整
-                //    //currentEmitterDirectionPointFromListener = soundDistancePoints[listenerObj.currentOuterPointID];
-                //    adjustmentEachMovedDistance += (listenerObj.transform.position - soundDistancePoints[listenerObj.currentOuterPointID].transform.position).sqrMagnitude;
-                //}
-                //else
-                //{
-                //    //currentEmitterDirectionPointFromListener = soundDistancePoints[listenerObj.currentPointID];
-                //    adjustmentEachMovedDistance += (listenerObj.transform.position - soundDistancePoints[listenerObj.currentPointID].transform.position).sqrMagnitude;
-                //}
                 //Debug.Log($"L:行き止まり = 遠ざかっている {adjustmentEachMovedDistance}");
                 return;
             }
@@ -495,13 +435,11 @@ namespace SoundDistance
             if (serchEachRouteList[currentMinID].Count >= 2)
             {
                 float sqrMagnitude = 0f;
-                //currentEmitterDirectionPointFromListener = serchEachRouteList[currentMinID][serchEachRouteList[currentMinID].Count - 2];
-                //startのpointがListenerのcurrentPoint
                 if (serchEachRouteList[currentMinID][serchEachRouteList[currentMinID].Count - 1].ID == listenerObj.currentPointID)
                 {
+                    //Emitterの方へ向かっている状態
                     if (serchEachRouteList[currentMinID][serchEachRouteList[currentMinID].Count - 2].ID == listenerObj.nextTargetPointID)
                     {
-                        //next = 向かっている
                         //1つ前のルートPointとの距離を取得
                         sqrMagnitude =
                             serchEachRouteList[currentMinID][serchEachRouteList[currentMinID].Count - 1]
@@ -513,6 +451,7 @@ namespace SoundDistance
                         adjustmentEachMovedDistance -= Mathf.Clamp(pointToPlayerDistanceMagnitude, 0f, sqrMagnitude);//(sqrMagnitude - Mathf.Clamp(pointToPlayerDistanceMagnitude, 0f, sqrMagnitude));
                         //Debug.Log($"L:next = 向かっている {adjustmentEachMovedDistance}");
                     }
+                    //Emitterから遠ざかっている場合
                     else
                     {
                         //current = 遠ざかっている
@@ -528,7 +467,11 @@ namespace SoundDistance
                             float pointToPlayerDistanceMagnitude = (listenerObj.transform.position - serchEachRouteList[currentMinID][serchEachRouteList[currentMinID].Count - 1].transform.position).sqrMagnitude;
                             
                             adjustmentEachMovedDistance += Mathf.Clamp(pointToPlayerDistanceMagnitude, 0f, sqrMagnitude);
-                            //Debug.Log($"L:current = 遠ざかっている {adjustmentEachMovedDistance}");
+                            //Debug.Log($"L:current = 遠ざかっている {adjustmentEachMovedDistance} next : {soundDistancePoints[listenerObj.nextTargetPointID].gameObject.name}");
+                        }
+                        else
+                        {
+                            //行き止まりからOuterに戻ってきたタイミング＝当たり判定の中なので何もしない
                         }
                     }
                 }
@@ -537,6 +480,7 @@ namespace SoundDistance
                     //枝分かれルートのPointからOuterのPointに向かっている状態
                     //currentEmitterDirectionPointFromListener = soundDistancePoints[listenerObj.currentOuterPointID];
                     adjustmentEachMovedDistance += (listenerObj.transform.position - soundDistancePoints[listenerObj.currentOuterPointID].transform.position).sqrMagnitude;
+                    Debug.LogError("想定外");
                     //Debug.LogError($"serchEachRouteList is beyond expectations data : nextID :: {serchEachRouteList[currentMinID][serchEachRouteList[currentMinID].Count - 1].ID}");
                     ////next = 向かっている
                     ////1つ前のルートPointから距離を取得
@@ -640,12 +584,12 @@ namespace SoundDistance
             }
             else
             {
-                string debStr = "";
+                //string debStr = "";
 
-                for (int i = 0; i < calcMinDistancePoints.Count; i++)
-                {
-                    debStr += calcMinDistancePoints[i].ID + " ";
-                }
+                //for (int i = 0; i < calcMinDistancePoints.Count; i++)
+                //{
+                //    debStr += calcMinDistancePoints[i].gameObject.name + " ";
+                //}
                 if (minID >= 0 && minID < costList.Count)
                 {
                     currentDistanceListenerToEmitter = costList[minID] + adjustmentEachMovedDistance;
@@ -790,15 +734,15 @@ namespace SoundDistance
             }
         }
         /// <summary>
-        /// 行き止まり方向・部屋の中に入り、且つ枝分かれルートに当たっていない場合にtrue
+        /// 行き止まり方向に入っている・部屋の中に入り、且つ枝分かれルートに当たっていない場合にtrue
         /// </summary>
         /// <returns></returns>
         private bool IsInTheNoPassageOrInRoomNearOuter()
         {
             return listenerObj.currentHittingPoint == null &&
                     (listenerObj.currentPointID == listenerObj.nextTargetPointID ||
-                    (!soundDistancePoints[listenerObj.nextTargetPointID].IsOuter && soundDistancePoints[listenerObj.currentPointID].IsOuter) || //枝分かれルートがある部屋に入った直後
-                    (soundDistancePoints[listenerObj.nextTargetPointID].IsOuter && !soundDistancePoints[listenerObj.currentPointID].IsOuter)); //枝分かれルートのPointからOuterに向かっているとき
+                    (!soundDistancePoints[listenerObj.nextTargetPointID].IsOuter && soundDistancePoints[listenerObj.currentPointID].IsOuter));// || //枝分かれルートがある部屋に入った直後
+                    //(soundDistancePoints[listenerObj.nextTargetPointID].IsOuter && !soundDistancePoints[listenerObj.currentPointID].IsOuter)); //枝分かれルートのPointからOuterに向かっているとき
         }
 
         /// <summary>

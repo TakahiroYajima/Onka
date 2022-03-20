@@ -13,13 +13,17 @@ namespace SoundDistance
         public int currentPointID { get; private set; } = -1;
         public void SetPointID(int id) {
             currentPointID = id;
-            if (SoundDistanceManager.Instance.soundDistancePoints[currentPointID].IsOuter)
-            {
-                currentOuterPointID = currentPointID;
-            }
+            SetOuterPointID(id);
         }
         //脇道や部屋に入った時用に、最後に通過した外周のIDを持っておく
         public int currentOuterPointID { get; private set; } = -1;
+        public void SetOuterPointID(int id)
+        {
+            if (SoundDistanceManager.Instance.soundDistancePoints[id].IsOuter)
+            {
+                currentOuterPointID = id;
+            }
+        }
         //次に通過すると見なされるSoundDistancePointのインスタンスID
         public int nextTargetPointID { get; private set; } = -1;
         public void SetNextTargetPointID(int id) { nextTargetPointID = id; }
