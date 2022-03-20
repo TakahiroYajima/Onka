@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SoundDistance;
+using SoundSystem;
 
 public class EA_FirstChasedFromYukie : EventActorBase
 {
@@ -36,6 +37,7 @@ public class EA_FirstChasedFromYukie : EventActorBase
     public override void EventEnd()
     {
         StageManager.Instance.Yukie.onStateChangeCallback -= OnYukieStateChangedCallback;
+        SoundManager.Instance.PlayEnvironmentWithKey("ambient_in_house");
     }
 
     private void OnYukieStateChangedCallback(EnemyState state)
