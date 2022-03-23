@@ -112,6 +112,7 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
                         watchDiaryManager.gameObject.SetActive(true);
                         //oneItemViewerPref.SetActive(false);
                         instancedOneItemViewer.CloseView();
+                        watchDiaryManager.OnFinishWatched = OnFinishedWatchDiary;
                         watchDiaryManager.StartWatchDiary(_data);
                         break;
                     default:
@@ -123,6 +124,13 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
             }
             yield return null;
         }
+    }
+    /// <summary>
+    /// 日記を見終わった際のコールバック
+    /// </summary>
+    private void OnFinishedWatchDiary()
+    {
+        FinishWatchItem();
     }
 
     /// <summary>

@@ -17,11 +17,7 @@ public class WatchDiaryManager : MonoBehaviour
 
     [SerializeField] private Font[] fonts;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public UnityAction OnFinishWatched = null;
 
     public void StartWatchDiary(ItemData _diaryData)
     {
@@ -45,7 +41,7 @@ public class WatchDiaryManager : MonoBehaviour
                 pageNum++;
                 if (pageNum >= diaryData.fileItem.content.Count)
                 {
-                    ItemManager.Instance.FinishWatchItem();
+                    
                     EndWatchingItem();
                     yield break;
                 }
@@ -72,5 +68,9 @@ public class WatchDiaryManager : MonoBehaviour
     {
         StopCoroutine(WatchingItemUpdate());
         isUpdateMoving = false;
+        if (OnFinishWatched != null)
+        {
+            OnFinishWatched();
+        }
     }
 }
