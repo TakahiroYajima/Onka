@@ -27,6 +27,7 @@ public class ItemData
     public string name;
     public string spriteName;
     public string description;
+    public string description_detail;//おまけ閲覧用
     public FileItem fileItem;
     public bool geted = false;//取得済みか
     public bool used = false;//使用済みか

@@ -13,15 +13,21 @@ public class ItemListViewer : MonoBehaviour
     [SerializeField] private Transform listParent = null;
     [SerializeField] private OneItemViewer oneItemViewerPref = null;
     [SerializeField] private Transform viewerParent = null;
+    [SerializeField] private OneItemDetailViewer oneItemDetailViewerPref = null;
+    [SerializeField] private Transform detailViewerParent = null;
     [SerializeField] private Sprite defaultSprite = null;
 
     public UnityAction onViewed = null;
     public UnityAction onClosed = null;
 
+    private OneItemViewer currentInstanceViewer = null;
+    private OneItemDetailViewer currentInstanceDetailViewer = null;
+    private ItemData currentDisplayItem = null;
+
     public enum ViewMode
     {
-        Master,
-        Playing,
+        Master,//おまけモード。手に入れたものはすべて表示
+        Playing,//プレイ中。プレイ中のデータ内で手に入れたもののみ表示
     }
 
     public void Initialize()
@@ -82,7 +88,7 @@ public class ItemListViewer : MonoBehaviour
             }
             if (itemData.geted)
             {
-                instancedList[i].Initialize(itemSprite, itemName, () => { DisplayItem(itemSprite, itemData); });
+                instancedList[i].Initialize(itemSprite, itemName, () => { DisplayItem(itemSprite, itemData, viewMode); });
             }
             else
             {
@@ -100,13 +106,39 @@ public class ItemListViewer : MonoBehaviour
         instancedList.Clear();
     }
 
-    private void DisplayItem(Sprite _itemSprite, ItemData _itemData)
+    private void DisplayItem(Sprite _itemSprite, ItemData _itemData, ViewMode viewMode)
     {
-        OneItemViewer v = Instantiate(oneItemViewerPref, viewerParent);
-        v.ViewItem(_itemSprite, _itemData.name, _itemData.description, true, CloseOneItemView);
+        currentDisplayItem = _itemData;
+        currentInstanceViewer = Instantiate(oneItemViewerPref, viewerParent);
+        if (viewMode == ViewMode.Master)
+        {
+            currentInstanceViewer.ViewItem(_itemSprite, _itemData.name, _itemData.description, true, CloseOneItemView, OnPressItemDetailButtonInViewer);
+        }
+        else
+        {
+            currentInstanceViewer.ViewItem(_itemSprite, _itemData.name, _itemData.description, true, CloseOneItemView, null);
+        }
     }
     private void CloseOneItemView()
     {
-        
+        currentInstanceViewer = null;
+    }
+
+    private void OnPressItemDetailButtonInViewer()
+    {
+        currentInstanceDetailViewer = Instantiate(oneItemDetailViewerPref, detailViewerParent);
+        currentInstanceDetailViewer.View(currentDisplayItem, OnCloseOneItemDetailView);
+        if(currentInstanceViewer != null)
+        {
+            currentInstanceViewer.gameObject.SetActive(false);
+        }
+    }
+    private void OnCloseOneItemDetailView()
+    {
+        currentInstanceDetailViewer = null;
+        if (currentInstanceViewer != null)
+        {
+            currentInstanceViewer.gameObject.SetActive(true);
+        }
     }
 }

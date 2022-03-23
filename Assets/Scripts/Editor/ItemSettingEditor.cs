@@ -126,6 +126,12 @@ public class ItemSettingEditor : EditorWindow
                                         scriptableObject.itemDataList[findID].name = EditorGUILayout.TextField("アイテム名", scriptableObject.itemDataList[findID].name);
                                         scriptableObject.itemDataList[findID].spriteName = EditorGUILayout.TextField("ファイル名", scriptableObject.itemDataList[findID].spriteName);
                                         scriptableObject.itemDataList[findID].description = EditorGUILayout.TextField("説明", scriptableObject.itemDataList[findID].description);
+                                        EditorGUILayout.BeginVertical(GUI.skin.box);
+                                        {
+                                            EditorGUILayout.LabelField("詳細説明（おまけ用）");
+                                            scriptableObject.itemDataList[findID].description_detail = EditorGUILayout.TextArea(scriptableObject.itemDataList[findID].description_detail);
+                                        }
+                                        EditorGUILayout.EndVertical();
 
                                         if (scriptableObject.itemDataList[findID].type == ItemType.WatchOnly)
                                         {
