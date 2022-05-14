@@ -109,8 +109,8 @@ public class YukieStateInRoomWandering : StateBase
                 //Debug.Log(yukie.transform.position + " : " + (yukie.transform.position + transformRight) + " : " + (yukie.transform.position + transformLeft));
                 targetDireciton = transformLeft;
                 yukie.StopSound();
-                FirstSerachPlayer();
                 RotationActionOnComplete = DoNextState;
+                FirstSerachPlayer();
                 break;
             case YukieInRoomWanderingState.SerachPlayerToLeft:
                 RotationAction(RotationActionOnComplete);
