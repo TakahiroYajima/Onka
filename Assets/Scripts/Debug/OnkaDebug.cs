@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿#if UNITY_EDITOR
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Onka.Manager.Data;
@@ -60,3 +61,4 @@ public class OnkaDebug : MonoBehaviour
         DataManager.Instance.GetItemData("key_entrance").geted = true;
     }
 }
+#endif
