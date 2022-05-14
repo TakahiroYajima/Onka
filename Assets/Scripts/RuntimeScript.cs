@@ -9,9 +9,15 @@ public class RuntimeScript : MonoBehaviour
     static void RuntimeInit()
     {
         Application.targetFrameRate = 60;
-        if(SceneManager.GetActiveScene().name != "Initialize")
+        //Debug.unityLogger.logEnabled = false;
+        //Debug.unityLogger.logEnabled = false;
+#if UNITY_EDITOR
+        if (SceneManager.GetActiveScene().name == "撮影用") return;
+#endif
+
+        if (SceneManager.GetActiveScene().name != "Initialize")
         {
             SceneManager.LoadScene("Initialize");
-        }   
+        }
     }
 }
