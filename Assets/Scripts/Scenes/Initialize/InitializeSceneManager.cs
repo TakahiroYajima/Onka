@@ -8,7 +8,7 @@ public class InitializeSceneManager : SceneBase
     // Start is called before the first frame update
     protected override void Start()
     {
-        SceneManager.LoadScene("Title");
+        SceneManager.LoadScene("FirstSplash");
     }
 
 }
