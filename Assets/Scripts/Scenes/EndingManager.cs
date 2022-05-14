@@ -13,8 +13,13 @@ public class EndingManager : SingletonMonoBehaviour<EndingManager>
     private List<StaffRollTexts> staffRollTexts = new List<StaffRollTexts>();
 
     [SerializeField] private StaffRollItem staffRollItemPref = null;
+    [SerializeField] private Transform titleParent = null;
     [SerializeField] private Transform staffRollParent = null;
+    private StaffRollItem instanceTitleStaffRollItem = null;
     private List<StaffRollItem> instanceStaffRollList = new List<StaffRollItem>();
+
+    [SerializeField] private LayoutGroup parentLayoutGroup = null;
+    [SerializeField] private LayoutGroup staffRollLayoutGroup = null;
 
     private void Start()
     {
@@ -41,8 +46,16 @@ public class EndingManager : SingletonMonoBehaviour<EndingManager>
         for(int i = 0; i < staffRollTexts.Count; i++)
         {
             InstanceStaffRollItem(staffRollTexts[i]);
+            yield return new WaitForEndOfFrame();
+            staffRollLayoutGroup.enabled = false;
+            parentLayoutGroup.enabled = false;
+            yield return null;
+            staffRollLayoutGroup.enabled = true;
+            //parentLayoutGroup.enabled = false;
+            //yield return null;
+            parentLayoutGroup.enabled = true;
             yield return StartCoroutine(StaffRollItemFadeAction());
-            yield return new WaitForSeconds(0.7f);
+            yield return new WaitForSeconds(0.69f);
         }
         
         yield return new WaitForSeconds(2f);
@@ -60,18 +73,44 @@ public class EndingManager : SingletonMonoBehaviour<EndingManager>
     /// <param name="_staffRollTexts"></param>
     private void InstanceStaffRollItem(StaffRollTexts _staffRollTexts)
     {
-        for(int i = 0; i < _staffRollTexts.oneScreenDisplayList.Count; i++)
+        if (!string.IsNullOrEmpty(_staffRollTexts.oneScreenDisplayData.title))
         {
-            //既に生成されていれば使いまわす
-            if(i < instanceStaffRollList.Count)
+            if (instanceTitleStaffRollItem == null)
             {
-                instanceStaffRollList[i].gameObject.SetActive(true);
-                instanceStaffRollList[i].Init(_staffRollTexts.oneScreenDisplayList[i].title, _staffRollTexts.oneScreenDisplayList[i].staffName);
+                instanceTitleStaffRollItem = Instantiate(staffRollItemPref, titleParent);
             }
-            else
+            instanceTitleStaffRollItem.Init(_staffRollTexts.oneScreenDisplayData.title, TextAnchor.MiddleCenter);
+        }
+        if (_staffRollTexts.oneScreenDisplayData.staffNameList == null)
+        {
+            staffRollParent.gameObject.SetActive(false);
+            //if (instanceStaffRollList.Count > 0)
+            //{
+
+            //}
+            //else
+            //{
+
+            //}
+        }
+        else
+        {
+            staffRollParent.gameObject.SetActive(true);
+            TextAnchor textAnchor = TextAnchor.MiddleCenter;
+            if(_staffRollTexts.oneScreenDisplayData.staffNameList.Count > 1) { textAnchor = TextAnchor.MiddleLeft; }
+            for (int i = 0; i < _staffRollTexts.oneScreenDisplayData.staffNameList.Count; i++)
             {
-                instanceStaffRollList.Add(Instantiate(staffRollItemPref, staffRollParent));
-                instanceStaffRollList[i].Init(_staffRollTexts.oneScreenDisplayList[i].title, _staffRollTexts.oneScreenDisplayList[i].staffName);
+                //既に生成されていれば使いまわす
+                if (i < instanceStaffRollList.Count)
+                {
+                    instanceStaffRollList[i].gameObject.SetActive(true);
+                    instanceStaffRollList[i].Init(_staffRollTexts.oneScreenDisplayData.staffNameList[i], textAnchor);
+                }
+                else
+                {
+                    instanceStaffRollList.Add(Instantiate(staffRollItemPref, staffRollParent));
+                    instanceStaffRollList[i].Init(_staffRollTexts.oneScreenDisplayData.staffNameList[i], textAnchor);
+                }
             }
         }
     }
@@ -91,7 +130,11 @@ public class EndingManager : SingletonMonoBehaviour<EndingManager>
         {
             alpha = currentTime / _in_out_time;
             color.a = alpha;
-            for(int i = 0; i < instanceStaffRollList.Count; i++)
+            if (instanceTitleStaffRollItem != null)
+            {
+                instanceTitleStaffRollItem.SetAlpha(alpha);
+            }
+            for (int i = 0; i < instanceStaffRollList.Count; i++)
             {
                 if (instanceStaffRollList[i].gameObject.activeSelf)
                 {
@@ -108,6 +151,10 @@ public class EndingManager : SingletonMonoBehaviour<EndingManager>
         {
             alpha = 1 - currentTime / _in_out_time;
             color.a = alpha;
+            if (instanceTitleStaffRollItem != null)
+            {
+                instanceTitleStaffRollItem.SetAlpha(alpha);
+            }
             for (int i = 0; i < instanceStaffRollList.Count; i++)
             {
                 if (instanceStaffRollList[i].gameObject.activeSelf)
@@ -128,21 +175,21 @@ public class EndingManager : SingletonMonoBehaviour<EndingManager>
 public class StaffRollData
 {
     public string title;
-    public string staffName;
+    public List<string> staffNameList;
 
-    public StaffRollData(string _title, string _name)
+    public StaffRollData(string _title, List<string> _nameList)
     {
         title = _title;
-        staffName = _name;
+        staffNameList = _nameList;
     }
 }
 
 public class StaffRollTexts
 {
-    public List<StaffRollData> oneScreenDisplayList = new List<StaffRollData>();//一度に表示するリスト。一つだけの表示なら要素数は１。
-    public StaffRollTexts(List<StaffRollData> staffRollDatas)
+    public StaffRollData oneScreenDisplayData;//一度に表示するリスト。一つだけの表示なら要素数は１。
+    public StaffRollTexts(StaffRollData _data)
     {
-        oneScreenDisplayList = staffRollDatas;
+        oneScreenDisplayData = _data;
     }
 }
 
@@ -152,27 +199,16 @@ public class StaffRollTextCoreator
     {
         List<StaffRollTexts> returnList = new List<StaffRollTexts>()
         {
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("怨 禍", "")}),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Appearance", "")}),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Player : You", "")}),
-            //new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Syatyou","_K")}),
-            //new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Assets","")}),
-            //new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Asset Store", "https://assetstore.unity.com/") }),
-            //new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("MusMus", "https://musmus.main.jp/")}),
-            //new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("DOVA-SYNDROME", "https://dova-s.jp/")}),
-            //new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Maoudamashii", "https://maou.audio/") }),
-            //new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("KMF", "http://www.kazamit.com/index.php?p=1") }),
-            //new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Komori", "https://taira-komori.jpn.org/horror01.html") }),
-            //new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Pocket Sound", "https://pocket-se.info/") }),
-            //new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("The match makers", "http://osabisi.sakura.ne.jp/m2/") }),
-            //new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Other", "Yajima") }),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Staff","")}),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Planning : Yajin", "")}),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Programing : Yajin", "") }),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Design : Yajin", "") }),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("CreateTool : Unity", "")}),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Presents : Yajin", "") }),
-            new StaffRollTexts(new List<StaffRollData>(){ new StaffRollData("Thank you for playing.", "")}),
+            new StaffRollTexts(new StaffRollData("怨 禍", null)),/*new StaffRollTexts(new StaffRollData("Planning", new List<string>() { "Sample1 Yajin", "Sample2 Yajin", "Sample3 Yajin" })),*/
+            new StaffRollTexts(new StaffRollData("Staff", null)),
+            new StaffRollTexts(new StaffRollData("Planning", new List<string>() { "Yajin" })),
+            new StaffRollTexts(new StaffRollData("Design", new List<string>() { "AssetStore", "Yajin" })),
+            new StaffRollTexts(new StaffRollData("Sound", new List<string>() { "OtoLogic", "びたちー素材館", "DOVA-SYNDROME", "小森 平", "効果音ラボ",  "Yajin" })),
+            new StaffRollTexts(new StaffRollData("Font", new List<string>() { "おたもん","暗黒工房","源界明朝" })),
+            new StaffRollTexts(new StaffRollData("Programing", new List<string>() { "Yajin" })),
+            new StaffRollTexts(new StaffRollData("Create Tool", new List<string>() { "Unity", "CharacterCreator3", "Photoshop" })),
+            new StaffRollTexts(new StaffRollData("Presents", new List<string>() { "Yajin" })),
+            new StaffRollTexts(new StaffRollData("Thank you for playing.", null)),
         };
         return returnList;
     }
