@@ -30,6 +30,22 @@ public class OpeningEventManager : MonoBehaviour
     private IEnumerator EventAction()
     {
         yield return new WaitForSeconds(1f);
+        WordsMessageManager.Instance.SetDisplayPosition(WordsMessageManager.DisplayPosition.Center);
+        WordsMessageManager.Instance.SetTextColor(Color.red);
+        WordsMessageManager.Instance.SetFadeTime(3.5f);
+        yield return StartCoroutine(WordsMessageManager.Instance.WordsAction(new List<string>()
+        {
+            @"怨禍（おんか）
+
+強い怨みを持ったモノによってもたらされる禍（わざわい）。
+それは怨む対象を追い続け、未来を奪うまで呪い続ける。
+禍から逃れる術はなく、ただ己の過去を悔いてその身が滅ぼされるのを待つのみ。
+"
+        }));
+        yield return new WaitForSeconds(1f);
+        WordsMessageManager.Instance.SetDisplayPosition(WordsMessageManager.DisplayPosition.Under);
+        WordsMessageManager.Instance.SetInitTextColor();
+        WordsMessageManager.Instance.SetInitFadeTime();
         yield return StartCoroutine(WordsMessageManager.Instance.WordsAction(new List<string>() {
             "あなたにはこの事件の調査をお願いします",
             "…この事件…ですか",
