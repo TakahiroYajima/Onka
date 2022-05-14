@@ -9,12 +9,7 @@ public class SceneControlManager : SingletonMonoBehaviour<SceneControlManager>
 {
     public ChangeSceneMoveType changeSceneMoveType = ChangeSceneMoveType.Normal;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
+    
     public void ChangeScene(string sceneName, bool isBGMStop = true, UnityAction onComplete = null, FadeManager.FadeColorType fadeOutColorType = FadeManager.FadeColorType.None, FadeManager.FadeColorType fadeInColorType = FadeManager.FadeColorType.None)
     {
         if (isBGMStop)
@@ -28,44 +23,75 @@ public class SceneControlManager : SingletonMonoBehaviour<SceneControlManager>
         });
     }
 
-    //public void ChangeSceneWithFade(string sceneName, bool isBGMStop = true, UnityAction onComplete = null)
+    //public void ChangeSceneAsyncWithFadeOnly(string sceneName, FadeManager.FadeColorType fadeOutColorType = FadeManager.FadeColorType.None, FadeManager.FadeColorType fadeInColorType = FadeManager.FadeColorType.None, bool isBGMStop = true, UnityAction onComplete = null)
     //{
     //    if (isBGMStop)
     //    {
     //        StopBGMAndEnvironment();
     //    }
-    //    FadeManager.Instance.FadeOut(FadeManager.FadeColorType.Black, 1f, () =>
+    //    FadeManager.Instance.FadeOut(fadeOutColorType, 1f, () =>
     //    {
-    //        SceneManager.LoadScene(sceneName);
-    //        FadeManager.Instance.FadeIn(FadeManager.FadeColorType.Black, 1f, onComplete);
+    //        AsyncOperation async = SceneManager.LoadSceneAsync(sceneName);
+    //        StartCoroutine(WaitSceneLoadAfterFadeIn(async, fadeInColorType, onComplete));
     //    });
     //}
 
     public void ChangeSceneAsyncWithLoading(string sceneName, bool isBGMStop = true, UnityAction onComplete = null, FadeManager.FadeColorType fadeOutColorType = FadeManager.FadeColorType.None, FadeManager.FadeColorType fadeInColorType = FadeManager.FadeColorType.None)
     {
+        //Debug.Log($"ChangeSceneAsyncWithLoading : {System.DateTime.Now.ToString()}");
         if (isBGMStop)
         {
             StopBGMAndEnvironment();
         }
+        //Debug.Log($"FadeOutStart : {System.DateTime.Now.ToString()}");
         FadeManager.Instance.FadeOut(fadeOutColorType, 1f, () =>
         {
+            //Debug.Log($"FadeOuted : {System.DateTime.Now.ToString()}");
             LoadingUIManager.Instance.SetActive(true);
+            //Debug.Log($"asyncInstance : {System.DateTime.Now.ToString()}");
             AsyncOperation async = SceneManager.LoadSceneAsync(sceneName);
-            //SceneManager.sceneLoaded += (Scene nextScene, LoadSceneMode mode) => {
-            //    FadeManager.Instance.FadeIn(fadeInColorType, 1f, onComplete);
-            //};
+
+            //Debug.Log($"asyncInstanted : {System.DateTime.Now.ToString()}");
             LoadingUIManager.Instance.StartLoading(async, () =>
             {
+                //Debug.Log($"LoadEnd : {System.DateTime.Now.ToString()}");
                 StartCoroutine(WaitSceneLoadAfterFadeIn(async, fadeInColorType, onComplete));
-                //FadeManager.Instance.FadeIn(fadeInColorType, 1f, onComplete);
-            });
-            //StartCoroutine(ChangeSceneAsyncCoroutine(sceneName, onComplete, fadeInColorType));
+            },false);
         });
     }
+    ////動作確認用
+    //private IEnumerator LoadSampleCor(string sceneName, FadeManager.FadeColorType fadeInColorType, UnityAction onComplete = null)
+    //{
+    //    Debug.Log($"FadeOuted : {System.DateTime.Now.ToString()}");
+    //    yield return null;
+    //    LoadingUIManager.Instance.SetActive(true);
+    //    Debug.Log($"asyncInstance : {System.DateTime.Now.ToString()}");
+    //    yield return null;
+    //    AsyncOperation async = SceneManager.LoadSceneAsync(sceneName);
+    //    //SceneManager.sceneLoaded += (Scene nextScene, LoadSceneMode mode) => {
+    //    //    FadeManager.Instance.FadeIn(fadeInColorType, 1f, onComplete);
+    //    //};
+    //    yield return null;
+    //    Debug.Log($"asyncInstanted : {System.DateTime.Now.ToString()}");
+    //    yield return null;
+    //    LoadingUIManager.Instance.StartLoading(async, () =>
+    //    {
+    //        StartCoroutine(LoadedSample(async, fadeInColorType, onComplete));
+    //        //FadeManager.Instance.FadeIn(fadeInColorType, 1f, onComplete);
+    //    });
+    //}
+    //private IEnumerator LoadedSample(AsyncOperation async, FadeManager.FadeColorType fadeInColorType, UnityAction onComplete = null)
+    //{
+    //    Debug.Log($"LoadEnd : {System.DateTime.Now.ToString()}");
+    //    yield return null;
+    //    StartCoroutine(WaitSceneLoadAfterFadeIn(async, fadeInColorType, onComplete));
+    //}
 
     private IEnumerator WaitSceneLoadAfterFadeIn(AsyncOperation async, FadeManager.FadeColorType fadeInColorType = FadeManager.FadeColorType.None, UnityAction onComplete = null)
     {
         yield return async;
+        //Debug.Log($"AsyncEnded : {System.DateTime.Now.ToString()}");
+        LoadingUIManager.Instance.SetActive(false);
         FadeManager.Instance.FadeIn(fadeInColorType, 1f, onComplete);
     }
 

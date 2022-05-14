@@ -8,7 +8,7 @@ public class LoadingUIManager : SingletonMonoBehaviour<LoadingUIManager>
 {
     [SerializeField] private GameObject loadingObject = null;//Loadingの親Object
     [SerializeField] private Image loadingGauge = null;//ロード中のアニメーションゲージ
-    //[SerializeField] private Text loadingAnimationText = null;//ロード中テキスト
+    //[SerializeField] private Text loadingText = null;//ロード中テキスト
     // Start is called before the first frame update
     void Start()
     {
@@ -21,12 +21,12 @@ public class LoadingUIManager : SingletonMonoBehaviour<LoadingUIManager>
         loadingObject.SetActive(_isActive);
     }
 
-    public void StartLoading(AsyncOperation asyncOperation, UnityAction onComplete)
+    public void StartLoading(AsyncOperation asyncOperation, UnityAction onComplete, bool isAutoEnactive = true)
     {
         StartCoroutine(DoLoading(asyncOperation, onComplete));
     }
 
-    private IEnumerator DoLoading(AsyncOperation asyncOperation, UnityAction onComplete)
+    private IEnumerator DoLoading(AsyncOperation asyncOperation, UnityAction onComplete, bool isAutoEnactive = true)
     {
         float currentTime = 0f;
         float needTime = 1.4f;
@@ -45,10 +45,14 @@ public class LoadingUIManager : SingletonMonoBehaviour<LoadingUIManager>
             yield return null;
         }
         asyncOperation.allowSceneActivation = true;
-        loadingObject.SetActive(false);
+        
         if(onComplete != null)
         {
             onComplete();
+        }
+        if (isAutoEnactive)
+        {
+            loadingObject.SetActive(false);
         }
     }
 }
