@@ -15,10 +15,18 @@ public class WordsMessageManager : SingletonMonoBehaviour<WordsMessageManager>
 
     private List<string> messageList = new List<string>();
 
-    //private float currentWaitTime = 0f;
-    private const float WaitTime = 0.35f;
-
+    //フェード時間情報
+    private float fadeTime = 0f;
+    private const float InitFaitTime = 0.35f;
     private float elapsedTime_Common = 0f;//経過時間計測用（汎用）
+    public void SetFadeTime(float f)
+    {
+        fadeTime = f;
+    }
+    public void SetInitFadeTime()
+    {
+        fadeTime = InitFaitTime;
+    }
 
     private bool isWaitForClick = false;//クリック待ちフラグ
 
@@ -26,10 +34,63 @@ public class WordsMessageManager : SingletonMonoBehaviour<WordsMessageManager>
 
     private bool isStartable = true;
 
+    //表示位置情報
+    private Vector2 initDisplayPosition = Vector2.zero;
+    private DisplayPosition displayPosition = DisplayPosition.Under;
+    public enum DisplayPosition
+    {
+        Under,
+        Center
+    }
+    private Vector2 GetDisplayPosition(DisplayPosition _pos)
+    {
+        switch (_pos)
+        {
+            case DisplayPosition.Under: return initDisplayPosition;
+            case DisplayPosition.Center: return Vector2.zero;
+            default: return initDisplayPosition;
+        }
+    }
+    public void SetDisplayPosition(DisplayPosition _pos)
+    {
+        displayPosition = _pos;
+        switch (_pos)
+        {
+            case DisplayPosition.Under: messageText.GetComponent<RectTransform>().sizeDelta = initWHSize; break;
+            case DisplayPosition.Center: messageText.GetComponent<RectTransform>().sizeDelta = centerPos_Size; break;
+            default: messageText.GetComponent<RectTransform>().sizeDelta = initWHSize; break;
+        }
+        
+    }
+    //中央配置の時は画面全体にサイズを確保
+    private Vector2 initWHSize = Vector2.zero;
+    private Vector2 centerPos_Size = new Vector2(1800f, 900f);
+
+    //テキストカラー情報
+    private Color initColor = Color.white;
+    private Color displayColor = Color.white;
+    public void SetTextColor(Color _c)
+    {
+        displayColor = _c;
+    }
+    public void SetInitTextColor()
+    {
+        displayColor = initColor;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        Initialize();
+    }
+
+    public void Initialize()
+    {
         routeObj.SetActive(false);
+        initDisplayPosition = messageText.GetComponent<RectTransform>().anchoredPosition;
+        initWHSize = messageText.GetComponent<RectTransform>().sizeDelta;
+        displayColor = initColor;
+        fadeTime = InitFaitTime;
         InitImage();
     }
 
@@ -56,6 +117,7 @@ public class WordsMessageManager : SingletonMonoBehaviour<WordsMessageManager>
 
     public IEnumerator WordsAction(List<string> words, Sprite sprite = null)
     {
+        messageText.GetComponent<RectTransform>().anchoredPosition = GetDisplayPosition(displayPosition);
         AddMessage(words, sprite);
         StartMessageShow();
         while (isAction) yield return null;
@@ -111,6 +173,7 @@ public class WordsMessageManager : SingletonMonoBehaviour<WordsMessageManager>
 
     private IEnumerator ShowTextAndSprite()
     {
+        messageText.color = new Color(displayColor.r, displayColor.g, displayColor.b, messageText.color.a);
         Color c = messageText.color;
         c.a = 0f;
         messageText.color = c;
@@ -121,9 +184,9 @@ public class WordsMessageManager : SingletonMonoBehaviour<WordsMessageManager>
             yield return StartCoroutine(ShowImage());
         }
         messageText.text = messageList[0];
-        while (elapsedTime_Common < WaitTime)
+        while (elapsedTime_Common < fadeTime)
         {
-            c.a = elapsedTime_Common / WaitTime;
+            c.a = elapsedTime_Common / fadeTime;
             messageText.color = c;
             elapsedTime_Common += Time.deltaTime;
             yield return null;
@@ -136,7 +199,7 @@ public class WordsMessageManager : SingletonMonoBehaviour<WordsMessageManager>
     {
         if (!displayImage.gameObject.activeSelf)
         {
-            yield return StartCoroutine(FadeManager.Instance.FadeAction(displayImage, FadeType.Out, WaitTime));
+            yield return StartCoroutine(FadeManager.Instance.FadeAction(displayImage, FadeType.Out, fadeTime));
         }
     }
 
@@ -147,9 +210,9 @@ public class WordsMessageManager : SingletonMonoBehaviour<WordsMessageManager>
         messageText.color = c;
         elapsedTime_Common = 0f;
 
-        while (elapsedTime_Common < WaitTime)
+        while (elapsedTime_Common < fadeTime)
         {
-            c.a = 1 - elapsedTime_Common / WaitTime;
+            c.a = 1 - elapsedTime_Common / fadeTime;
             messageText.color = c;
             elapsedTime_Common += Time.deltaTime;
             yield return null;
