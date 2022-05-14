@@ -478,7 +478,7 @@ public class EndingEventManager : MonoBehaviour
     {
         FadeManager.Instance.FadeOut(FadeManager.FadeColorType.Black, 2f);
         SoundManager.Instance.StopBGMWithFadeOut(3f);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(4.5f);
         isPlaying = false;
         if(onComplete != null)
         {
