@@ -76,7 +76,7 @@ public class ProvokedSystem : MonoBehaviour
             }
             else
             {
-                provocationingTime -= Time.deltaTime * Enemy_Yukie.doUpdateFrameCount;
+                provocationingTime -= Time.deltaTime * Enemy_Yukie.doUpdateFrameCount * 0.2f;//加算と同じカウントだと中々振り返らないので減衰を入れる
                 if (provocationingTime < 0f) { provocationingTime = 0f; }
             }
         }, 6f);//6メートル以内なら煽りと判断
