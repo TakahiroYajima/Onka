@@ -19,6 +19,7 @@ public class PlayerStateFree : StateBase
     {
         player.FirstPersonAIO.enabled = true;
         CrosshairManager.Instance.FindCrosshair();
+        CrosshairManager.Instance.FindStaminaGauge();
         frameCount = 0;
     }
 

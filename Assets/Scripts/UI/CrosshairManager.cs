@@ -10,6 +10,8 @@ public class CrosshairManager : SingletonMonoBehaviour<CrosshairManager>
     //FirstPersonAIOのUI
     [HideInInspector] public GameObject Crosshair { get; private set; } = null;
     private Image crosshairImage = null;
+
+    [HideInInspector] public GameObject StaminaGauge { get; private set; } = null;
     public void FindCrosshair()
     {
         if (Crosshair == null)
@@ -42,6 +44,22 @@ public class CrosshairManager : SingletonMonoBehaviour<CrosshairManager>
     {
         if ((int)type >= centerSprites.Length) return;
         SetCrosshairSprite(centerSprites[(int)type]);
+    }
+
+    public void FindStaminaGauge()
+    {
+        if (StaminaGauge == null)
+        {
+            StaminaGauge = GameObject.Find("StaminaMeter");
+        }
+    }
+    public void SetStaminaGaugeActive(bool _isActive)
+    {
+        FindStaminaGauge();
+        if (StaminaGauge != null)
+        {
+            StaminaGauge.SetActive(_isActive);
+        }
     }
 }
 
