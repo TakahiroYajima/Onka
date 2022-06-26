@@ -47,6 +47,7 @@ public class EA_AfterGetNobuyukiDiary3 : EventActorBase
 
     private IEnumerator MovePanel(UnityAction onComplete)
     {
+        yield return new WaitForEndOfFrame();
         //プレイヤーのカメラの向きの先に信之生成（位置調整だけ）
         Vector3 playerPos = StageManager.Instance.Player.transform.position;
         playerPos.y = nobuyukiObj.transform.position.y;

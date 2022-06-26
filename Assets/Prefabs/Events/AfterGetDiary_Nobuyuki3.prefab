@@ -50,8 +50,8 @@ MeshRenderer:
   m_GameObject: {fileID: 4359209960899093346}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -165,6 +165,16 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  exitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onTriggerExitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  HitCollider: {fileID: 0}
 --- !u!1 &5027634937119711800
 GameObject:
   m_ObjectHideFlags: 0
