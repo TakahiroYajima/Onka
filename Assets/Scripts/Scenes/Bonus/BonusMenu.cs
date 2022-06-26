@@ -63,5 +63,10 @@ public class BonusMenu : MonoBehaviour
     {
 
     }
+
+    public void OnPressTwitterButton()
+    {
+        Application.OpenURL("https://twitter.com/YajinProject");
+    }
     #endregion
 }
