@@ -24,10 +24,10 @@ namespace Onka.Manager.Data
         private int currentSelectLoadDataArrayNum = 0;//ロードしたゲームデータのリスト番号
         public const int MaxSaveDataCount = 3;
 
-        public GameData GetGeneralGameData()
-        {
-            return generalGameData;
-        }
+        //public GameData GetGeneralGameData()
+        //{
+        //    return generalGameData;
+        //}
         public IReadOnlyList<ItemData> GetGeneralItemDataList()
         {
             return generalGameData.itemDataList.itemDataList;
@@ -201,9 +201,11 @@ namespace Onka.Manager.Data
         {
             SetGeneralGameDataGetedItem("key_entrance");
             SetGeneralGameDataGetedItem("note_final");
+            SetGetedItemFlagToGeneralData();
             generalGameData.isGameCleared = true;
             SaveGeneralGameData(onComplete);
         }
+
         /// <summary>
         /// 過去にゲームをクリアしたことがあるかを返す
         /// </summary>
@@ -231,6 +233,22 @@ namespace Onka.Manager.Data
             if(item.type == ItemType.DoorKey || item.type == ItemType.Useable)
             {
                 item.used = true;
+            }
+        }
+        /// <summary>
+        /// エンディング時はセーブできないので、取得済みのアイテムをGeneralGameDataに登録する
+        /// </summary>
+        private void SetGetedItemFlagToGeneralData()
+        {
+            var list = playingGameData.itemDataList.itemDataList.FindAll(x => x.geted == true);
+            foreach(var i in list)
+            {
+                ItemData item = generalGameData.itemDataList.itemDataList.FirstOrDefault(x => x.key == i.key);
+                item.geted = true;
+                if (item.type == ItemType.DoorKey || item.type == ItemType.Useable)
+                {
+                    item.used = true;
+                }
             }
         }
 

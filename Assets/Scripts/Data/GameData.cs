@@ -26,5 +26,7 @@ public class GameData
             eventDataList.list[i].isAppeared = false;
             eventDataList.list[i].isEnded = false;
         }
+        saveDate = string.Empty;
+        isGameCleared = false;
     }
 }
