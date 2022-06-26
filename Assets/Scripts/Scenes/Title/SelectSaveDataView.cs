@@ -45,7 +45,7 @@ public class SelectSaveDataView : MonoBehaviour
     private float GetRateOfProgression(int dataArrayNum)
     {
         int allEventAndItemCount = saveDataList[dataArrayNum].itemDataList.itemDataList.Count + saveDataList[dataArrayNum].eventDataList.list.Count;
-        allEventAndItemCount -= 2;//最後のノートとエンディングイベントはセーブできないのでその分引いておく（エンディング直前で最後のノート以外入手済みでMAXになる）
+        allEventAndItemCount -= 3;//玄関の鍵と最後のノートとエンディングイベントはセーブできないのでその分引いておく（エンディング直前で玄関の鍵と最後のノート以外入手済みでMAXになる）
         int getedItemCount = saveDataList[dataArrayNum].itemDataList.itemDataList.FindAll(x => x.geted == true).Count;
         int endedEventCount = saveDataList[dataArrayNum].eventDataList.list.FindAll(x => x.isEnded == true).Count;
         float rateOfPregress = (float)(getedItemCount + endedEventCount) / (float)allEventAndItemCount;
