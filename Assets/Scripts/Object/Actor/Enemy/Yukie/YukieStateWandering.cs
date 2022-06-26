@@ -31,7 +31,7 @@ public class YukieStateWandering : StateBase
         yukie.wanderingActor.SetMoveSpeed(1f);
         yukie.onColliderEnterCallback = null;
         yukie.PlaySoundLoop(0, 0.3f);
-        yukie.provokedSystem.Initialize(10f, () =>
+        yukie.provokedSystem.Initialize(7.5f, () =>
         {
             yukie.ChangeState(EnemyState.RotateToPlayer);
         }, yukie.EyeTransform);

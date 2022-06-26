@@ -41,7 +41,7 @@ public class Enemy_Yukie : Enemy
     //挑発されている際のプレイヤー検知用
     private float playerDetectionDistance = 8f;
     private float searchAngle = 60f;
-    private float rotationSpeed = 3f;
+    private float rotationSpeed = 4f;
     public const int doUpdateFrameCount = 6;//Rayは重いので6フレームに1回処理
 
     //プレイヤーが自分の視界の範囲外をうろつく＝挑発しているので、それに対する不意打ち要素
