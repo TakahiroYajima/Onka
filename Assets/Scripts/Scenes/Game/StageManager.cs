@@ -89,14 +89,15 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
     }
     private void OnF12KeyPress()
     {
-        if(Cursor.lockState == CursorLockMode.Locked)
-        {
-            InGameUtil.DoCursorFree();
-        }
-        else
-        {
-            InGameUtil.DoCursorLock();
-        }
+        //if(Cursor.lockState == CursorLockMode.Locked)
+        //{
+        //    InGameUtil.DoCursorFree();
+        //}
+        //else
+        //{
+        //    InGameUtil.DoCursorLock();
+        //}
+        Application.Quit();
     }
     private void OpenedMenuAction()
     {
@@ -171,7 +172,7 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
             prevAzuhaState = Azuha.currentState;
             Azuha.ChangeState(EnemyState.CanNotAction);
         }
-        if (Yuzuha != null)
+        if (Yuzuha != null && Yuzuha.gameObject.activeSelf)
         {
             prevYukieState = Yuzuha.currentState;
             Yuzuha.ChangeState(EnemyState.CanNotAction);
@@ -192,7 +193,7 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
         {
             Azuha.ChangeState(prevAzuhaState);
         }
-        if (Yuzuha != null)
+        if (Yuzuha != null && Yuzuha.gameObject.activeSelf)
         {
             Yuzuha.ChangeState(prevYukieState);
         }
@@ -214,7 +215,7 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
             Azuha.ChangeState(EnemyState.CanNotAction);
             Azuha.gameObject.SetActive(false);
         }
-        if(Yuzuha != null)
+        if(Yuzuha != null && Yuzuha.gameObject.activeSelf)
         {
             Yuzuha.ChangeState(EnemyState.CanNotAction);
             Yuzuha.gameObject.SetActive(false);
