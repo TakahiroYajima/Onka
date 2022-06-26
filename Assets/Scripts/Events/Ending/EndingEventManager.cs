@@ -90,6 +90,8 @@ public class EndingEventManager : MonoBehaviour
     private IEnumerator FinalEventAction(UnityAction onComplete)
     {
         InGameUtil.DoCursorLock();
+        CrosshairManager.Instance.SetStaminaGaugeActive(false);
+        Onka.Manager.Menu.InStageMenuManager.Instance.HideGuide();
         yield return null;
         yield return StartCoroutine(Words(new List<string>() { "……", "………", "……悪かった","俺が悪かった……","金が……","金が足りなかったんだよ……！！",
         "助けてくれるって言うから話をしたのに……","でもあんたらは焦る俺を笑うかのように幸せな姿を見せつけて！！","すぐに金が必要だったんだよ……","俺は……！！"}));
@@ -183,12 +185,17 @@ public class EndingEventManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
         yield return StartCoroutine(Words(new List<string>()
         {
-            "- 富豪宅で男性惨殺か -",
-            "今日未明、榊原宅の庭で男性の遺体が発見された。",
-            @"男性はこの付近に住む探偵 -----さんで
-先日の榊原一家殺害事件の調査をしていた。",
-            @"警察はこの事件の犯人が-----さんを殺害したとみて
-捜査を進めている。"}));
+            "- 富豪宅で男性惨殺！　榊原家の怨念の仕業か！？ -",
+            "- 今日未明、榊原宅の庭で男性の遺体が発見された。 -",
+            @"- 男性はこの付近に住む探偵 -----さんで
+先日の榊原一家殺害事件の調査をしていた。 -",
+            @"- 遺体の様子は人の手によって殺害されたのか
+疑問に思うほど凄惨な状態だったという。 -",
+            @"- この状況から「殺された一家の霊による事件」、
+「榊原家の祟りだ」と言う者が現れ、混乱を招いている。 -",
+            @"- 警察はこの事件の犯人が-----さんを殺害したとみて
+捜査を進めていると発表したが、犯人の手がかりは一切掴めていないという。 -",
+        }));
         SoundManager.Instance.StopBGMWithFadeOut();
         FadeManager.Instance.FadeOut(FadeManager.FadeColorType.Black, 2f);
         yield return new WaitForSeconds(3f);
@@ -197,7 +204,7 @@ public class EndingEventManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         //主人公の妻のセリフ
-        yield return StartCoroutine(Words(new List<string>() { "ありえない", "夫が…あの人があんなに無惨に殺されたのに！！","警察は全く捜査してくれない……！！","私が……私がこの目で真実を……" }));
+        yield return StartCoroutine(Words(new List<string>() { "ありえない", "夫が…あの人があんなに無惨に殺されたのに！！","幽霊の仕業なんてふざけた事を言って……！！","私がここで……この目で真実を……" }));
 
         yield return StartCoroutine(StartupHatsu());
         yield return new WaitForSeconds(0.7f);
