@@ -5,7 +5,7 @@ using UnityEngine;
 public class FirstSplashSceneManager : MonoBehaviour
 {
     [SerializeField] private UpdateFader faderObj = null;
-    [SerializeField] private Sprite[] splashSprites = null;
+    [SerializeField] private GameObject[] splashGroupObjcts = null;
 
     private int currentSplashStateNum = 0;
     private bool isMoving = false;
@@ -42,11 +42,14 @@ public class FirstSplashSceneManager : MonoBehaviour
         isMoving = false;
         yield return new WaitForSeconds(0.3f);
         
-
-        currentSplashStateNum++;
-        if (currentSplashStateNum < splashSprites.Length)
+        if(currentSplashStateNum >= 0)
         {
-            faderObj.SetSprite(splashSprites[currentSplashStateNum], true);
+            splashGroupObjcts[currentSplashStateNum].SetActive(false);
+        }
+        currentSplashStateNum++;
+        if (currentSplashStateNum < splashGroupObjcts.Length)
+        {
+            splashGroupObjcts[currentSplashStateNum].SetActive(true);
             faderObj.FadeStart(FadeType.In, 0.7f, () => { StartCoroutine(DoWaitAndOut());});
             isMoving = true;
         }
