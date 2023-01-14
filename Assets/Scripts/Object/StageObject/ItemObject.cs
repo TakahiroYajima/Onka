@@ -12,13 +12,22 @@ public class ItemObject : MonoBehaviour
     [SerializeField] private ItemGimickType gimmickType = ItemGimickType.None;
     public ItemGimickType GimmickType { get { return gimmickType; } }
     public bool isGimmickItem { get { return gimmickType != ItemGimickType.None; } }
-    public EventBase gimmickEvent = null;
+    [field: SerializeField] public string gimmickKey { get; private set; }
 
     private Collider thisCollider = null;
     [SerializeField] private bool isDefaultInactive = false;//デフォルトで非表示にするか
     [SerializeField] private bool isHiddenItem = false;//どこかにしまってあるアイテムか
-    [SerializeField] private Transform hiddenMoveParentTransform = null;//アイテムを隠すとき、Parentを設定する必要がある場合（引き出しの中にあるものなど）に設定
-    public Transform HiddenParent { get { return hiddenMoveParentTransform; } }
+
+    /// <summary>
+    /// 引き出しなど、動いた時に追従する対象を設定
+    /// </summary>
+    /// <param name="parent"></param>
+    public void SetHiddenParent(Transform parent)
+    {
+        transform.parent = parent;
+    }
+
+    private int gettableCallCount = 0;//両開きの棚では両方閉まっていないと判定が消えないようにする
     
     // Start is called before the first frame update
     void Awake()
@@ -32,8 +41,7 @@ public class ItemObject : MonoBehaviour
     }
 
     public void Initialize()
-    {
-        //最初からアイテムを取得できないようにする
+    {//最初からアイテムを取得できないようにする
         if (isHiddenItem)
         {
             thisCollider.enabled = false;
@@ -48,6 +56,7 @@ public class ItemObject : MonoBehaviour
                 OnGetedItemCallback(_itemData);
             }
         }
+        gettableCallCount = 0;
     }
     
     /// <summary>
@@ -56,13 +65,18 @@ public class ItemObject : MonoBehaviour
     public void DoGettableItem()
     {
         thisCollider.enabled = true;
+        gettableCallCount++;
     }
     /// <summary>
     /// 引き出しを閉めたときなどに設定するコールバック
     /// </summary>
     public void DoNotGettableItem()
     {
-        thisCollider.enabled = false;
+        gettableCallCount--;
+        if (gettableCallCount <= 0)
+        {
+            thisCollider.enabled = false;
+        }
     }
     
     public void OnGetedItemCallback(ItemData _itemData)

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using SoundSystem;
 
-public class SlidableObject : MonoBehaviour
+public class SlidableObject : OpenableObjectBase
 {
     public enum SlideDirection
     {
@@ -27,14 +27,6 @@ public class SlidableObject : MonoBehaviour
     private void Start()
     {
         moveTransform = GetComponent<Transform>();
-        if(OpenedCallback == null)
-        {
-            OpenedCallback = new UnityEvent();
-        }
-        if(ClosedCallback == null)
-        {
-            ClosedCallback = new UnityEvent();
-        }
     }
 
     public void Slide()
@@ -45,13 +37,13 @@ public class SlidableObject : MonoBehaviour
             {
                 isOpenState = false;
                 SoundManager.Instance.PlaySeWithKeyOne(closeSEKey);
-                StartCoroutine(DoSlide(false, () => { ClosedCallback.Invoke(); }));
+                StartCoroutine(DoSlide(false, () => { onClosed?.Invoke(); }));
             }
             else
             {
                 isOpenState = true;
                 SoundManager.Instance.PlaySeWithKeyOne(openSEKey);
-                StartCoroutine(DoSlide(true, () => { OpenedCallback.Invoke(); }));
+                StartCoroutine(DoSlide(true, () => { onOpened?.Invoke(); }));
             }
         }
     }

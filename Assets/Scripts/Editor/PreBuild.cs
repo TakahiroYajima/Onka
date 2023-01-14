@@ -12,6 +12,6 @@ public class PreBuild : IPreprocessBuildWithReport
     public void OnPreprocessBuild(BuildReport report)
     {
         Debug.Log("ビルド前処理：セーブデータの初期化をしてください");
-        AssetDatabase.Refresh(); // アセットDBの更新
+        //AssetDatabase.Refresh(); // アセットDBの更新
     }
 }

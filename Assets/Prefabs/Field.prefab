@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1216472291295966583}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -40, y: 0.157, z: 95}
-  m_LocalScale: {x: 12, y: 1, z: 11}
+  m_LocalPosition: {x: 0, y: 0.157, z: 95}
+  m_LocalScale: {x: 20, y: 1, z: 11}
   m_Children: []
   m_Father: {fileID: 9039147438911714798}
   m_RootOrder: 1
@@ -1988,8 +1988,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3996507192076977983}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -40, y: 0.157, z: -80}
-  m_LocalScale: {x: 12, y: 1, z: 14}
+  m_LocalPosition: {x: 0, y: 0.157, z: -80}
+  m_LocalScale: {x: 20, y: 1, z: 14}
   m_Children: []
   m_Father: {fileID: 9039147438911714798}
   m_RootOrder: 2
@@ -2056,8 +2056,8 @@ GameObject:
   m_Name: Terrain (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 1
-  m_StaticEditorFlags: 4294967295
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967287
   m_IsActive: 1
 --- !u!4 &9039147438212267393
 Transform:
@@ -2132,8 +2132,8 @@ GameObject:
   m_Name: Terrain (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 1
-  m_StaticEditorFlags: 4294967295
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967287
   m_IsActive: 1
 --- !u!4 &9039147438321284017
 Transform:
@@ -2347,8 +2347,8 @@ GameObject:
   m_Name: Terrain (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 1
-  m_StaticEditorFlags: 4294967295
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967287
   m_IsActive: 1
 --- !u!4 &9039147439328381053
 Transform:

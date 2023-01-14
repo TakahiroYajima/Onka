@@ -1566,10 +1566,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_kozo_2
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &49588700
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2560,8 +2559,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &70785834
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2656,6 +2653,10 @@ PrefabInstance:
     - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_TagString
       value: Floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 446732, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_RootOrder
@@ -4704,10 +4705,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_nobuyuki
   gimmickType: 1
-  gimmickEvent: {fileID: 492988155}
+  <gimmickKey>k__BackingField: Event_HighAltitudeItemGet_NobuyukiRoomKey
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!135 &114378822
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6051,6 +6051,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Floor
       objectReference: {fileID: 0}
+    - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 446732, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_RootOrder
       value: 13
@@ -7095,10 +7099,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: note_nobuyuki1
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!4 &179784775 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 403170, guid: db1592dc16a5e3a40b99b6250b4fb9d9,
@@ -7225,10 +7228,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_nobuyuki_2
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 1
-  hiddenMoveParentTransform: {fileID: 8037692752914550825}
 --- !u!65 &180537317
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7563,8 +7565,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!114 &185260159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7610,8 +7610,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!4 &185999584 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 444242, guid: 9700464865136ae47b2f6a69a302e104,
@@ -10006,10 +10004,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_courtyard
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!135 &238278352
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -10144,10 +10141,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_yukie_2
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 1
-  hiddenMoveParentTransform: {fileID: 1541392801}
 --- !u!65 &242328750
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10414,6 +10410,10 @@ PrefabInstance:
     - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_TagString
       value: Floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 446732, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_RootOrder
@@ -10731,6 +10731,10 @@ PrefabInstance:
     - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_TagString
       value: Floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 446732, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_RootOrder
@@ -11245,6 +11249,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Floor
       objectReference: {fileID: 0}
+    - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 446732, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -11399,6 +11407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6700f0e6596c414fa6027447c1603f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <pointKey>k__BackingField: 
   isOuter: 1
   isCorner: 0
   soundDistancePointNodes:
@@ -11619,8 +11628,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &274473164
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11959,10 +11966,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: note_yukie2
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!1001 &283867976
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12108,10 +12114,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_keymanagementcabinet
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 1
-  hiddenMoveParentTransform: {fileID: 6409583869447640844}
 --- !u!135 &283867980
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -13205,6 +13210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6700f0e6596c414fa6027447c1603f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <pointKey>k__BackingField: 
   isOuter: 1
   isCorner: 0
   soundDistancePointNodes:
@@ -13594,6 +13600,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Floor
       objectReference: {fileID: 0}
+    - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 446732, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -13852,10 +13862,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_nobuyuki_1
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &321898003
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14394,10 +14403,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: note_nobuyuki2
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 1
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!4 &340491426 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400738, guid: 4bf63fff39271d34ea0dd4c61fde49a5,
@@ -15723,10 +15731,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: note_final
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 1
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!1 &375639096
 GameObject:
   m_ObjectHideFlags: 0
@@ -16791,10 +16798,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_shiori_2
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &403243894
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18587,6 +18593,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Floor
       objectReference: {fileID: 0}
+    - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 446732, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -18855,6 +18865,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6700f0e6596c414fa6027447c1603f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <pointKey>k__BackingField: 
   isOuter: 1
   isCorner: 0
   soundDistancePointNodes:
@@ -19330,8 +19341,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &462015070
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19672,8 +19681,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &472057985
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20153,8 +20160,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &490092159
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20592,6 +20597,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6700f0e6596c414fa6027447c1603f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <pointKey>k__BackingField: 
   isOuter: 1
   isCorner: 1
   soundDistancePointNodes:
@@ -20712,10 +20718,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_yukie
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!135 &514414899
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -21421,8 +21426,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &540141283
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22587,6 +22590,7 @@ GameObject:
   - component: {fileID: 578893481}
   - component: {fileID: 578893480}
   - component: {fileID: 578893479}
+  - component: {fileID: 578893484}
   m_Layer: 14
   m_Name: Door
   m_TagString: StageObject
@@ -22724,6 +22728,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 578893477}
   m_Mesh: {fileID: 5060444177187149915, guid: b6deba4ff0d38c84eb9b04de5f05b3ab, type: 3}
+--- !u!114 &578893484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578893477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46992e78eff41834495f6b39fd09a63a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openableObject: {fileID: 578893479}
+  isSetParent: 0
+  inItemKeys:
+  - note_kozo1
 --- !u!1001 &580016044
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22746,6 +22766,10 @@ PrefabInstance:
     - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_TagString
       value: Floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 446732, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_RootOrder
@@ -23395,6 +23419,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Floor
       objectReference: {fileID: 0}
+    - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 446732, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -23514,8 +23542,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &598364644
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23745,6 +23771,10 @@ PrefabInstance:
     - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_TagString
       value: Floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 446732, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_RootOrder
@@ -24352,6 +24382,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Floor
       objectReference: {fileID: 0}
+    - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 446732, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -24435,6 +24469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6700f0e6596c414fa6027447c1603f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <pointKey>k__BackingField: 
   isOuter: 0
   isCorner: 0
   soundDistancePointNodes:
@@ -24581,10 +24616,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: note_yukie1
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!1001 &634006406
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24917,8 +24951,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &648204202
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25566,8 +25598,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!114 &662700856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27643,6 +27673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6700f0e6596c414fa6027447c1603f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <pointKey>k__BackingField: 
   isOuter: 0
   isCorner: 0
   soundDistancePointNodes:
@@ -27940,10 +27971,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_hatsu_3
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &725112765
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28064,6 +28094,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6700f0e6596c414fa6027447c1603f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <pointKey>k__BackingField: 
   isOuter: 1
   isCorner: 1
   soundDistancePointNodes:
@@ -28302,8 +28333,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &735958018
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -29950,6 +29979,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6700f0e6596c414fa6027447c1603f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <pointKey>k__BackingField: 
   isOuter: 1
   isCorner: 1
   soundDistancePointNodes:
@@ -31174,8 +31204,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &799381377
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31326,6 +31354,7 @@ GameObject:
   - component: {fileID: 803689222}
   - component: {fileID: 803689221}
   - component: {fileID: 803689220}
+  - component: {fileID: 803689225}
   m_Layer: 14
   m_Name: dr R
   m_TagString: StageObject
@@ -31412,8 +31441,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &803689222
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31474,6 +31501,23 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 803689218}
   m_Mesh: {fileID: 4300004, guid: 0eeb2dadff067bc49922d67ade75273b, type: 3}
+--- !u!114 &803689225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803689218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46992e78eff41834495f6b39fd09a63a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openableObject: {fileID: 803689221}
+  isSetParent: 0
+  inItemKeys:
+  - key_1fhiddenroom
+  - note_nobuyuki2
 --- !u!4 &804212172 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 485366, guid: 5fc838260f79bbc478cf2ce7d9b452cc,
@@ -31995,10 +32039,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_entrance
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 1
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!1 &812552564
 GameObject:
   m_ObjectHideFlags: 0
@@ -32130,6 +32173,7 @@ GameObject:
   - component: {fileID: 817061874}
   - component: {fileID: 817061873}
   - component: {fileID: 817061872}
+  - component: {fileID: 817061877}
   m_Layer: 14
   m_Name: dr L
   m_TagString: StageObject
@@ -32205,8 +32249,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &817061874
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32267,6 +32309,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 817061870}
   m_Mesh: {fileID: 4300002, guid: 0eeb2dadff067bc49922d67ade75273b, type: 3}
+--- !u!114 &817061877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 817061870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46992e78eff41834495f6b39fd09a63a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openableObject: {fileID: 817061873}
+  isSetParent: 0
+  inItemKeys:
+  - diary_azuhayuzuha_3
 --- !u!4 &820184663 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 444242, guid: 9700464865136ae47b2f6a69a302e104,
@@ -32457,6 +32515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6700f0e6596c414fa6027447c1603f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <pointKey>k__BackingField: 
   isOuter: 1
   isCorner: 0
   soundDistancePointNodes:
@@ -33438,10 +33497,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_hatsu_1
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &856370803
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -35804,8 +35862,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &903594022
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -35851,8 +35907,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &903594025
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -37038,8 +37092,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!114 &930636936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37072,8 +37124,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!114 &930636938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37106,8 +37156,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!1001 &931781250
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37897,10 +37945,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: note_kozo1
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 1
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!1001 &949869749
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39229,8 +39276,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &975376168
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -39276,8 +39321,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &975376171
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -39532,6 +39575,14 @@ PrefabInstance:
     - target: {fileID: 197348, guid: cc2259a387f086f449798a44be969fe6, type: 3}
       propertyPath: m_TagString
       value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 197348, guid: cc2259a387f086f449798a44be969fe6, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 197348, guid: cc2259a387f086f449798a44be969fe6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 463842, guid: cc2259a387f086f449798a44be969fe6, type: 3}
       propertyPath: m_RootOrder
@@ -41406,8 +41457,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &1031887176
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -42106,10 +42155,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_underground
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!135 &1044003380
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -42581,10 +42629,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_hatsu_2
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &1057080967
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -43058,6 +43105,10 @@ PrefabInstance:
     - target: {fileID: 127492, guid: 5247604acd8cb8b4cbe1b7e96e1365d7, type: 3}
       propertyPath: m_TagString
       value: Floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 127492, guid: 5247604acd8cb8b4cbe1b7e96e1365d7, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 496922, guid: 5247604acd8cb8b4cbe1b7e96e1365d7, type: 3}
       propertyPath: m_RootOrder
@@ -44556,10 +44607,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_drawingroom
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!135 &1104734879
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -45338,6 +45388,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Floor
       objectReference: {fileID: 0}
+    - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 446732, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -45866,6 +45920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6700f0e6596c414fa6027447c1603f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <pointKey>k__BackingField: 
   isOuter: 1
   isCorner: 1
   soundDistancePointNodes:
@@ -46398,10 +46453,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_yukie_3
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!4 &1141269163 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 486290, guid: c0ddca4836a901748a833a89a4abb256,
@@ -46986,10 +47040,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_shiori_3
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 1
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &1170956895
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -47793,6 +47846,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6700f0e6596c414fa6027447c1603f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <pointKey>k__BackingField: 
   isOuter: 1
   isCorner: 0
   soundDistancePointNodes:
@@ -48600,6 +48654,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6700f0e6596c414fa6027447c1603f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <pointKey>k__BackingField: 
   isOuter: 0
   isCorner: 0
   soundDistancePointNodes:
@@ -49070,6 +49125,22 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1556067970}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1218900615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1218900614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46992e78eff41834495f6b39fd09a63a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openableObject: {fileID: 1218900616}
+  isSetParent: 0
+  inItemKeys:
+  - item_crowbar
 --- !u!114 &1218900616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49111,8 +49182,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &1218900617
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -49242,6 +49311,10 @@ PrefabInstance:
     - target: {fileID: 127492, guid: 5247604acd8cb8b4cbe1b7e96e1365d7, type: 3}
       propertyPath: m_TagString
       value: Floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 127492, guid: 5247604acd8cb8b4cbe1b7e96e1365d7, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 496922, guid: 5247604acd8cb8b4cbe1b7e96e1365d7, type: 3}
       propertyPath: m_RootOrder
@@ -49429,10 +49502,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_azuhayuzuha_1
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &1223824218
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -49976,8 +50048,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &1243031631
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -50690,8 +50760,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &1255289549
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -50804,8 +50872,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &1255871110
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -50965,6 +51031,10 @@ PrefabInstance:
     - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_TagString
       value: Floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 446732, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_RootOrder
@@ -51460,8 +51530,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &1270041152
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -51682,6 +51750,10 @@ PrefabInstance:
     - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_TagString
       value: Floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 446732, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_RootOrder
@@ -53927,10 +53999,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_maidroom
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!135 &1314443202
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -55052,10 +55123,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_azuhayuzuha_3
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 1
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &1338368497
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -55785,6 +55855,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6700f0e6596c414fa6027447c1603f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <pointKey>k__BackingField: 
   isOuter: 1
   isCorner: 1
   soundDistancePointNodes:
@@ -56260,10 +56331,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_kozo_1
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &1364760017
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -57453,12 +57523,22 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   closeSEKey: se_slideobj_open
---- !u!4 &1379389063 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400010, guid: 4df89b4a30091594a850aeacf8ace8d3,
-    type: 3}
-  m_PrefabInstance: {fileID: 1379389040}
+--- !u!114 &1379389060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1379389043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46992e78eff41834495f6b39fd09a63a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openableObject: {fileID: 1379389055}
+  isSetParent: 1
+  inItemKeys:
+  - note_yuzuha1
 --- !u!114 &1384348859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58599,6 +58679,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6700f0e6596c414fa6027447c1603f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <pointKey>k__BackingField: 
   isOuter: 1
   isCorner: 0
   soundDistancePointNodes:
@@ -59163,10 +59244,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: item_crowbar
   gimmickType: 0
-  gimmickEvent: {fileID: 492988155}
+  <gimmickKey>k__BackingField: Event_HighAltitudeItemGet_NobuyukiRoomKey
   isDefaultInactive: 0
   isHiddenItem: 1
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!1001 &1421336579
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -59557,6 +59637,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Floor
       objectReference: {fileID: 0}
+    - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 446732, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -59895,8 +59979,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &1436174714
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -61933,6 +62015,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Floor
       objectReference: {fileID: 0}
+    - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 446732, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -62049,6 +62135,7 @@ GameObject:
   - component: {fileID: 1515446261}
   - component: {fileID: 1515446260}
   - component: {fileID: 1515446259}
+  - component: {fileID: 1515446264}
   m_Layer: 14
   m_Name: dr R
   m_TagString: StageObject
@@ -62113,8 +62200,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &1515446261
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -62175,6 +62260,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1515446257}
   m_Mesh: {fileID: 4300004, guid: 0eeb2dadff067bc49922d67ade75273b, type: 3}
+--- !u!114 &1515446264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1515446257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46992e78eff41834495f6b39fd09a63a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openableObject: {fileID: 1515446260}
+  isSetParent: 0
+  inItemKeys:
+  - diary_azuhayuzuha_3
 --- !u!1001 &1517934505
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -62896,6 +62997,7 @@ GameObject:
   - component: {fileID: 1541392804}
   - component: {fileID: 1541392803}
   - component: {fileID: 1541392802}
+  - component: {fileID: 1541392807}
   m_Layer: 14
   m_Name: kitchen-unit2-drawer1
   m_TagString: StageObject
@@ -63034,6 +63136,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1541392800}
   m_Mesh: {fileID: 4300006, guid: 4df89b4a30091594a850aeacf8ace8d3, type: 3}
+--- !u!114 &1541392807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1541392800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46992e78eff41834495f6b39fd09a63a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openableObject: {fileID: 1541392802}
+  isSetParent: 1
+  inItemKeys:
+  - diary_yukie_2
 --- !u!4 &1545630142 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400738, guid: 4bf63fff39271d34ea0dd4c61fde49a5,
@@ -65561,6 +65679,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6700f0e6596c414fa6027447c1603f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <pointKey>k__BackingField: 
   isOuter: 1
   isCorner: 1
   soundDistancePointNodes:
@@ -65897,6 +66016,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6700f0e6596c414fa6027447c1603f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <pointKey>k__BackingField: 
   isOuter: 0
   isCorner: 0
   soundDistancePointNodes:
@@ -68512,10 +68632,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_shiori_1
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 1
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &1675833414
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -69125,10 +69244,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_kitchen_shelf_1
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 1
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!1001 &1693486544
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -69409,10 +69527,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_yukie_1
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &1697826117
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -69971,10 +70088,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_kozo_3
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &1707364305
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -70345,10 +70461,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_kozoroom
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 1
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!135 &1711806429
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -70577,10 +70692,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_1fhiddenroom
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 1
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!135 &1715608503
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -70837,6 +70951,7 @@ GameObject:
   - component: {fileID: 1724990133}
   - component: {fileID: 1724990132}
   - component: {fileID: 1724990131}
+  - component: {fileID: 1724990136}
   m_Layer: 14
   m_Name: dr L
   m_TagString: StageObject
@@ -70923,8 +71038,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &1724990133
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -70985,6 +71098,23 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1724990129}
   m_Mesh: {fileID: 4300002, guid: 0eeb2dadff067bc49922d67ade75273b, type: 3}
+--- !u!114 &1724990136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1724990129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46992e78eff41834495f6b39fd09a63a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openableObject: {fileID: 1724990132}
+  isSetParent: 0
+  inItemKeys:
+  - key_1fhiddenroom
+  - note_nobuyuki2
 --- !u!1001 &1727740185
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -72686,6 +72816,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Floor
       objectReference: {fileID: 0}
+    - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 446732, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -72837,6 +72971,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6700f0e6596c414fa6027447c1603f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <pointKey>k__BackingField: 
   isOuter: 1
   isCorner: 1
   soundDistancePointNodes:
@@ -73203,10 +73338,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_azuhayuzuha_2
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &1776039852
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -73536,10 +73670,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_azuha_yuzuha
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!135 &1789612788
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -74812,6 +74945,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6700f0e6596c414fa6027447c1603f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <pointKey>k__BackingField: 
   isOuter: 0
   isCorner: 0
   soundDistancePointNodes:
@@ -75861,6 +75995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6700f0e6596c414fa6027447c1603f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <pointKey>k__BackingField: 
   isOuter: 1
   isCorner: 1
   soundDistancePointNodes:
@@ -76277,10 +76412,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_nobuyuki_3
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &1861618055
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -77294,6 +77428,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Floor
       objectReference: {fileID: 0}
+    - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 446732, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -77619,6 +77757,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6700f0e6596c414fa6027447c1603f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <pointKey>k__BackingField: 
   isOuter: 0
   isCorner: 0
   soundDistancePointNodes:
@@ -82550,6 +82689,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Floor
       objectReference: {fileID: 0}
+    - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 446732, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -83767,10 +83910,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: note_yuzuha1
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 1
-  hiddenMoveParentTransform: {fileID: 1379389063}
 --- !u!4 &2062193250 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400738, guid: 4bf63fff39271d34ea0dd4c61fde49a5,
@@ -84522,6 +84664,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Floor
       objectReference: {fileID: 0}
+    - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 446732, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -84688,8 +84834,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &2083779444
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -84992,6 +85136,10 @@ PrefabInstance:
     - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_TagString
       value: Floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 176130, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 446732, guid: cacbbb1d3d2e1564f9024edc7c477aac, type: 3}
       propertyPath: m_RootOrder
@@ -86921,6 +87069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6700f0e6596c414fa6027447c1603f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <pointKey>k__BackingField: 
   isOuter: 0
   isCorner: 0
   soundDistancePointNodes:
@@ -87399,6 +87548,7 @@ GameObject:
   - component: {fileID: 7117403482315351244}
   - component: {fileID: 977581801385607208}
   - component: {fileID: 1445273208214717}
+  - component: {fileID: 1445273208214718}
   m_Layer: 14
   m_Name: dr L
   m_TagString: StageObject
@@ -87420,6 +87570,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unlockKey: key_kitchen_shelf_1
   keyLockObject: {fileID: 1920933002}
+--- !u!114 &1445273208214718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1445273208214716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46992e78eff41834495f6b39fd09a63a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openableObject: {fileID: 7117403482315351244}
+  isSetParent: 0
+  inItemKeys:
+  - diary_shiori_1
 --- !u!1 &1453051838962653
 GameObject:
   m_ObjectHideFlags: 0
@@ -87434,6 +87600,7 @@ GameObject:
   - component: {fileID: 65214831184023061}
   - component: {fileID: 1453051838962655}
   - component: {fileID: 1453051838962654}
+  - component: {fileID: 1453051838962656}
   m_Layer: 14
   m_Name: dr R
   m_TagString: StageObject
@@ -87495,8 +87662,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
+--- !u!114 &1453051838962656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453051838962653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46992e78eff41834495f6b39fd09a63a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openableObject: {fileID: 1453051838962655}
+  isSetParent: 0
+  inItemKeys:
+  - diary_shiori_2
 --- !u!1 &1500086922387023
 GameObject:
   m_ObjectHideFlags: 0
@@ -87511,6 +87692,7 @@ GameObject:
   - component: {fileID: 65364711391224917}
   - component: {fileID: 1500086922387025}
   - component: {fileID: 1500086922387024}
+  - component: {fileID: 1500086922387026}
   m_Layer: 14
   m_Name: dr L
   m_TagString: StageObject
@@ -87561,8 +87743,22 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
+--- !u!114 &1500086922387026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500086922387023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46992e78eff41834495f6b39fd09a63a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openableObject: {fileID: 1500086922387025}
+  isSetParent: 0
+  inItemKeys:
+  - diary_shiori_2
 --- !u!1 &1532758080410004
 GameObject:
   m_ObjectHideFlags: 0
@@ -87624,6 +87820,7 @@ GameObject:
   - component: {fileID: 1798798556289328527}
   - component: {fileID: 65580483122792750}
   - component: {fileID: 1576059155051745}
+  - component: {fileID: 1576059155051746}
   m_Layer: 14
   m_Name: dr R
   m_TagString: StageObject
@@ -87645,6 +87842,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unlockKey: key_kitchen_shelf_1
   keyLockObject: {fileID: 1920933002}
+--- !u!114 &1576059155051746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576059155051744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46992e78eff41834495f6b39fd09a63a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openableObject: {fileID: 4704265195625211613}
+  isSetParent: 0
+  inItemKeys:
+  - diary_shiori_1
 --- !u!1 &1668413683645080
 GameObject:
   m_ObjectHideFlags: 0
@@ -89917,6 +90130,11 @@ PrefabInstance:
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2496301768739212099, guid: d459114817d67074b924502fe5a6b41c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 2496301768811910519, guid: d459114817d67074b924502fe5a6b41c,
         type: 3}
       propertyPath: m_IsActive
@@ -90070,7 +90288,7 @@ PrefabInstance:
     - target: {fileID: 9039147438212267396, guid: d459114817d67074b924502fe5a6b41c,
         type: 3}
       propertyPath: m_NavMeshLayer
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9039147438321284020, guid: d459114817d67074b924502fe5a6b41c,
         type: 3}
@@ -90080,7 +90298,7 @@ PrefabInstance:
     - target: {fileID: 9039147438869474734, guid: d459114817d67074b924502fe5a6b41c,
         type: 3}
       propertyPath: m_NavMeshLayer
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9039147438911714798, guid: d459114817d67074b924502fe5a6b41c,
         type: 3}
@@ -90145,7 +90363,12 @@ PrefabInstance:
     - target: {fileID: 9039147439328381040, guid: d459114817d67074b924502fe5a6b41c,
         type: 3}
       propertyPath: m_NavMeshLayer
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9039147439328381040, guid: d459114817d67074b924502fe5a6b41c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967287
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d459114817d67074b924502fe5a6b41c, type: 3}
@@ -94276,8 +94499,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!1001 &4745260619260437136
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -94589,6 +94810,40 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4880074144558562362}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4880074144558562364 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7343483575993091366, guid: 0a90b84690231e64481afeb70002d424,
+    type: 3}
+  m_PrefabInstance: {fileID: 4880074144558562362}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4880074144558562365 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6092175142983500124, guid: 0a90b84690231e64481afeb70002d424,
+    type: 3}
+  m_PrefabInstance: {fileID: 4880074144558562362}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4880074144558562364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 758b8c17cfb9aa848b17094fd3e26ca5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4880074144558562366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4880074144558562364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46992e78eff41834495f6b39fd09a63a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openableObject: {fileID: 4880074144558562365}
+  isSetParent: 0
+  inItemKeys:
+  - key_kitchen_shelf_1
 --- !u!1 &4933936861424181035
 GameObject:
   m_ObjectHideFlags: 0
@@ -94624,10 +94879,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_bathroom
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 1
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &4933936861424181037
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -96851,6 +97105,7 @@ GameObject:
   - component: {fileID: 6411709558640762528}
   - component: {fileID: 6411709558640762529}
   - component: {fileID: 6411709558640762527}
+  - component: {fileID: 6411709558640762530}
   m_Layer: 14
   m_Name: Dresser_BottomRight
   m_TagString: StageObject
@@ -96928,6 +97183,22 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   closeSEKey: se_slideobj_open
+--- !u!114 &6411709558640762530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6411709558640762526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46992e78eff41834495f6b39fd09a63a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openableObject: {fileID: 6411709558640762529}
+  isSetParent: 1
+  inItemKeys:
+  - key_keymanagementcabinet
 --- !u!1 &6469074988616155191
 GameObject:
   m_ObjectHideFlags: 0
@@ -97113,8 +97384,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!23 &7316239935139127425
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -103940,6 +104209,7 @@ GameObject:
   - component: {fileID: 8037692752914517004}
   - component: {fileID: 8037692752914517003}
   - component: {fileID: 8037692752914517002}
+  - component: {fileID: 8037692752914517013}
   m_Layer: 14
   m_Name: kitchen-unit2-drawer4
   m_TagString: StageObject
@@ -104155,6 +104425,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300004, guid: 4df89b4a30091594a850aeacf8ace8d3, type: 3}
+--- !u!114 &8037692752914517013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8037692752914517001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46992e78eff41834495f6b39fd09a63a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openableObject: {fileID: 8037692752914517002}
+  isSetParent: 1
+  inItemKeys:
+  - diary_nobuyuki_2
 --- !u!1 &8037692752914517015
 GameObject:
   m_ObjectHideFlags: 0

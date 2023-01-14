@@ -28,12 +28,13 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
         itemList = itemsParent.GetComponentsInChildren<ItemObject>().ToList();
         for (int i = 0; i < itemList.Count; i++)
         {
-            if (itemList[i].HiddenParent != null)
-            {
-                itemList[i].transform.parent = itemList[i].HiddenParent;
-            }
             itemList[i].Initialize();
         }
+    }
+    public ItemObject GetItemObjectWithKey(string key)
+    {
+        var item = itemList.FirstOrDefault(v => v.ItemKey == key);
+        return item;
     }
     /// <summary>
     /// アイテムを取得する。ギミック付きなら解かせる。解けていれば入手
@@ -45,9 +46,9 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
         ItemData data = DataManager.Instance.GetItemData(itemObject.ItemKey);
         if(data != null)
         {
-            if (itemObject.isGimmickItem && itemObject.gimmickEvent != null)
+            if (itemObject.isGimmickItem && !string.IsNullOrEmpty(itemObject.gimmickKey))
             {
-                itemObject.gimmickEvent.ForceStartEvent(() =>
+                Onka.Manager.Event.EventManager.Instance.RequestEventStart(itemObject.gimmickKey, () =>
                 {
                     NormalItemGetAction(data, itemObject, isGetedAction);
                 });

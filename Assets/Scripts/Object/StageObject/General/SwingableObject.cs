@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using UnityEngine.Events;
 using SoundSystem;
 
@@ -9,12 +10,12 @@ using SoundSystem;
 /// アタッチするオブジェクトは必ずダイナミックにすること（インスペクタのStaticのチェックを外す）
 /// </summary>
 [RequireComponent(typeof(BoxCollider))]
-public class SwingableObject : MonoBehaviour
+public class SwingableObject : OpenableObjectBase
 {
     [SerializeField] private SwingDirection swingDirection;
     [SerializeField] private UnityEvent OpenedCallback = null;
     [SerializeField] private UnityEvent ClosedCallback = null;
-
+    
     private Transform swingTransform = null;
     private Collider thisCollider = null;
 
@@ -22,21 +23,13 @@ public class SwingableObject : MonoBehaviour
     public bool isOpenState { get; private set; } = false;
 
     private float currentLocalRotation = 0f;
-    [HideInInspector] public string openSEKey = "se_closet_open";
-    [HideInInspector] public string closeSEKey = "se_closet_close";
+    private const string openSEKey = "se_closet_open";
+    private const string closeSEKey = "se_closet_close";
 
     private void Start()
     {
         swingTransform = GetComponent<Transform>();
         thisCollider = GetComponent<Collider>();
-        if (OpenedCallback == null)
-        {
-            OpenedCallback = new UnityEvent();
-        }
-        if (ClosedCallback == null)
-        {
-            ClosedCallback = new UnityEvent();
-        }
         currentLocalRotation = swingTransform.localRotation.y;
     }
 
@@ -44,8 +37,8 @@ public class SwingableObject : MonoBehaviour
     {
         if (!isMoving)
         {
-            if (isOpenState) { ClosedCallback.Invoke(); StartCoroutine(DoSwing(false, () => { SoundManager.Instance.PlaySeWithKeyOne(closeSEKey); })); }//本当は閉鎖前のコールバックを作るべきだった
-            else { SoundManager.Instance.PlaySeWithKeyOne(openSEKey); StartCoroutine(DoSwing(true, () => { OpenedCallback.Invoke(); })); }
+            if (isOpenState) { onClosed?.Invoke(); StartCoroutine(DoSwing(false, () => { SoundManager.Instance.PlaySeWithKeyOne(closeSEKey); })); }//本当は閉鎖前のコールバックを作るべきだった
+            else { SoundManager.Instance.PlaySeWithKeyOne(openSEKey); StartCoroutine(DoSwing(true, () => { onOpened?.Invoke(); })); }
         }
     }
 

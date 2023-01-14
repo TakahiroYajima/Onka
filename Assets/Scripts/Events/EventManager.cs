@@ -96,6 +96,29 @@ namespace Onka.Manager.Event
             }
         }
 
+        public void RequestEventStart(string eventKey, UnityEngine.Events.UnityAction onCompleted)
+        {
+            EventBase gimmickEvent = null;
+            //本当はクリア済みのものをリストから取り除きたいが、過去に作った仕様を忘れたため一旦foreachで回す。時間がある時に調整
+            foreach(var v in eventObjectList)
+            {
+                if (v == null) continue;
+                if(v.EventKey == eventKey)
+                {
+                    gimmickEvent = v;
+                    break;
+                }
+            }
+            if(gimmickEvent != null)
+            {
+                gimmickEvent.ForceStartEvent(onCompleted);
+            }
+            else
+            {
+                Debug.LogError($"EventKeyがありません : {eventKey}");
+            }
+        }
+
         /// <summary>
         /// イベント開始リクエスト
         /// </summary>

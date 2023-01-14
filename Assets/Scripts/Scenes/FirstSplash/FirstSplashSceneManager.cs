@@ -10,11 +10,15 @@ public class FirstSplashSceneManager : MonoBehaviour
     private int currentSplashStateNum = 0;
     private bool isMoving = false;
 
+    private bool isSceneChangeOK = false;
+
     // Start is called before the first frame update
     void Start()
     {
         currentSplashStateNum = -1;//DoNextでインクリメントするため、-1で初期化
         DoNext();
+        //yield return SceneControlManager.Instance.InitializeLoadBeforeBeginGame();
+        isSceneChangeOK = true;
     }
 
     // Update is called once per frame
@@ -79,6 +83,16 @@ public class FirstSplashSceneManager : MonoBehaviour
 
     private void DoEnd()
     {
+        StartCoroutine(DoEndWaitInitSceneLoad());
+    }
+
+    private IEnumerator DoEndWaitInitSceneLoad()
+    {
+        while (!isSceneChangeOK)
+        {
+            Debug.Log("初期ロード待ち");
+            yield return null;
+        }
         isMoving = false;
         faderObj.SetActive(false);
         SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Title", true, null, FadeManager.FadeColorType.None, FadeManager.FadeColorType.Black);
