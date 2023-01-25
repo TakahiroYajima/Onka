@@ -46,6 +46,12 @@ namespace SoundDistance
         private bool isActionFrame { get { return currentFrame >= ActionFrameNum; } }
         #endregion
 
+        public void SetUp(SoundDistanceListener listener, SoundDistanceEmitter emitter)
+        {
+            listenerObj = listener;
+            emitterObj = emitter;
+        }
+
         public void Initialize()
         {
             soundDistancePoints.Clear();

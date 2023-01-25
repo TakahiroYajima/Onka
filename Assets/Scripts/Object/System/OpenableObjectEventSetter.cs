@@ -12,7 +12,7 @@ public class OpenableObjectEventSetter : MonoBehaviour
     [SerializeField] private bool isSetParent;//引き出しの時など、動いたオブジェクトに追従させたい時にtrue
     [SerializeField] private string[] inItemKeys;
 
-    void Start()
+    public void SetUp()
     {
         if (inItemKeys.Length <= 0) return;
         foreach(var v in inItemKeys)

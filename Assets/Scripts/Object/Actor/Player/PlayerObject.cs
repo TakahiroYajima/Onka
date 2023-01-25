@@ -11,6 +11,8 @@ public class PlayerObject : MonoBehaviour
     [SerializeField] private FirstPersonAIO firstPersonAIO = null;
     public FirstPersonAIO FirstPersonAIO { get { return firstPersonAIO; } }
     [SerializeField] private GameObject cameraObj = null;
+    [SerializeField] private SoundDistance.SoundDistanceListener soundListener;
+    public SoundDistance.SoundDistanceListener SoundListener { get { return soundListener; } }
     public GameObject CameraObj { get { return cameraObj; } }
     public Raycastor raycastor { get; private set; } = null;
     public InRoomChecker inRoomChecker { get; private set; } = null;

@@ -20,13 +20,15 @@ public class Enemy_Yukie : Enemy
     public ProvokedSystem provokedSystem { get; private set; } = null;
     public MovingObject movingObject { get; private set; } = null;
     public Rigidbody rigidbody { get; private set; } = null;
-    [SerializeField] private SoundPlayerObject emitterSoundPlayer = null;
+    private SoundPlayerObject emitterSoundPlayer = null;
     [SerializeField] private CapsuleCollider toPlayerWallCollider = null;//プレイヤーと一定の距離を保つためにあるコライダー
     public CapsuleCollider ToPlayerWallCollider { get { return toPlayerWallCollider; } }
     [SerializeField] private Transform faceTransform = null;
     public Transform FaceTransform { get { return faceTransform; } }
     [SerializeField] private Transform eyeTransform = null;
     public Transform EyeTransform { get { return eyeTransform; } }
+    [SerializeField] private SoundDistanceEmitter soundEmitter;
+    public SoundDistanceEmitter SoundEmitter { get { return soundEmitter; } }
 
     public Dictionary<EnemyState, StateBase> yukieStateDic { get; private set; } = new Dictionary<EnemyState, StateBase>();
 
@@ -54,6 +56,13 @@ public class Enemy_Yukie : Enemy
     protected override void Awake()
     {
         base.Awake();
+        currentState = EnemyState.Init;
+    }
+    /// <summary>
+    /// 初期設定
+    /// </summary>
+    public void SetUp()
+    {
         wanderingActor = GetComponent<WanderingActor>();
         inRoomWanderingActor = GetComponent<InRoomWanderingActor>();
         player = StageManager.Instance.Player;
@@ -63,6 +72,7 @@ public class Enemy_Yukie : Enemy
         provokedSystem = GetComponent<ProvokedSystem>();
         movingObject = GetComponent<MovingObject>();
         rigidbody = GetComponent<Rigidbody>();
+        emitterSoundPlayer = SoundDistanceManager.Instance.Maker.GetComponent<SoundPlayerObject>();
 
         //State登録
         yukieStateDic.Add(EnemyState.Init, new YukieStateInit(this));
@@ -73,14 +83,6 @@ public class Enemy_Yukie : Enemy
         yukieStateDic.Add(EnemyState.ChasePlayer, new YukieStateChasePlayer(this));
         yukieStateDic.Add(EnemyState.CaughtPlayer, new YukieStateCaughtPlayer(this));
         yukieStateDic.Add(EnemyState.CanNotAction, new YukieStateCanNotAction(this));
-
-        currentState = EnemyState.Init;
-    }
-
-    // Start is called before the first frame update
-    protected override void Start()
-    {
-        base.Start();
 
         //コールバック登録
         inRoomChecker.onEnterRoomAction = OnEnterRoomAction;

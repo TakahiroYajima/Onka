@@ -10,13 +10,17 @@ using Onka.Manager.Data;
 
 public class StageManager : SingletonMonoBehaviour<StageManager>
 {
-    [SerializeField] private PlayerObject playerObject = null;
+    [SerializeField] private FieldManager houseFieldPrefab;
+    public FieldManager fieldObject { get; private set; }
+    [SerializeField] private PlayerObject playerPrefab;
+    private PlayerObject playerObject = null;
     public PlayerObject Player { get { return playerObject; } }
-    [SerializeField] private Enemy_Yukie yukieObject = null;
+    [SerializeField] private Enemy_Yukie yukiePrefab;
+    private Enemy_Yukie yukieObject = null;
     public Enemy_Yukie Yukie { get { return yukieObject; } }
-    public Enemy_Shiori Shiori = null;
-    public Enemy_Azuha Azuha = null;
-    public Enemy_Yuzuha Yuzuha = null;
+    [System.NonSerialized] public Enemy_Shiori Shiori = null;
+    [System.NonSerialized] public Enemy_Azuha Azuha = null;
+    [System.NonSerialized] public Enemy_Yuzuha Yuzuha = null;
 
     
 
@@ -28,14 +32,23 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
 
     public void Initialize()
     {
-        if (playerObject != null)
+        if(fieldObject == null)
         {
-            playerObject.onStateChangeCallback = OnPlayerStateChanged;
+            //fieldObject = Instantiate(houseFieldPrefab, this.transform);
+            //テスト
+            fieldObject = FindObjectOfType<FieldManager>();
         }
-        if (yukieObject != null)
+        if(playerObject == null)
         {
-            yukieObject.onStateChangeCallback = OnYukieStateChanged;
+            playerObject = Instantiate(playerPrefab, this.transform);
         }
+        playerObject.onStateChangeCallback = OnPlayerStateChanged;
+        if (yukieObject == null)
+        {
+            yukieObject = Instantiate(yukiePrefab, this.transform);
+            yukieObject.SetUp();
+        }
+        yukieObject.onStateChangeCallback = OnYukieStateChanged;
         InStageMenuManager.Instance.onOpenedMenu = OpenedMenuAction;
         InStageMenuManager.Instance.onClosedMenu = ClosedMenuAction;
         InputKeyManager.Instance.onEscKeyPress = OnEscKeyPress;

@@ -10,9 +10,9 @@ using Onka.Manager.Menu;
 public class GameSceneManager : SceneBase
 {
     [SerializeField] private GameObject restartPosition = null;//セーブ地点から再開する時の場所
-    [SerializeField] private SoundDistancePoint savePointSDP = null;
-    [SerializeField] private List<WanderingPoint> yukieInitWanderingPoints = new List<WanderingPoint>();
-    [SerializeField] private List<SoundDistancePoint> yukieInitInstancePoints = new List<SoundDistancePoint>();
+    //[SerializeField] private SoundDistancePoint savePointSDP = null;
+    //[SerializeField] private List<WanderingPoint> yukieInitWanderingPoints = new List<WanderingPoint>();
+    //[SerializeField] private List<SoundDistancePoint> yukieInitInstancePoints = new List<SoundDistancePoint>();
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -22,15 +22,26 @@ public class GameSceneManager : SceneBase
         StageManager.Instance.Initialize();
         EventManager.Instance.Initialize();
         ItemManager.Instance.Initialize();
+        SoundDistanceManager.Instance.SetUp(StageManager.Instance.Player.SoundListener, StageManager.Instance.Yukie.SoundEmitter);
         SoundDistanceManager.Instance.Initialize();
 
-        InGameUtil.GCCollect();
 
+        StartCoroutine(InitSceneSetUp());
+    }
+
+    private IEnumerator InitSceneSetUp()
+    {
+        StageManager.Instance.fieldObject.SetUp();
+        InGameUtil.GCCollect();
+        yield return null;
+        yield return null;
         StartScene();
     }
     
     private void StartScene()
     {
+        SoundDistancePoint savePointSDP = StageManager.Instance.fieldObject.SavePointSDP;
+
         //オープニングイベント終了済み
         if (EventManager.Instance.IsEventEnded("Event_Opnening"))
         {
@@ -65,6 +76,8 @@ public class GameSceneManager : SceneBase
         if (EventManager.Instance.IsEventEnded("Event_FirstChasedFromYukie"))
         {
             //雪絵をランダムに配置（プレイヤーから見えないところ）
+            var yukieInitInstancePoints = StageManager.Instance.fieldObject.YukieInitInstancePoints;
+            var yukieInitWanderingPoints = StageManager.Instance.fieldObject.YukieInitWanderingPoints;
             int arrayNum = UnityEngine.Random.Range(0, yukieInitInstancePoints.Count - 1);
             Vector3 yukiePos = new Vector3(yukieInitInstancePoints[arrayNum].transform.position.x, StageManager.Instance.Yukie.transform.position.y, yukieInitInstancePoints[arrayNum].transform.position.z);
             StageManager.Instance.Yukie.transform.position = yukiePos;
