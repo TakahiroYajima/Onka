@@ -378,6 +378,15 @@ namespace Onka.Manager.Data
         {
             return playingGameData.itemDataList.itemDataList;
         }
+        public bool IsGetedItem(string _key)
+        {
+            var data = playingGameData.itemDataList.itemDataList.FirstOrDefault(x => x.key == _key);
+            if(data == null)
+            {
+                Debug.LogError($"item data is null!! {_key}");
+            }
+            return data.geted;
+        }
 
         /// <summary>
         /// アイテムのデータ更新（ゲーム内のみ。セーブ無し）

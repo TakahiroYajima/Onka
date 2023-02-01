@@ -5,9 +5,14 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-public class OpenableObjectEventSetterManager : MonoBehaviour
+public class OpenableObjectEventSetterController : MonoBehaviour
 {
     [SerializeField, ReadOnly] private OpenableObjectEventSetter[] openableObjectEventSetters;
+
+    void Start()
+    {
+        StageManager.Instance.fieldObject.AddOpenableObjectEventSetterController(this);
+    }
 
     public void SetUp()
     {
@@ -20,20 +25,20 @@ public class OpenableObjectEventSetterManager : MonoBehaviour
 #if UNITY_EDITOR
     public void SetOpenableObjectEventSetter()
     {
-        var list = FindObjectsOfType<OpenableObjectEventSetter>();
+        var list = GetComponentsInChildren<OpenableObjectEventSetter>();
         openableObjectEventSetters = list;
     }
 #endif
 }
 #if UNITY_EDITOR
-[CustomEditor(typeof(OpenableObjectEventSetterManager))]
+[CustomEditor(typeof(OpenableObjectEventSetterController))]
 public class CustomOpenableObjectEventSetterManagerEditor : Editor
 {
 
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-        var component = (OpenableObjectEventSetterManager)target;
+        var component = (OpenableObjectEventSetterController)target;
         //イベントのタイルを一斉にセットするボタンを表示
         if (GUILayout.Button("AllEventTileSetup"))
         {

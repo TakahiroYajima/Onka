@@ -20,8 +20,15 @@ public class OpenableObjectEventSetter : MonoBehaviour
             ItemObject item = ItemManager.Instance.GetItemObjectWithKey(v);
             if(item == null)
             {
-                Debug.LogError($"item key is not found :: {v}");
-                continue;
+                if (ItemManager.Instance.IsGetedItem(v))
+                {
+                    continue;
+                }
+                else
+                {
+                    Debug.LogError($"item key is not found :: {v}");
+                    continue;
+                }
             }
             openableObject.onOpened += ()=> { if (item != null) { item.DoGettableItem(); } } ;
             openableObject.onClosed += () => { if (item != null) { item.DoNotGettableItem(); } };

@@ -9,7 +9,7 @@ using Onka.Manager.Menu;
 
 public class GameSceneManager : SceneBase
 {
-    [SerializeField] private GameObject restartPosition = null;//セーブ地点から再開する時の場所
+    //[SerializeField] private GameObject restartPosition = null;//セーブ地点から再開する時の場所
     //[SerializeField] private SoundDistancePoint savePointSDP = null;
     //[SerializeField] private List<WanderingPoint> yukieInitWanderingPoints = new List<WanderingPoint>();
     //[SerializeField] private List<SoundDistancePoint> yukieInitInstancePoints = new List<SoundDistancePoint>();
@@ -46,7 +46,7 @@ public class GameSceneManager : SceneBase
         if (EventManager.Instance.IsEventEnded("Event_Opnening"))
         {
             //セーブ地点から再開
-            StageManager.Instance.Player.transform.position = restartPosition.transform.position;
+            StageManager.Instance.Player.transform.position = StageManager.Instance.fieldObject.restartPosition.transform.position;
             StageManager.Instance.Player.transform.rotation = Quaternion.Euler(0f, 180f, 0f);//セーブポイントの方を向かせる
             StageManager.Instance.Player.ChangeState(PlayerState.Free);
         }
@@ -93,6 +93,7 @@ public class GameSceneManager : SceneBase
             SoundManager.Instance.PlayEnvironmentWithKey("ambient_in_house");
         }
         EventManager.Instance.isEnable = true;
+        Debug.Log("EventManager.Instance.InitProgressEach");
         EventManager.Instance.InitProgressEach();
     }
 }

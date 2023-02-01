@@ -21,6 +21,7 @@ TagManager:
   - KeyHole
   - Number
   - KeyLockTouchable
+  - SystemColliderObject
   layers:
   - Default
   - TransparentFX

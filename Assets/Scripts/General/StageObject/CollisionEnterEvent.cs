@@ -12,6 +12,12 @@ public class CollisionEnterEvent : MonoBehaviour
     [HideInInspector] public Collision HitCollision = null;
     [HideInInspector] public Collider HitCollider = null;
 
+    public void InitSetTriggerEnter(UnityAction callback)
+    {
+        onTriggerEnterEvent = new UnityEvent();
+        onTriggerEnterEvent.AddListener(callback);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         HitCollision = collision;

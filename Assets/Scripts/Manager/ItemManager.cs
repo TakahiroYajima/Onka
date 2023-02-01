@@ -36,6 +36,12 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
         var item = itemList.FirstOrDefault(v => v.ItemKey == key);
         return item;
     }
+
+    public bool IsGetedItem(string _key)
+    {
+        return DataManager.Instance.IsGetedItem(_key);
+    }
+
     /// <summary>
     /// アイテムを取得する。ギミック付きなら解かせる。解けていれば入手
     /// </summary>
