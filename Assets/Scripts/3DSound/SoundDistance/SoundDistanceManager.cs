@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace SoundDistance
 {
@@ -26,7 +29,7 @@ namespace SoundDistance
         /// </summary>
         public float CanNotHearRatio { get { return canNotHearRatio; } }
 
-        public List<SoundDistancePoint> soundDistancePoints { get; private set; } = new List<SoundDistancePoint>();
+        [field: SerializeField, ReadOnly]public List<SoundDistancePoint> soundDistancePoints { get; private set; } = new List<SoundDistancePoint>();
         public float OuterCircumference { get; private set; } = 0f;//1周の距離（袋小路は考慮しない）
 
         //ダイクストラで計算された最短距離（goalからstartまで）
@@ -46,6 +49,10 @@ namespace SoundDistance
         private bool isActionFrame { get { return currentFrame >= ActionFrameNum; } }
         #endregion
 
+        public SoundDistancePoint GetSoundDistancePoint(string key)
+        {
+            return soundDistancePoints.FirstOrDefault(v => v.pointKey == key);
+        }
         public void SetUp(SoundDistanceListener listener, SoundDistanceEmitter emitter)
         {
             listenerObj = listener;
@@ -54,9 +61,6 @@ namespace SoundDistance
 
         public void Initialize()
         {
-            soundDistancePoints.Clear();
-            soundDistancePoints = transform.GetComponentsInChildren<SoundDistancePoint>().ToList();
-            
             //全て初期化してからルート探索のデータを設定（初期化前のPointを参照している恐れがあるため）
             for (int i = 0; i < soundDistancePoints.Count; i++)
             {
@@ -871,7 +875,36 @@ namespace SoundDistance
             soundMaker.isVolumeON = _isEnable;
         }
         #endregion
+
+        #if UNITY_EDITOR
+    public void SetSoundPoints()
+        {
+            soundDistancePoints.Clear();
+            soundDistancePoints = transform.GetComponentsInChildren<SoundDistancePoint>().ToList();
+        }
+#endif
     }
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(SoundDistanceManager))]
+    public class CustomSoundDistanceManagerEditor : Editor
+    {
+
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+            var component = (SoundDistanceManager)target;
+            //イベントのタイルを一斉にセットするボタンを表示
+            if (GUILayout.Button("AllSoundPointsSetup"))
+            {
+                //https://light11.hatenadiary.com/entry/2019/10/12/170109
+                //https://bluebirdofoz.hatenablog.com/entry/2021/08/17/224314
+                component.SetSoundPoints();
+                EditorUtility.SetDirty(component);
+            }
+        }
+    }
+#endif
 }
 
 /// <summary>

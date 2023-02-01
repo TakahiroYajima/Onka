@@ -11,7 +11,7 @@ namespace SoundDistance
     [RequireComponent(typeof(BoxCollider))]
     public class SoundDistancePoint : MonoBehaviour
     {
-        [field: SerializeField, ReadOnly] public string pointKey { get; private set; }
+        [field: SerializeField] public string pointKey { get; private set; }
         [SerializeField] private bool isOuter = false;//外周に位置しているか
         public bool IsOuter { get { return isOuter; } }
         [SerializeField] private bool isCorner = false;//曲がり角に配置されているか
