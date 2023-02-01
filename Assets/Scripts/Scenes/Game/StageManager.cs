@@ -34,11 +34,18 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
     {
         if(fieldObject == null)
         {
-            //fieldObject = Instantiate(houseFieldPrefab, this.transform);
-            //テスト
-            fieldObject = FindObjectOfType<FieldManager>();
+            fieldObject = Instantiate(houseFieldPrefab, this.transform);
         }
-        if(playerObject == null)
+        
+        InStageMenuManager.Instance.onOpenedMenu = OpenedMenuAction;
+        InStageMenuManager.Instance.onClosedMenu = ClosedMenuAction;
+        InputKeyManager.Instance.onEscKeyPress = OnEscKeyPress;
+        InputKeyManager.Instance.onF12KeyPress = OnF12KeyPress;
+    }
+
+    public void ActorSetUp()
+    {
+        if (playerObject == null)
         {
             playerObject = Instantiate(playerPrefab, this.transform);
         }
@@ -49,10 +56,6 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
             yukieObject.SetUp();
         }
         yukieObject.onStateChangeCallback = OnYukieStateChanged;
-        InStageMenuManager.Instance.onOpenedMenu = OpenedMenuAction;
-        InStageMenuManager.Instance.onClosedMenu = ClosedMenuAction;
-        InputKeyManager.Instance.onEscKeyPress = OnEscKeyPress;
-        InputKeyManager.Instance.onF12KeyPress = OnF12KeyPress;
     }
 
     private void OnPlayerStateChanged(PlayerState prev, PlayerState current)

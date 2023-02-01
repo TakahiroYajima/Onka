@@ -18,10 +18,14 @@ public class GameSceneManager : SceneBase
     {
         base.Initialize();
         InStageMenuManager.Instance.Initialize();
-        WanderingPointManager.Instance.Initialize();
         StageManager.Instance.Initialize();
+
+        //ステージが生成されてから
+        WanderingPointManager.Instance.Initialize();
         EventManager.Instance.Initialize();
         ItemManager.Instance.Initialize();
+
+        StageManager.Instance.ActorSetUp();
         SoundDistanceManager.Instance.SetUp(StageManager.Instance.Player.SoundListener, StageManager.Instance.Yukie.SoundEmitter);
         SoundDistanceManager.Instance.Initialize();
 
