@@ -10,7 +10,13 @@ public class Event_AnyItemActive : EventBase
 {
     private ItemObject itemObject = null;
     [SerializeField] private string itemObjectKey = "";
-    public void SetItemPosition(Vector3 pos) { itemObject.transform.position = pos; }
+    public void SetItemPosition(Vector3 pos) { 
+        if(itemObject == null)
+        {
+            itemObject = ItemManager.Instance.GetItemObjectWithKey(itemObjectKey);
+        }
+        itemObject.transform.position = pos; 
+    }
 
     protected override void AlreadyClearedMove()
     {

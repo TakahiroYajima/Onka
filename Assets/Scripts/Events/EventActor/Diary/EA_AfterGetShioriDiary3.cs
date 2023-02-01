@@ -20,7 +20,7 @@ public class EA_AfterGetShioriDiary3 : EventActorBase
         instanceAnim.transform.position = walkInstancePosition;
         instanceAnim.onWalkEventEnded = () =>
         {
-            //彩珠波と柚子羽の部屋の鍵を落とすため、位置を設定
+            //風呂場の鍵を落とすため、位置を設定
             Vector3 keyPos = new Vector3(instanceAnim.transform.position.x, instanceAnim.transform.position.y + 1f, instanceAnim.transform.position.z);
             eventBase.azuyuzuKeyActiveEvent.SetItemPosition(keyPos);
 
