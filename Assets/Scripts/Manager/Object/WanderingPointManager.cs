@@ -34,7 +34,18 @@ public class WanderingPointManager : SingletonMonoBehaviour<WanderingPointManage
         }
     }
 
-
+    public WanderingPoint GetWanderingPoint(string key)
+    {
+        foreach(WanderingEnemyType type in Enum.GetValues(typeof(WanderingEnemyType)))
+        {
+            var wp = wanderingPoints[type].FirstOrDefault(v => v.objectKey == key);
+            if(wp != null)
+            {
+                return wp;
+            }
+        }
+        return null;
+    }
 }
 
 /// <summary>

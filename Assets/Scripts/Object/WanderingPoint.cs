@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class WanderingPoint : MonoBehaviour
 {
+    [field: SerializeField] public string objectKey { get; private set; } = "";
     [SerializeField] private WanderingEnemyType wanderingEnemyType = WanderingEnemyType.Yukie;
     public WanderingEnemyType WanderingEnemyType { get { return wanderingEnemyType; } }
 
