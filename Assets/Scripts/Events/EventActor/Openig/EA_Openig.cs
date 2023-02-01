@@ -10,6 +10,7 @@ public class EA_Openig : EventActorBase
     [SerializeField] private CollisionEnterEvent inEntranceJudgeColliderEvent = null;
     [SerializeField] private GameObject initPlayerPosition = null;
 
+    private DoorObject entranceDoor;
     protected override void Initialize()
     {
         inEntranceJudgeCollider = inEntranceJudgeColliderEvent.gameObject.GetComponent<BoxCollider>();
@@ -18,6 +19,9 @@ public class EA_Openig : EventActorBase
 
     public override void EventStart()
     {
+        Debug.Log($"EventManager : {Onka.Manager.Event.EventManager.Instance} :: eventKey : {eventBase.endranceDoorKey}");
+        Debug.Log($"EventManager2 : {Onka.Manager.Event.EventManager.Instance.GetUseEventObject(eventBase.endranceDoorKey)}");
+        entranceDoor = Onka.Manager.Event.EventManager.Instance.GetUseEventObject(eventBase.endranceDoorKey).GetComponent<DoorObject>();
         StartCoroutine(FirstEventAction());
     }
     public override void EventUpdate()
@@ -32,11 +36,10 @@ public class EA_Openig : EventActorBase
     private IEnumerator FirstEventAction()
     {
         StageManager.Instance.Player.transform.position = initPlayerPosition.transform.position;
-
         yield return null;//他のスクリプト初期化待ち
 
         //各アクターの初期化
-        eventBase.endranceDoor.isForceOpenable = true;
+        entranceDoor.isForceOpenable = true;
         StageManager.Instance.InactiveYukieAndInitListenerPointID();
         eventBase.ChangeNextState();
         yield return new WaitForSeconds(2f);//念のため
@@ -48,9 +51,9 @@ public class EA_Openig : EventActorBase
     private IEnumerator AfterInEntranceEventAction()
     {
         inEntranceJudgeCollider.enabled = false;
-        eventBase.endranceDoor.isForceOpenable = false;
+        entranceDoor.isForceOpenable = false;
         StageManager.Instance.Player.ForcedStopFPS();
-        eventBase.endranceDoor.CloseDoor();
+        entranceDoor.CloseDoor();
         yield return new WaitForSecondsRealtime(0.5f);
         SoundManager.Instance.PlaySeWithKeyOne("se_door_close");
         yield return new WaitForSecondsRealtime(0.9f);

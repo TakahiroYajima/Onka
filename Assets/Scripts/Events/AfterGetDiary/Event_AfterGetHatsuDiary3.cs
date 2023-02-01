@@ -6,11 +6,6 @@ using SoundSystem;
 
 public class Event_AfterGetHatsuDiary3 : EventBase
 {
-    [SerializeField] private CRT cameraCRT = null;
-    public CRT CRT { get { return cameraCRT; } }
-    [SerializeField] private Camera worldCamera = null;
-    public Camera WorldCamera { get { return worldCamera; } }
-
     protected override void EventActive()
     {
         base.EventActive();

@@ -13,11 +13,10 @@ public class Event_Openig : EventBase
 
         End,
     }
-    [HideInInspector] public OpeningEventState currentState = OpeningEventState.Init;
+    [System.NonSerialized] public OpeningEventState currentState = OpeningEventState.Init;
 
-    public SoundDistancePoint initSoundPoint = null;
-    
-    public DoorObject endranceDoor = null;
+    [System.NonSerialized] public string initSoundPointKey = "sd_point_outer_0000";
+    [System.NonSerialized] public string endranceDoorKey = "door_entrance";
 
     protected override void EventActive()
     {

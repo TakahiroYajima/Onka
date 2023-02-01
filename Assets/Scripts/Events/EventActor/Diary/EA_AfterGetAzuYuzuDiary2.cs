@@ -9,8 +9,6 @@ using Onka.Manager.Data;
 /// </summary>
 public class EA_AfterGetAzuYuzuDiary2 : EventActorBase
 {
-    [HideInInspector] public Event_AfterGetAzuYuzuDiary2 eventBase = null;
-
     [SerializeField] private Enemy_Yuzuha yuzuha = null;
     [SerializeField] private SoundPlayerObject yuzuhaSoundPlayer = null;
     
@@ -25,6 +23,8 @@ public class EA_AfterGetAzuYuzuDiary2 : EventActorBase
     [SerializeField] private CollisionEnterEvent eventEndCollisionEnterEvent = null;
 
     [SerializeField] private AudioClip kagomekagomeSound = null;
+
+    [SerializeField, ReadOnly] private string yuzuhaDiaryKey = "diary_azuhayuzuha_2";
 
     private enum YD2State
     {
@@ -41,8 +41,6 @@ public class EA_AfterGetAzuYuzuDiary2 : EventActorBase
     protected override void Initialize()
     {
         StageManager.Instance.Yuzuha = yuzuha;
-        //yuzuhaSoundPlayer = yuzuha.GetComponent<SoundPlayerObject>();
-        yuzuha.gameObject.SetActive(false);
 
         kagomekagomeCollider = kagomekagomeCollisionEnterEvent.GetComponent<BoxCollider>();
         yuzuhaActiveCollider = yuzuhaActiveCollisionEnterEvent.GetComponent<BoxCollider>();
@@ -72,7 +70,7 @@ public class EA_AfterGetAzuYuzuDiary2 : EventActorBase
             case YD2State.Init:break;
             case YD2State.Kagomekagome:
                 //日記を読むまで待つ
-                if (DataManager.Instance.GetItemData(eventBase.yuzuhaDiary.ItemKey).geted)
+                if (DataManager.Instance.GetItemData(yuzuhaDiaryKey).geted)
                 {
                     yuzuhaActiveCollider.enabled = true;
                     currentState = YD2State.AfterReadDiaryWaitTime;
@@ -137,7 +135,7 @@ public class EA_AfterGetAzuYuzuDiary2 : EventActorBase
     /// </summary>
     public void OnKagomeKagomeCollisionExitEvent()
     {
-        if (!DataManager.Instance.GetItemData(eventBase.yuzuhaDiary.ItemKey).geted)
+        if (!DataManager.Instance.GetItemData(yuzuhaDiaryKey).geted)
         {
             if (Utility.Instance.IsTagNameMatch(kagomekagomeCollisionEnterEvent.HitCollider.gameObject, Tags.Player))
             {

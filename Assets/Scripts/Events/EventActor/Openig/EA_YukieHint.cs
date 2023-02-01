@@ -34,6 +34,7 @@ public class EA_YukieHint : EventActorBase
 
     private IEnumerator EventAction()
     {
+        var playerCameraMovingObject = StageManager.Instance.Player.cameraMovingObject;
         CrosshairManager.Instance.SetCrosshairActive(false);
         StageManager.Instance.Player.ChangeState(PlayerState.Event);
         StageManager.Instance.Yukie.transform.position = yukieFirstPosition.transform.position;
@@ -41,8 +42,8 @@ public class EA_YukieHint : EventActorBase
         StageManager.Instance.Yukie.gameObject.SetActive(true);
         StageManager.Instance.Yukie.ChangeState(EnemyState.CanNotAction);
 
-        Vector3 initRotation = eventBase.playerCameraMovingObject.transform.forward;
-        StartCoroutine(eventBase.playerCameraMovingObject.TurnAroundSmooth_Coroutine(playerLookPosition.transform.position, 10f));
+        Vector3 initRotation = playerCameraMovingObject.transform.forward;
+        StartCoroutine(playerCameraMovingObject.TurnAroundSmooth_Coroutine(playerLookPosition.transform.position, 10f));
         yield return StartCoroutine(StageManager.Instance.Yukie.movingObject.MoveWithTime(yukieFirstPosition.transform.position + Vector3.right * 3f, 3f));
         //yield return StartCoroutine(eventBase.playerCameraMovingObject.TurnAroundSmooth_Coroutine(initRotation, 6f));
 

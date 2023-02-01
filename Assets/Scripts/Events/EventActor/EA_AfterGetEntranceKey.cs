@@ -6,7 +6,7 @@ using SoundDistance;
 
 public class EA_AfterGetEntranceKey : EventActorBase
 {
-    [HideInInspector] public Event_AfterGetEntranceKey eventBase = null;
+    //[HideInInspector] public Event_AfterGetEntranceKey eventBase = null;
 
     [SerializeField] private GameObject firstYukiePosition = null;
 
@@ -14,6 +14,13 @@ public class EA_AfterGetEntranceKey : EventActorBase
     private BoxCollider yukieEventCollider = null;
     [SerializeField] private CollisionEnterEvent eventEndCollisionEnterEvent = null;
     private BoxCollider eventEndCollider = null;
+
+    [SerializeField, ReadOnly] private string entranceDoorKey = "door_entrance";
+    [SerializeField, ReadOnly] private string emitterPointKey = "sd_point_room1_0002";
+    [SerializeField, ReadOnly] private string emitterNextPointKey = "sd_point_2f_0001";
+    [SerializeField, ReadOnly] private string listenerPointKey = "sd_point_2f_0000";
+    [SerializeField, ReadOnly] private string listenerNextPointKey = "sd_point_2f_0000";
+    [SerializeField, ReadOnly] private string outerPointKey = "sd_point_outer_0007";
 
     protected override void Initialize()
     {
@@ -45,14 +52,19 @@ public class EA_AfterGetEntranceKey : EventActorBase
     }
     private IEnumerator YukieActiveEvent()
     {
+        var emitterPoint = SoundDistanceManager.Instance.GetSoundDistancePoint(emitterPointKey);
+        var emitterNextPoint = SoundDistanceManager.Instance.GetSoundDistancePoint(emitterNextPointKey);
+        var outerPoint = SoundDistanceManager.Instance.GetSoundDistancePoint(outerPointKey);
+        var listenerPoint = SoundDistanceManager.Instance.GetSoundDistancePoint(listenerPointKey);
+        var listenerNextPoint = SoundDistanceManager.Instance.GetSoundDistancePoint(listenerNextPointKey);
         StageManager.Instance.Yukie.transform.position = firstYukiePosition.transform.position;
         StageManager.Instance.Yukie.gameObject.SetActive(true);
 
-        SoundDistanceManager.Instance.Emitter.SetPointID(eventBase.emitterPoint.ID);
-        SoundDistanceManager.Instance.Emitter.SetNextTargetPointID(eventBase.emitterNextPoint.ID);
-        SoundDistanceManager.Instance.Emitter.SetOuterPointID(eventBase.outerPoint.ID);
-        SoundDistanceManager.Instance.Listener.SetCurrentPointID(eventBase.listenerPoint.ID);
-        SoundDistanceManager.Instance.Listener.SetNextTargetPointID(eventBase.listenerNextPoint.ID);
+        SoundDistanceManager.Instance.Emitter.SetPointID(emitterPoint.ID);
+        SoundDistanceManager.Instance.Emitter.SetNextTargetPointID(emitterNextPoint.ID);
+        SoundDistanceManager.Instance.Emitter.SetOuterPointID(outerPoint.ID);
+        SoundDistanceManager.Instance.Listener.SetCurrentPointID(listenerPoint.ID);
+        SoundDistanceManager.Instance.Listener.SetNextTargetPointID(listenerNextPoint.ID);
 
 
         Vector3 lookPos = new Vector3(StageManager.Instance.Player.transform.position.x, StageManager.Instance.Yukie.transform.position.y, StageManager.Instance.Player.transform.position.z);
@@ -75,8 +87,9 @@ public class EA_AfterGetEntranceKey : EventActorBase
     }
     private IEnumerator EndColliderEnterEvent()
     {
-        eventBase.entranceDoor.CloseDoor();
-        eventBase.entranceDoor.isEternalClosed = true;
+        var entranceDoor = Onka.Manager.Event.EventManager.Instance.GetUseEventObject(entranceDoorKey).GetComponent<DoorObject>();
+        entranceDoor.CloseDoor();
+        entranceDoor.isEternalClosed = true;
         StageManager.Instance.Yukie.ChangeState(EnemyState.CanNotAction);
         StageManager.Instance.Yukie.StopSound();
         StageManager.Instance.Player.ChangeState(PlayerState.Event);

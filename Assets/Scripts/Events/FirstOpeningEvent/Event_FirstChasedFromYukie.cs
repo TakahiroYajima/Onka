@@ -13,7 +13,6 @@ public class Event_FirstChasedFromYukie : EventBase
     protected override void EventActive()
     {
         base.EventActive();
-        instanceEventActor.gameObject.GetComponent<EA_FirstChasedFromYukie>().eventBase = this;
         InitiationContact();
     }
     public override void EventStart()

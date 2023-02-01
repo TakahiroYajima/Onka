@@ -20,7 +20,7 @@ public class EA_AfterGetKozoDiary3 : EventActorBase
     public override void EventStart()
     {
         soundPlayer.PlaySE("se_lug");
-        StartCoroutine(MoveStatus(() =>
+        StartCoroutine(MoveStatus(eventBase.MoveObject , () =>
         {
             parent.EventClearContact();
         }));
@@ -34,16 +34,16 @@ public class EA_AfterGetKozoDiary3 : EventActorBase
 
     }
 
-    private IEnumerator MoveStatus(UnityAction onComplete)
+    private IEnumerator MoveStatus(Transform moveObject, UnityAction onComplete)
     {
         float currentTime = 0f;
         while (currentTime < 0.5)
         {
-            eventBase.MoveObject.Rotate(0, 45 * (Time.deltaTime / 0.5f), 0);
+            moveObject.Rotate(0, 45 * (Time.deltaTime / 0.5f), 0);
             currentTime += Time.deltaTime;
             yield return null;
         }
-        eventBase.MoveObject.rotation = eventBase.moveObjectFinishedRotationEular;
+        moveObject.rotation = eventBase.moveObjectFinishedRotationEular;
         onComplete();
     }
 
@@ -51,7 +51,6 @@ public class EA_AfterGetKozoDiary3 : EventActorBase
     {
         if (Utility.Instance.IsTagNameMatch(collisionEnterEvent.HitCollision.gameObject, Tags.Player))
         {
-            Debug.Log("孝蔵の日記3取得後イベント");
             parent.SetCanBeStarted(true);
             parent.InitiationContact();
         }

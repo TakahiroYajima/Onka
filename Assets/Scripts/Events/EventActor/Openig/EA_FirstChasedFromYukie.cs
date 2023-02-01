@@ -6,8 +6,8 @@ using SoundSystem;
 
 public class EA_FirstChasedFromYukie : EventActorBase
 {
-    [HideInInspector] public Event_FirstChasedFromYukie eventBase = null;
     [SerializeField] private GameObject firstYukiePosition = null;
+    [SerializeField, ReadOnly] private string soundPointSDPKey = "sd_point_outer_0009";
 
     protected override void Initialize()
     {
@@ -16,8 +16,10 @@ public class EA_FirstChasedFromYukie : EventActorBase
 
     public override void EventStart()
     {
-        SoundDistanceManager.Instance.Emitter.SetPointID(eventBase.soundPointSDP.ID);
-        SoundDistanceManager.Instance.Listener.SetCurrentPointID(eventBase.soundPointSDP.ID);
+        var soundPointSDP = SoundDistanceManager.Instance.GetSoundDistancePoint(soundPointSDPKey);
+
+        SoundDistanceManager.Instance.Emitter.SetPointID(soundPointSDP.ID);
+        SoundDistanceManager.Instance.Listener.SetCurrentPointID(soundPointSDP.ID);
         SoundDistanceManager.Instance.Maker.SetVolume(0f);
         SoundDistanceManager.Instance.ForceInitCalc();
         SoundDistanceManager.Instance.isActive = true;

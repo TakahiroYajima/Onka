@@ -5,7 +5,8 @@ using UnityEngine.Events;
 
 public class EA_HighAltitudeItemGet : EventActorBase
 {
-    [HideInInspector] public Event_HighAltitudeItemGet eventBase = null;
+    [System.NonSerialized] public Event_HighAltitudeItemGet eventBase = null;
+    [SerializeField, ReadOnly] private string getItemObjectKey = "key_nobuyuki";
 
     [SerializeField] private GameObject longStickObjectPref = null;
     [SerializeField] private GameObject longStickItemInitPosition = null;
@@ -32,11 +33,12 @@ public class EA_HighAltitudeItemGet : EventActorBase
 
     private IEnumerator ItemGetEvent()
     {
+        ItemObject keyObject = ItemManager.Instance.GetItemObjectWithKey(getItemObjectKey);
         GameObject stick = Instantiate(longStickObjectPref, transform);
         stick.transform.position = longStickItemInitPosition.transform.position;
         stick.transform.rotation = longStickItemInitPosition.transform.rotation;
 
-        Vector3 initItemPos = eventBase.getItemObject.transform.position;
+        Vector3 initItemPos = keyObject.transform.position;
         Vector3 itemMoveTarget = itemObjectMoveTargetPosition.transform.position;
         Vector3 itemMoveMidPos = itemObjectMoveMidPosition.transform.position;
 
@@ -46,13 +48,13 @@ public class EA_HighAltitudeItemGet : EventActorBase
         while (t < 1f)
         {
             stick.transform.position = Vector3.Lerp(longStickItemInitPosition.transform.position, longStickItemMoveTargetPosition.transform.position, t);
-            eventBase.getItemObject.transform.position = CalcLerpPoint(initItemPos, itemMoveMidPos, itemMoveTarget, t);
+            keyObject.transform.position = CalcLerpPoint(initItemPos, itemMoveMidPos, itemMoveTarget, t);
             t += Time.deltaTime;
             yield return null;
         }
 
         Destroy(stick);
-        eventBase.getItemObject.gameObject.SetActive(false);
+        keyObject.gameObject.SetActive(false);
 
         FinishEvent();
     }

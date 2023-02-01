@@ -9,12 +9,13 @@ using UnityEngine.Events;
 public class Event_AfterGetKozoDiary3 : EventBase
 {
     //地下にあるキメラみたいな像を動かす。音も鳴らす（ビビらせ要員）
-    [SerializeField] private Transform moveObject = null;
-    public Transform MoveObject { get { return moveObject; } }
+    public Transform MoveObject { get; private set; }
+    [SerializeField, ReadOnly] private string moveObjectKey = "obj_underground_gargoy";
     public Quaternion moveObjectFinishedRotationEular = Quaternion.Euler(0, 45, 0);
 
     protected override void EventActive()
     {
+        MoveObject = Onka.Manager.Event.EventManager.Instance.GetUseEventObject(moveObjectKey).transform;
         base.EventActive();
         instanceEventActor.GetComponent<EA_AfterGetKozoDiary3>().eventBase = this;
     }
@@ -34,7 +35,8 @@ public class Event_AfterGetKozoDiary3 : EventBase
 
     protected override void AlreadyClearedMove()
     {
+        MoveObject = Onka.Manager.Event.EventManager.Instance.GetUseEventObject(moveObjectKey).transform;
         base.AlreadyClearedMove();
-        moveObject.rotation = moveObjectFinishedRotationEular;
+        MoveObject.rotation = moveObjectFinishedRotationEular;
     }
 }

@@ -8,8 +8,6 @@ using SoundDistance;
 /// </summary>
 public class Event_YukieHint : EventBase
 {
-    public MovingObject playerCameraMovingObject = null;
-    
 
     protected override void EventActive()
     {

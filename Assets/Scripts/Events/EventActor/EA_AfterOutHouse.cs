@@ -6,7 +6,6 @@ using SoundSystem;
 
 public class EA_AfterOutHouse : EventActorBase
 {
-    public Event_AfterOutHouse eventBase { private get; set; } = null;
     [SerializeField] private EndingEventManager endingEventManager = null;
 
     protected override void Initialize()

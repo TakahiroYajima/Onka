@@ -15,8 +15,13 @@ public class EA_AfterGetHatsuDiary3 : EventActorBase
     public Event_AfterGetHatsuDiary3 eventBase { private get; set; }
     private Vector2 initPos = Vector2.zero;
 
+    private CRT crt = null;
+    private Camera worldCamera = null;
+
     protected override void Initialize()
     {
+        crt = StageManager.Instance.Player.CameraObj.GetComponent<CRT>();
+        worldCamera = StageManager.Instance.Player.CameraObj.GetComponent<Camera>();
         canvasObj.gameObject.SetActive(false);
         
         
@@ -26,7 +31,7 @@ public class EA_AfterGetHatsuDiary3 : EventActorBase
     public override void EventStart()
     {
         canvasObj.renderMode = RenderMode.ScreenSpaceCamera;
-        canvasObj.worldCamera = eventBase.WorldCamera;
+        canvasObj.worldCamera = worldCamera;
         StartCoroutine(HatsuEvent(() =>
         {
             parent.EventClearContact();
@@ -38,7 +43,7 @@ public class EA_AfterGetHatsuDiary3 : EventActorBase
     }
     public override void EventEnd()
     {
-        eventBase.CRT.enabled = false;
+        crt.enabled = false;
     }
 
     private IEnumerator HatsuEvent(UnityAction onComplete = null)
@@ -63,7 +68,7 @@ public class EA_AfterGetHatsuDiary3 : EventActorBase
             ItemManager.Instance.FinishWatchingItemEnforcement();
         }
         canvasObj.gameObject.SetActive(true);
-        eventBase.CRT.enabled = true;
+        crt.enabled = true;
         hatsuAudio.clip = hatsuVoiceSEClip;
         noiseAudio.clip = noiseSEClip;
         hatsuAudio.Play();
@@ -80,7 +85,7 @@ public class EA_AfterGetHatsuDiary3 : EventActorBase
         hatsuRectTransform.anchoredPosition = underPos;
         hatsuAudio.Stop();
         noiseAudio.Stop();
-        eventBase.CRT.enabled = false;
+        crt.enabled = false;
         if (onComplete != null)
         {
             onComplete();

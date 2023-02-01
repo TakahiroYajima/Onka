@@ -15,9 +15,30 @@ namespace Onka.Manager.Event
         private List<EventBase> eventObjectList = new List<EventBase>();
         private List<EventBase> doingEventList = new List<EventBase>();//実行中のイベント
 
+        private Dictionary<string, UseEventObject> useEventObjects = new Dictionary<string, UseEventObject>();
+
         //private int inProgressEventArrayNum = -1;
         public bool IsAnyEventEnabled { get { return doingEventList.Count > 0; /*inProgressEventArrayNum > -1;*/ } }
         public bool isEnable = false;
+
+        public void AddUseEventObjects(List<UseEventObject> list)
+        {
+            foreach (var ueo in list)
+            {
+                if (!useEventObjects.ContainsKey(ueo.objectKey))
+                {
+                    useEventObjects.Add(ueo.objectKey, ueo);
+                }
+            }
+        }
+        public UseEventObject GetUseEventObject(string key)
+        {
+            if (useEventObjects.ContainsKey(key))
+            {
+                return useEventObjects[key];
+            }
+            return null;
+        }
 
         public void Initialize()
         {
@@ -141,7 +162,7 @@ namespace Onka.Manager.Event
                         //inProgressEventArrayNum = managementID;
                         //eventObjectList[inProgressEventArrayNum].EventStart();
                         doingEventList.Add(eventObjectList[managementID]);
-                        //Debug.Log("AddEvent : " + eventObjectList[managementID].EventKey);
+                        Debug.Log("EventStart : " + eventObjectList[managementID].EventKey);
                         eventObjectList[managementID].EventStart();
                     }
                 }

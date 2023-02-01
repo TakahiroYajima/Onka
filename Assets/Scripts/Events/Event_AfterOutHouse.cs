@@ -8,12 +8,13 @@ using UnityEngine;
 public class Event_AfterOutHouse : EventBase
 {
     [SerializeField] private GameObject fieldColliderBase = null;
-    [SerializeField] private DoorObject entranceDoor = null;
+    private DoorObject entranceDoor = null;
+    [SerializeField, ReadOnly] private string entranceDoorKey = "door_entrance";
 
     protected override void EventActive()
     {
         base.EventActive();
-        instanceEventActor.GetComponent<EA_AfterOutHouse>().eventBase = this;
+        entranceDoor = Onka.Manager.Event.EventManager.Instance.GetUseEventObject(entranceDoorKey).GetComponent<DoorObject>();
         InitiationContact();
     }
 

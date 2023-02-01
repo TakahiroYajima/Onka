@@ -8,11 +8,13 @@ public class EA_AfterGetNobuyukiDiary3 : EventActorBase
     [SerializeField] private BoxCollider boxCollider = null;
     [SerializeField] private CollisionEnterEvent collisionEnterEvent = null;
     [SerializeField] private MovingObject nobuyukiObj = null;
+    private Vector3 initNobuyukiPos;
 
     protected override void Initialize()
     {
+        initNobuyukiPos = nobuyukiObj.transform.position;
         boxCollider.enabled = true;
-        nobuyukiObj.gameObject.SetActive(false);
+        nobuyukiObj.transform.position = new Vector3(0f, -10f, 0f);//最初から表示させないとActiveにしたときにメッシュが青色になるので見えないところで描画させておく
         parent.SetCanBeStarted(false);
     }
 
@@ -37,7 +39,7 @@ public class EA_AfterGetNobuyukiDiary3 : EventActorBase
         StageManager.Instance.Player.raycastor.ObjectToRayAction(StageManager.Instance.Player.transform.position, StageManager.Instance.Player.transform.position + StageManager.Instance.Player.transform.forward, (RaycastHit hit) =>
         {
             Vector3 hitPoint = hit.point;
-            hitPoint.y = nobuyukiObj.transform.position.y;
+            hitPoint.y = initNobuyukiPos.y;
             nobuyukiObj.transform.position = hitPoint;
             nobuyukiObj.gameObject.SetActive(true);
             StartCoroutine(MovePanel(onComplete));
