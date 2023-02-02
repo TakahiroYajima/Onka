@@ -9,14 +9,16 @@ using Onka.Manager.Menu;
 
 public class GameSceneManager : SceneBase
 {
-    //[SerializeField] private GameObject restartPosition = null;//セーブ地点から再開する時の場所
-    //[SerializeField] private SoundDistancePoint savePointSDP = null;
-    //[SerializeField] private List<WanderingPoint> yukieInitWanderingPoints = new List<WanderingPoint>();
-    //[SerializeField] private List<SoundDistancePoint> yukieInitInstancePoints = new List<SoundDistancePoint>();
-    // Start is called before the first frame update
+    [SerializeField] private GameObject managerObjectPrefab = null;
+    private GameObject managerObject = null;
+
     protected override void Start()
     {
         base.Initialize();
+        if(managerObject == null)
+        {
+            managerObject = Instantiate(managerObjectPrefab, this.transform);
+        }
         InStageMenuManager.Instance.Initialize();
         StageManager.Instance.Initialize();
 
