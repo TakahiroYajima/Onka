@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,7 +25,7 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager> {
         {FadeColorType.White, Color.white },
     };
 
-    public void FadeIn(FadeColorType colorType = FadeColorType.Black, float duration = DefaultDuration, UnityAction onComplete = null) {
+    public void FadeIn(FadeColorType colorType = FadeColorType.Black, float duration = DefaultDuration, Action onComplete = null) {
         if (!this._colorDict.ContainsKey(colorType)) {
             return;
         }
@@ -47,7 +48,7 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager> {
         }));
     }
 
-    public void FadeOut(FadeColorType colorType = FadeColorType.Black, float duration = DefaultDuration, UnityAction onComplete = null) {
+    public void FadeOut(FadeColorType colorType = FadeColorType.Black, float duration = DefaultDuration, Action onComplete = null) {
         if (!this._colorDict.ContainsKey(colorType)) {
             return;
         }
