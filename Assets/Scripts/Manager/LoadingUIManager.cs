@@ -1,14 +1,24 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
 public class LoadingUIManager : SingletonMonoBehaviour<LoadingUIManager>
 {
+    public class LoadingParameter
+    {
+        public AsyncOperation asyncOperation;
+        public Action onCompleted;
+        public string message;
+        public bool isAutoEnactive = true;
+    }
+
     [SerializeField] private GameObject loadingObject = null;//Loadingの親Object
     [SerializeField] private Image loadingGauge = null;//ロード中のアニメーションゲージ
-    //[SerializeField] private Text loadingText = null;//ロード中テキスト
+    [SerializeField] private Text loadingText = null;//ロード中テキスト
+
+    private bool isAutoMove = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,21 +31,33 @@ public class LoadingUIManager : SingletonMonoBehaviour<LoadingUIManager>
         loadingObject.SetActive(_isActive);
     }
 
-    public void StartLoading(AsyncOperation asyncOperation, UnityAction onComplete, bool isAutoEnactive = true)
+    public void SetMessage(string message)
     {
-        StartCoroutine(DoLoading(asyncOperation, onComplete));
+        loadingText.text = message;
     }
 
-    private IEnumerator DoLoading(AsyncOperation asyncOperation, UnityAction onComplete, bool isAutoEnactive = true)
+    public void SetProgress(float fill)
+    {
+        if (isAutoMove) return;
+        loadingGauge.fillAmount = fill;
+    }
+
+    public void StartLoading(LoadingParameter param)
+    {
+        StartCoroutine(DoLoading(param.asyncOperation, param.onCompleted, param.message, param.isAutoEnactive));
+    }
+
+    private IEnumerator DoLoading(AsyncOperation asyncOperation, Action onComplete, string message, bool isAutoEnactive = true)
     {
         float currentTime = 0f;
-        float needTime = 1.4f;
+        float needTime = 1f;
         float progress = 0f;
         float pTime = 0f;
-        asyncOperation.allowSceneActivation = false;
 
+        loadingText.text = message;
         loadingGauge.fillAmount = 0f;
         loadingObject.SetActive(true);
+        isAutoMove = true;
         while (currentTime < needTime || progress < 1f) {
             progress = Mathf.Clamp01(asyncOperation.progress / 0.9f);
             pTime = currentTime / needTime;
@@ -44,8 +66,7 @@ public class LoadingUIManager : SingletonMonoBehaviour<LoadingUIManager>
             currentTime += Time.deltaTime;
             yield return null;
         }
-        asyncOperation.allowSceneActivation = true;
-        
+
         if(onComplete != null)
         {
             onComplete();
@@ -54,5 +75,6 @@ public class LoadingUIManager : SingletonMonoBehaviour<LoadingUIManager>
         {
             loadingObject.SetActive(false);
         }
+        isAutoMove = false;
     }
 }

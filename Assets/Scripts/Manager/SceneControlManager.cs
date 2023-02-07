@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
@@ -10,7 +10,7 @@ public class SceneControlManager : SingletonMonoBehaviour<SceneControlManager>
     public ChangeSceneMoveType changeSceneMoveType = ChangeSceneMoveType.Normal;
 
     
-    public void ChangeScene(string sceneName, bool isBGMStop = true, UnityAction onComplete = null, FadeManager.FadeColorType fadeOutColorType = FadeManager.FadeColorType.None, FadeManager.FadeColorType fadeInColorType = FadeManager.FadeColorType.None)
+    public void ChangeScene(string sceneName, bool isBGMStop = true, Action onComplete = null, FadeManager.FadeColorType fadeOutColorType = FadeManager.FadeColorType.None, FadeManager.FadeColorType fadeInColorType = FadeManager.FadeColorType.None)
     {
         if (isBGMStop)
         {
@@ -36,7 +36,7 @@ public class SceneControlManager : SingletonMonoBehaviour<SceneControlManager>
     //    });
     //}
 
-    public void ChangeSceneAsyncWithLoading(string sceneName, bool isBGMStop = true, UnityAction onComplete = null, FadeManager.FadeColorType fadeOutColorType = FadeManager.FadeColorType.None, FadeManager.FadeColorType fadeInColorType = FadeManager.FadeColorType.None)
+    public void ChangeSceneAsyncWithLoading(string sceneName, bool isBGMStop = true, Action onComplete = null, FadeManager.FadeColorType fadeOutColorType = FadeManager.FadeColorType.None, FadeManager.FadeColorType fadeInColorType = FadeManager.FadeColorType.None, bool isAfterLoadFadeOut = true)
     {
         //Debug.Log($"ChangeSceneAsyncWithLoading : {System.DateTime.Now.ToString()}");
         if (isBGMStop)
@@ -52,11 +52,26 @@ public class SceneControlManager : SingletonMonoBehaviour<SceneControlManager>
             AsyncOperation async = SceneManager.LoadSceneAsync(sceneName);
 
             //Debug.Log($"asyncInstanted : {System.DateTime.Now.ToString()}");
-            LoadingUIManager.Instance.StartLoading(async, () =>
+            async.allowSceneActivation = false;
+            LoadingUIManager.LoadingParameter param = new LoadingUIManager.LoadingParameter()
             {
-                //Debug.Log($"LoadEnd : {System.DateTime.Now.ToString()}");
-                StartCoroutine(WaitSceneLoadAfterFadeIn(async, fadeInColorType, onComplete));
-            },false);
+                asyncOperation = async,
+                onCompleted = ()=>
+                {
+                    async.allowSceneActivation = true;
+                    if (isAfterLoadFadeOut)
+                    {
+                        StartCoroutine(WaitSceneLoadAfterFadeIn(async, fadeInColorType, onComplete));
+                    }
+                    else
+                    {
+                        onComplete?.Invoke();
+                    }
+                },
+                message = "ロード中",
+                isAutoEnactive = isAfterLoadFadeOut
+            };
+            LoadingUIManager.Instance.StartLoading(param);
         });
     }
     ////動作確認用
@@ -87,7 +102,7 @@ public class SceneControlManager : SingletonMonoBehaviour<SceneControlManager>
     //    StartCoroutine(WaitSceneLoadAfterFadeIn(async, fadeInColorType, onComplete));
     //}
 
-    private IEnumerator WaitSceneLoadAfterFadeIn(AsyncOperation async, FadeManager.FadeColorType fadeInColorType = FadeManager.FadeColorType.None, UnityAction onComplete = null)
+    private IEnumerator WaitSceneLoadAfterFadeIn(AsyncOperation async, FadeManager.FadeColorType fadeInColorType = FadeManager.FadeColorType.None, Action onComplete = null)
     {
         yield return async;
         //Debug.Log($"AsyncEnded : {System.DateTime.Now.ToString()}");
