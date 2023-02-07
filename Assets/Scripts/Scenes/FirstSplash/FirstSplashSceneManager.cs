@@ -90,7 +90,6 @@ public class FirstSplashSceneManager : MonoBehaviour
     {
         while (!isSceneChangeOK)
         {
-            Debug.Log("初期ロード待ち");
             yield return null;
         }
         isMoving = false;
