@@ -69,7 +69,7 @@ public class OpeningEventManager : MonoBehaviour
         FadeManager.Instance.FadeOut(FadeManager.FadeColorType.Black, 3.5f, () =>
         {
             SceneControlManager.Instance.changeSceneMoveType = ChangeSceneMoveType.NewGame;
-            SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Game", true, null, FadeManager.FadeColorType.None, FadeManager.FadeColorType.Black);
+            SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Game", true, null, FadeManager.FadeColorType.None, FadeManager.FadeColorType.Black, false);
         });
     }
 

@@ -25,7 +25,7 @@ public class TitleManager : SceneBase
     public void PressLoadButton()
     {
         SoundManager.Instance.PlaySeWithKeyOne("menuse_enter");
-        SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Game", true, null, FadeManager.FadeColorType.Black, FadeManager.FadeColorType.Black);
+        SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Game", true, null, FadeManager.FadeColorType.Black, FadeManager.FadeColorType.Black, false);
     }
 
     public void PressBonusButton()
