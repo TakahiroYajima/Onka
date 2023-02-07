@@ -15,7 +15,7 @@ namespace SoundDistance
     /// </summary>
     public class SoundDistanceManager : SingletonMonoBehaviour<SoundDistanceManager>
     {
-        [HideInInspector] public bool isActive = false;
+        [System.NonSerialized] public bool isActive = false;
         [SerializeField] private SoundDistanceListener listenerObj = null;//音を聞く側
         public SoundDistanceListener Listener { get { return listenerObj; } }
         [SerializeField] private SoundDistanceEmitter emitterObj = null;//音を発する側
@@ -87,7 +87,8 @@ namespace SoundDistance
         // Update is called once per frame
         void Update()
         {
-            if (!IsAllInitSeted() || !isActive) return;
+            if (!isActive) return;
+            if (!IsAllInitSeted()) return;
             if (DoUpdateFrameAndJudge())
             {
                 //Debug.Log($"SD_IDs emitter : {emitterObj.currentOuterPointID} {emitterObj.currentPointID} listener : {listenerObj.currentOuterPointID} {listenerObj.currentPointID}");
