@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.AI;
 using SoundSystem;
 using SoundDistance;
 using Onka.Manager.Event;
@@ -9,39 +10,76 @@ using Onka.Manager.Menu;
 
 public class GameSceneManager : SceneBase
 {
-    [SerializeField] private GameObject managerObjectPrefab = null;
     private GameObject managerObject = null;
+
+    private NavMeshDataInstance navMeshInstance;
 
     protected override void Start()
     {
         base.Initialize();
-        if(managerObject == null)
-        {
-            managerObject = Instantiate(managerObjectPrefab, this.transform);
-        }
-        InStageMenuManager.Instance.Initialize();
-        StageManager.Instance.Initialize();
 
-        //ステージが生成されてから
-        WanderingPointManager.Instance.Initialize();
-        EventManager.Instance.Initialize();
-        ItemManager.Instance.Initialize();
+        StartCoroutine(SetStart());
+    }
 
-        StageManager.Instance.ActorSetUp();
-        SoundDistanceManager.Instance.SetUp(StageManager.Instance.Player.SoundListener, StageManager.Instance.Yukie.SoundEmitter);
-        SoundDistanceManager.Instance.Initialize();
+    private IEnumerator SetStart()
+    {
+        var async = StartCoroutine(InitSceneSetUp());
 
-
-        StartCoroutine(InitSceneSetUp());
+        LoadingUIManager.Instance.SetMessage("ステージを構成しています");
+        yield return async;
+        StartScene();
     }
 
     private IEnumerator InitSceneSetUp()
     {
+        yield return null;
+        LoadingUIManager.Instance.SetProgress(0f);
+        yield return LoadInScene();
+        LoadingUIManager.Instance.SetProgress(0.25f);
+        yield return LoadStage();
+        LoadingUIManager.Instance.SetProgress(0.5f);
+        //ステージが生成されてから
+        yield return SetUpManager();
+        LoadingUIManager.Instance.SetProgress(0.75f);
+        yield return ActorSetUp();
+        LoadingUIManager.Instance.SetProgress(1f);
+        yield return null;
+
         StageManager.Instance.fieldObject.SetUp();
         InGameUtil.GCCollect();
+    }
+    private IEnumerator LoadInScene()
+    {
+        //NavMesh読み込み
+        var async = Resources.LoadAsync<NavMeshData>("Stages/NavMesh/NavMesh");
+        yield return async;
+        navMeshInstance = NavMesh.AddNavMeshData(async.asset as NavMeshData);
+    }
+    private IEnumerator LoadStage()
+    {
+        if (managerObject == null)
+        {
+            var async = Resources.LoadAsync<GameObject>("Managers/Managers");
+            yield return async;
+            managerObject = Instantiate(async.asset as GameObject, this.transform);
+        }
+        InStageMenuManager.Instance.Initialize();
+        StageManager.Instance.Initialize();
         yield return null;
+    }
+    private IEnumerator SetUpManager()
+    {
+        WanderingPointManager.Instance.Initialize();
+        EventManager.Instance.Initialize();
+        ItemManager.Instance.Initialize();
         yield return null;
-        StartScene();
+    }
+    private IEnumerator ActorSetUp()
+    {
+        StageManager.Instance.ActorSetUp();
+        SoundDistanceManager.Instance.SetUp(StageManager.Instance.Player.SoundListener, StageManager.Instance.Yukie.SoundEmitter);
+        SoundDistanceManager.Instance.Initialize();
+        yield return null;
     }
     
     private void StartScene()
@@ -99,8 +137,10 @@ public class GameSceneManager : SceneBase
             SoundManager.Instance.PlayEnvironmentWithKey("ambient_in_house");
         }
         EventManager.Instance.isEnable = true;
-        Debug.Log("EventManager.Instance.InitProgressEach");
         EventManager.Instance.InitProgressEach();
+
+        LoadingUIManager.Instance.SetActive(false);
+        FadeManager.Instance.FadeIn(FadeManager.FadeColorType.Black, 1f, null);
     }
 }
 
@@ -125,6 +165,6 @@ public class InGameUtil
 
     public static void GCCollect()
     {
-        GC.Collect();
+        //GC.Collect();
     }
 }
