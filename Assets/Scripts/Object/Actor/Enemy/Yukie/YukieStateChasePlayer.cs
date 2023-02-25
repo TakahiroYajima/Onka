@@ -12,7 +12,7 @@ public class YukieStateChasePlayer : StateBase
     private int frameCount = 0;
     private const int doUpdateFrameCount = 6;
     private float noRecognitionTime = 0f;
-    private const float ToChangeWanderingLostPlayerTime = 6f;//プレイヤーを見失ってから探索モードに戻るまでの時間
+    private const float ToChangeWanderingLostPlayerTime = 8.5f;//プレイヤーを見失ってから探索モードに戻るまでの時間
 
     private bool isHitPlayer = false;//最初からプレイヤーに衝突している場合、OnColliderEnterが反応しないので、OnColliderStayを1度だけ発生させるようにするフラグ
 
@@ -65,7 +65,7 @@ public class YukieStateChasePlayer : StateBase
                 {
                     noRecognitionTime += Time.deltaTime * doUpdateFrameCount;
                 }
-            }, 10f);
+            }, 11f);
             frameCount = 0;
         }
         else
