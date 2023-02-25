@@ -12,12 +12,11 @@ using UnityEditor;
 public class UseEventObjectParent : MonoBehaviour
 {
     [SerializeField, ReadOnly] private List<UseEventObject> useEventObjectList = new List<UseEventObject>();
-    // Start is called before the first frame update
-    void Start()
+    
+    public void SetUp()
     {
         if (useEventObjectList.Count > 0)
         {
-            Debug.Log($"AddEventObject : {useEventObjectList[0].objectKey}");
             Onka.Manager.Event.EventManager.Instance.AddUseEventObjects(useEventObjectList);
         }
     }
