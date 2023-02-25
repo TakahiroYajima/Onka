@@ -10,6 +10,7 @@ using Onka.Manager.Menu;
 
 public class GameSceneManager : SceneBase
 {
+    [field: SerializeField] public FieldManager fieldObject { get; private set; }
     private GameObject managerObject = null;
 
     private NavMeshDataInstance navMeshInstance;
@@ -33,28 +34,33 @@ public class GameSceneManager : SceneBase
     private IEnumerator InitSceneSetUp()
     {
         yield return null;
-        LoadingUIManager.Instance.SetProgress(0f);
-        yield return LoadInScene();
+        //LoadingUIManager.Instance.SetProgress(0f);
+        //yield return LoadInScene();
         LoadingUIManager.Instance.SetProgress(0.25f);
         yield return LoadStage();
         LoadingUIManager.Instance.SetProgress(0.5f);
+        //Debug.Log("0.5");
         //ステージが生成されてから
         yield return SetUpManager();
         LoadingUIManager.Instance.SetProgress(0.75f);
+        //Debug.Log("0.75");
         yield return ActorSetUp();
-        LoadingUIManager.Instance.SetProgress(1f);
+        
         yield return null;
-
-        StageManager.Instance.fieldObject.SetUp();
         InGameUtil.GCCollect();
+        //Debug.Log("0.75_2");
+        yield return null;
+        StageManager.Instance.fieldObject.SetUp();
+        //Debug.Log("1");
+        LoadingUIManager.Instance.SetProgress(1f);
     }
-    private IEnumerator LoadInScene()
-    {
-        //NavMesh読み込み
-        var async = Resources.LoadAsync<NavMeshData>("Stages/NavMesh/NavMesh");
-        yield return async;
-        navMeshInstance = NavMesh.AddNavMeshData(async.asset as NavMeshData);
-    }
+    //private IEnumerator LoadInScene()
+    //{
+    //    //NavMesh読み込み
+    //    var async = Resources.LoadAsync<NavMeshData>("Stages/NavMesh/NavMesh");
+    //    yield return async;
+    //    navMeshInstance = NavMesh.AddNavMeshData(async.asset as NavMeshData);
+    //}
     private IEnumerator LoadStage()
     {
         if (managerObject == null)
@@ -64,7 +70,7 @@ public class GameSceneManager : SceneBase
             managerObject = Instantiate(async.asset as GameObject, this.transform);
         }
         InStageMenuManager.Instance.Initialize();
-        StageManager.Instance.Initialize();
+        StageManager.Instance.Initialize(fieldObject);
         yield return null;
     }
     private IEnumerator SetUpManager()
@@ -76,9 +82,10 @@ public class GameSceneManager : SceneBase
     }
     private IEnumerator ActorSetUp()
     {
+        SoundDistanceManager.Instance.Initialize();
         StageManager.Instance.ActorSetUp();
         SoundDistanceManager.Instance.SetUp(StageManager.Instance.Player.SoundListener, StageManager.Instance.Yukie.SoundEmitter);
-        SoundDistanceManager.Instance.Initialize();
+        
         yield return null;
     }
     
@@ -165,6 +172,6 @@ public class InGameUtil
 
     public static void GCCollect()
     {
-        //GC.Collect();
+        GC.Collect();
     }
 }

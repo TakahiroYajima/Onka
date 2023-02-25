@@ -10,7 +10,7 @@ using Onka.Manager.Data;
 
 public class StageManager : SingletonMonoBehaviour<StageManager>
 {
-    [SerializeField] private FieldManager houseFieldPrefab;
+    //[SerializeField] private FieldManager houseFieldPrefab;
     public FieldManager fieldObject { get; private set; }
     [SerializeField] private PlayerObject playerPrefab;
     private PlayerObject playerObject = null;
@@ -30,13 +30,14 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
     private EnemyState prevAzuhaState = EnemyState.Init;
     private EnemyState prevYuzuhaState = EnemyState.Init;
 
-    public void Initialize()
+    public void Initialize(FieldManager field)
     {
-        if(fieldObject == null)
-        {
-            fieldObject = Instantiate(houseFieldPrefab, this.transform);
-        }
-        
+        fieldObject = field;
+        //if(fieldObject == null)
+        //{
+        //    fieldObject = Instantiate(houseFieldPrefab, this.transform);
+        //}
+
         InStageMenuManager.Instance.onOpenedMenu = OpenedMenuAction;
         InStageMenuManager.Instance.onClosedMenu = ClosedMenuAction;
         InputKeyManager.Instance.onEscKeyPress = OnEscKeyPress;

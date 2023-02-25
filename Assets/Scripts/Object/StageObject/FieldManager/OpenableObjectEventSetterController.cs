@@ -9,10 +9,10 @@ public class OpenableObjectEventSetterController : MonoBehaviour
 {
     [SerializeField, ReadOnly] private OpenableObjectEventSetter[] openableObjectEventSetters;
 
-    void Start()
-    {
-        StageManager.Instance.fieldObject.AddOpenableObjectEventSetterController(this);
-    }
+    //void Start()
+    //{
+    //    //StageManager.Instance.fieldObject.AddOpenableObjectEventSetterController(this);
+    //}
 
     public void SetUp()
     {

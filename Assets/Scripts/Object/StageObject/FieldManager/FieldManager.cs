@@ -38,7 +38,7 @@ public class FieldManager : MonoBehaviour
     {
         if (!openableObjectEventSetterControllerList.Contains(script))
         {
-            script.SetUp();
+            //script.SetUp();
             openableObjectEventSetterControllerList.Add(script);
         }
     }
