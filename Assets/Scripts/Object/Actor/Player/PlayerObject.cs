@@ -21,7 +21,8 @@ public class PlayerObject : MonoBehaviour
     public Rigidbody rigidbody { get; private set; } = null;
     public MovingObject cameraMovingObject { get; private set; } = null;
     public CapsuleCollider capsuleCollider { get; private set; } = null;
-    public float colliderHeightHalf { get { return capsuleCollider.height * 0.48f; } }//0.5だと完全に頂点になるため、若干下げる
+    //public float colliderHeightHalf { get { return capsuleCollider.height * 0.49f; } }//0.5だと完全に頂点になるため、若干下げる
+    public float defaultColliderHeightHalf { get { return 0.79f; } }
 
     private Dictionary<PlayerState, StateBase> playerStateDic = new Dictionary<PlayerState, StateBase>();
     public PlayerState currentState { get; private set; } = PlayerState.Init;

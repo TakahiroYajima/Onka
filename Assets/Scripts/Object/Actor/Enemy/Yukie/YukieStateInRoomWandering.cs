@@ -36,8 +36,9 @@ public class YukieStateInRoomWandering : StateBase
 
     public override void StartAction()
     {
-        if (yukie.isIgnoreInRoom)
+        if (yukie.isIgnoreInRoom || yukie.isRecognizedPlayerInRoom)
         {
+            yukie.isRecognizedPlayerInRoom = false;//永久に部屋を無視しないようにここで初期化
             yukie.ChangeState(EnemyState.ChasePlayer);
             return;
         }
@@ -108,7 +109,7 @@ public class YukieStateInRoomWandering : StateBase
                 InitTransforms();
                 //Debug.Log(yukie.transform.position + " : " + (yukie.transform.position + transformRight) + " : " + (yukie.transform.position + transformLeft));
                 targetDireciton = transformLeft;
-                yukie.StopSound();
+                yukie.StopSound(true);
                 RotationActionOnComplete = DoNextState;
                 FirstSerachPlayer();
                 break;
@@ -160,9 +161,10 @@ public class YukieStateInRoomWandering : StateBase
     private void FirstSerachPlayer()
     {
         //まだプレイヤーを目視できているか判定
+        //隠れ箇所で余分に当たり判定が上に出ている部分があるので、立っている時には気付くようにする
         if (IsPlayerHitSerchRay(yukie.player.transform.position))
             yukie.ChangeState(EnemyState.RecognizedPlayer);//プレイヤーを目視できていたら追いかけるステートへ
-        else if (IsPlayerHitSerchRay(yukie.player.transform.position + new Vector3(0f, yukie.player.colliderHeightHalf, 0f)))
+        else if (IsPlayerHitSerchRay(yukie.player.transform.position + new Vector3(0f, yukie.player.defaultColliderHeightHalf, 0f)))
             yukie.ChangeState(EnemyState.RecognizedPlayer);
         else
         {
@@ -183,7 +185,7 @@ public class YukieStateInRoomWandering : StateBase
         {
             if (IsPlayerHitSerchRay(yukie.player.transform.position))
                 yukie.ChangeState(EnemyState.RecognizedPlayer);//プレイヤーを目視できていたら追いかけるステートへ
-            else if (IsPlayerHitSerchRay(yukie.player.transform.position + new Vector3(0f, yukie.player.colliderHeightHalf, 0f)))
+            else if (IsPlayerHitSerchRay(yukie.player.transform.position + new Vector3(0f, yukie.player.defaultColliderHeightHalf, 0f)))
                 yukie.ChangeState(EnemyState.RecognizedPlayer);
         }
         else
@@ -206,8 +208,9 @@ public class YukieStateInRoomWandering : StateBase
         float dot = Vector3.Dot(yukie.transform.forward, targetDireciton);
 
         float deg = Mathf.Acos(dot) * Mathf.Rad2Deg;
-        //Debug.Log("InRoomRotationAction : " + currentState.ToString() + " : " + deg);
-        if (deg <= rotationSpeed)
+        //Debug.Log($"InRoomRotationAction : {currentState} : {targetDireciton} : {dot} : acos : {Mathf.Acos(dot)} : {deg} if <= {rotationSpeed}");
+        //dotが1になるとAcosがバグる（本来想定されていない計算になる）ので、1になったら終了判定
+        if (dot >= 1f || deg <= rotationSpeed)
         {
             onComplete();
         }
@@ -299,7 +302,9 @@ public class YukieStateInRoomWandering : StateBase
         if(Enum.IsDefined(typeof(YukieInRoomWanderingState), nextID))
         {
             currentState = (YukieInRoomWanderingState)Enum.ToObject(typeof(YukieInRoomWanderingState), nextID);
+            //Debug.Log($"CurrentStateChange : {currentState}");
         }
+        //Debug.Log($"DoNextStateComplete : {currentState}");
     }
 }
 

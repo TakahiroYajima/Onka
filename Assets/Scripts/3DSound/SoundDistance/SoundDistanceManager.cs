@@ -815,6 +815,11 @@ namespace SoundDistance
         /// <param name="point"></param>
         public void SetPointToEmitter(SoundDistancePoint point)
         {
+            if (point.ID < 0)
+            {
+                Debug.LogWarning($"Initialize not ended {point.gameObject.name}");
+                return;
+            }
             emitterObj.SetPointID(point.ID);
             ReCalcDikstra();
         }
@@ -851,9 +856,9 @@ namespace SoundDistance
             soundMaker.maxVolume = _maxVolume;
             soundMaker.SetClipAndPlay(_clip, 0);
         }
-        public void StopSoundDistanceMaker()
+        public void StopSoundDistanceMaker(bool isAudioClipClear = false)
         {
-            soundMaker.SoundStop();
+            soundMaker.SoundStop(isAudioClipClear);
         }
         public void SetMaxVolumeToMaker(float _maxVolume)
         {

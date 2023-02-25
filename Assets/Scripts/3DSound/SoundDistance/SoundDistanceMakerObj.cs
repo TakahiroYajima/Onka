@@ -17,10 +17,10 @@ namespace SoundDistance
         {
             isActionable = true;
         }
-        public void StopAction()
+        public void StopAction(bool isAudioClipClear = false)
         {
             isActionable = false;
-            SoundStop();
+            SoundStop(isAudioClipClear);
         }
         [HideInInspector] public bool isVolumeON = true;//ボリュームを0にするだけで、後は通常の処理にさせたいときはfalseにする
         
@@ -117,9 +117,13 @@ namespace SoundDistance
         //        audioSource.Play();
         //    }
         //}
-        public void SoundStop()
+        public void SoundStop(bool isAudioClipClear = false)
         {
             audioSource.Stop();
+            if (isAudioClipClear)
+            {
+                audioSource.clip = null;
+            }
         }
         public void SoundPause()
         {
