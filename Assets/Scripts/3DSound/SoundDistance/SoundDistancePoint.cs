@@ -101,16 +101,18 @@ namespace SoundDistance
         /// </summary>
         public int ID { get; private set; } = -1;
 
-        private void Awake()
-        {
-            boxCollider = GetComponent<BoxCollider>();
-        }
+        //private void Awake()
+        //{
+        //    boxCollider = GetComponent<BoxCollider>();
+        //}
 
         /// <summary>
         /// ノード情報の初期設定
         /// </summary>
         public void Initialize()
         {
+            boxCollider = GetComponent<BoxCollider>();
+            boxCollider.enabled = true;
             Dictionary<Direction, bool> routeExistsDic = new Dictionary<Direction, bool>();
             foreach (var n in soundDistancePointNodes.GetTable())
             {

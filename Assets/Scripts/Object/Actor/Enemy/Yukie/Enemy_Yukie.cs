@@ -40,8 +40,8 @@ public class Enemy_Yukie : Enemy
     private Vector2 yukieXZ = new Vector2(0, 0);
     private Vector2 playerXZ = new Vector2(0, 0);
 
-    //挑発されている際のプレイヤー検知用
-    private float playerDetectionDistance = 8f;
+    //プレイヤー検知用
+    private float playerDetectionDistance = 13f;
     private float searchAngle = 60f;
     private float rotationSpeed = 4f;
     public const int doUpdateFrameCount = 6;//Rayは重いので6フレームに1回処理
@@ -50,8 +50,9 @@ public class Enemy_Yukie : Enemy
     private const float NoticeProvocationTime = 10f;//挑発に気付くまでの時間
 
     //特定ステート内フラグ
-    [HideInInspector] public bool isEternalChaseMode = false;//追いかけるステートの時、プレイヤーが部屋に隠れるまで見失わないようにするか
-    [HideInInspector] public bool isIgnoreInRoom = false;//部屋の中に入ってもプレイヤーを見失わずに強制で追いかけるか
+    [System.NonSerialized] public bool isEternalChaseMode = false;//追いかけるステートの時、プレイヤーが部屋に隠れるまで見失わないようにするか
+    [System.NonSerialized] public bool isIgnoreInRoom = false;//部屋の中に入ってもプレイヤーを見失わずに強制で追いかけるか
+    [System.NonSerialized] public bool isRecognizedPlayerInRoom = false;//部屋を覗くアクションの時にプレイヤーを発見していたか
 
     protected override void Awake()
     {
@@ -205,9 +206,9 @@ public class Enemy_Yukie : Enemy
     {
         SoundDistanceManager.Instance.SetMaxVolumeToMaker(_volume);
     }
-    public void StopSound()
+    public void StopSound(bool isAudioClipClear = false)
     {
-        SoundDistanceManager.Instance.StopSoundDistanceMaker();
+        SoundDistanceManager.Instance.StopSoundDistanceMaker(isAudioClipClear);
     }
     public void SetVolumeONEnable(bool _isEnable)
     {

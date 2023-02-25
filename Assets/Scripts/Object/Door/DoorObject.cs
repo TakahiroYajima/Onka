@@ -18,7 +18,7 @@ public abstract class DoorObject : MonoBehaviour
     protected BoxCollider thisCollider = null;
 
     protected bool isMoving = false;
-    protected bool isOpenState = false;//ドアが開いている状態か
+    public bool isOpenState { get; protected set; } = false;//ドアが開いている状態か
     public bool isForceOpenable = false;//イベントなどで強制的にドアを開けられるようにするか
     [HideInInspector] public bool isEternalClosed = false;//一切開けられないようにするか（イベント用）
 
