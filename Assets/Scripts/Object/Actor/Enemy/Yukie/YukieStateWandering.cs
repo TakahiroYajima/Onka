@@ -19,7 +19,6 @@ public class YukieStateWandering : StateBase
     private int frameCount = 0;
     private bool isInitialized = false;
     private State currentState;
-    private int currentHitedSDPOuterID = -1;
 
     public YukieStateWandering(Enemy_Yukie _yukie)
     {
@@ -39,7 +38,7 @@ public class YukieStateWandering : StateBase
         {
             yukie.wanderingActor.SetWanderingID(yukie.wanderingActor.currentWanderingPointID);
         }
-        yukie.wanderingActor.SetMoveSpeed(1.1f);
+        yukie.wanderingActor.SetMoveSpeed(yukie.walkSpeed);
         yukie.onColliderEnterCallback = null;
         yukie.PlaySoundLoop(0, 0.3f);
         yukie.provokedSystem.Initialize(7.5f, () =>
@@ -53,7 +52,7 @@ public class YukieStateWandering : StateBase
 
     public override void UpdateAction()
     {
-        if(frameCount >= Enemy_Yukie.doUpdateFrameCount)
+        if(frameCount >= Enemy_Yukie.DoUpdateFrameCount)
         {
             if (yukie.IsInSightPlayer()){
                 //壁を挟んでいなければプレイヤーを発見させる
@@ -99,7 +98,6 @@ public class YukieStateWandering : StateBase
     {
         if (soundDistancePointID == yukieStateLookInRoom.prevLookPointID) return;
         if (soundDistancePointID == yukie.SoundEmitter.prevHitedOuterPointID) return;//同じ場所に2回当たったら部屋から出てきたパターンと認識。覗かないようにする
-        currentHitedSDPOuterID = soundDistancePointID;
         yukieStateLookInRoom.SetLookPointID(soundDistancePointID);
         var target = LookInRoomJudgeManager.Instance.GetRoomPointData(soundDistancePointID);
         if (!target.isExist) return;

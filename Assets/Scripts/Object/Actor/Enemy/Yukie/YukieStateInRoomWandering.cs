@@ -86,7 +86,7 @@ public class YukieStateInRoomWandering : StateBase
 
     public override void UpdateAction()
     {
-        if (frameCount >= Enemy_Yukie.doUpdateFrameCount)
+        if (frameCount >= Enemy_Yukie.DoUpdateFrameCount)
         {
             SerachPlayerUpdate();
             frameCount = 0;

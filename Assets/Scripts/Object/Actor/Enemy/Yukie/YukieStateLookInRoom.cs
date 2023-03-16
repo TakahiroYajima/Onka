@@ -31,9 +31,7 @@ public class YukieStateLookInRoom : StateBase
     private int frameCount = 0;
 
     private Vector3 moveToCenterTarget;
-    private Vector3 targetDireciton;
-    private Vector3 initAngle;
-    private float rotationSpeed = 1.4f;
+    private const float RotationSpeed = 1.4f;
     private LookInRoomJudgeManager.RoomPointSoundDistancePointData currentTargetRoomPoint;
 
     public Action OnCompleted;
@@ -65,7 +63,7 @@ public class YukieStateLookInRoom : StateBase
 
     public override void UpdateAction()
     {
-        if (frameCount >= Enemy_Yukie.doUpdateFrameCount)
+        if (frameCount >= Enemy_Yukie.DoUpdateFrameCount)
         {
             SerachPlayerUpdate();
             frameCount = 0;
@@ -78,25 +76,16 @@ public class YukieStateLookInRoom : StateBase
         switch (currentState)
         {
             case State.Init:
-                //int currentWanderingPointID = yukie.wanderingActor.currentWanderingPointID;
                 int currentOuterSDPID = yukie.SoundEmitter.currentOuterPointID;
                 moveToCenterTarget = SoundDistanceManager.Instance.soundDistancePoints[currentOuterSDPID].transform.position;
-                //moveToCenterTarget.y = yukie.transform.position.y;
-                Debug.Log($"LookInRoomInit : {moveToCenterTarget} :: {yukie.navMeshAgent.pathStatus} != {UnityEngine.AI.NavMeshPathStatus.PathInvalid} ? ");
+                //Debug.Log($"LookInRoomInit : {moveToCenterTarget} :: {yukie.navMeshAgent.pathStatus} != {UnityEngine.AI.NavMeshPathStatus.PathInvalid} ? ");
                 yukie.navMeshAgent.SetDestination(moveToCenterTarget);
                 yukie.navMeshAgent.speed *= 1.5f;
                 ChangeState(State.MoveToCenter);
                 break;
             case State.MoveToCenter:
-                initAngle = yukie.transform.forward;
-                Debug.Log($"MoveToCenter : {yukie.navMeshAgent.velocity.magnitude}");
-                //if ((yukie.transform.position - moveToCenterTarget).sqrMagnitude <= 2f)
-                //{
-                //    ChangeState(State.FirstSearchRay);
-                //}
                 if (yukie.navMeshAgent.velocity.magnitude <= 0.001f)
                 {
-                    Debug.Log("FirstSearchRay");
                     yukie.navMeshAgent.speed = yukie.walkSpeed;
                     ChangeState(State.FirstSearchRay);
                 }
@@ -104,7 +93,6 @@ public class YukieStateLookInRoom : StateBase
             case State.FirstSearchRay:
                 if (IsPlayerHitSerchRay(yukie.player.transform.position + new Vector3(0f, yukie.player.defaultColliderHeightHalf, 0f)))
                 {
-                    Debug.Log("FirstSearchRay Hit");
                     OnRecognizedPlayerAction();//プレイヤーを目視できていたら追いかけるステートへ
                 }
                 else
@@ -163,109 +151,70 @@ public class YukieStateLookInRoom : StateBase
 
     private IEnumerator LookInRoomOrAlwaysOpenPoint(State nextState)
     {
-        Debug.Log("LookInRoomOrAlwaysOpenPointStart");
-        float waitTime = 1f;
-        float currentTime = 0f;
-        //内容が同じものの連続なので後でリファクタ
+        Vector3 initForwardPosition = yukie.FaceTransform.position + yukie.FaceTransform.forward;//yukie.transform.position + yukie.transform.forward;
+
         if(currentTargetRoomPoint.alwaysOpen != null)
         {
             foreach(var open in currentTargetRoomPoint.alwaysOpen)
             {
-                Debug.Log($"AlwaysOpen : {open.transform.position}");
-                targetDireciton = open.transform.position - yukie.transform.position;
-                targetDireciton.y = 0f;
-                while (!RotationAction())
-                {
-                    if (IsPlayerHitSerchRay(yukie.player.transform.position))
-                    {
-                        OnRecognizedPlayerAction();
-                        yield break;
-                    }
-                    yield return null;
-                }
-                while(currentTime < waitTime)
-                {
-                    if (IsPlayerHitSerchRay(yukie.player.transform.position))
-                    {
-                        OnRecognizedPlayerAction();
-                        yield break;
-                    }
-                    currentTime += Time.deltaTime;
-                    yield return null;
-                }
-                currentState = 0f;
-                targetDireciton = initAngle;
-                while (!RotationAction())
-                {
-                    if (IsPlayerHitSerchRay(yukie.player.transform.position))
-                    {
-                        OnRecognizedPlayerAction();
-                        yield break;
-                    }
-                    yield return null;
-                }
+                bool is2F = open.pointType == AlwaysOpenRookPointType.OnThe2F;
+                yield return TurnAroundAction(open.transform.position, is2F);
+                yield return WaitAction();
+                yield return TurnAroundAction(initForwardPosition, is2F);
             }
         }
         if(currentTargetRoomPoint.doors != null)
         {
             foreach(var door in currentTargetRoomPoint.doors)
             {
-                Debug.Log($"Door : {door.transform.position}");
-                targetDireciton = door.transform.position - yukie.transform.position;
-                targetDireciton.y = 0f;
-                while (!RotationAction())
-                {
-                    if (IsPlayerHitSerchRay(yukie.player.transform.position))
-                    {
-                        OnRecognizedPlayerAction();
-                        yield break;
-                    }
-                    yield return null;
-                }
-                while (currentTime < waitTime)
-                {
-                    if (IsPlayerHitSerchRay(yukie.player.transform.position))
-                    {
-                        OnRecognizedPlayerAction();
-                        yield break;
-                    }
-                    currentTime += Time.deltaTime;
-                    yield return null;
-                }
-                currentState = 0f;
-                targetDireciton = initAngle;
-                while (!RotationAction())
-                {
-                    if (IsPlayerHitSerchRay(yukie.player.transform.position))
-                    {
-                        OnRecognizedPlayerAction();
-                        yield break;
-                    }
-                    yield return null;
-                }
+                if (!door.isOpenState) continue;
+
+                yield return TurnAroundAction(door.transform.position);
+                yield return WaitAction();
+                yield return TurnAroundAction(initForwardPosition);
             }
         }
         currentState = nextState;
     }
+
+    private IEnumerator TurnAroundAction(Vector3 targetPosition, bool isFaceRotation = false, float rotationSpeed = RotationSpeed)
+    {
+        while (!yukie.TurnAroundToTargetAngle_Update(targetPosition, isFaceRotation, rotationSpeed))
+        {
+            if (OnRecognizedPlayerAndCoroutineJudge())
+            {
+                yield break;
+            }
+            yield return null;
+        }
+    }
+
+    private IEnumerator WaitAction()
+    {
+        float waitTime = 1f;
+        float currentTime = 0f;
+        while (currentTime < waitTime)
+        {
+            if (OnRecognizedPlayerAndCoroutineJudge())
+            {
+                yield break;
+            }
+            currentTime += Time.deltaTime;
+            yield return null;
+        }
+        currentState = 0f;
+    }
     /// <summary>
-    /// 回転の動作。完了したらtrueを返す
+    /// プレイヤーを発見していたらコルーチンを終了させる
     /// </summary>
     /// <returns></returns>
-    private bool RotationAction()
+    private bool OnRecognizedPlayerAndCoroutineJudge()
     {
-        float dot = Vector3.Dot(yukie.transform.forward, targetDireciton);
-
-        float deg = Mathf.Acos(dot) * Mathf.Rad2Deg;
-        //Debug.Log($"InRoomRotationAction : {currentState} : {targetDireciton} : {dot} : acos : {Mathf.Acos(dot)} : {deg} if <= {rotationSpeed}");
-        //dotが1になるとAcosがバグる（本来想定されていない計算になる）ので、1になったら終了判定
-        if (dot >= 1f || deg <= rotationSpeed)
+        if (IsPlayerHitSerchRay(yukie.player.transform.position))
         {
+            OnRecognizedPlayerAction();
+            yukie.StopCoroutine(LookInRoomOrAlwaysOpenPoint(State.None));
             return true;
-        }
-        else
-        {
-            Vector3 newDir = Vector3.RotateTowards(yukie.transform.forward, targetDireciton, rotationSpeed * Time.deltaTime, 0f);
-            yukie.transform.rotation = Quaternion.LookRotation(newDir);
         }
         return false;
     }

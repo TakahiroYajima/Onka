@@ -39,6 +39,16 @@ public class YukieStateChasePlayer : StateBase
     public override void UpdateAction()
     {
         yukie.navMeshAgent.SetDestination(yukie.player.transform.position);
+        if (Mathf.Abs(yukie.transform.position.y - yukie.player.transform.position.y) > 0.7f)
+        {
+            yukie.LookRotationFaceToTarget(yukie.player.eyePosition);
+        }
+        else
+        {
+            Vector3 target = yukie.transform.position + yukie.transform.forward;
+            target.y = yukie.FaceTransform.position.y;
+            yukie.LookRotationFaceToTarget(target);
+        }
 
         if (yukie.isEternalChaseMode) return;//永久追尾モードなら追いかけ続ける
 

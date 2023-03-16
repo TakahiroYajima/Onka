@@ -43,8 +43,8 @@ public class Enemy_Yukie : Enemy
     //プレイヤー検知用
     private float playerDetectionDistance = 13f;
     private float searchAngle = 60f;
-    private float rotationSpeed = 4f;
-    public const int doUpdateFrameCount = 6;//Rayは重いので6フレームに1回処理
+    private const float DefaultRotationSpeed = 4f;
+    public const int DoUpdateFrameCount = 6;//Rayは重いので6フレームに1回処理
 
     //プレイヤーが自分の視界の範囲外をうろつく＝挑発しているので、それに対する不意打ち要素
     private const float NoticeProvocationTime = 10f;//挑発に気付くまでの時間
@@ -170,24 +170,62 @@ public class Enemy_Yukie : Enemy
     /// 指定された方向へ向く（Y軸は雪絵と同じになる）
     /// </summary>
     /// <param name="targetPosition"></param>
-    /// <param name="onRotationEnded"></param>
-    public void TurnAroundToTargetAngle_Update(Vector3 targetPosition, UnityAction onRotationEnded)
+    /// <returns>終了フラグ</returns>
+    public bool TurnAroundToTargetAngle_Update(Vector3 targetPosition, bool isFaceRotationHeight = false, float rotationSpeed = DefaultRotationSpeed)
     {
-        Vector3 playerPos = new Vector3(targetPosition.x, transform.position.y, targetPosition.z);
-        Vector3 targetDir = playerPos - transform.position;
-        Vector3 normalized = targetDir.normalized;
+        Vector3 yukieTargetPos = new Vector3(targetPosition.x, transform.position.y, targetPosition.z);
+        Vector3 yukieTargetDir = yukieTargetPos - transform.position;
+        Vector3 normalized = yukieTargetDir.normalized;
         float dot = Vector3.Dot(transform.forward, normalized);
 
         float deg = Mathf.Acos(dot) * Mathf.Rad2Deg;
-        if (deg <= rotationSpeed)
+        if (dot >= 1f || deg <= rotationSpeed)
         {
-            transform.LookAt(playerPos);
-            onRotationEnded();
+            transform.LookAt(yukieTargetPos);
+            return true;
         }
         else
         {
-            Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, rotationSpeed * Time.deltaTime, 0f);
+            Vector3 newDir = Vector3.RotateTowards(transform.forward, yukieTargetDir, rotationSpeed * Time.deltaTime, 0f);
             transform.rotation = Quaternion.LookRotation(newDir);
+            if (isFaceRotationHeight)
+            {
+                Vector3 faceLookTarget = targetPosition;//transform.forward;
+                //faceLookTarget.y = targetPosition.y;
+                Vector3 faceTargetDir = faceLookTarget - faceTransform.position;//new Vector3(0f, faceLookTarget.y - faceTransform.position.y, 0f);//XZは本体がやってくれるので、顔はYの高さの分回転すればよい
+                float faceDot = Vector3.Dot(faceTransform.forward, faceTargetDir);
+                float faceDeg = Mathf.Acos(faceDot) * Mathf.Rad2Deg;
+                if (dot < 1f && deg > rotationSpeed)
+                {
+                    Vector3 faceNewDir = Vector3.RotateTowards(faceTransform.forward, faceTargetDir, rotationSpeed * Time.deltaTime, 0f);
+                    faceTransform.rotation = Quaternion.LookRotation(faceNewDir);
+                }
+                else
+                {
+                    faceTransform.LookAt(faceLookTarget);
+                }
+                //LookRotationFaceToTarget(targetPosition, rotationSpeed);
+            }
+        }
+        return false;
+    }
+
+    public void LookRotationFaceToTarget(Vector3 targetPosition, float rotationSpeed = DefaultRotationSpeed)
+    {
+        Vector3 faceLookTarget = targetPosition;//transform.forward;
+                                                //faceLookTarget.y = targetPosition.y;
+        Vector3 faceTargetDir = faceLookTarget - faceTransform.position;//new Vector3(0f, faceLookTarget.y - faceTransform.position.y, 0f);//XZは本体がやってくれるので、顔はYの高さの分回転すればよい
+        float faceDot = Vector3.Dot(faceTransform.forward, faceTargetDir);
+        float faceDeg = Mathf.Acos(faceDot) * Mathf.Rad2Deg;
+        if (faceDot < 1f && faceDeg > rotationSpeed)
+        {
+            Vector3 faceNewDir = Vector3.RotateTowards(faceTransform.forward, faceTargetDir, rotationSpeed * Time.deltaTime, 0f);
+            faceTransform.rotation = Quaternion.LookRotation(faceNewDir);
+            //faceTransform.rotation = Quaternion.LookRotation(player.eyePosition - faceTransform.position);
+        }
+        else
+        {
+            //faceTransform.LookAt(faceLookTarget);
         }
     }
 

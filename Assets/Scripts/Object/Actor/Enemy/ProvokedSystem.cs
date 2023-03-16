@@ -79,7 +79,7 @@ public class ProvokedSystem : MonoBehaviour
                     rate = 0f;//遠すぎる時は通常の時間
                 }
                 rate = Mathf.Clamp01(rate);
-                float addTime = Time.deltaTime * Enemy_Yukie.doUpdateFrameCount;
+                float addTime = Time.deltaTime * Enemy_Yukie.DoUpdateFrameCount;
                 addTime += addTime * (1 - rate);//真後ろで2倍近く早く気付く
                 
                 provocationingTime += addTime;
@@ -92,7 +92,7 @@ public class ProvokedSystem : MonoBehaviour
             }
             else
             {
-                provocationingTime -= Time.deltaTime * Enemy_Yukie.doUpdateFrameCount * 0.2f;//加算と同じカウントだと中々振り返らないので減衰を入れる
+                provocationingTime -= Time.deltaTime * Enemy_Yukie.DoUpdateFrameCount * 0.2f;//加算と同じカウントだと中々振り返らないので減衰を入れる
                 if (provocationingTime < 0f) { provocationingTime = 0f; }
             }
         }, ProvokedJudgeDistance);
