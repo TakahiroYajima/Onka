@@ -9,6 +9,10 @@ public class EA_AfterGetShioriDiary3 : EventActorBase
     [SerializeField] private Vector3 walkInstancePosition = Vector3.zero;
     public Event_AfterGetShioriDiary1 eventBase = null;
 
+    private string yukieSetPositionSDPKey = "sd_point_outer_0008";
+    private string yukieSetTargetWanderingPointKey = "wandering_point_yukie_0003";
+    //private string yukieNextWanderingPointKey = "wandering_point_yukie_0003";
+
     protected override void Initialize()
     {
         //parent.SetCanBeStarted(false);
@@ -28,6 +32,8 @@ public class EA_AfterGetShioriDiary3 : EventActorBase
             Destroy(instanceAnim.gameObject);
             StageManager.Instance.Shiori = null;
         };
+        //雪絵の位置を移動（キッチンから出たときに丁度遭遇する距離、またそのままだと部屋を覗き込んで2人同時または詩織の後に即追いかけられる展開に）
+        StageManager.Instance.ForceOperationYukiePositionWithSDP(yukieSetPositionSDPKey, yukieSetTargetWanderingPointKey);
         StartCoroutine(StartEvent());
     }
     public override void EventUpdate()

@@ -91,6 +91,26 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
     }
 
     /// <summary>
+    /// SoundDistancePointの位置に強制移動させる
+    /// </summary>
+    /// <param name="soundDistancePointKey"></param>
+    public void ForceOperationYukiePositionWithSDP(string soundDistancePointKey, string targetWanderingPointKey)
+    {
+        var soundDistancePoint = SoundDistanceManager.Instance.GetSoundDistancePoint(soundDistancePointKey);
+        var currentWanderingPoint = WanderingPointManager.Instance.GetWanderingPoint(targetWanderingPointKey);
+        //var nextWanderingPoint = WanderingPointManager.Instance.GetWanderingPoint(nextWanderingPointKey);
+        yukieObject.ChangeState(EnemyState.CanNotAction);
+        var yukiePos = soundDistancePoint.transform.position;
+        yukiePos.y = yukieObject.transform.position.y;
+        yukieObject.transform.position = yukiePos;
+        yukieObject.wanderingActor.SetWanderingID(currentWanderingPoint.PointNum);
+        yukieObject.ChangeState(EnemyState.Wandering);
+
+        SoundDistanceManager.Instance.Emitter.SetPointID(soundDistancePoint.ID);
+        SoundDistanceManager.Instance.ForceInitCalc();
+    }
+
+    /// <summary>
     /// Escキーを押した時の挙動（メニュー表示）
     /// </summary>
     private void OnEscKeyPress()
