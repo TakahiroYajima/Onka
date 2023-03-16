@@ -6,8 +6,8 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     public NavMeshAgent navMeshAgent { get; protected set; } = null;
-    public float walkSpeed { get; protected set; } = 1f;
-    public float runSpeed { get; protected set; } = 4f;
+    public float walkSpeed { get; protected set; } = 1.1f;
+    public float runSpeed { get; protected set; } = 4.1f;
 
     public EnemyState currentState { get; protected set; } = EnemyState.Init;
 
@@ -22,12 +22,10 @@ public class Enemy : MonoBehaviour
         
     }
 
-    public void MoveToTargetNavMeshAgent(Vector3 targetPosition)
-    {
-        navMeshAgent.SetDestination(targetPosition);
-    }
-
-
+    //public void MoveToTargetNavMeshAgent(Vector3 targetPosition)
+    //{
+    //    navMeshAgent.SetDestination(targetPosition);
+    //}
 }
 
 public enum EnemyState
