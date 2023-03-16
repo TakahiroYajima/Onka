@@ -36,6 +36,11 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
         var item = itemList.FirstOrDefault(v => v.ItemKey == key);
         return item;
     }
+    public ItemObject[] GetItemObjectsWithKeys(string[] keys)
+    {
+        var items = keys.Select(v => GetItemObjectWithKey(v)).ToArray();
+        return items;
+    }
 
     public bool IsGetedItem(string _key)
     {

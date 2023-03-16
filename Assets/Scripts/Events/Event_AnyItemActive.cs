@@ -8,45 +8,73 @@ using Onka.Manager.Data;
 /// </summary>
 public class Event_AnyItemActive : EventBase
 {
-    private ItemObject itemObject = null;
-    [SerializeField] private string itemObjectKey = "";
+    private ItemObject[] itemObjects = null;
+    [SerializeField] private string[] itemObjectKeys = null;
+    [SerializeField] private bool awaitAllItemGeted = true;
     public void SetItemPosition(Vector3 pos) { 
-        if(itemObject == null)
+        if(itemObjects == null)
         {
-            itemObject = ItemManager.Instance.GetItemObjectWithKey(itemObjectKey);
+            itemObjects = ItemManager.Instance.GetItemObjectsWithKeys(itemObjectKeys);
         }
-        itemObject.transform.position = pos; 
+        if (itemObjects.Length > 0)
+        {
+            itemObjects[0].transform.position = pos;
+        }
+        else
+        {
+            Debug.LogError("item count is zero");
+        }
     }
 
     protected override void AlreadyClearedMove()
     {
-        itemObject = ItemManager.Instance.GetItemObjectWithKey(itemObjectKey);
+        itemObjects = ItemManager.Instance.GetItemObjectsWithKeys(itemObjectKeys);
         //永久に存在するアイテム（日記など）は、表示させて終了
-        switch (DataManager.Instance.GetItemData(itemObjectKey).type)
+        for (int i = 0; i < itemObjectKeys.Length; ++i)
         {
-            case ItemType.WatchOnly:
-                itemObject.gameObject.SetActive(true);
-                break;
+            switch (DataManager.Instance.GetItemData(itemObjectKeys[i]).type)
+            {
+                case ItemType.WatchOnly:
+                    itemObjects[i].gameObject.SetActive(true);
+                    break;
+            }
         }
     }
 
     protected override void EventActive()
     {
-        itemObject = ItemManager.Instance.GetItemObjectWithKey(itemObjectKey);
+        itemObjects = ItemManager.Instance.GetItemObjectsWithKeys(itemObjectKeys);
         base.EventActive();
         InitiationContact();
     }
     public override void EventStart()
     {
         base.EventStart();
-        itemObject.gameObject.SetActive(true);
+        foreach(var obj in itemObjects)
+        {
+            obj.gameObject.SetActive(true);
+        }
     }
 
     public override void EventUpdate()
     {
         base.EventUpdate();
         //鍵を取得するまでイベントクリアにはならない
-        if (DataManager.Instance.GetItemData(itemObjectKey).geted)
+        //取得しなくてもクリア可能なら無視する
+        bool isCleared = true;
+        if (awaitAllItemGeted)
+        {
+            foreach (var key in itemObjectKeys)
+            {
+                var item = DataManager.Instance.GetItemData(key);
+                if (!item.geted)
+                {
+                    isCleared = false;
+                }
+            }
+        }
+
+        if (isCleared)
         {
             EventClearContact();
         }
