@@ -10,7 +10,7 @@ public class EndingEventManager : MonoBehaviour
     private CameraZoom zoom = null;
     [SerializeField] private MovingObject yukie = null;
     [SerializeField] private MovingObject shiori = null;
-    [SerializeField] private WalkAnimObj kozo = null;
+    [SerializeField] private Enemy_Kozo kozo = null;
     [SerializeField] private WalkAnimObj hatsu = null;
     [SerializeField] private WalkAnimObj nobuyuki = null;
     [SerializeField] private WalkAnimObj azuha = null;
@@ -57,6 +57,7 @@ public class EndingEventManager : MonoBehaviour
         azuhaSoundPlayer = azuha.GetComponent<SoundPlayerObject>();
         yuzuhaSoundPlayer = yuzuha.GetComponent<SoundPlayerObject>();
 
+        kozo.SetUp();
         kozo.gameObject.SetActive(false);
         hatsu.gameObject.SetActive(false);
         yukie.gameObject.SetActive(false);
@@ -331,8 +332,8 @@ public class EndingEventManager : MonoBehaviour
         tvEffect.enabled = true;
         yield return new WaitForSeconds(0.05f);
         
-        kozo.AnimOff();
-        kozo.animatorEnabled = false;
+        kozo.walkAnimObj.AnimOff();
+        kozo.walkAnimObj.animatorEnabled = false;
         nobuyuki.AnimOff();
         nobuyuki.animatorEnabled = false;
         isKozoUpdate = false;
@@ -354,7 +355,7 @@ public class EndingEventManager : MonoBehaviour
         kozo.gameObject.SetActive(true);
         kozo.transform.position = kozoPos;
         StartCoroutine(KozoUpdate());
-        kozo.AnimOn();
+        kozo.walkAnimObj.AnimOn();
         kozoSoundPlayer.PlaySoundLoop(0, 0.7f);
     }
     private void StartupShiori(Vector3 shioriPos)
@@ -415,7 +416,7 @@ public class EndingEventManager : MonoBehaviour
         isKozoUpdate = true;
         while (isKozoUpdate)
         {
-            kozo.SetMoveDir((mainCamera.transform.position - kozo.transform.position));
+            kozo.walkAnimObj.SetMoveDir((mainCamera.transform.position - kozo.transform.position));
             yield return null;
         }
     }

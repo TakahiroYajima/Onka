@@ -6,36 +6,18 @@ using UnityEngine.Events;
 
 public class EA_AfterGetHatsuDiary3 : EventActorBase
 {
-    [SerializeField] private Canvas canvasObj = null;
-    [SerializeField] private RectTransform hatsuRectTransform = null;
-    [SerializeField] private AudioSource hatsuAudio = null;
-    [SerializeField] private AudioSource noiseAudio = null;
-    [SerializeField] private AudioClip hatsuVoiceSEClip = null;
-    [SerializeField] private AudioClip noiseSEClip = null;
+    [SerializeField] private HatsuThreatenAction threatenAction = null;
+    
     public Event_AfterGetHatsuDiary3 eventBase { private get; set; }
-    private Vector2 initPos = Vector2.zero;
-
-    private CRT crt = null;
-    private Camera worldCamera = null;
 
     protected override void Initialize()
     {
-        crt = StageManager.Instance.Player.CameraObj.GetComponent<CRT>();
-        worldCamera = StageManager.Instance.Player.CameraObj.GetComponent<Camera>();
-        canvasObj.gameObject.SetActive(false);
-        
-        
-        initPos = hatsuRectTransform.anchoredPosition;
+        threatenAction.Initialize();
     }
 
     public override void EventStart()
     {
-        canvasObj.renderMode = RenderMode.ScreenSpaceCamera;
-        canvasObj.worldCamera = worldCamera;
-        StartCoroutine(HatsuEvent(() =>
-        {
-            parent.EventClearContact();
-        }));
+        StartCoroutine(HatsuEvent());
     }
     public override void EventUpdate()
     {
@@ -43,15 +25,12 @@ public class EA_AfterGetHatsuDiary3 : EventActorBase
     }
     public override void EventEnd()
     {
-        crt.enabled = false;
+        
+
     }
 
-    private IEnumerator HatsuEvent(UnityAction onComplete = null)
+    private IEnumerator HatsuEvent()
     {
-        int count = 0;
-        
-        Vector2 underPos = initPos;
-        underPos.y -= 30f;
         float t = 0f;
         while(t < 3f)
         {
@@ -67,28 +46,10 @@ public class EA_AfterGetHatsuDiary3 : EventActorBase
         {
             ItemManager.Instance.FinishWatchingItemEnforcement();
         }
-        canvasObj.gameObject.SetActive(true);
-        crt.enabled = true;
-        hatsuAudio.clip = hatsuVoiceSEClip;
-        noiseAudio.clip = noiseSEClip;
-        hatsuAudio.Play();
-        noiseAudio.Play();
-        while (count < 3)
+
+        StartCoroutine(threatenAction.HatsuEvent(() =>
         {
-            yield return new WaitForSeconds(0.1f);
-            hatsuRectTransform.anchoredPosition = underPos;
-            yield return new WaitForSeconds(0.1f);
-            hatsuRectTransform.anchoredPosition = initPos;
-            count++;
-        }
-        yield return new WaitForSeconds(0.1f);
-        hatsuRectTransform.anchoredPosition = underPos;
-        hatsuAudio.Stop();
-        noiseAudio.Stop();
-        crt.enabled = false;
-        if (onComplete != null)
-        {
-            onComplete();
-        }
+            parent.EventClearContact();
+        }));
     }
 }

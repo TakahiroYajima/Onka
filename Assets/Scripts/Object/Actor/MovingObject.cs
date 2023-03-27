@@ -10,12 +10,6 @@ public class MovingObject : MonoBehaviour
 {
     private float rotationSpeed = 3f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     /// <summary>
     /// 指定された方向へ向く（Y軸は自分と同じになる）
     /// </summary>

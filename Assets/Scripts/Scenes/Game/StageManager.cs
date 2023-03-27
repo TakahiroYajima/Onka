@@ -18,6 +18,8 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
     [SerializeField] private Enemy_Yukie yukiePrefab;
     private Enemy_Yukie yukieObject = null;
     public Enemy_Yukie Yukie { get { return yukieObject; } }
+    [System.NonSerialized] public Enemy_Kozo Kozo = null;
+    [System.NonSerialized] public Enemy_Hatsu Hatsu = null;
     [System.NonSerialized] public Enemy_Shiori Shiori = null;
     [System.NonSerialized] public Enemy_Azuha Azuha = null;
     [System.NonSerialized] public Enemy_Yuzuha Yuzuha = null;
@@ -26,6 +28,8 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
 
     private PlayerState prevPlayerState = PlayerState.Free;
     private EnemyState prevYukieState = EnemyState.Init;
+    private EnemyState prevKozoState = EnemyState.Init;
+    private EnemyState prevHatsuState = EnemyState.Init;
     private Enemy_ShioriState prevShioriState = Enemy_ShioriState.Init;
     private EnemyState prevAzuhaState = EnemyState.Init;
     private EnemyState prevYuzuhaState = EnemyState.Init;
@@ -199,6 +203,16 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
             prevYukieState = yukieObject.currentState;
             yukieObject.ChangeState(EnemyState.CanNotAction);
         }
+        if(Kozo != null)
+        {
+            prevKozoState = Kozo.currentState;
+            Kozo.ChangeState(EnemyState.Init);
+        }
+        if (Hatsu != null)
+        {
+            prevHatsuState = Hatsu.currentState;
+            Hatsu.ChangeState(EnemyState.Init);
+        }
         if (Shiori != null)
         {
             prevShioriState = Shiori.currentShioriState;
@@ -222,6 +236,14 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
         {
             yukieObject.ChangeState(prevYukieState);
         }
+        if (Kozo != null)
+        {
+            Kozo.ChangeState(prevKozoState);
+        }
+        if (Hatsu != null)
+        {
+            Hatsu.ChangeState(prevHatsuState);
+        }
         if (Shiori != null)
         {
             Shiori.ChangeState(prevShioriState);
@@ -243,7 +265,17 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
             yukieObject.StopSound();
             yukieObject.gameObject.SetActive(false);
         }
-        if(Shiori != null)
+        if (Kozo != null)
+        {
+            Kozo.soundPlayerObject.StopSound();
+            Kozo.gameObject.SetActive(false);
+        }
+        if (Hatsu != null)
+        {
+            Hatsu.soundPlayerObject.StopSound();
+            Hatsu.gameObject.SetActive(false);
+        }
+        if (Shiori != null)
         {
             Shiori.gameObject.SetActive(false);
         }

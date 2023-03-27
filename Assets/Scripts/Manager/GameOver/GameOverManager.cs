@@ -71,6 +71,8 @@ public enum GameOverType
     YukieArrested,
     ShioriArrested,
     AzuYuzuArrested,
+    KozoArrested,
+    HatsuArrested,
 }
 
 /// <summary>
