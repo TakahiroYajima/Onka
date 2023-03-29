@@ -14,11 +14,11 @@ public class KeyLockTarget : MonoBehaviour
     [SerializeField] protected KeyLockObject keyLockObject = null;
     public bool isUnlocked { get { return DataManager.Instance.IsKeyUnlocked(unlockTargetKey); } }//過去にプレイヤーが解錠しているか（ItemのisUsedで判定）
 
-    // Start is called before the first frame update
-    void Start()
+    public void SetUp()
     {
         keyLockObject.SetInitialize(this);
     }
+
     /// <summary>
     /// 解錠できた瞬間のイベント。終了の際は必ず下記のUnlocked()を呼ぶこと
     /// </summary>

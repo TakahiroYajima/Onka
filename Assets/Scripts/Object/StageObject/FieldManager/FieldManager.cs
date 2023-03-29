@@ -24,11 +24,14 @@ public class FieldManager : MonoBehaviour
     [SerializeField] private List<SoundDistancePoint> yukieInitInstancePoints = new List<SoundDistancePoint>();
     public IReadOnlyList<SoundDistancePoint> YukieInitInstancePoints { get { return yukieInitInstancePoints; } }
 
+    [SerializeField] private KeyLockHoleSetupController keyLockHoleSetupController = null;
+
     [SerializeField, ReadOnly] private AreaParent[] areaParents = null;
 
     public void SetUp()
     {
-        foreach(var v in areaParents)
+        keyLockHoleSetupController.SetUp();
+        foreach (var v in areaParents)
         {
             v.SetUp();
         }

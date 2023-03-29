@@ -7,11 +7,5 @@ using UnityEngine;
 /// </summary>
 public abstract class KeyLockOperationObject : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     public abstract void Tap();
 }

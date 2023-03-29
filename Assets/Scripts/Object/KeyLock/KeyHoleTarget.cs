@@ -10,8 +10,7 @@ public class KeyHoleTarget : MonoBehaviour
     [SerializeField] protected KeyHoleObject keyLockObject = null;
     public bool isUnlocked { get { return DataManager.Instance.IsKeyUnlocked(unlockKey); } }//過去にプレイヤーがドアを開けているか（ItemのisUsedで判定）
 
-    // Start is called before the first frame update
-    void Start()
+    public void SetUp()
     {
         keyLockObject.SetInitialize(this);
     }

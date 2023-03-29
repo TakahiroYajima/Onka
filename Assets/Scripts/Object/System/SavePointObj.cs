@@ -8,12 +8,6 @@ using Onka.Manager.Data;
 /// </summary>
 public class SavePointObj : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     public void StartSaveAction()
     {
         DialogManager.Instance.OpenTemplateDialog("セーブしますか？", TempDialogType.YesOrNo, SaveAction);

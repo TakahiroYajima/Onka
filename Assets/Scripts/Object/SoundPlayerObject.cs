@@ -18,14 +18,6 @@ public class SoundPlayerObject : MonoBehaviour
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        //for(int i = 0; i < audioClipList.Count; i++)
-        //{
-        //    SoundData soundData = DataManager.Instance.GetSoundSO().soundDataList.FirstOrDefault(x => x.soundName == audioClipList[i].name);
-        //    if(soundData != null && soundData != default)
-        //    {
-        //        soundDataList.Add(soundData);
-        //    }
-        //}
     }
     
     public AudioClip GetClip(int arrayNum)
