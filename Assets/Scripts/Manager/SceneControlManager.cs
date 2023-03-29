@@ -110,7 +110,7 @@ public class SceneControlManager : SingletonMonoBehaviour<SceneControlManager>
         FadeManager.Instance.FadeIn(fadeInColorType, 1f, onComplete);
     }
 
-    private void StopBGMAndEnvironment()
+    public void StopBGMAndEnvironment()
     {
         SoundManager.Instance.StopBGMWithFadeOut(1f);
         SoundManager.Instance.StopEnvironment();

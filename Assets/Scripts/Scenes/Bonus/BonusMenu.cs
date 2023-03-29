@@ -15,7 +15,7 @@ public class BonusMenu : MonoBehaviour
     #region MainMenu
     public void OnPressBackToTitleButton()
     {
-        SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Title", true, null, FadeManager.FadeColorType.Black, FadeManager.FadeColorType.Black);
+        SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Game", true, null, FadeManager.FadeColorType.Black, FadeManager.FadeColorType.Black);
     }
 
     public void OnPressOpenMenuButton()

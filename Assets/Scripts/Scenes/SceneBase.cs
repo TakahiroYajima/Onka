@@ -27,8 +27,8 @@ public abstract class SceneBase : SingletonMonoBehaviour<SceneBase>
         }
     }
 
-    //protected void ChangeScene(string name)
-    //{
-    //    SceneControlManager.Instance.ChangeSceneWithFade(name);
-    //}
+    public virtual void SceneStart()
+    {
+
+    }
 }

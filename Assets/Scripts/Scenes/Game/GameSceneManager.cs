@@ -8,8 +8,14 @@ using SoundDistance;
 using Onka.Manager.Event;
 using Onka.Manager.Menu;
 
+/// <summary>
+/// ゲーム本編のScene制御
+/// </summary>
+/// <remark>もともとは1つのSceneずつで制御していたが、タイトルの読み込みを0にしたいためTitleManagerから直接制御されるように変更
 public class GameSceneManager : SceneBase
 {
+    [SerializeField] private TitleManager titleManagerPrefab = null;
+    private TitleManager titleManager = null;
     [field: SerializeField] public FieldManager fieldObject { get; private set; }
     private GameObject managerObject = null;
 
@@ -17,8 +23,13 @@ public class GameSceneManager : SceneBase
 
     protected override void Start()
     {
-        base.Initialize();
+        titleManager = Instantiate(titleManagerPrefab);
+        titleManager.Initialize();
+    }
 
+    public override void SceneStart()
+    {
+        base.Initialize();
         StartCoroutine(SetStart());
     }
 
@@ -28,6 +39,10 @@ public class GameSceneManager : SceneBase
 
         LoadingUIManager.Instance.SetMessage("ステージを構成しています");
         yield return async;
+        if (titleManager != null)
+        {
+            DestroyImmediate(titleManager.gameObject);
+        }
         StartScene();
     }
 

@@ -94,6 +94,6 @@ public class FirstSplashSceneManager : MonoBehaviour
         }
         isMoving = false;
         faderObj.SetActive(false);
-        SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Title", true, null, FadeManager.FadeColorType.None, FadeManager.FadeColorType.Black);
+        SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Game", true, null, FadeManager.FadeColorType.None, FadeManager.FadeColorType.Black);
     }
 }

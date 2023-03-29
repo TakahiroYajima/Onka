@@ -99,7 +99,7 @@ namespace Onka.Manager.Menu
             {
                 if (isBack)
                 {
-                    SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Title", true, null, FadeManager.FadeColorType.Black, FadeManager.FadeColorType.Black);
+                    SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Game", true, null, FadeManager.FadeColorType.Black, FadeManager.FadeColorType.Black);
                 }
                 else
                 {
