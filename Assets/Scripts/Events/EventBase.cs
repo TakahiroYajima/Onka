@@ -16,7 +16,7 @@ public abstract class EventBase : MonoBehaviour
     public string EventKey { get { return eventKey; } }
     [SerializeField] protected string[] needItemKeys = null;//このイベントが発生するのに必要なアイテムキー
     [SerializeField] protected string[] needEventKeys = null;//このイベントが発生するのに必要なイベントキー
-    [HideInInspector] public int managementID = -1;//配列で管理する際のID
+    [System.NonSerialized] public int managementID = -1;//配列で管理する際のID
 
     [SerializeField] protected EventActorBase eventActorPref = null;
     protected EventActorBase instanceEventActor = null;
