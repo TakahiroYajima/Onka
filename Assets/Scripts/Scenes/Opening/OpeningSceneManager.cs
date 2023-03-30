@@ -10,6 +10,6 @@ public class OpeningSceneManager : SceneBase
     protected override void Start()
     {
         base.Initialize();
-        openingEventManager.StartAction();
+        //openingEventManager.StartAction();
     }
 }

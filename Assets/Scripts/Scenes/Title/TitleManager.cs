@@ -26,7 +26,9 @@ public class TitleManager : MonoBehaviour
     public void PressStartButton()
     {
         SoundManager.Instance.PlaySeWithKeyOne("menuse_enter");
-        SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Opening",true, null, FadeManager.FadeColorType.Black, FadeManager.FadeColorType.None);
+        //SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Opening",true, null, FadeManager.FadeColorType.Black, FadeManager.FadeColorType.None);
+        SceneControlManager.Instance.StopBGMAndEnvironment();
+        FadeManager.Instance.FadeOut(FadeManager.FadeColorType.Black, FadeManager.DefaultDuration, ChangeSceneGameWithOpening);
     }
 
     public void PressLoadButton()
@@ -40,8 +42,13 @@ public class TitleManager : MonoBehaviour
     private void ChangeSceneGame()
     {
         titleMenu.gameObject.SetActive(false);
-        InGameUtil.GCCollect();
         GameSceneManager.Instance.SceneStart();
+    }
+
+    private void ChangeSceneGameWithOpening()
+    {
+        titleMenu.gameObject.SetActive(false);
+        GameSceneManager.Instance.SceneStartWithOpening();
     }
 
     //private IEnumerator ChangeToGame()

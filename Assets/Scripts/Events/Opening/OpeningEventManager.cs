@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SoundSystem;
@@ -8,17 +9,14 @@ public class OpeningEventManager : MonoBehaviour
     [SerializeField] private AudioClip bgm = null;
 
     private bool isPlaying = false;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private Action onComplete = null;
 
-    public void StartAction()
+    public void StartAction(Action onComplete)
     {
         if (!isPlaying)
         {
             isPlaying = true;
+            this.onComplete = onComplete;
             SoundManager.Instance.PlayBGMWithFadeIn(bgm, 2f, 0.1f);
             FadeManager.Instance.FadeIn(FadeManager.FadeColorType.Black, 2f, () =>
             {
@@ -69,7 +67,11 @@ public class OpeningEventManager : MonoBehaviour
         FadeManager.Instance.FadeOut(FadeManager.FadeColorType.Black, 3.5f, () =>
         {
             SceneControlManager.Instance.changeSceneMoveType = ChangeSceneMoveType.NewGame;
-            SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Game", true, null, FadeManager.FadeColorType.None, FadeManager.FadeColorType.Black, false);
+            if(onComplete != null)
+            {
+                onComplete();
+            }
+            //SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Game", true, null, FadeManager.FadeColorType.None, FadeManager.FadeColorType.Black, false);
         });
     }
 

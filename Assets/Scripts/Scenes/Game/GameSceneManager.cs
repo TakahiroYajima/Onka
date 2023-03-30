@@ -16,6 +16,9 @@ public class GameSceneManager : SceneBase
 {
     [SerializeField] private TitleManager titleManagerPrefab = null;
     private TitleManager titleManager = null;
+    [SerializeField] private OpeningEventManager openingEventManagerPrefab = null;
+    private OpeningEventManager openingEventManager = null;
+
     [field: SerializeField] public FieldManager fieldObject { get; private set; }
     private GameObject managerObject = null;
 
@@ -27,46 +30,66 @@ public class GameSceneManager : SceneBase
         titleManager.Initialize();
     }
 
+    private void DeleteTitle()
+    {
+        if (titleManager != null)
+        {
+            DestroyImmediate(titleManager.gameObject);
+        }
+    }
+
+    private void DeleteOpening()
+    {
+        if (openingEventManager != null)
+        {
+            DestroyImmediate(openingEventManager.gameObject);
+        }
+    }
+
     public override void SceneStart()
     {
         base.Initialize();
         StartCoroutine(SetStart());
     }
 
+    public override void SceneStartWithOpening()
+    {
+        base.Initialize();
+        DeleteTitle();
+        openingEventManager = Instantiate(openingEventManagerPrefab);
+        openingEventManager.StartAction(() => { StartCoroutine(SetStart()); });
+    }
+    
     private IEnumerator SetStart()
     {
         var async = StartCoroutine(InitSceneSetUp());
 
         LoadingUIManager.Instance.SetMessage("ステージを構成しています");
         yield return async;
-        if (titleManager != null)
-        {
-            DestroyImmediate(titleManager.gameObject);
-        }
+        DeleteTitle();
+        DeleteOpening();
         StartScene();
     }
 
     private IEnumerator InitSceneSetUp()
     {
-        yield return null;
+        var await = new WaitForSeconds(0.14f);
+        yield return await;
         //LoadingUIManager.Instance.SetProgress(0f);
         //yield return LoadInScene();
         LoadingUIManager.Instance.SetProgress(0.25f);
         yield return LoadStage();
+        yield return await;
         LoadingUIManager.Instance.SetProgress(0.5f);
         //Debug.Log("0.5");
         //ステージが生成されてから
         yield return SetUpManager();
+        yield return await;
         LoadingUIManager.Instance.SetProgress(0.75f);
-        //Debug.Log("0.75");
         yield return ActorSetUp();
-        
-        yield return null;
+        yield return await;
         InGameUtil.GCCollect();
-        //Debug.Log("0.75_2");
-        yield return null;
         StageManager.Instance.fieldObject.SetUp();
-        //Debug.Log("1");
         LoadingUIManager.Instance.SetProgress(1f);
     }
     //private IEnumerator LoadInScene()

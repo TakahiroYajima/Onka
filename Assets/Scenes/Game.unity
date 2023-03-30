@@ -157,6 +157,8 @@ MonoBehaviour:
   thisScene: 3
   titleManagerPrefab: {fileID: 1653171324286563224, guid: 6e0a87ab02352184d964e2bb21df9b57,
     type: 3}
+  openingEventManagerPrefab: {fileID: 2852741678086489196, guid: 16531619ebb0e3f4eba91e08cd2ec0a6,
+    type: 3}
   <fieldObject>k__BackingField: {fileID: 914174497195868147}
 --- !u!4 &356880851
 Transform:

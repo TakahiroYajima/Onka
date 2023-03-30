@@ -31,4 +31,8 @@ public abstract class SceneBase : SingletonMonoBehaviour<SceneBase>
     {
 
     }
+    public virtual void SceneStartWithOpening()
+    {
+
+    }
 }

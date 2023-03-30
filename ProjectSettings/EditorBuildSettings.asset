@@ -12,12 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/FirstSplash.unity
     guid: d4bc265eeb72cd643aaf42d2d3dd6d9d
   - enabled: 1
-    path: Assets/Scenes/Opening.unity
-    guid: f150a44a514d9324b897aee888ee257a
-  - enabled: 1
-    path: Assets/Scenes/Title.unity
-    guid: c19b07efc769e614390a65f7aa0b892b
-  - enabled: 1
     path: Assets/Scenes/Game.unity
     guid: 94417778c546c8d4bac57779a8334c25
   - enabled: 1
