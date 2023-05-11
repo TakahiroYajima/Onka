@@ -284,6 +284,10 @@ namespace SoundSystem
             {
                 audioSource.Play(audioClip, soundData.volume);
             }
+            else
+            {
+                Debug.LogWarning("audiosource is null");
+            }
         }
 
         public void PlayBGMWithFadeIn(string clipName, float fadeTime = 2f)
