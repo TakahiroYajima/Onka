@@ -22,7 +22,9 @@ public class EA_AfterOutHouse : EventActorBase
         endingEventManager.Initialize(StageManager.Instance.Player.CameraObj);
         endingEventManager.StartAction(EndingEventType.FinalEvent, () =>
          {
-             SceneControlManager.Instance.ChangeScene("Ending", true);
+             DestroyImmediate(endingEventManager.gameObject);
+             var manager = GameSceneManager.Instance as GameSceneManager;
+             manager.StartEnding();
          });
     }
     public override void EventUpdate()

@@ -18,6 +18,8 @@ public class GameSceneManager : SceneBase
     private TitleManager titleManager = null;
     [SerializeField] private OpeningEventManager openingEventManagerPrefab = null;
     private OpeningEventManager openingEventManager = null;
+    [SerializeField] private EndingSceneManager endingSceneManagerPrefab = null;
+    private EndingSceneManager endingSceneManager = null;
 
     [field: SerializeField] public FieldManager fieldObject { get; private set; }
     private GameObject managerObject = null;
@@ -186,6 +188,15 @@ public class GameSceneManager : SceneBase
 
         LoadingUIManager.Instance.SetActive(false);
         FadeManager.Instance.FadeIn(FadeManager.FadeColorType.Black, 1f, null);
+    }
+
+    public void StartEnding()
+    {
+        if(endingSceneManager == null)
+        {
+            endingSceneManager = Instantiate(endingSceneManagerPrefab);
+        }
+        endingSceneManager.StartEnding();
     }
 }
 

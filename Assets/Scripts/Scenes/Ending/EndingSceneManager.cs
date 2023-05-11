@@ -1,15 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class EndingSceneManager : SceneBase
+public class EndingSceneManager : MonoBehaviour
 {
     [SerializeField] private EndingEventManager endingEventManager = null;
     [SerializeField] private GameObject camera = null;
-    // Start is called before the first frame update
-    protected override void Start()
+    
+    public void StartEnding()
     {
-        base.Initialize();
+        StageManager.Instance.Player.gameObject.SetActive(false);
+        Onka.Manager.Data.DataManager.Instance.SetCurrentSceneUseSound(SceneType.Ending);
         endingEventManager.Initialize(camera);
         endingEventManager.StartAction(EndingEventType.EndingScene);
     }
