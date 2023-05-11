@@ -14,6 +14,7 @@ public class HatsuStateInit : StateBase
     public override void StartAction()
     {
         hatsu.navMeshAgent.enabled = false;
+        hatsu.rigidbody.isKinematic = true;
     }
 
     public override void UpdateAction()
@@ -23,6 +24,6 @@ public class HatsuStateInit : StateBase
 
     public override void EndAction()
     {
-
+        hatsu.rigidbody.isKinematic = false;
     }
 }

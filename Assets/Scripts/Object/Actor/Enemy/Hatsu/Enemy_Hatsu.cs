@@ -32,6 +32,8 @@ public class Enemy_Hatsu : Enemy
 
         hatsuStateDic.Add(EnemyState.Init, new HatsuStateInit(this));
         hatsuStateDic.Add(EnemyState.ChasePlayer, new HatsuStateChasePlayer(this));
+
+        ChangeState(EnemyState.Init);
     }
 
     // Update is called once per frame
