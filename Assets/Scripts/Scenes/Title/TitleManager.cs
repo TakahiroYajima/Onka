@@ -58,7 +58,7 @@ public class TitleManager : MonoBehaviour
 
     public void PressBonusButton()
     {
-        SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Bonus", true, null, FadeManager.FadeColorType.Black, FadeManager.FadeColorType.Black);
+        SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Bonus", true, null, FadeManager.FadeColorType.Black, FadeManager.FadeColorType.Black, true, 1f, 2.1f);
     }
 
     public void PressQuitButton()

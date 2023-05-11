@@ -38,7 +38,7 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager> {
         }
         this._image.enabled = true;
         this._image.color = this._colorDict[colorType];
-        StartCoroutine(FadeAction(_image, FadeType.In, 1f, () =>
+        StartCoroutine(FadeAction(_image, FadeType.In, duration, () =>
         {
             this._image.enabled = false;
             if (onComplete != null)
@@ -63,7 +63,7 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager> {
         this._image.enabled = true;
         Color c = this._colorDict[colorType];
         this._image.color = new Color(c.r, c.g, c.b, 0);
-        StartCoroutine(FadeAction(_image, FadeType.Out, 1f, () =>
+        StartCoroutine(FadeAction(_image, FadeType.Out, duration, () =>
         {
             if (onComplete != null)
             {
