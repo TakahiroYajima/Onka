@@ -12,6 +12,7 @@ public class SelectSaveDataViewItem : MonoBehaviour
     [SerializeField] private Image rateOfProgressionImage = null;
     [SerializeField] private Text titleText = null;
     [SerializeField] private Text dateTimeText = null;
+    [SerializeField] private Text noDataText = null;
 
     UnityAction<int> onPress = null;
 
@@ -33,7 +34,7 @@ public class SelectSaveDataViewItem : MonoBehaviour
         if (!string.IsNullOrEmpty(saveDateTime))
         {
             rateOfProgressionImage.fillAmount = rateOfProgression;
-            titleText.text = $"データ {(id + 1).ToString()}";
+            titleText.text = string.Format(TextMaster.GetText("text_select_save_data_item_title"), id + 1);
             dateTimeText.text = saveDateTime;
             activeBase.SetActive(true);
             noDataTextObj.SetActive(false);
@@ -42,6 +43,7 @@ public class SelectSaveDataViewItem : MonoBehaviour
         {
             activeBase.SetActive(false);
             noDataTextObj.SetActive(true);
+            noDataText.text = TextMaster.GetText("text_select_save_data_item_no_data");
         }
         onPress = _onPress;
     }

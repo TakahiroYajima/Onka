@@ -124,12 +124,16 @@ public class ItemSettingEditor : EditorWindow
                                         scriptableObject.itemDataList[findID].key = EditorGUILayout.TextField("Key", scriptableObject.itemDataList[findID].key);
                                         scriptableObject.itemDataList[findID].type = (ItemType)EditorGUILayout.EnumPopup("種類", scriptableObject.itemDataList[findID].type);
                                         scriptableObject.itemDataList[findID].name = EditorGUILayout.TextField("アイテム名", scriptableObject.itemDataList[findID].name);
+                                        scriptableObject.itemDataList[findID].name_en = EditorGUILayout.TextField("アイテム名（英）", scriptableObject.itemDataList[findID].name_en);
                                         scriptableObject.itemDataList[findID].spriteName = EditorGUILayout.TextField("ファイル名", scriptableObject.itemDataList[findID].spriteName);
                                         scriptableObject.itemDataList[findID].description = EditorGUILayout.TextField("説明", scriptableObject.itemDataList[findID].description);
+                                        scriptableObject.itemDataList[findID].description_en = EditorGUILayout.TextField("説明（英）", scriptableObject.itemDataList[findID].description_en);
                                         EditorGUILayout.BeginVertical(GUI.skin.box);
                                         {
                                             EditorGUILayout.LabelField("詳細説明（おまけ用）");
                                             scriptableObject.itemDataList[findID].description_detail = EditorGUILayout.TextArea(scriptableObject.itemDataList[findID].description_detail);
+                                            EditorGUILayout.LabelField("詳細説明（おまけ用）（英）");
+                                            scriptableObject.itemDataList[findID].description_detail_en = EditorGUILayout.TextArea(scriptableObject.itemDataList[findID].description_detail_en);
                                         }
                                         EditorGUILayout.EndVertical();
 
@@ -160,22 +164,37 @@ public class ItemSettingEditor : EditorWindow
                                                         if (GUILayout.Button("ファイル追加"))
                                                         {
                                                             scriptableObject.itemDataList[findID].fileItem.content.Add("");
+                                                            scriptableObject.itemDataList[findID].fileItem.content_en.Add("");
                                                         }
                                                     }
                                                     GUI.backgroundColor = defaultColor;
 
                                                     for (int fileCount = 0; fileCount < scriptableObject.itemDataList[findID].fileItem.content.Count; fileCount++)
                                                     {
+                                                        //英文を新しく追加したのでリストが足りなかった場合の対処(2023/4/19)
+                                                        if (scriptableObject.itemDataList[findID].fileItem.content_en.Count < scriptableObject.itemDataList[findID].fileItem.content.Count)
+                                                        {
+                                                            scriptableObject.itemDataList[findID].fileItem.content_en.Add("");
+                                                        }
+
                                                         EditorGUILayout.BeginVertical(GUI.skin.box);
                                                         {
                                                             EditorGUILayout.LabelField("ページ " + (fileCount + 1));
                                                             EditorGUILayout.BeginHorizontal(GUI.skin.box);
                                                             {
-                                                                scriptableObject.itemDataList[findID].fileItem.content[fileCount] = EditorGUILayout.TextArea(scriptableObject.itemDataList[findID].fileItem.content[fileCount]);
+                                                                EditorGUILayout.BeginVertical(GUI.skin.box);
+                                                                {
+                                                                    EditorGUILayout.LabelField("テキスト");
+                                                                    scriptableObject.itemDataList[findID].fileItem.content[fileCount] = EditorGUILayout.TextArea(scriptableObject.itemDataList[findID].fileItem.content[fileCount]);
+                                                                    EditorGUILayout.LabelField("テキスト（英）");
+                                                                    scriptableObject.itemDataList[findID].fileItem.content_en[fileCount] = EditorGUILayout.TextArea(scriptableObject.itemDataList[findID].fileItem.content_en[fileCount]);
+                                                                }
+                                                                EditorGUILayout.EndVertical();
                                                                 GUILayout.Space(10);
                                                                 if (GUILayout.Button("ページ削除", GUILayout.Width(80)))
                                                                 {
                                                                     scriptableObject.itemDataList[findID].fileItem.content.RemoveAt(fileCount);
+                                                                    scriptableObject.itemDataList[findID].fileItem.content_en.RemoveAt(fileCount);
                                                                 }
                                                             }
                                                             EditorGUILayout.EndHorizontal();

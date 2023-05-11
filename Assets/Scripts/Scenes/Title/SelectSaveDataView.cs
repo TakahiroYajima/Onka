@@ -23,8 +23,15 @@ public class SelectSaveDataView : MonoBehaviour
     }
     private ViewSelectType viewSelectType = ViewSelectType.LoadGame;
 
+    //マスタ
+    [SerializeField] private Text messageText = null;
+    [SerializeField] private Text backText = null;
+
     public void View(ViewSelectType _viewSelectType)
     {
+        messageText.text = TextMaster.GetText("text_select_save_data");
+        backText.text = TextMaster.GetText("text_back");
+
         viewSelectType = _viewSelectType;
         saveDataList = DataManager.Instance.GetAllGameDatas();
         InstanceList();

@@ -14,7 +14,7 @@ public class CharactorListViewerOneItem : MonoBehaviour
     public void Initialize(CharactorData data, UnityAction onPress = null)
     {
         charactorImage.sprite = data.sprite;
-        nameText.text = data.name;
+        nameText.text = data.Name;
         charactorButton.onClick.RemoveAllListeners();
         if (onPress != null)
         {

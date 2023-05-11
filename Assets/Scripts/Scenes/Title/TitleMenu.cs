@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using Onka.Manager.Data;
 
 public class TitleMenu : MonoBehaviour
@@ -8,10 +9,24 @@ public class TitleMenu : MonoBehaviour
     [SerializeField] private SelectSaveDataView selectSaveDataView = null;
     [SerializeField] private GameObject bonusButtonObj = null;
 
+    //マスタ
+    [SerializeField] private Text titleText = null;
+    [SerializeField] private Text startText = null;
+    [SerializeField] private Text continueText = null;
+    [SerializeField] private Text quitText = null;
+    [SerializeField] private Text bonusText = null;
+    [SerializeField] private Text settingText = null;
+
     public void Initialize()
     {
         bonusButtonObj.SetActive(DataManager.Instance.IsGameClearedInThePast());
 
+        titleText.text = TextMaster.GetText("text_title");
+        startText.text = TextMaster.GetText("text_new_game");
+        continueText.text = TextMaster.GetText("text_continue_game");
+        quitText.text = TextMaster.GetText("text_quit_game");
+        bonusText.text = TextMaster.GetText("text_bonus");
+        settingText.text = TextMaster.GetText("text_language_setting");
     }
 
     public void OnPressNewGameButton()
@@ -63,5 +78,10 @@ public class TitleMenu : MonoBehaviour
     public void OnPressQuitButton()
     {
         manager.PressQuitButton();
+    }
+
+    public void OnPressSettingButton()
+    {
+
     }
 }

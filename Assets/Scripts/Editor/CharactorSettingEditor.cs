@@ -126,6 +126,7 @@ public class CharactorSettingEditor : EditorWindow
                                         EditorGUILayout.BeginHorizontal();
                                         {
                                             dataList.charactorDataList[findID].name = EditorGUILayout.TextField("名前", dataList.charactorDataList[findID].name);
+                                            dataList.charactorDataList[findID].name_en = EditorGUILayout.TextField("名前（英）", dataList.charactorDataList[findID].name_en);
                                             dataList.charactorDataList[findID].isCharactorName = EditorGUILayout.Toggle("名前表記？", dataList.charactorDataList[findID].isCharactorName);
                                         }
                                         EditorGUILayout.EndHorizontal();
@@ -148,6 +149,12 @@ public class CharactorSettingEditor : EditorWindow
                                             EditorGUILayout.BeginHorizontal(GUI.skin.box);
                                             {
                                                 dataList.charactorDataList[findID].description = EditorGUILayout.TextArea(dataList.charactorDataList[findID].description);
+                                            }
+                                            EditorGUILayout.EndHorizontal();
+                                            EditorGUILayout.LabelField("説明（英）");
+                                            EditorGUILayout.BeginHorizontal(GUI.skin.box);
+                                            {
+                                                dataList.charactorDataList[findID].description_en = EditorGUILayout.TextArea(dataList.charactorDataList[findID].description_en);
                                             }
                                             EditorGUILayout.EndHorizontal();
                                         }

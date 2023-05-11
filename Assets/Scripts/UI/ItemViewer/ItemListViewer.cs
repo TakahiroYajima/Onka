@@ -79,7 +79,7 @@ public class ItemListViewer : MonoBehaviour
             if (itemData.geted)
             {
                 itemSprite = ResourceManager.LoadResourceSprite(ResourceManager.ItemResourcePath, itemData.spriteName);
-                itemName = itemData.name;
+                itemName = itemData.Name;
             }
             else
             {
@@ -112,11 +112,11 @@ public class ItemListViewer : MonoBehaviour
         currentInstanceViewer = Instantiate(oneItemViewerPref, viewerParent);
         if (viewMode == ViewMode.Master)
         {
-            currentInstanceViewer.ViewItem(_itemSprite, _itemData.name, _itemData.description, true, CloseOneItemView, OnPressItemDetailButtonInViewer);
+            currentInstanceViewer.ViewItem(_itemSprite, _itemData.Name, _itemData.Description, true, CloseOneItemView, OnPressItemDetailButtonInViewer);
         }
         else
         {
-            currentInstanceViewer.ViewItem(_itemSprite, _itemData.name, _itemData.description, true, CloseOneItemView, null);
+            currentInstanceViewer.ViewItem(_itemSprite, _itemData.Name, _itemData.Description, true, CloseOneItemView, null);
         }
     }
     private void CloseOneItemView()

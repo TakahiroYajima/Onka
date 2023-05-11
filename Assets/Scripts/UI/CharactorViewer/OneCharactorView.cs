@@ -19,10 +19,10 @@ public class OneCharactorView : MonoBehaviour
     public void View(CharactorData _data, bool _showBackButton = false, UnityAction _onClosed = null)
     {
         nameTitleObj.SetActive(_data.isCharactorName);
-        nameText.text = _data.name;
+        nameText.text = _data.Name;
         ageText.text = _data.age.ToString();
         genderText.text = EnumUtil.PerseGenderStr(_data.gender);
-        descriptionText.text = _data.description;
+        descriptionText.text = _data.Description;
         //descriptionText.gameObject.GetComponent<HyphenationJpn>().GetText(_data.description);
         charactorImage.sprite = _data.sprite;
 

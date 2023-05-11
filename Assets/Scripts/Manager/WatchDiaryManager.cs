@@ -39,7 +39,7 @@ public class WatchDiaryManager : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 pageNum++;
-                if (pageNum >= diaryData.fileItem.content.Count)
+                if (pageNum >= diaryData.fileItem.Content.Count)
                 {
                     
                     EndWatchingItem();
@@ -57,8 +57,8 @@ public class WatchDiaryManager : MonoBehaviour
     private void DoOpenPage(int page)
     {
         //Debug.Log("DoOpenPage : " + page);
-        pageNumText.text = $"{page + 1} / {diaryData.fileItem.content.Count}";
-        contentText.text = diaryData.fileItem.content[page];
+        pageNumText.text = $"{page + 1} / {diaryData.fileItem.Content.Count}";
+        contentText.text = diaryData.fileItem.Content[page];
         contentText.font = fonts[(int)diaryData.fileItem.fontType];
         contentText.color = diaryData.fileItem.GetTextColor();
         SoundManager.Instance.PlaySeWithKey("menuse_book_page");

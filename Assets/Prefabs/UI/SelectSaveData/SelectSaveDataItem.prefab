@@ -479,6 +479,7 @@ MonoBehaviour:
   rateOfProgressionImage: {fileID: 3408740575161021982}
   titleText: {fileID: 7898121096185173837}
   dateTimeText: {fileID: 1424689259985413248}
+  noDataText: {fileID: 681842391353143846}
 --- !u!222 &3682578094182313691
 CanvasRenderer:
   m_ObjectHideFlags: 0

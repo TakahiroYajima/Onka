@@ -25,7 +25,7 @@ public class OneItemDetailViewer : MonoBehaviour
     {
         currentWatchingItemData = _data;
         itemImage.sprite = ResourceManager.LoadResourceSprite(ResourceManager.ItemResourcePath, currentWatchingItemData.spriteName);
-        nameText.text = currentWatchingItemData.name;
+        nameText.text = currentWatchingItemData.Name;
         descriptionText.text = currentWatchingItemData.description_detail;
 
         onClosed = _onClosed;
