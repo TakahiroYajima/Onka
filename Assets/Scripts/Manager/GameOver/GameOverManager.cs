@@ -29,6 +29,7 @@ public class GameOverManager : SingletonMonoBehaviour<GameOverManager>
         instanceEvent = Instantiate(gameOverEventPrefs.GetTable()[type], transform);
         instanceEvent.Initialize();
         StageManager.Instance.AllEnemyInactive();
+        gameOverText.text = TextMaster.GetText("text_game_over");
         StartCoroutine(StartGameOverAction());
     }
 
@@ -50,7 +51,7 @@ public class GameOverManager : SingletonMonoBehaviour<GameOverManager>
         yield return StartCoroutine(FadeManager.Instance.FadeAction(gameOverText, FadeType.Out, 2f));
         yield return new WaitForSeconds(1.5f);
         InGameUtil.DoCursorFree();
-        DialogManager.Instance.OpenTemplateDialog("タイトルへ", TempDialogType.InButtonMessage, BackToTitleCallback);
+        DialogManager.Instance.OpenTemplateDialog(TextMaster.GetText("text_game_over_back_to_title"), TempDialogType.InButtonMessage, BackToTitleCallback);
     }
 
     public void EndEventAction()
