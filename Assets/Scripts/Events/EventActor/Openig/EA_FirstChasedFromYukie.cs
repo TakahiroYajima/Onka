@@ -8,10 +8,11 @@ public class EA_FirstChasedFromYukie : EventActorBase
 {
     [SerializeField] private GameObject firstYukiePosition = null;
     [SerializeField, ReadOnly] private string soundPointSDPKey = "sd_point_outer_0009";
+    [SerializeField] private RunAwayTutorialManager tutorialManager = null;
 
     protected override void Initialize()
     {
-        
+        tutorialManager.SetUp();
     }
 
     public override void EventStart()
@@ -31,6 +32,8 @@ public class EA_FirstChasedFromYukie : EventActorBase
         StageManager.Instance.Yukie.transform.LookAt(lookPos);
         StageManager.Instance.Yukie.onStateChangeCallback += OnYukieStateChangedCallback;
         StageManager.Instance.Yukie.ChangeState(EnemyState.RecognizedPlayer);
+
+        tutorialManager.StartTutorial();
     }
     public override void EventUpdate()
     {
