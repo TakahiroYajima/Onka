@@ -27,7 +27,7 @@ There is no escape from the curse.
 ") },
     };
 
-    public static string GeMessageText(string key)
+    public static string GetMessageText(string key)
     {
         if (MessageText.ContainsKey(key))
         {
@@ -201,5 +201,22 @@ They announced that they are investigating, but have no clues as to who did it. 
             case Language.En: return EndingSceneConversationTexts.Select(v => v.en).ToList();
             default: return EndingSceneConversationTexts.Select(v => v.en).ToList();
         };
+    }
+
+    //private Dictionary<string, TextLanguage> GetMessageData(MessageType type)
+    //{
+    //    switch (type)
+    //    {
+    //        case MessageType.Opening: return MessageText;
+    //        //case MessageType.Bonus: return EndingEventConversationTexts;
+    //    }
+    //}
+
+    public enum MessageType
+    {
+        Opening,
+        EndingEvent,
+        EndingCredit,
+        Bonus,
     }
 }

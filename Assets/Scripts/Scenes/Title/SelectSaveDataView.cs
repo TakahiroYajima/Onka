@@ -70,12 +70,11 @@ public class SelectSaveDataView : MonoBehaviour
             string message = "";
             if (instantedList[_selectSaveDataArrayNum].IsNoData)
             {
-                message = "ここにセーブしますか？";
+                message = TextMaster.GetText("text_check_save_data");
             }
             else
             {
-                message = @"データを上書きします。
-本当によろしいですか？";
+                message = TextMaster.GetText("text_check_rewrite_data");
             }
             DialogManager.Instance.OpenTemplateMessageBoxDialog(message, TempDialogType.YesOrNo, (bool _isUpdateNewGameData) =>
             {
@@ -89,7 +88,7 @@ public class SelectSaveDataView : MonoBehaviour
         {
             if (instantedList[_selectSaveDataArrayNum].IsNoData) { return; }
 
-            string message = "このデータをロードしますか？";
+            string message = TextMaster.GetText("text_check_load_data");
             DialogManager.Instance.OpenTemplateMessageBoxDialog(message, TempDialogType.YesOrNo, (bool _isOK) =>
             {
                 if (_isOK)

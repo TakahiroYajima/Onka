@@ -259,6 +259,7 @@ MonoBehaviour:
     type: 3}
   detailViewerParent: {fileID: 5888833033886687324}
   defaultSprite: {fileID: 21300000, guid: c8e2a771925c11d43b07426909ddd0fc, type: 3}
+  backButtonText: {fileID: 169003626817383003}
 --- !u!1 &3966454520782540479
 GameObject:
   m_ObjectHideFlags: 0
@@ -933,7 +934,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

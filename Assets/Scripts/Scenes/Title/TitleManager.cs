@@ -58,7 +58,7 @@ public class TitleManager : MonoBehaviour
 
     public void PressBonusButton()
     {
-        SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Bonus", true, null, FadeManager.FadeColorType.Black, FadeManager.FadeColorType.Black, true, 1f, 2.1f);
+        SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Bonus", true, null, FadeManager.FadeColorType.Black, FadeManager.FadeColorType.Black, true, 1f, 3.5f, true);
     }
 
     public void PressQuitButton()
@@ -68,6 +68,11 @@ public class TitleManager : MonoBehaviour
          {
              Application.Quit();
          });
+    }
+
+    public void OnChangeLanguage()
+    {
+        titleMenu.SetTexts();
     }
 
     public void Debug_Ending()

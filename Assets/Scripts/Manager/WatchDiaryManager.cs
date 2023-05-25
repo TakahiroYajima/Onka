@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System;
+﻿using SoundSystem;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
-using SoundSystem;
+using UnityEngine.UI;
 
 public class WatchDiaryManager : MonoBehaviour
 {
@@ -14,6 +11,7 @@ public class WatchDiaryManager : MonoBehaviour
     private ItemData diaryData = null;
     [SerializeField] private Text pageNumText = null;
     [SerializeField] private Text contentText = null;
+    [SerializeField] private Text clickToNextText = null;
 
     [SerializeField] private Font[] fonts;
 
@@ -21,12 +19,18 @@ public class WatchDiaryManager : MonoBehaviour
 
     public void StartWatchDiary(ItemData _diaryData)
     {
+        SetTexts();
         if (!isUpdateMoving)
         {
             isUpdateMoving = true;
             diaryData = _diaryData;
             StartCoroutine(WatchingItemUpdate());
         }
+    }
+
+    private void SetTexts()
+    {
+        clickToNextText.text = TextMaster.GetText("text_click_to_next");
     }
 
     private IEnumerator WatchingItemUpdate()

@@ -12,9 +12,13 @@ public class TemplateDialog : DialogBase
 
     public void Open(string message, TempDialogType tempDialogType, UnityAction<bool> pressButtonCallback)
     {
+        var yesMaster = tempDialogType == TempDialogType.YesOrNo_LanguageReverce ? "text_yes_reverce_language" : "text_yes";
+        var noMaster = tempDialogType == TempDialogType.YesOrNo_LanguageReverce ? "text_no_reverce_language" : "text_no";
+        yesButton.text.text = TextMaster.GetText(yesMaster);
+        noButton.text.text = TextMaster.GetText(noMaster);
         yesButton.button.onClick.AddListener(() => { pressButtonCallback(true); });
         noButton.button.onClick.AddListener(() => { pressButtonCallback(false); });
-        if(tempDialogType != TempDialogType.YesOrNo)
+        if(tempDialogType != TempDialogType.YesOrNo && tempDialogType != TempDialogType.YesOrNo_LanguageReverce)
         {
             noButton.gameObject.SetActive(false);
         }
@@ -40,5 +44,6 @@ public enum TempDialogType
 {
     OK,
     YesOrNo,
+    YesOrNo_LanguageReverce,//言語反転のYesOrNo
     InButtonMessage,//ボタンの方にメッセージを表示させる
 }

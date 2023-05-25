@@ -713,10 +713,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseObject: {fileID: 608639330962696965}
   itemImage: {fileID: 7845805067347327945}
-  detailButton: {fileID: 8065125682931316508}
+  detailButton: {fileID: 6454960451428512141}
   itemText: {fileID: 7845805067068442462}
   contentText: {fileID: 7845805067085891034}
-  backButton: {fileID: 4162836141927310480}
+  backButton: {fileID: 6089177175088395729}
 --- !u!222 &6877169865089551124
 CanvasRenderer:
   m_ObjectHideFlags: 0

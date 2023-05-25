@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using Onka.Manager.Data;
 
@@ -17,6 +17,8 @@ public class ItemListViewer : MonoBehaviour
     [SerializeField] private Transform detailViewerParent = null;
     [SerializeField] private Sprite defaultSprite = null;
 
+    [SerializeField] private Text backButtonText = null;
+
     public UnityAction onViewed = null;
     public UnityAction onClosed = null;
 
@@ -32,7 +34,13 @@ public class ItemListViewer : MonoBehaviour
 
     public void Initialize()
     {
+        SetTexts();
         DestroyList();
+    }
+
+    private void SetTexts()
+    {
+        backButtonText.text = TextMaster.GetText("text_back");
     }
 
     public void ViewList(ViewMode viewMode)

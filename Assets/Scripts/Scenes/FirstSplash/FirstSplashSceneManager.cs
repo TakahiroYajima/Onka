@@ -1,11 +1,13 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FirstSplashSceneManager : MonoBehaviour
 {
     [SerializeField] private UpdateFader faderObj = null;
     [SerializeField] private GameObject[] splashGroupObjcts = null;
+    [SerializeField] private Text warningText = null;
+    [SerializeField] private Text warningHeadText = null;
 
     private int currentSplashStateNum = 0;
     private bool isMoving = false;
@@ -15,10 +17,17 @@ public class FirstSplashSceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SetTexts();
         currentSplashStateNum = -1;//DoNextでインクリメントするため、-1で初期化
         DoNext();
         //yield return SceneControlManager.Instance.InitializeLoadBeforeBeginGame();
         isSceneChangeOK = true;
+    }
+
+    private void SetTexts()
+    {
+        warningText.text = TextMaster.GetText("splash_warning");
+        warningHeadText.text = TextMaster.GetText("splash_warning_head");
     }
 
     // Update is called once per frame

@@ -104,7 +104,7 @@ public class ItemManager : SingletonMonoBehaviour<ItemManager>
         //itemContentText.text = _data.description;
         canvasUI.SetActive(true);
         instancedOneItemViewer = Instantiate(oneItemViewerPref, canvasUI.transform);
-        instancedOneItemViewer.ViewItem(sprite, _data.Name, _data.description);
+        instancedOneItemViewer.ViewItem(sprite, _data.Name, _data.Description);
         //oneItemViewerPref.SetActive(true);
         SoundManager.Instance.PlaySeWithKey("menuse_enter");
         StartCoroutine(WatchingItemUpdate(_data));

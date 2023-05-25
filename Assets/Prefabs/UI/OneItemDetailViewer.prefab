@@ -54,8 +54,8 @@ MonoBehaviour:
   itemImage: {fileID: 1256720111193672481}
   nameText: {fileID: 4530928218044360167}
   descriptionText: {fileID: 5618760950222535307}
-  backButton: {fileID: 320568851535651738}
-  watchButton: {fileID: 535226411602460733}
+  backButton: {fileID: 8612448127095779211}
+  watchButton: {fileID: 62880783482079427}
   watchDiaryManager: {fileID: 2076473294311391704}
 --- !u!1 &1133991887369113939
 GameObject:

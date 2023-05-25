@@ -11,6 +11,7 @@ public enum SaveType
     PlayerData,//セーブデータ
     GeneralPlayerData,//1度取得すれば取得済みフラグが立つもの
     MasterData,//最初からあり、更新できないもの
+    SettingData,//言語設定
 }
 
 public sealed class FileManager
@@ -23,7 +24,8 @@ public sealed class FileManager
         {SaveType.Normal, "/SaveData" },
         {SaveType.PlayerData,"/SaveData/PlayerData" },
         {SaveType.GeneralPlayerData, "/SaveData/GeneralPlayerData" },
-        {SaveType.MasterData, "/SaveData/MasterData" }
+        {SaveType.MasterData, "/SaveData/MasterData" },
+        {SaveType.SettingData, "/SaveData/SettingData" },
     };
 
     public static void DataSave<Types>(Types saveClass, SaveType saveType, string fileName, UnityAction onComplete = null)

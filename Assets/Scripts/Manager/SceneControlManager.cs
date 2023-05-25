@@ -36,7 +36,7 @@ public class SceneControlManager : SingletonMonoBehaviour<SceneControlManager>
     //    });
     //}
 
-    public void ChangeSceneAsyncWithLoading(string sceneName, bool isBGMStop = true, Action onComplete = null, FadeManager.FadeColorType fadeOutColorType = FadeManager.FadeColorType.None, FadeManager.FadeColorType fadeInColorType = FadeManager.FadeColorType.None, bool isAfterLoadFadeOut = true, float fadeOutTime = 1f, float fadeInTime = 1f)
+    public void ChangeSceneAsyncWithLoading(string sceneName, bool isBGMStop = true, Action onComplete = null, FadeManager.FadeColorType fadeOutColorType = FadeManager.FadeColorType.None, FadeManager.FadeColorType fadeInColorType = FadeManager.FadeColorType.None, bool isAfterLoadFadeOut = true, float fadeOutTime = 1f, float fadeInTime = 1f, bool isGCCollect = false)
     {
         //Debug.Log($"ChangeSceneAsyncWithLoading : {System.DateTime.Now.ToString()}");
         if (isBGMStop)
@@ -47,6 +47,10 @@ public class SceneControlManager : SingletonMonoBehaviour<SceneControlManager>
         FadeManager.Instance.FadeOut(fadeOutColorType, fadeOutTime, () =>
         {
             //Debug.Log($"FadeOuted : {System.DateTime.Now.ToString()}");
+            if (isGCCollect)
+            {
+                InGameUtil.GCCollect();
+            }
             LoadingUIManager.Instance.SetActive(true);
             //Debug.Log($"asyncInstance : {System.DateTime.Now.ToString()}");
             AsyncOperation async = SceneManager.LoadSceneAsync(sceneName);
@@ -68,7 +72,7 @@ public class SceneControlManager : SingletonMonoBehaviour<SceneControlManager>
                         onComplete?.Invoke();
                     }
                 },
-                message = "ロード中",
+                message = TextMaster.GetText("text_loading"),
                 isAutoEnactive = isAfterLoadFadeOut
             };
             LoadingUIManager.Instance.StartLoading(param);

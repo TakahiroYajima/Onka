@@ -11,6 +11,7 @@ namespace Onka.Manager.Menu
         public bool isActivable { get; private set; } = false;//メニュー表示可能か
         public bool isInMenu { get; private set; } = false;//メニュー表示中か
         [SerializeField] private Image menuGuideImage = null;
+        [SerializeField] private Text menuGuideText = null;
         [SerializeField] private Image inactiveImage = null;//メニュー表示不可能を表すUI
         [SerializeField] private Transform instanceParent = null;
 
@@ -29,6 +30,8 @@ namespace Onka.Manager.Menu
 
         public void Initialize()
         {
+            menuGuideText.text = TextMaster.GetText("text_menu_title");
+            menuView.Initialize();
             menuView.onClickOperateGuideButton = OpenOperationDesctiption;
             menuView.onClickItemButton = OpenItemListView;
             menuView.onClickBackToTitleButton = OpenBackToTitleDialog;
@@ -93,13 +96,12 @@ namespace Onka.Manager.Menu
         private void OpenBackToTitleDialog()
         {
             menuView.HideButtons();
-            string message = @"タイトルに戻りますか？
-（セーブしていないデータは破棄されます）";
+            string message = TextMaster.GetText("text_menu_check_back_to_title");
             DialogManager.Instance.OpenTemplateDialog(message, TempDialogType.YesOrNo, (isBack) =>
             {
                 if (isBack)
                 {
-                    SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Game", true, null, FadeManager.FadeColorType.Black, FadeManager.FadeColorType.Black);
+                    SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Game", true, null, FadeManager.FadeColorType.Black, FadeManager.FadeColorType.Black, true, 1f, 1f, true);
                 }
                 else
                 {
