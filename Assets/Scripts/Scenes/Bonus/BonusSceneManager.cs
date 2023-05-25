@@ -6,6 +6,7 @@ using Onka.Manager.Data;
 public class BonusSceneManager : SceneBase
 {
     [HideInInspector] public CharactorDataList charactorDataList = null;
+    [SerializeField] private BonusMenu bonusMenu = null;
 
     protected override void Initialize()
     {
@@ -19,5 +20,7 @@ public class BonusSceneManager : SceneBase
                 charactorDataList.charactorDataList[i].sprite = ResourceManager.LoadResourceSprite(ResourceManager.CharactorResourcePath, charactorDataList.charactorDataList[i].imageName);
             }
         }
+
+        bonusMenu.Initialize();
     }
 }

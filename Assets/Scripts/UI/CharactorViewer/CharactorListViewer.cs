@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 
 public class CharactorListViewer : MonoBehaviour
@@ -13,12 +13,20 @@ public class CharactorListViewer : MonoBehaviour
     [SerializeField] private OneCharactorView oneCharactorViewerPref = null;
     [SerializeField] private Transform viewerParent = null;
 
+    [SerializeField] private Text backButtonText = null;
+
     private CharactorDataList dataList = null;
     public UnityAction onViewed = null;
     public UnityAction onClosed = null;
     public void Initialize()
     {
+        SetTexts();
         DestroyList();
+    }
+
+    private void SetTexts()
+    {
+        backButtonText.text = TextMaster.GetText("text_back");
     }
 
     public void ViewList(CharactorDataList _dataList)

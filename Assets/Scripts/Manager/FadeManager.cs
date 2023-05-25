@@ -76,7 +76,7 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager> {
     {
         Color color = _image.color;
         float currentTime = 0f;
-        while(currentTime < _duration)
+        while(currentTime < 1f)
         {
             float dir = Time.deltaTime / _duration;
             if (_type == FadeType.In)
@@ -100,7 +100,7 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager> {
     {
         Color color = _text.color;
         float currentTime = 0f;
-        while (currentTime < _duration)
+        while (currentTime < 1f)
         {
             float dir = Time.deltaTime / _duration;
             if (_type == FadeType.In)
@@ -113,6 +113,25 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager> {
             }
             _text.color = color;
             currentTime += dir;
+            yield return null;
+        }
+        if (onComplete != null)
+        {
+            onComplete();
+        }
+    }
+
+    public IEnumerator FadeImage(Image _image, FadeType _type, float _targetAlpha, float _fadeTime, Action onComplete = null)
+    {
+        Color color = _image.color;
+        float currentProgress = 0f;
+        float initAlpha = color.a;
+        while (currentProgress < 1f)
+        {
+            float dir = Mathf.Lerp(initAlpha, _targetAlpha, currentProgress);
+            color.a = dir;
+            _image.color = color;
+            currentProgress += Time.deltaTime / _fadeTime;
             yield return null;
         }
         if (onComplete != null)

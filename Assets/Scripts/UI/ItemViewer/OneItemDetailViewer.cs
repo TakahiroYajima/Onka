@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 /// <summary>
 /// おまけモードにて、アイテムの詳細（日記ならその前に中身）を見せる
@@ -13,8 +11,8 @@ public class OneItemDetailViewer : MonoBehaviour
     [SerializeField] private Image itemImage = null;
     [SerializeField] private Text nameText = null;
     [SerializeField] private Text descriptionText = null;
-    [SerializeField] private Button backButton = null;
-    [SerializeField] private Button watchButton = null;
+    [SerializeField] private TextButton backButton = null;
+    [SerializeField] private TextButton watchButton = null;
     public UnityAction onClosed = null;
 
     [SerializeField] private WatchDiaryManager watchDiaryManager = null;
@@ -23,15 +21,22 @@ public class OneItemDetailViewer : MonoBehaviour
 
     public void View(ItemData _data, UnityAction _onClosed = null)
     {
+        SetTexts();
         currentWatchingItemData = _data;
         itemImage.sprite = ResourceManager.LoadResourceSprite(ResourceManager.ItemResourcePath, currentWatchingItemData.spriteName);
         nameText.text = currentWatchingItemData.Name;
-        descriptionText.text = currentWatchingItemData.description_detail;
+        descriptionText.text = currentWatchingItemData.DescriptionDetail;
 
         onClosed = _onClosed;
 
         watchButton.gameObject.SetActive(_data.type == ItemType.WatchOnly);
         StartItemDetailView();
+    }
+
+    private void SetTexts()
+    {
+        watchButton.text.text = TextMaster.GetText("text_more_watch");
+        backButton.text.text = TextMaster.GetText("text_back");
     }
 
     public void CloseView()
