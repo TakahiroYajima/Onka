@@ -32,8 +32,7 @@ public class EA_AfterGetShioriDiary3 : EventActorBase
             Destroy(instanceAnim.gameObject);
             StageManager.Instance.Shiori = null;
         };
-        //雪絵の位置を移動（キッチンから出たときに丁度遭遇する距離、またそのままだと部屋を覗き込んで2人同時または詩織の後に即追いかけられる展開に）
-        StageManager.Instance.ForceOperationYukiePositionWithSDP(yukieSetPositionSDPKey, yukieSetTargetWanderingPointKey);
+        
         StartCoroutine(StartEvent());
     }
     public override void EventUpdate()
@@ -47,6 +46,9 @@ public class EA_AfterGetShioriDiary3 : EventActorBase
     private IEnumerator StartEvent()
     {
         yield return null;//初期化待ち
+        //雪絵の位置を移動（キッチンから出たときに丁度遭遇する距離、またそのままだと部屋を覗き込んで2人同時または詩織の後に即追いかけられる展開に）
+        StageManager.Instance.ForceOperationYukiePositionWithSDP(yukieSetPositionSDPKey, yukieSetTargetWanderingPointKey);
+
         instanceAnim.ChangeState(Enemy_ShioriState.WalkEvent);
     }
 }
