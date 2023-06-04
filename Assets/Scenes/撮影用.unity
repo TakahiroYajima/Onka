@@ -1464,10 +1464,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_kozo_2
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &49588700
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2405,8 +2404,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &70785834
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2838,6 +2835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 3
   wanderingCollider: {fileID: 81882948}
@@ -4417,10 +4415,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_nobuyuki
   gimmickType: 1
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!135 &114378822
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6592,10 +6589,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: note_nobuyuki1
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!4 &179784775 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 403170, guid: db1592dc16a5e3a40b99b6250b4fb9d9,
@@ -6722,10 +6718,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_nobuyuki_2
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &180537317
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7047,8 +7042,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!114 &185260159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7094,8 +7087,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!4 &185999584 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 444242, guid: 9700464865136ae47b2f6a69a302e104,
@@ -7147,6 +7138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 1
   wanderingCollider: {fileID: 188642968}
@@ -9064,10 +9056,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_courtyard
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!135 &238278352
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -9202,10 +9193,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_yukie_2
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 1
-  hiddenMoveParentTransform: {fileID: 1541392801}
 --- !u!65 &242328750
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10600,8 +10590,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &274473164
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10940,10 +10928,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: note_yukie2
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!1001 &283867976
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11089,10 +11076,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_keymanagementcabinet
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 1
-  hiddenMoveParentTransform: {fileID: 6409583869447640844}
 --- !u!135 &283867980
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -11673,6 +11659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 2
   wanderingCollider: {fileID: 292837369}
@@ -12138,6 +12125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 3
   wanderingCollider: {fileID: 307242090}
@@ -12756,10 +12744,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_nobuyuki_1
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &321898003
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13254,10 +13241,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: note_nobuyuki2
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 1
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!111 &339888424
 Animation:
   m_ObjectHideFlags: 0
@@ -14594,10 +14580,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: note_final
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 1
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!1 &375639096
 GameObject:
   m_ObjectHideFlags: 0
@@ -15625,10 +15610,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_shiori_2
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &403243894
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17623,6 +17607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 3
   wanderingCollider: {fileID: 453915457}
@@ -18080,8 +18065,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &462015070
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18766,8 +18749,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &490092159
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19195,10 +19176,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_yukie
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!135 &514414899
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -19263,6 +19243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 4
   wanderingCollider: {fileID: 519539221}
@@ -19868,8 +19849,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &540141283
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21881,8 +21860,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &598364644
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22502,6 +22479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 1
   wanderingCollider: {fileID: 618428305}
@@ -22871,10 +22849,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: note_yukie1
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!1001 &634006406
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23061,6 +23038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 2
   wanderingCollider: {fileID: 639035047}
@@ -23207,8 +23185,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &648204202
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23856,8 +23832,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!114 &662700856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24847,6 +24821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 0
   wanderingCollider: {fileID: 694189610}
@@ -24988,6 +24963,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 0
   wanderingCollider: {fileID: 705307763}
@@ -26153,10 +26129,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_hatsu_3
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &725112765
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26438,8 +26413,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &735958018
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27336,6 +27309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 1
   wanderingCollider: {fileID: 760544131}
@@ -29169,8 +29143,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &799381377
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -29363,8 +29335,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &803689222
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -29916,10 +29886,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_entrance
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 1
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!23 &812476541
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -30141,8 +30110,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &817061874
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31288,10 +31255,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_hatsu_1
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &856370803
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33540,8 +33506,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &903594022
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33587,8 +33551,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &903594025
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34323,6 +34285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 0
   wanderingCollider: {fileID: 924749741}
@@ -34649,8 +34612,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!114 &930636936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34683,8 +34644,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!114 &930636938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34717,8 +34676,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!1001 &931781250
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35521,10 +35478,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: note_kozo1
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 1
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!1001 &949869749
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36799,8 +36755,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &975376168
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -36846,8 +36800,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &975376171
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -38633,6 +38585,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 0
   wanderingCollider: {fileID: 1030070163}
@@ -38716,8 +38669,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &1031887176
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -39416,10 +39367,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_underground
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!135 &1044003380
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -39891,10 +39841,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_hatsu_2
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &1057080967
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -41846,10 +41795,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_drawingroom
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!135 &1104734879
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -43478,10 +43426,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_yukie_3
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!4 &1141269163 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 486290, guid: c0ddca4836a901748a833a89a4abb256,
@@ -43741,6 +43688,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 2
   wanderingCollider: {fileID: 1155648935}
@@ -44108,10 +44056,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_shiori_3
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 1
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &1170956895
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -45998,8 +45945,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &1218900617
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -46316,10 +46261,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_azuhayuzuha_1
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &1223824218
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -46804,8 +46748,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &1243031631
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -47222,6 +47164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 1
   wanderingCollider: {fileID: 1250954819}
@@ -47581,8 +47524,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &1255871110
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -48167,8 +48108,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &1270041152
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -49721,6 +49660,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 0
   wanderingCollider: {fileID: 1303570429}
@@ -50410,10 +50350,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_maidroom
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!135 &1314443202
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -51535,10 +51474,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_azuhayuzuha_3
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 1
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &1338368497
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -52072,6 +52010,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 1
   wanderingCollider: {fileID: 1350575037}
@@ -52383,6 +52322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 0
   wanderingCollider: {fileID: 1361435169}
@@ -52679,10 +52619,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_kozo_1
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &1364760017
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -53872,12 +53811,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   closeSEKey: se_slideobj_open
---- !u!4 &1379389063 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 400010, guid: 4df89b4a30091594a850aeacf8ace8d3,
-    type: 3}
-  m_PrefabInstance: {fileID: 1379389040}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1384348859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55489,10 +55422,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: item_crowbar
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 1
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!111 &1419648260
 Animation:
   m_ObjectHideFlags: 0
@@ -55657,6 +55589,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 1
   wanderingCollider: {fileID: 1423900160}
@@ -56238,8 +56171,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &1436174714
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -58270,8 +58201,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &1515446261
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -59351,7 +59280,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1549743024
 Transform:
   m_ObjectHideFlags: 0
@@ -60829,6 +60758,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 2
   wanderingCollider: {fileID: 1583207481}
@@ -63290,6 +63220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 2
   wanderingCollider: {fileID: 1652569311}
@@ -64243,10 +64174,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_shiori_1
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 1
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &1675833414
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -64330,6 +64260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 3
   wanderingCollider: {fileID: 1677919364}
@@ -64824,10 +64755,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_kitchen_shelf_1
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 1
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!1001 &1693486544
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -65108,10 +65038,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_yukie_1
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &1697826117
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -65670,10 +65599,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_kozo_3
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &1707364305
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -66044,10 +65972,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_kozoroom
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 1
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!135 &1711806429
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -66276,10 +66203,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_1fhiddenroom
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 1
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!135 &1715608503
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -66569,8 +66495,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &1724990133
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -67812,6 +67736,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 2
   wanderingCollider: {fileID: 1758752656}
@@ -68438,6 +68363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 3
   wanderingCollider: {fileID: 1766303180}
@@ -68597,6 +68523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 0
   wanderingCollider: {fileID: 1772505934}
@@ -68761,10 +68688,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_azuhayuzuha_2
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &1776039852
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -69094,10 +69020,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_azuha_yuzuha
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!135 &1789612788
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -69883,6 +69808,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 1
   wanderingCollider: {fileID: 1817316305}
@@ -71639,10 +71565,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: diary_nobuyuki_3
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &1861618055
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -75884,6 +75809,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 2
   wanderingCollider: {fileID: 1966417064}
@@ -78782,10 +78708,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: note_yuzuha1
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 0
   isHiddenItem: 1
-  hiddenMoveParentTransform: {fileID: 1379389063}
 --- !u!4 &2062193250 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400738, guid: 4bf63fff39271d34ea0dd4c61fde49a5,
@@ -79750,8 +79675,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!65 &2083779444
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -81943,6 +81866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50356b1fa12d37f458d8ff7ab1dcde35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <objectKey>k__BackingField: 
   wanderingEnemyType: 0
   pointNum: 4
   wanderingCollider: {fileID: 2129803750}
@@ -82613,8 +82537,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!1 &1500086922387023
 GameObject:
   m_ObjectHideFlags: 0
@@ -82679,8 +82601,6 @@ MonoBehaviour:
   ClosedCallback:
     m_PersistentCalls:
       m_Calls: []
-  openSEKey: se_closet_open
-  closeSEKey: se_closet_close
 --- !u!1 &1532758080410004
 GameObject:
   m_ObjectHideFlags: 0
@@ -90077,10 +89997,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemKey: key_bathroom
   gimmickType: 0
-  gimmickEvent: {fileID: 0}
+  <gimmickKey>k__BackingField: 
   isDefaultInactive: 1
   isHiddenItem: 0
-  hiddenMoveParentTransform: {fileID: 0}
 --- !u!65 &4933936861424181037
 BoxCollider:
   m_ObjectHideFlags: 0
