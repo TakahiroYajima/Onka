@@ -133,10 +133,10 @@ public class EA_AfterGetAzuYuzuDiary3 : EventActorBase
         c.a = 0f;
         thunderImage.color = c;
         thunderImage.gameObject.SetActive(true);
-        yield return StartCoroutine(FadeManager.Instance.FadeAction(thunderImage, FadeType.Out, 0.2f));
+        yield return StartCoroutine(FadeManager.Instance.FadeImage(thunderImage, FadeType.Out, 0.4f, 0.1f));
         soundPlayer.PlaySE(0);
         yield return new WaitForSeconds(0.7f);
-        yield return StartCoroutine(FadeManager.Instance.FadeAction(thunderImage, FadeType.In, 2f));
+        yield return StartCoroutine(FadeManager.Instance.FadeImage(thunderImage, FadeType.In, 0f, 1f));
         thunderImage.gameObject.SetActive(false);
     }
 }
