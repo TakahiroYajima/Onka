@@ -107,8 +107,8 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
         var yukiePos = soundDistancePoint.transform.position;
         yukiePos.y = yukieObject.transform.position.y;
         yukieObject.transform.position = yukiePos;
-        yukieObject.wanderingActor.SetWanderingID(currentWanderingPoint.PointNum);
         yukieObject.ChangeState(EnemyState.Wandering);
+        yukieObject.wanderingActor.SetWanderingID(currentWanderingPoint.PointNum);
 
         SoundDistanceManager.Instance.Emitter.SetPointID(soundDistancePoint.ID);
         SoundDistanceManager.Instance.ForceInitCalc();
@@ -176,7 +176,7 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
         playerObject.ChangeState(PlayerState.InMenu);
         yukieObject.ChangeState(EnemyState.CanNotAction);
         InGameUtil.DoCursorFree();
-        DialogManager.Instance.OpenTemplateDialog("セーブしますか？", TempDialogType.YesOrNo, SaveAction);
+        DialogManager.Instance.OpenTemplateDialog(TextMaster.GetText("text_save_point_dialog_title"), TempDialogType.YesOrNo, SaveAction);
     }
 
     private void SaveAction(bool isSave)
