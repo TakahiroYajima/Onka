@@ -34,7 +34,7 @@ public class OpeningEventManager : MonoBehaviour
         WordsMessageManager.Instance.SetFadeTime(3.5f);
         yield return StartCoroutine(WordsMessageManager.Instance.WordsAction(new List<string>()
         {
-            TextMaster.GetMessageText("opening_onka") 
+            TextMaster.GetText("opening_onka") 
         }));
         yield return new WaitForSeconds(1f);
         WordsMessageManager.Instance.SetDisplayPosition(WordsMessageManager.DisplayPosition.Under);
