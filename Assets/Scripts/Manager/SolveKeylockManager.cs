@@ -1,17 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class SolveKeylockManager : SingletonMonoBehaviour<SolveKeylockManager>
 {
     private KeyLockObject currentSolvingKeyLockObject = null;
     [SerializeField] private GameObject canvasObj = null;
+    [SerializeField] private Text backButtonTexts = null;
 
     /// <summary>
     /// 解錠イベント開始
     /// </summary>
     public void StartSolveEvent(KeyLockObject _keyLockObject)
     {
+        backButtonTexts.text = TextMaster.GetText("text_back");
         currentSolvingKeyLockObject = _keyLockObject;
         StageManager.Instance.Player.ChangeState(PlayerState.SolveKeylock);
         canvasObj.SetActive(true);
