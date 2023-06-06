@@ -202,9 +202,9 @@ public class StaffRollTextCoreator
             new StaffRollTexts(new StaffRollData("怨 禍", null)),/*new StaffRollTexts(new StaffRollData("Planning", new List<string>() { "Sample1 Yajin", "Sample2 Yajin", "Sample3 Yajin" })),*/
             new StaffRollTexts(new StaffRollData("Staff", null)),
             new StaffRollTexts(new StaffRollData("Planning", new List<string>() { "Yajin" })),
-            new StaffRollTexts(new StaffRollData("Design", new List<string>() { "AssetStore", "notargs", "Yajin" })),
-            new StaffRollTexts(new StaffRollData("Sound", new List<string>() { "OtoLogic", "びたちー素材館", "DOVA-SYNDROME", "小森 平", "効果音ラボ",  "Yajin" })),
-            new StaffRollTexts(new StaffRollData("Font", new List<string>() { "おたもん","暗黒工房","源界明朝","フォントダス" })),
+            new StaffRollTexts(new StaffRollData("Design", new List<string>() { "Unity AssetStore 様", "notargs 様", "Yajin" })),
+            new StaffRollTexts(new StaffRollData("Sound", new List<string>() { "OtoLogic 様", "びたちー素材館 様", "DOVA-SYNDROME 様", "小森 平 様", "効果音ラボ 様",  "Yajin" })),
+            new StaffRollTexts(new StaffRollData("Font", new List<string>() { "おたもん 様", "暗黒工房 様", "源界明朝 様", "フォントダス 様" })),
             new StaffRollTexts(new StaffRollData("Programing", new List<string>() { "Yajin" })),
             new StaffRollTexts(new StaffRollData("Create Tool", new List<string>() { "Unity", "CharacterCreator3", "Photoshop", "Audacity" })),
             new StaffRollTexts(new StaffRollData("Presents", new List<string>() { "Yajin" })),
