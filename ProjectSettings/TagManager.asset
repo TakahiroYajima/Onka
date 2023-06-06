@@ -48,7 +48,7 @@ TagManager:
   - KeyLockTouchable
   - RaycastWall
   - KeyHole
-  - 
+  - Enemy_Event
   - 
   - 
   - 
