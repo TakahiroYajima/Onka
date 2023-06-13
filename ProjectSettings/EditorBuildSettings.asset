@@ -17,4 +17,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Bonus.unity
     guid: f6935afe59f3d564b8d390e5f371a29e
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 85c99380d3e284443b0abab0b32928da,
+      type: 2}
+    com.unity.localization.settings: {fileID: 11400000, guid: 7dc238578611418408b4c6217ab7d48c,
+      type: 2}

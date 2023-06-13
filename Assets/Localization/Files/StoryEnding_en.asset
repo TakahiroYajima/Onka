@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: StoryEnding_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 4b4f5f9176c7bd34aba455caff19814f, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 1
+    m_Localized: "- Slaughter of a man at a wealthy man's house!\u3000Was this the
+      work of the Sakakibara family's grudge! -"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2
+    m_Localized: '- Earlier today, a man''s body was found in the garden of Sakakibara''s
+      house. -'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3
+    m_Localized: '- The man is -----, a private detective who lives in the area.
+
+      He
+      was investigating the recent murder of the Sakakibara family. -'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4
+    m_Localized: '- The bodies were said to be in such a gruesome state that it was
+      questionable whether they had been murdered by human hands. -'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5
+    m_Localized: '- From this situation, the case is ''an incident caused by the
+      spirits of a murdered family'',
+
+      Some people claim that the Sakakibara
+      family is haunted, leading to confusion. -'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6
+    m_Localized: '- The police believe that the perpetrators of this incident murdered
+      -----.
+
+      They announced that they are investigating, but have no clues
+      as to who did it. -'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7
+    m_Localized: Don't be silly!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8
+    m_Localized: Even though her husband was brutally murdered!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9
+    m_Localized: They told me it was the work of ghosts, and I was poked and prodded!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10
+    m_Localized: I'm here... to see the truth with my own eyes!
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 1

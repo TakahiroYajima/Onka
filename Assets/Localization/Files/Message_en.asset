@@ -1,0 +1,252 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Message_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: b53f422c2b68a0c4f94d4741beb4e6a2, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 8401720774656
+    m_Localized: Onka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8401741746176
+    m_Localized: New game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8401741746177
+    m_Localized: Continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8401741746178
+    m_Localized: Quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8401741746179
+    m_Localized: Bonus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8401741746180
+    m_Localized: Twitter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8401741746181
+    m_Localized: Please select the save data.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8401741746182
+    m_Localized: Back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8401741746183
+    m_Localized: Data {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8401741746184
+    m_Localized: No save data.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8401741746185
+    m_Localized: "\u8A00\u8A9E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8401741746186
+    m_Localized: "\u8A00\u8A9E\u8A2D\u5B9A\uFF08Language\uFF09"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8401741746187
+    m_Localized: Loading
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8401741746188
+    m_Localized: Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8401741746189
+    m_Localized: Death
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8401741746190
+    m_Localized: Back to title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8401741746191
+    m_Localized: Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8401741746192
+    m_Localized: Age
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8401741746193
+    m_Localized: Gender
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8401741746194
+    m_Localized: Man
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8401741746195
+    m_Localized: Woman
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8401745940480
+    m_Localized: ???
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8401745940481
+    m_Localized: 'On-ka
+
+
+      A calamity brought about by a thing with a strong
+      grudge.
+
+      It continues to curse until it wipes out the lives of those
+      touched by its enmity.
+
+      There is no escape from the curse.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23772846690304
+    m_Localized: Click to next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23772846690305
+    m_Localized: Details
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23772846690306
+    m_Localized: "Thank you for playing Onka.\nHere you can view the backstory of
+      the characters and items that appear in Onka.\nPlease enjoy the world of \"Onka\"
+      until the end.\n\nAuthor\uFF1AYajin"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 461841404071936
+    m_Localized: Back to title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 461841446014976
+    m_Localized: Items obtained
+    m_Metadata:
+      m_Items: []
+  - m_Id: 461841446014977
+    m_Localized: Character list
+    m_Metadata:
+      m_Items: []
+  - m_Id: 461841446014978
+    m_Localized: Items
+    m_Metadata:
+      m_Items: []
+  - m_Id: 461841446014979
+    m_Localized: Operation explanation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 461841446014980
+    m_Localized: Move
+    m_Metadata:
+      m_Items: []
+  - m_Id: 461841446014981
+    m_Localized: Viewpoint shift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 461841446014982
+    m_Localized: Run
+    m_Metadata:
+      m_Items: []
+  - m_Id: 461841446014983
+    m_Localized: "Crouch down\u30FBHide"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 461841446014984
+    m_Localized: More
+    m_Metadata:
+      m_Items: []
+  - m_Id: 461841446014985
+    m_Localized: Story
+    m_Metadata:
+      m_Items: []
+  - m_Id: 838046489841664
+    m_Localized: 'This game contains expressions that may cause fear.
+
+      Small
+      children and people with weak hearts are not recommended to play.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 838046527590400
+    m_Localized: 'This game relies on sound in some parts.
+
+      It is strongly
+      recommended to wear headphones when playing.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 840614725095424
+    m_Localized: Do you want to load this data?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 840614733484032
+    m_Localized: Do you want to save here?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 840614733484033
+    m_Localized: 'Overwrite data.
+
+      Are you sure?'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 840614733484034
+    m_Localized: Yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 840614733484035
+    m_Localized: No
+    m_Metadata:
+      m_Items: []
+  - m_Id: 842640871723008
+    m_Localized: "\u306F\u3044"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 842640875917312
+    m_Localized: "\u3044\u3044\u3048"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1211728525594624
+    m_Localized: Do you want to save?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1215015840714752
+    m_Localized: Operation explanation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1215015849103360
+    m_Localized: Items obtained
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1215015849103361
+    m_Localized: Back to title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1215015849103362
+    m_Localized: Back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1241736480624640
+    m_Localized: 'Do you want to go back to the title?
+
+      (Unsaved data will
+      be discarded)'
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 1
