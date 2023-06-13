@@ -11,7 +11,8 @@ public class RuntimeScript : MonoBehaviour
         Application.targetFrameRate = 60;
         //Debug.unityLogger.logEnabled = false;
 #if UNITY_EDITOR
-        if (SceneManager.GetActiveScene().name == "撮影用") return;
+        if (SceneManager.GetActiveScene().name == "撮影用"
+            || SceneManager.GetActiveScene().name == "ゲーム内撮影用") return;
 #endif
 
         if (SceneManager.GetActiveScene().name != "Initialize")
