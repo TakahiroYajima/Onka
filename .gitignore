@@ -16,6 +16,8 @@
 /Assets/Resources.meta
 /Assets/StreamingAssets/SaveData/PlayerData/
 /Assets/StreamingAssets/SaveData/PlayerData.meta
+/Assets/StreamingAssets/SaveData/GeneralPlayerData/
+/Assets/StreamingAssets/SaveData/GeneralPlayerData.meta
 
 # Visual Studio 2015 cache directory
 /.vs/
