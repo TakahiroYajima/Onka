@@ -39,7 +39,9 @@ public class YukieStateChasePlayer : StateBase
     public override void UpdateAction()
     {
         yukie.navMeshAgent.SetDestination(yukie.player.transform.position);
-        if (Mathf.Abs(yukie.transform.position.y - yukie.player.transform.position.y) > 0.7f)
+        bool isHitPlayer = yukie.raycastor.IsRaycastHitObjectMatch(yukie.transform.position, yukie.player.transform.position, Tags.Player, 11f);
+        //2階に向かって追いかけている時はプレイヤーを見上げるようにする（プレイヤーにRayが当たっていないと壁越しに階段の上を見上げるというちょっと笑える挙動になるのでチェックを入れる）
+        if (Mathf.Abs(yukie.transform.position.y - yukie.player.transform.position.y) > 0.35f && isHitPlayer)
         {
             yukie.LookRotationFaceToTarget(yukie.player.eyePosition);
         }
@@ -64,18 +66,26 @@ public class YukieStateChasePlayer : StateBase
                 frameCount = 0;
                 return;
             }
-            
-            yukie.raycastor.ObjectToRayAction(yukie.transform.position, yukie.player.transform.position, (RaycastHit hit) =>
+
+            if (isHitPlayer)
             {
-                if (Utility.Instance.IsTagNameMatch(hit.transform.gameObject, Tags.Player))
-                {
-                    noRecognitionTime = 0f;
-                }
-                else
-                {
-                    noRecognitionTime += Time.deltaTime * doUpdateFrameCount;
-                }
-            }, 11f);
+                noRecognitionTime = 0f;
+            }
+            else
+            {
+                noRecognitionTime += Time.deltaTime * doUpdateFrameCount;
+            }
+            //yukie.raycastor.ObjectToRayAction(yukie.transform.position, yukie.player.transform.position, (RaycastHit hit) =>
+            //{
+            //    if (Utility.Instance.IsTagNameMatch(hit.transform.gameObject, Tags.Player))
+            //    {
+            //        noRecognitionTime = 0f;
+            //    }
+            //    else
+            //    {
+            //        noRecognitionTime += Time.deltaTime * doUpdateFrameCount;
+            //    }
+            //}, 11f);
             frameCount = 0;
         }
         else
