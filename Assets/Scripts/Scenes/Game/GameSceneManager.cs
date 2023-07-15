@@ -30,6 +30,7 @@ public class GameSceneManager : SceneBase
     {
         titleManager = Instantiate(titleManagerPrefab);
         titleManager.Initialize();
+        SceneControlManager.Instance.FadeInScene(FadeManager.FadeColorType.Black, null, 1f);
     }
 
     private void DeleteTitle()
@@ -66,18 +67,20 @@ public class GameSceneManager : SceneBase
     {
         var async = StartCoroutine(InitSceneSetUp());
 
-        LoadingUIManager.Instance.SetMessage("ステージを構成しています");
+        LoadingUIManager.Instance.SetActive(true);
+        LoadingUIManager.Instance.SetProgress(0f);
+        LoadingUIManager.Instance.SetMessage(TextMaster.GetText("text_loading"));
         yield return async;
         DeleteTitle();
         DeleteOpening();
-        StartScene();
+        StartCoroutine(StartScene());
     }
 
     private IEnumerator InitSceneSetUp()
     {
         var await = new WaitForSeconds(0.14f);
         yield return await;
-        //LoadingUIManager.Instance.SetProgress(0f);
+        
         //yield return LoadInScene();
         LoadingUIManager.Instance.SetProgress(0.25f);
         yield return LoadStage();
@@ -129,7 +132,7 @@ public class GameSceneManager : SceneBase
         yield return null;
     }
     
-    private void StartScene()
+    private IEnumerator StartScene()
     {
         SoundDistancePoint savePointSDP = StageManager.Instance.fieldObject.SavePointSDP;
 
@@ -139,7 +142,6 @@ public class GameSceneManager : SceneBase
             //セーブ地点から再開
             StageManager.Instance.Player.transform.position = StageManager.Instance.fieldObject.restartPosition.transform.position;
             StageManager.Instance.Player.transform.rotation = Quaternion.Euler(0f, 180f, 0f);//セーブポイントの方を向かせる
-            StageManager.Instance.Player.ChangeState(PlayerState.Free);
         }
         //オープニングイベントだけ終了済み
         if (!EventManager.Instance.IsEventEnded("Event_YukieHint"))
@@ -186,8 +188,14 @@ public class GameSceneManager : SceneBase
         EventManager.Instance.isEnable = true;
         EventManager.Instance.InitProgressEach();
 
-        LoadingUIManager.Instance.SetActive(false);
-        FadeManager.Instance.FadeIn(FadeManager.FadeColorType.Black, 1f, null);
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(0.2f);
+        FadeManager.Instance.FadeIn(FadeManager.FadeColorType.Black, 1f, ()=>
+        {
+            StageManager.Instance.Player.ChangeState(PlayerState.Free);
+        });
+        yield return new WaitForSeconds(0.1f);
+        LoadingUIManager.Instance.SetInactiveWithFadeOut();
     }
 
     public void StartEnding()
