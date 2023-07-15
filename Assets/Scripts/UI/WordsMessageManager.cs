@@ -12,7 +12,7 @@ public class WordsMessageManager : SingletonMonoBehaviour<WordsMessageManager>
     [SerializeField] private GameObject routeObj = null;
     [SerializeField] private Image displayImage = null;//中央に表示する画像
     [SerializeField] private Text messageText = null;//下部に表示するメッセージ（キャラのセリフ）
-    [SerializeField] private GameObject clickTextObj = null;//クリックを促すテキストのオブジェクト
+    [SerializeField] private Text clickText = null;//クリックを促すテキストのオブジェクト
 
     private List<string> messageList = new List<string>();
 
@@ -88,7 +88,8 @@ public class WordsMessageManager : SingletonMonoBehaviour<WordsMessageManager>
     public void Initialize()
     {
         routeObj.SetActive(false);
-        clickTextObj.SetActive(false);
+        clickText.gameObject.SetActive(false);
+        clickText.text = TextMaster.GetText("text_click_to_next");
         initDisplayPosition = messageText.GetComponent<RectTransform>().anchoredPosition;
         initWHSize = messageText.GetComponent<RectTransform>().sizeDelta;
         displayColor = initColor;
@@ -154,7 +155,7 @@ public class WordsMessageManager : SingletonMonoBehaviour<WordsMessageManager>
 
     private IEnumerator DoNext(bool isFirst = false)
     {
-        clickTextObj.SetActive(false);
+        clickText.gameObject.SetActive(false);
         if (!isFirst)
         {
             yield return StartCoroutine(HideText());
@@ -164,14 +165,14 @@ public class WordsMessageManager : SingletonMonoBehaviour<WordsMessageManager>
         {
             yield return StartCoroutine(ShowTextAndSprite());
             isWaitForClick = true;
-            clickTextObj.SetActive(true);
+            clickText.gameObject.SetActive(true);
         }
         else
         {
             //メッセージが0なので終了
             isStartable = true;
             routeObj.SetActive(false);
-            clickTextObj.SetActive(false);
+            clickText.gameObject.SetActive(false);
             InitImage();
         }
     }
