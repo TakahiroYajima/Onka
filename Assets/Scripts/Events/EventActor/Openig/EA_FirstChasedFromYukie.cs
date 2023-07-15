@@ -10,6 +10,9 @@ public class EA_FirstChasedFromYukie : EventActorBase
     [SerializeField, ReadOnly] private string soundPointSDPKey = "sd_point_outer_0009";
     [SerializeField] private RunAwayTutorialManager tutorialManager = null;
 
+    private float time = 0;
+    private const float JudgeTime = 5f;
+
     protected override void Initialize()
     {
         tutorialManager.SetUp();
@@ -37,7 +40,11 @@ public class EA_FirstChasedFromYukie : EventActorBase
     }
     public override void EventUpdate()
     {
-
+        if (tutorialManager.IsAction && StageManager.Instance.Yukie.currentState == EnemyState.InRoomWandering && time > JudgeTime)
+        {
+            tutorialManager.EndTutorial();
+        }
+        time += Time.deltaTime;
     }
     public override void EventEnd()
     {

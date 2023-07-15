@@ -6,6 +6,7 @@ public class RunAwayTutorialManager : MonoBehaviour
 {
     [SerializeField] private TextureAnimation[] tutorialObjects = null;
     [SerializeField] private FloatingAnimation lastArrowObject = null;
+    public bool IsAction { get; private set; } = false;
 
     public void SetUp()
     {
@@ -27,6 +28,7 @@ public class RunAwayTutorialManager : MonoBehaviour
         }
         lastArrowObject.gameObject.SetActive(true);
         lastArrowObject.StartAction();
+        IsAction = true;
     }
 
     public void EndTutorial()
@@ -36,5 +38,6 @@ public class RunAwayTutorialManager : MonoBehaviour
             obj.gameObject.SetActive(false);
         }
         lastArrowObject.gameObject.SetActive(false);
+        IsAction = false;
     }
 }
