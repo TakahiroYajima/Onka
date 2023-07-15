@@ -41,6 +41,7 @@ public class OpeningEventManager : MonoBehaviour
         WordsMessageManager.Instance.SetInitTextColor();
         WordsMessageManager.Instance.SetInitFadeTime();
         yield return StartCoroutine(WordsMessageManager.Instance.WordsAction(TextMaster.GetOpeningConversationTexts().ToList()));
+        SoundManager.Instance.StopBGMWithFadeOut(bgm.name, 2f);
         FadeManager.Instance.FadeOut(FadeManager.FadeColorType.Black, 3.5f, () =>
         {
             SceneControlManager.Instance.changeSceneMoveType = ChangeSceneMoveType.NewGame;

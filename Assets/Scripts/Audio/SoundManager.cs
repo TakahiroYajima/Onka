@@ -397,7 +397,7 @@ namespace SoundSystem
         {
             if (IsPaused) return;
             
-            AudioSource audioSource = bgmAudioSourceList.FirstOrDefault(bas => bas.clip.name == clipName);
+            AudioSource audioSource = bgmAudioSourceList.FirstOrDefault(bas => bas.clip != null && bas.clip.name == clipName);
 
             if (audioSource == null || audioSource.isPlaying == false)
             {
