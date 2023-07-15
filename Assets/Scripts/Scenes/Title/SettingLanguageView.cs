@@ -27,9 +27,9 @@ public class SettingLanguageView : MonoBehaviour
     {
         DialogManager.Instance.OpenTemplateDialog("日本語に設定しますか？", TempDialogType.YesOrNo_LanguageReverce, (result) =>
         {
-            GameManager.Instance.ChangeLanguage(Language.Ja);
             if (result)
             {
+                GameManager.Instance.ChangeLanguage(Language.Ja);
                 OnChangeLanguage();
             }
         });
@@ -39,9 +39,9 @@ public class SettingLanguageView : MonoBehaviour
     {
         DialogManager.Instance.OpenTemplateDialog("Do you want to set it to English?", TempDialogType.YesOrNo_LanguageReverce, (result) =>
         {
-            GameManager.Instance.ChangeLanguage(Language.En);
             if (result)
             {
+                GameManager.Instance.ChangeLanguage(Language.En);
                 OnChangeLanguage();
             }
         });
