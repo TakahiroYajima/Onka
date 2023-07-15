@@ -14,7 +14,7 @@ public class LoadingUIManager : SingletonMonoBehaviour<LoadingUIManager>
         public bool isAutoEnactive = true;
     }
 
-    [SerializeField] private GameObject loadingObject = null;//Loadingの親Object
+    [SerializeField] private CanvasGroup loadingObject = null;//Loadingの親Object
     [SerializeField] private Image loadingGauge = null;//ロード中のアニメーションゲージ
     [SerializeField] private Text loadingText = null;//ロード中テキスト
 
@@ -22,13 +22,22 @@ public class LoadingUIManager : SingletonMonoBehaviour<LoadingUIManager>
     // Start is called before the first frame update
     void Start()
     {
-        loadingObject.SetActive(false);
+        loadingObject.gameObject.SetActive(false);
     }
 
     public void SetActive(bool _isActive)
     {
         loadingGauge.fillAmount = 0f;
-        loadingObject.SetActive(_isActive);
+        loadingObject.gameObject.SetActive(_isActive);
+        loadingObject.alpha = _isActive ? 1 : 0;
+    }
+
+    public void SetInactiveWithFadeOut()
+    {
+        StartCoroutine(FadeManager.Instance.FadeAction(loadingObject, FadeType.In, 1f, () =>
+        {
+            loadingObject.gameObject.SetActive(false);
+        }));
     }
 
     public void SetMessage(string message)
@@ -56,8 +65,11 @@ public class LoadingUIManager : SingletonMonoBehaviour<LoadingUIManager>
 
         loadingText.text = message;
         loadingGauge.fillAmount = 0f;
-        loadingObject.SetActive(true);
+        loadingObject.gameObject.SetActive(true);
+        loadingObject.alpha = 1;
         isAutoMove = true;
+        //ロード前にちゃんとUIが表示されるまで待つ
+        yield return null;
         while (currentTime < needTime || progress < 1f) {
             progress = Mathf.Clamp01(asyncOperation.progress / 0.9f);
             pTime = currentTime / needTime;
@@ -71,9 +83,12 @@ public class LoadingUIManager : SingletonMonoBehaviour<LoadingUIManager>
         {
             onComplete();
         }
+        //ロードの後、PostProcessの初回反映時に画面が真っ暗になるので、せめてロードUIは表示させたままにする
+        yield return new WaitForEndOfFrame();
+        yield return null;
         if (isAutoEnactive)
         {
-            loadingObject.SetActive(false);
+            SetInactiveWithFadeOut();
         }
         isAutoMove = false;
     }

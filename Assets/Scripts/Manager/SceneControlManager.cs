@@ -10,18 +10,18 @@ public class SceneControlManager : SingletonMonoBehaviour<SceneControlManager>
     public ChangeSceneMoveType changeSceneMoveType = ChangeSceneMoveType.Normal;
 
     
-    public void ChangeScene(string sceneName, bool isBGMStop = true, Action onComplete = null, FadeManager.FadeColorType fadeOutColorType = FadeManager.FadeColorType.None, FadeManager.FadeColorType fadeInColorType = FadeManager.FadeColorType.None)
-    {
-        if (isBGMStop)
-        {
-            StopBGMAndEnvironment();
-        }
-        FadeManager.Instance.FadeOut(fadeOutColorType, 1f, () =>
-        {
-            SceneManager.LoadScene(sceneName);
-            FadeManager.Instance.FadeIn(fadeInColorType, 1f, onComplete);
-        });
-    }
+    //public void ChangeScene(string sceneName, bool isBGMStop = true, Action onComplete = null, FadeManager.FadeColorType fadeOutColorType = FadeManager.FadeColorType.None, FadeManager.FadeColorType fadeInColorType = FadeManager.FadeColorType.None)
+    //{
+    //    if (isBGMStop)
+    //    {
+    //        StopBGMAndEnvironment();
+    //    }
+    //    FadeManager.Instance.FadeOut(fadeOutColorType, 1f, () =>
+    //    {
+    //        SceneManager.LoadScene(sceneName);
+    //        FadeManager.Instance.FadeIn(fadeInColorType, 1f, onComplete);
+    //    });
+    //}
 
     //public void ChangeSceneAsyncWithFadeOnly(string sceneName, FadeManager.FadeColorType fadeOutColorType = FadeManager.FadeColorType.None, FadeManager.FadeColorType fadeInColorType = FadeManager.FadeColorType.None, bool isBGMStop = true, UnityAction onComplete = null)
     //{
@@ -51,33 +51,42 @@ public class SceneControlManager : SingletonMonoBehaviour<SceneControlManager>
             {
                 InGameUtil.GCCollect();
             }
-            LoadingUIManager.Instance.SetActive(true);
-            //Debug.Log($"asyncInstance : {System.DateTime.Now.ToString()}");
-            AsyncOperation async = SceneManager.LoadSceneAsync(sceneName);
-
-            //Debug.Log($"asyncInstanted : {System.DateTime.Now.ToString()}");
-            async.allowSceneActivation = false;
-            LoadingUIManager.LoadingParameter param = new LoadingUIManager.LoadingParameter()
-            {
-                asyncOperation = async,
-                onCompleted = ()=>
-                {
-                    async.allowSceneActivation = true;
-                    if (isAfterLoadFadeOut)
-                    {
-                        StartCoroutine(WaitSceneLoadAfterFadeIn(async, fadeInColorType, onComplete, fadeInTime));
-                    }
-                    else
-                    {
-                        onComplete?.Invoke();
-                    }
-                },
-                message = TextMaster.GetText("text_loading"),
-                isAutoEnactive = isAfterLoadFadeOut
-            };
-            LoadingUIManager.Instance.StartLoading(param);
+            StartCoroutine(AfterFadeOutCore(sceneName, onComplete, fadeOutColorType, fadeInColorType, isAfterLoadFadeOut, fadeOutTime, fadeInTime));
         });
     }
+
+    private IEnumerator AfterFadeOutCore(string sceneName, Action onComplete = null, FadeManager.FadeColorType fadeOutColorType = FadeManager.FadeColorType.None, FadeManager.FadeColorType fadeInColorType = FadeManager.FadeColorType.None, bool isAfterLoadFadeOut = true, float fadeOutTime = 1f, float fadeInTime = 1f)
+    {
+        LoadingUIManager.Instance.SetActive(true);
+        //ロード前にちゃんとUIが表示されるまで待つ
+        yield return null;
+        yield return new WaitForEndOfFrame();
+        //Debug.Log($"asyncInstance : {System.DateTime.Now.ToString()}");
+        AsyncOperation async = SceneManager.LoadSceneAsync(sceneName);
+
+        //Debug.Log($"asyncInstanted : {System.DateTime.Now.ToString()}");
+        async.allowSceneActivation = false;
+        LoadingUIManager.LoadingParameter param = new LoadingUIManager.LoadingParameter()
+        {
+            asyncOperation = async,
+            onCompleted = () =>
+            {
+                async.allowSceneActivation = true;
+                if (isAfterLoadFadeOut)
+                {
+                    StartCoroutine(WaitSceneLoadAfterFadeIn(async, fadeInColorType, onComplete, fadeInTime));
+                }
+                else
+                {
+                    onComplete?.Invoke();
+                }
+            },
+            message = TextMaster.GetText("text_loading"),
+            isAutoEnactive = isAfterLoadFadeOut
+        };
+        LoadingUIManager.Instance.StartLoading(param);
+    }
+
     ////動作確認用
     //private IEnumerator LoadSampleCor(string sceneName, FadeManager.FadeColorType fadeInColorType, UnityAction onComplete = null)
     //{
@@ -110,8 +119,15 @@ public class SceneControlManager : SingletonMonoBehaviour<SceneControlManager>
     {
         yield return async;
         //Debug.Log($"AsyncEnded : {System.DateTime.Now.ToString()}");
-        LoadingUIManager.Instance.SetActive(false);
+        //ロードが終わってすぐに非表示にするとロードで固まった時に真っ暗な画面が表示されることになる
+        yield return null;
+        FadeInScene(fadeInColorType, onComplete, fadeInTime);
+    }
+
+    public void FadeInScene(FadeManager.FadeColorType fadeInColorType, Action onComplete, float fadeInTime)
+    {
         FadeManager.Instance.FadeIn(fadeInColorType, fadeInTime, onComplete);
+        LoadingUIManager.Instance.SetInactiveWithFadeOut();
     }
 
     public void StopBGMAndEnvironment()

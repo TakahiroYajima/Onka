@@ -121,6 +121,31 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager> {
         }
     }
 
+    public IEnumerator FadeAction(CanvasGroup _canvasGroup, FadeType _type, float _duration, UnityAction onComplete = null)
+    {
+        float alpha = _canvasGroup.alpha;
+        float currentTime = 0f;
+        while (currentTime < 1f)
+        {
+            float dir = Time.deltaTime / _duration;
+            if (_type == FadeType.In)
+            {
+                alpha -= dir;
+            }
+            else
+            {
+                alpha += dir;
+            }
+            _canvasGroup.alpha = alpha;
+            currentTime += dir;
+            yield return null;
+        }
+        if (onComplete != null)
+        {
+            onComplete();
+        }
+    }
+
     public IEnumerator FadeImage(Image _image, FadeType _type, float _targetAlpha, float _fadeTime, Action onComplete = null)
     {
         Color color = _image.color;

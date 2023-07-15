@@ -63,7 +63,7 @@ public class GameOverManager : SingletonMonoBehaviour<GameOverManager>
 
     private void BackToTitleCallback(bool b)
     {
-        SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Game", true, null,FadeManager.FadeColorType.Black, FadeManager.FadeColorType.Black);
+        SceneControlManager.Instance.ChangeSceneAsyncWithLoading("Game", true, null,FadeManager.FadeColorType.Black, FadeManager.FadeColorType.None, false, 1, 0, true);
     }
 }
 
