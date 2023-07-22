@@ -248,6 +248,52 @@ MonoBehaviour:
       be discarded)'
     m_Metadata:
       m_Items: []
+  - m_Id: 22548730567004160
+    m_Localized: Decision
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22548730600558593
+    m_Localized: Setting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22548730600558594
+    m_Localized: Brightness
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22548730600558595
+    m_Localized: Mouse sensitivity
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22548730600558596
+    m_Localized: Normal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22548730600558597
+    m_Localized: Hard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22548730600558598
+    m_Localized: Difficulty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22548730604752896
+    m_Localized: 'Normal: Enemies stop moving while viewing items.
+
+      You can
+      also browse items once you have viewed them from the item list.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22548730604752897
+    m_Localized: 'Hard: Enemies move while viewing items.(excluding menus)
+
+      Also,
+      you cannot see the details from the item list in the menu.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22557774967017472
+    m_Localized: Cancel
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

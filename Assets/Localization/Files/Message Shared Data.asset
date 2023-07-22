@@ -75,6 +75,14 @@ MonoBehaviour:
     m_Key: text_no_reverce_language
     m_Metadata:
       m_Items: []
+  - m_Id: 22548730567004160
+    m_Key: text_decision
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22557774967017472
+    m_Key: text_cancel
+    m_Metadata:
+      m_Items: []
   - m_Id: 8401741746182
     m_Key: text_back
     m_Metadata:
@@ -105,6 +113,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 8401741746186
     m_Key: text_language_setting_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22548730600558593
+    m_Key: text_user_setting
     m_Metadata:
       m_Items: []
   - m_Id: 8401741746187
@@ -221,6 +233,34 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 838046527590400
     m_Key: splash_warning_head
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22548730600558594
+    m_Key: setting_brightness_label
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22548730600558595
+    m_Key: setting_mouse_sensitivity_label
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22548730600558596
+    m_Key: setting_normal_difficary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22548730600558597
+    m_Key: setting_hard_difficary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22548730600558598
+    m_Key: setting_difficary_label
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22548730604752896
+    m_Key: setting_difficary_description_normal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22548730604752897
+    m_Key: setting_difficary_description_hard
     m_Metadata:
       m_Items: []
   m_Metadata:
