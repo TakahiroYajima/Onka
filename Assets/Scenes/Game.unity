@@ -486,5 +486,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: StageObjects
       objectReference: {fileID: 0}
+    - target: {fileID: 1306968243354465348, guid: 5840af3becbe8284694ec649adfdadfc,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 109
+      objectReference: {fileID: 0}
+    - target: {fileID: 4509118854989874836, guid: 5840af3becbe8284694ec649adfdadfc,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 109
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5840af3becbe8284694ec649adfdadfc, type: 3}
