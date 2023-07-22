@@ -19,11 +19,8 @@ public abstract class DoorObject : MonoBehaviour
 
     protected bool isMoving = false;
     public bool isOpenState { get; protected set; } = false;//ドアが開いている状態か
-    public bool isForceOpenable = false;//イベントなどで強制的にドアを開けられるようにするか
+    [System.NonSerialized] public bool isForceOpenable = false;//イベントなどで強制的にドアを開けられるようにするか
     [HideInInspector] public bool isEternalClosed = false;//一切開けられないようにするか（イベント用）
-
-    bool isKeyHoleUnlocked = true;
-    bool isKeyLockUnlocked = true;
 
     protected string seKey = "se_door_open";
 
@@ -48,25 +45,21 @@ public abstract class DoorObject : MonoBehaviour
             thisCollider = gameObject.AddComponent<BoxCollider>();
             Debug.Log("ドアのコライダーがありませんでした");
         }
+        keyHoleTarget.SetDoor(this);
     }
 
-    public void OpenDoor()
+    public bool IsOpenableDoor()
     {
-        if (isEternalClosed) return;
+        if (isEternalClosed) return false;
+        if (isForceOpenable) return true;
 
-        if (isForceOpenable)
-        {
-            OpenAction();
-            SoundManager.Instance.PlaySeWithKeyOne(seKey);
-            return;
-        }
-
-        isKeyHoleUnlocked = true;
-        isKeyLockUnlocked = true;
+        bool isKeyHoleUnlocked = true;
+        bool isKeyLockUnlocked = true;
         if (keyHoleTarget != null)
         {
-            if (string.IsNullOrEmpty(keyHoleTarget.UnlockKey)) { Debug.LogError("解錠キーが設定されていません"); return; }
-            if (!keyHoleTarget.isUnlocked) {
+            if (string.IsNullOrEmpty(keyHoleTarget.UnlockKey)) { Debug.LogError("解錠キーが設定されていません"); return false; }
+            if (!keyHoleTarget.isUnlocked)
+            {
                 //Debug.Log("鍵がかかっている : " + openKey);
                 isKeyHoleUnlocked = false;
             }
@@ -75,22 +68,24 @@ public abstract class DoorObject : MonoBehaviour
                 //Debug.Log("解錠済み : " + openKey);
             }
         }
-        if(keyLockTarget != null)
+        if (keyLockTarget != null)
         {
-            if (string.IsNullOrEmpty(keyLockTarget.UnlockTargetKey)) { Debug.LogError("解錠キーが設定されていません"); return; }
+            if (string.IsNullOrEmpty(keyLockTarget.UnlockTargetKey)) { Debug.LogError("解錠キーが設定されていません"); return false; }
             if (!keyLockTarget.isUnlocked)
             {
                 //Debug.Log("鍵がかかっている : " + openKey);
                 isKeyLockUnlocked = false;
             }
         }
-        if (isKeyHoleUnlocked && isKeyLockUnlocked)
+        return isKeyHoleUnlocked && isKeyLockUnlocked;
+    }
+
+    public void OpenDoor()
+    {
+        if (IsOpenableDoor() && !isMoving && !isOpenState)
         {
-            if (!isMoving && !isOpenState)
-            {
-                OpenAction();
-                SoundManager.Instance.PlaySeWithKeyOne(seKey);
-            }
+            OpenAction();
+            SoundManager.Instance.PlaySeWithKeyOne(seKey);
         }
     }
     /// <summary>

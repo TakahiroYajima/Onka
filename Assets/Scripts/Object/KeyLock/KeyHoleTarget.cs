@@ -14,4 +14,9 @@ public class KeyHoleTarget : MonoBehaviour
     {
         keyLockObject.SetInitialize(this);
     }
+
+    public void SetDoor(DoorObject doorObject)
+    {
+        keyLockObject.SetDoor(doorObject);
+    }
 }

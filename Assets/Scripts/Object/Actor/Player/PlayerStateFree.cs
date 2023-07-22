@@ -58,7 +58,15 @@ public class PlayerStateFree : StateBase
             //    CrosshairManager.Instance.ChangeCenterSprites(CrosshairType.Door);
             //    break;
             case Tags.KeyHole:
-                CrosshairManager.Instance.ChangeCenterSprites(CrosshairType.DoorKey);
+                //ドアまたはボックスなどの鍵をを開けられない時だけ表示
+                if (!hit.transform.GetComponent<KeyHoleObject>().IsOpenableDoor)
+                {
+                    CrosshairManager.Instance.ChangeCenterSprites(CrosshairType.DoorKey);
+                }
+                else
+                {
+                    CrosshairManager.Instance.ChangeCenterSprites(CrosshairType.Normal);
+                }
                 break;
             default:
                 CrosshairManager.Instance.ChangeCenterSprites(CrosshairType.Normal);
