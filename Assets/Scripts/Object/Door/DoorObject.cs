@@ -45,7 +45,10 @@ public abstract class DoorObject : MonoBehaviour
             thisCollider = gameObject.AddComponent<BoxCollider>();
             Debug.Log("ドアのコライダーがありませんでした");
         }
-        keyHoleTarget.SetDoor(this);
+        if (keyHoleTarget != null)
+        {
+            keyHoleTarget.SetDoor(this);
+        }
     }
 
     public bool IsOpenableDoor()
