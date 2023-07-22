@@ -135,6 +135,10 @@ MonoBehaviour:
     m_Key: text_menu_content_operation
     m_Metadata:
       m_Items: []
+  - m_Id: 22559502886047744
+    m_Key: text_menu_content_setting
+    m_Metadata:
+      m_Items: []
   - m_Id: 1215015849103360
     m_Key: text_menu_content_item
     m_Metadata:
