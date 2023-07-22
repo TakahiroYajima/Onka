@@ -33,6 +33,10 @@ public class ScreenShot : MonoBehaviour
     // カメラのスクリーンショットを保存する
     private void CaptureScreenShot(string filePath,string name)
     {
+        if(_camera == null)
+        {
+            _camera = Camera.main;
+        }
         var rt = new RenderTexture(_camera.pixelWidth, _camera.pixelHeight, 24);
         var prev = _camera.targetTexture;
         _camera.targetTexture = rt;
