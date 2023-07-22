@@ -465,7 +465,10 @@ namespace Onka.Manager.Data
         }
         #endregion
 
-
+        public bool IsAfterMiddleStage()
+        {
+            return IsGetedItem("key_nobuyuki");// IsGetedItem("key_keymanagementcabinet") || ;
+        }
 
 
 

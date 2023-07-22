@@ -151,7 +151,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 461841446014982
-    m_Localized: "\u8D70\u884C"
+    m_Localized: "\u8D70\u308B"
     m_Metadata:
       m_Items: []
   - m_Id: 461841446014983
@@ -227,4 +227,5 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   references:
-    version: 1
+    version: 2
+    RefIds: []

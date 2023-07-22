@@ -14,7 +14,7 @@ public class ProvokedSystem : MonoBehaviour
 
     //ターゲットが自分の視界の範囲外をうろつく＝挑発しているので、それに対する不意打ち要素
     private float ProvokedJudgeDistance = 8f;//8メートル以内なら煽りと判断
-    private float NoticeProvocationTime = 7f;//挑発に気付くまでの時間
+    private float NoticeProvocationTime = 6f;//挑発に気付くまでの時間
     [HideInInspector] public float provocationingTime = 0f;//ターゲットに挑発されている時間
     [HideInInspector] public Transform rayStartPointTransform = null;//Rayを発射する地点
 
@@ -33,6 +33,11 @@ public class ProvokedSystem : MonoBehaviour
         {
             rayStartPointTransform = _rayStartPointTransform;
         }
+    }
+
+    public void SetNoticeProvocationTime(float _noticeProvocationTime)
+    {
+        NoticeProvocationTime = _noticeProvocationTime;
     }
 
     void Awake()

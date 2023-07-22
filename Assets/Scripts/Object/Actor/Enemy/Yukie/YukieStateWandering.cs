@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SoundDistance;
+using Onka.Manager.Data;
 
 /// <summary>
 /// 雪絵の徘徊ステート（通常モード）
@@ -19,6 +19,9 @@ public class YukieStateWandering : StateBase
     private int frameCount = 0;
     private bool isInitialized = false;
     private State currentState;
+
+    private const float NoticeProvocationTimeInit = 5f;
+    private const float NoticeProvocationTimeEary = 1.5f;
 
     public YukieStateWandering(Enemy_Yukie _yukie)
     {
@@ -41,7 +44,8 @@ public class YukieStateWandering : StateBase
         yukie.wanderingActor.SetMoveSpeed(yukie.walkSpeed);
         yukie.onColliderEnterCallback = null;
         yukie.PlaySoundLoop(0, 0.3f);
-        yukie.provokedSystem.Initialize(7.5f, () =>
+        float noticeProvocationTime = DataManager.Instance.IsAfterMiddleStage() ? NoticeProvocationTimeEary : NoticeProvocationTimeInit;
+        yukie.provokedSystem.Initialize(noticeProvocationTime, () =>
         {
             yukie.ChangeState(EnemyState.RotateToPlayer);
         }, yukie.EyeTransform);
@@ -67,6 +71,8 @@ public class YukieStateWandering : StateBase
             }
             else
             {
+                float noticeProvocationTime = DataManager.Instance.IsAfterMiddleStage() ? NoticeProvocationTimeEary : NoticeProvocationTimeInit;
+                yukie.provokedSystem.SetNoticeProvocationTime(noticeProvocationTime);
                 //一定時間プレイヤーが自分の近くをうろついていたら振り返り、発見モードになる
                 yukie.provokedSystem.ProvokedUpdate_ToPlayer_6Frame(yukie.player.transform.position);
             }

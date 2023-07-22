@@ -69,6 +69,48 @@ public class DebugUtilityMenu : MonoBehaviour
         AssetDatabase.Refresh();
     }
 
+    [MenuItem("Debug/GameData/全クリ直前（2番目データ）")]
+    public static void InitGameData_AllClear()
+    {
+        StringBuilder fileName = new StringBuilder();
+        fileName.Append(DataManager.GameDataBaseFileName);
+        fileName.Append("1.txt");
+        GameData data = LoadOrNewInstanceGameData(SaveType.PlayerData, fileName.ToString());
+
+        //マスターデータがある事前提なので注意
+        ItemDataList itemDataList = FileManager.LoadSaveData<ItemDataList>(SaveType.MasterData, DataManager.ItemDataFileName);
+        EventDataList eventDataList = FileManager.LoadSaveData<EventDataList>(SaveType.MasterData, DataManager.EventDataFileName);
+
+        //アイテムを手に入れた事にする
+        foreach(var v in itemDataList.itemDataList)
+        {
+            if (v.key != "key_entrance" && v.key != "note_final")
+            {
+                DoGetedAndUsedItem(itemDataList, v.key);
+            }
+        }
+        //イベントを終えたことにする
+        foreach (var v in eventDataList.list)
+        {
+            if (v.eventKey != "Event_NoteFinalActive" && v.eventKey != "Event_AfterOutHouse")
+            {
+                DoEndedEvent(eventDataList, v.eventKey);
+            }
+        }
+
+        //アイテムとイベントをセーブ用データに適用
+        data.itemDataList = itemDataList;
+        data.eventDataList = eventDataList;
+
+        //日付を入れないとNewGameのデータと判断される
+        System.DateTime dateTime = System.DateTime.Now;
+        string parceDate = dateTime.ToString(DataManager.SaveDateTimeFormat);
+        data.saveDate = parceDate;
+
+        FileManager.DataSave<GameData>(data, SaveType.PlayerData, fileName.ToString());
+        AssetDatabase.Refresh();
+    }
+
     /// <summary>
     /// マスターデータをセーブ用データにセット（要素追加後の初期化・フラグリセット用）
     /// </summary>
