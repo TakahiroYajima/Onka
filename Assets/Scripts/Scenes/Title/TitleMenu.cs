@@ -9,6 +9,7 @@ public class TitleMenu : MonoBehaviour
     [SerializeField] private SelectSaveDataView selectSaveDataView = null;
     [SerializeField] private GameObject bonusButtonObj = null;
     [SerializeField] private SettingLanguageView settingLanguageView = null;
+    [SerializeField] private UserSettingMenuView userSettingMenuView = null;
 
     //マスタ
     [SerializeField] private Text titleText = null;
@@ -17,6 +18,7 @@ public class TitleMenu : MonoBehaviour
     [SerializeField] private Text quitText = null;
     [SerializeField] private Text bonusText = null;
     [SerializeField] private Text settingText = null;
+    [SerializeField] private Text userSettingText = null;
 
     public void Initialize()
     {
@@ -34,6 +36,7 @@ public class TitleMenu : MonoBehaviour
         quitText.text = TextMaster.GetText("text_quit_game");
         bonusText.text = TextMaster.GetText("text_bonus");
         settingText.text = TextMaster.GetText("text_language_setting");
+        userSettingText.text = TextMaster.GetText("text_user_setting");
     }
 
     public void OnPressNewGameButton()
@@ -54,6 +57,7 @@ public class TitleMenu : MonoBehaviour
         mainMenuObj.SetActive(true);
         selectSaveDataView.gameObject.SetActive(false);
         settingLanguageView.gameObject.SetActive(false);
+        userSettingMenuView.gameObject.SetActive(false);
     }
 
     private void DoActiveSelectSaveDataView()
@@ -94,5 +98,11 @@ public class TitleMenu : MonoBehaviour
         settingLanguageView.onChangeLanguage = manager.OnChangeLanguage;
         settingLanguageView.onClose = BackToMainMenu;
         settingLanguageView.Initialize();
+    }
+
+    public void OnPressUserSettingButton()
+    {
+        userSettingMenuView.gameObject.SetActive(true);
+        userSettingMenuView.SetUp(BackToMainMenu);
     }
 }

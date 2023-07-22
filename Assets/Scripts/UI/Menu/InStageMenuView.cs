@@ -10,10 +10,12 @@ namespace Onka.Manager.Menu
     {
         [SerializeField] private GameObject buttonRootObj = null;
         [SerializeField] private Text operationText = null;
+        [SerializeField] private Text settingText = null;
         [SerializeField] private Text ItemText = null;
         [SerializeField] private Text backToTitleText = null;
         [SerializeField] private Text backText = null;
         public UnityAction onClickOperateGuideButton = null;
+        public UnityAction onClickSettingButton = null;
         public UnityAction onClickItemButton = null;
         public UnityAction onClickBackToTitleButton = null;
         public UnityAction onClickCanselButton = null;
@@ -21,6 +23,7 @@ namespace Onka.Manager.Menu
         public void Initialize()
         {
             operationText.text = TextMaster.GetText("text_menu_content_operation");
+            settingText.text = TextMaster.GetText("text_menu_content_setting");
             ItemText.text = TextMaster.GetText("text_menu_content_item");
             backToTitleText.text = TextMaster.GetText("text_menu_content_back_to_title");
             backText.text = TextMaster.GetText("text_menu_content_back");
@@ -31,6 +34,13 @@ namespace Onka.Manager.Menu
             if (onClickOperateGuideButton != null)
             {
                 onClickOperateGuideButton();
+            }
+        }
+        public void ClickSettingButton()
+        {
+            if (onClickSettingButton != null)
+            {
+                onClickSettingButton();
             }
         }
         public void ClickItemButton()

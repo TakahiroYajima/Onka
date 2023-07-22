@@ -17,6 +17,7 @@ namespace Onka.Manager.Menu
 
         [SerializeField] private InStageMenuView menuView = null;
         [SerializeField] private OperationDescriptionView operationDescriptionViewPref = null;
+        [SerializeField] private UserSettingMenuView userSettingMenuViewPref = null;
         [SerializeField] private ItemListViewer itemListViewerPref = null;
 
         public UnityAction onOpenedMenu { private get; set; } = null;
@@ -33,6 +34,7 @@ namespace Onka.Manager.Menu
             menuGuideText.text = TextMaster.GetText("text_menu_title");
             menuView.Initialize();
             menuView.onClickOperateGuideButton = OpenOperationDesctiption;
+            menuView.onClickSettingButton = OpenSettingView;
             menuView.onClickItemButton = OpenItemListView;
             menuView.onClickBackToTitleButton = OpenBackToTitleDialog;
             menuView.onClickCanselButton = CloseMenu;
@@ -83,6 +85,17 @@ namespace Onka.Manager.Menu
             v.InitAndShow(()=>
             {
                 menuView.gameObject.SetActive(true);
+            });
+            menuView.gameObject.SetActive(false);
+        }
+
+        private void OpenSettingView()
+        {
+            UserSettingMenuView view = Instantiate(userSettingMenuViewPref, instanceParent);
+            view.SetUp(() =>
+            {
+                menuView.gameObject.SetActive(true);
+                Destroy(view.gameObject);
             });
             menuView.gameObject.SetActive(false);
         }
