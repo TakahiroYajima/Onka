@@ -12,6 +12,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         base.Awake();
         TextMaster.Initialize();
         LoadSettingData();
+        //SetDisplayBrightness(settingData.brightness);
         LayerMaskData.Initialize();
     }
 
@@ -50,4 +51,14 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         return settingData;
     }
+
+    ///// <summary>
+    ///// ディスプレイの明るさを設定
+    ///// </summary>
+    ///// <param name="brightness"></param>
+    //public void SetDisplayBrightness(float brightness)
+    //{
+    //    RenderSettings.ambientIntensity = brightness;
+    //    Debug.Log($"SetDisplayBrightness : {RenderSettings.ambientIntensity}");
+    //}
 }

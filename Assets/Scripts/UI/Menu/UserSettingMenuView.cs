@@ -22,20 +22,18 @@ public class UserSettingMenuView : MonoBehaviour
     [SerializeField] private Text difficaryLabel = null;
     [SerializeField] private Text difficaryDescriptionTexst = null;
 
+    private GameSceneManager gameSceneManager;
+    private SettingData settingData;
     private Action onClose = null;
     private Difficulty currentDifficulty = Difficulty.Normal;
     private float brightnessValue = 0f;
     private float mouseSensitivityValue = 0f;
 
-    private const float BrightnessMin = 1f;
-    private const float BrightnessMax = 3f;
-    private const float MouseSensitivityMin = 1f;
-    private const float MouseSensitivityMax = 10f;
-
     public void SetUp(Action onClose)
     {
+        gameSceneManager = GameSceneManager.Instance as GameSceneManager;
         this.onClose = onClose;
-        SettingData settingData = GameManager.Instance.GetSettingData();
+        settingData = GameManager.Instance.GetSettingData();
 
         okButton.button.onClick.RemoveAllListeners();
         okButton.button.onClick.AddListener(OnClickOK);
@@ -43,16 +41,16 @@ public class UserSettingMenuView : MonoBehaviour
         cancelButton.button.onClick.AddListener(Close);
 
         brightnessAdjustmentSlider.onValueChanged.RemoveAllListeners();
-        brightnessAdjustmentSlider.onValueChanged.AddListener((value) => { CalcBrightnessValue(); brightnessText.text = brightnessValue.ToString("F1"); });
-        float brightnessMagnification = BrightnessMax - BrightnessMin;
-        float brightnessInitValue = (settingData.brightness - BrightnessMin) / brightnessMagnification;
+        brightnessAdjustmentSlider.onValueChanged.AddListener((value) => { CalcBrightnessValue(); brightnessText.text = brightnessValue.ToString("F1"); gameSceneManager.SetDisplayBrightness(brightnessValue); });
+        float brightnessMagnification = SettingConstant.BrightnessMax - SettingConstant.BrightnessMin;
+        float brightnessInitValue = (settingData.brightness - SettingConstant.BrightnessMin) / brightnessMagnification;
         brightnessAdjustmentSlider.value = brightnessInitValue;
         brightnessText.text = settingData.brightness.ToString("F1");
 
         mouseSensitivitySlider.onValueChanged.RemoveAllListeners();
-        mouseSensitivitySlider.onValueChanged.AddListener((value) => { CalcMouseSensitivityValue(); mouseSensitivityText.text = mouseSensitivityValue.ToString("F1"); });
-        float mouseSensitivityMagnification = MouseSensitivityMax - MouseSensitivityMin;
-        float mouseSensitivityInitValue = (settingData.mouseSensitivity - MouseSensitivityMin) / mouseSensitivityMagnification;
+        mouseSensitivitySlider.onValueChanged.AddListener((value) => { CalcMouseSensitivityValue(); mouseSensitivityText.text = mouseSensitivityValue.ToString("F1"); gameSceneManager.SetMouseSensitivity(mouseSensitivityValue); });
+        float mouseSensitivityMagnification = SettingConstant.MouseSensitivityMax - SettingConstant.MouseSensitivityMin;
+        float mouseSensitivityInitValue = (settingData.mouseSensitivity - SettingConstant.MouseSensitivityMin) / mouseSensitivityMagnification;
         mouseSensitivitySlider.value = mouseSensitivityInitValue;
         mouseSensitivityText.text = settingData.mouseSensitivity.ToString("F1");
 
@@ -97,14 +95,14 @@ public class UserSettingMenuView : MonoBehaviour
 
     private void CalcBrightnessValue()
     {
-        float brightnessMagnification = BrightnessMax - BrightnessMin;
-        brightnessValue = BrightnessMin + brightnessAdjustmentSlider.value * brightnessMagnification;
+        float brightnessMagnification = SettingConstant.BrightnessMax - SettingConstant.BrightnessMin;
+        brightnessValue = SettingConstant.BrightnessMin + brightnessAdjustmentSlider.value * brightnessMagnification;
     }
 
     private void CalcMouseSensitivityValue()
     {
-        float mouseSensitivityMagnification = MouseSensitivityMax - MouseSensitivityMin;
-        mouseSensitivityValue = MouseSensitivityMin + mouseSensitivitySlider.value * mouseSensitivityMagnification;
+        float mouseSensitivityMagnification = SettingConstant.MouseSensitivityMax - SettingConstant.MouseSensitivityMin;
+        mouseSensitivityValue = SettingConstant.MouseSensitivityMin + mouseSensitivitySlider.value * mouseSensitivityMagnification;
     }
 
     private void SetDifficulty(Difficulty difficulty)
@@ -117,8 +115,6 @@ public class UserSettingMenuView : MonoBehaviour
 
     private void OnClickOK()
     {
-        //CalcBrightnessValue();
-        //CalcMouseSensitivityValue();
         Debug.Log($"Save : {brightnessValue}, {mouseSensitivityValue}, {currentDifficulty}");
 
         GameManager.Instance.SetUserSettings(brightnessValue, mouseSensitivityValue, currentDifficulty);
@@ -127,6 +123,7 @@ public class UserSettingMenuView : MonoBehaviour
 
     private void Close()
     {
+        gameSceneManager.SetDisplayBrightness(settingData.brightness);
         onClose?.Invoke();
     }
 }

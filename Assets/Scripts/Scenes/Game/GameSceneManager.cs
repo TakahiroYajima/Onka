@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+//using UnityEngine.Rendering;
+//using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering.PostProcessing;
 using SoundSystem;
 using SoundDistance;
 using Onka.Manager.Event;
@@ -26,11 +29,22 @@ public class GameSceneManager : SceneBase
 
     private NavMeshDataInstance navMeshInstance;
 
+    private PostProcessVolume fieldPostProcess = null;
+
     protected override void Start()
     {
         titleManager = Instantiate(titleManagerPrefab);
         titleManager.Initialize();
         SceneControlManager.Instance.FadeInScene(FadeManager.FadeColorType.Black, null, 1f);
+        GameManager.Instance.OnSetUserSettings = OnSetUserSettings;
+
+        fieldPostProcess = fieldObject.fieldPostProcess;
+        SetDisplayBrightness(GameManager.Instance.GetSettingData().brightness);
+    }
+
+    public PostProcessVolume GetFieldPostProcess()
+    {
+        return fieldPostProcess;
     }
 
     private void DeleteTitle()
@@ -188,6 +202,8 @@ public class GameSceneManager : SceneBase
         EventManager.Instance.isEnable = true;
         EventManager.Instance.InitProgressEach();
 
+        SetMouseSensitivity(GameManager.Instance.GetSettingData().mouseSensitivity);
+
         yield return new WaitForEndOfFrame();
         yield return new WaitForSeconds(0.2f);
         FadeManager.Instance.FadeIn(FadeManager.FadeColorType.Black, 1f, ()=>
@@ -205,6 +221,60 @@ public class GameSceneManager : SceneBase
             endingSceneManager = Instantiate(endingSceneManagerPrefab);
         }
         endingSceneManager.StartEnding();
+    }
+
+    private void OnSetUserSettings(float brightness, float mouseSensitivity)
+    {
+
+    }
+
+    /// <summary>
+    /// 画面の明るさを設定（PostProcess）
+    /// </summary>
+    /// <param name="brightness"></param>
+    public void SetDisplayBrightness(float brightness)
+    {
+        float brightnessRatio = (brightness - SettingConstant.BrightnessMin) / (SettingConstant.BrightnessMax - SettingConstant.BrightnessMin);
+        Debug.Log($"brightnessRatio : {brightnessRatio}");
+        //PostProcess
+        float bloomIndencityMagnification = SettingConstant.BloomIntensityBright - SettingConstant.BloomIntensityDark;
+        float bloomIndencityValue = SettingConstant.BloomIntensityDark + bloomIndencityMagnification * brightnessRatio;
+
+        float bloomThresholdMagnification = SettingConstant.BloomThresholdBright - SettingConstant.BloomThresholdDark;//0に近づくほど明るくなるのでこれはマイナス値になる
+        float bloomThresholdValue = SettingConstant.BloomThresholdDark + bloomThresholdMagnification * brightnessRatio;
+
+        float ambientIndencityMagnification = SettingConstant.AmbientIntensityBright - SettingConstant.AmbientIntensityDark;//0に近づくほど明るくなるのでこれはマイナス値になる
+        float ambientIndencityValue = SettingConstant.AmbientIntensityDark + ambientIndencityMagnification * brightnessRatio;
+
+        Bloom bloom = fieldPostProcess.profile.GetSetting<Bloom>();
+        if(bloom != null)
+        {
+            bloom.intensity.Override(bloomIndencityValue);
+            bloom.threshold.Override(bloomThresholdValue);
+        }
+
+        AmbientOcclusion ambientOcclusion = fieldPostProcess.profile.GetSetting<AmbientOcclusion>();
+        if(ambientOcclusion != null)
+        {
+            ambientOcclusion.intensity.Override(ambientIndencityValue);
+        }
+
+        //本編中はプレイヤーのライトに影響
+        if (managerObject != null && StageManager.Instance.Player != null)
+        {
+            Light light = StageManager.Instance.Player.spotLight;
+            float lightMagnification = SettingConstant.PlayerLightBright - SettingConstant.PlayerLightDark;
+            float lightValue = SettingConstant.PlayerLightDark + lightMagnification * brightnessRatio;
+            light.intensity = lightValue;
+        }
+    }
+
+    public void SetMouseSensitivity(float mouseSensitivity)
+    {
+        if (managerObject != null && StageManager.Instance.Player != null)
+        {
+            StageManager.Instance.Player.FirstPersonAIO.mouseSensitivity = mouseSensitivity;
+        }
     }
 }
 

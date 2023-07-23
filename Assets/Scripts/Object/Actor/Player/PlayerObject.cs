@@ -11,6 +11,7 @@ public class PlayerObject : MonoBehaviour
     [SerializeField] private FirstPersonAIO firstPersonAIO = null;
     public FirstPersonAIO FirstPersonAIO { get { return firstPersonAIO; } }
     [SerializeField] private GameObject cameraObj = null;
+    [field: SerializeField] public Light spotLight { get; private set; } = null;
     [SerializeField] private SoundDistance.SoundDistanceListener soundListener;
     public SoundDistance.SoundDistanceListener SoundListener { get { return soundListener; } }
     public GameObject CameraObj { get { return cameraObj; } }
@@ -47,6 +48,11 @@ public class PlayerObject : MonoBehaviour
     private void OrganizeChasedEnemys() { foreach(Enemy e in chasedEnemys) { if(e == null) { chasedEnemys.Remove(e); } } }
 
     public bool isEventEnabled { get { return currentState == PlayerState.Init || currentState == PlayerState.Free; } }
+
+    public void SetLightIntensity(float intensity)
+    {
+        spotLight.intensity = intensity;
+    }
 
     private void Awake()
     {

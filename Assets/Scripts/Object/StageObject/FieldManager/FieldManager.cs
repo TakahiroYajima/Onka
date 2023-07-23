@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SoundSystem;
+using UnityEngine.Rendering.PostProcessing;
 using SoundDistance;
 using Onka.Manager.Event;
 using Onka.Manager.Menu;
@@ -15,6 +15,8 @@ using UnityEditor;
 public class FieldManager : MonoBehaviour
 {
     private List<OpenableObjectEventSetterController> openableObjectEventSetterControllerList = new List<OpenableObjectEventSetterController>();
+
+    [field: SerializeField] public PostProcessVolume fieldPostProcess { get; private set; } = null;
 
     [field: SerializeField] public GameObject restartPosition { get; private set; } = null;//セーブ地点から再開する時の場所
     [SerializeField] private SoundDistancePoint savePointSDP = null;

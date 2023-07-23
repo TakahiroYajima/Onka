@@ -241,6 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b71d01b0d8f9da54a8137ec66f5ca5c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <fieldPostProcess>k__BackingField: {fileID: 6782037110957561399}
   <restartPosition>k__BackingField: {fileID: 6732384535619392979}
   savePointSDP: {fileID: 6732384534954563125}
   yukieInitWanderingPoints:
@@ -15755,7 +15756,6 @@ MonoBehaviour:
   openKey: key_courtyard
   keyHoleTarget: {fileID: 1306968242634410630}
   keyLockTarget: {fileID: 0}
-  isForceOpenable: 0
   isEternalClosed: 0
   doorAnimation: {fileID: 1306968242624574452}
   openAnim: {fileID: 7400000, guid: 45548ae1f97435a4b8ceff4e75646c20, type: 2}
@@ -17784,6 +17784,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5732185247908671883}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6782037110957561399 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1266200670112901052, guid: 5b802a3f2fdd02946afc753cd93b765b,
+    type: 3}
+  m_PrefabInstance: {fileID: 5732185247908671883}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5912782766444871277
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18293,7 +18305,6 @@ MonoBehaviour:
   openKey: key_courtyard
   keyHoleTarget: {fileID: 6732384535574508721}
   keyLockTarget: {fileID: 0}
-  isForceOpenable: 0
   isEternalClosed: 0
   doorAnimation: {fileID: 6732384534533841532}
   openAnim: {fileID: 7400000, guid: 45548ae1f97435a4b8ceff4e75646c20, type: 2}
@@ -20961,7 +20972,6 @@ MonoBehaviour:
   openKey: 
   keyHoleTarget: {fileID: 0}
   keyLockTarget: {fileID: 0}
-  isForceOpenable: 0
   isEternalClosed: 0
   doorAnimation: {fileID: 6732384534773838935}
   openAnim: {fileID: 7400000, guid: 45548ae1f97435a4b8ceff4e75646c20, type: 2}
@@ -21209,7 +21219,6 @@ MonoBehaviour:
   openKey: inputkeypadlock_1
   keyHoleTarget: {fileID: 0}
   keyLockTarget: {fileID: 6732384535868359659}
-  isForceOpenable: 0
   isEternalClosed: 0
   openSlideDirection: 0
   slideDistance: 1.5
@@ -27135,7 +27144,6 @@ MonoBehaviour:
   openKey: key_yukie
   keyHoleTarget: {fileID: 6732384536119277915}
   keyLockTarget: {fileID: 0}
-  isForceOpenable: 0
   isEternalClosed: 0
   doorAnimation: {fileID: 6732384535097232323}
   openAnim: {fileID: 7400000, guid: 45548ae1f97435a4b8ceff4e75646c20, type: 2}
@@ -28526,7 +28534,6 @@ MonoBehaviour:
   openKey: key_azuha_yuzuha
   keyHoleTarget: {fileID: 6732384534590772294}
   keyLockTarget: {fileID: 0}
-  isForceOpenable: 0
   isEternalClosed: 0
   doorAnimation: {fileID: 6732384535139334997}
   openAnim: {fileID: 7400000, guid: 45548ae1f97435a4b8ceff4e75646c20, type: 2}
@@ -29302,7 +29309,6 @@ MonoBehaviour:
   openKey: key_drawingroom
   keyHoleTarget: {fileID: 6732384534824637739}
   keyLockTarget: {fileID: 0}
-  isForceOpenable: 0
   isEternalClosed: 0
   doorAnimation: {fileID: 6732384535194602434}
   openAnim: {fileID: 7400000, guid: 45548ae1f97435a4b8ceff4e75646c20, type: 2}
@@ -29508,7 +29514,6 @@ MonoBehaviour:
   openKey: 
   keyHoleTarget: {fileID: 0}
   keyLockTarget: {fileID: 0}
-  isForceOpenable: 0
   isEternalClosed: 0
   doorAnimation: {fileID: 6732384535211194955}
   openAnim: {fileID: 7400000, guid: 45548ae1f97435a4b8ceff4e75646c20, type: 2}
@@ -34358,7 +34363,6 @@ MonoBehaviour:
   openKey: key_underground
   keyHoleTarget: {fileID: 6732384536155483367}
   keyLockTarget: {fileID: 6732384536155483366}
-  isForceOpenable: 0
   isEternalClosed: 0
   openSlideDirection: 2
   slideDistance: 2
@@ -37384,7 +37388,6 @@ MonoBehaviour:
   openKey: 
   keyHoleTarget: {fileID: 0}
   keyLockTarget: {fileID: 0}
-  isForceOpenable: 0
   isEternalClosed: 0
   doorAnimation: {fileID: 6732384535654679249}
   openAnim: {fileID: 7400000, guid: 45548ae1f97435a4b8ceff4e75646c20, type: 2}
@@ -40285,7 +40288,6 @@ MonoBehaviour:
   openKey: key_maidroom
   keyHoleTarget: {fileID: 6732384534655545291}
   keyLockTarget: {fileID: 0}
-  isForceOpenable: 0
   isEternalClosed: 0
   doorAnimation: {fileID: 6732384535844708475}
   openAnim: {fileID: 7400000, guid: 45548ae1f97435a4b8ceff4e75646c20, type: 2}
@@ -40521,7 +40523,6 @@ MonoBehaviour:
   openKey: key_nobuyuki
   keyHoleTarget: {fileID: 6732384535719211553}
   keyLockTarget: {fileID: 0}
-  isForceOpenable: 0
   isEternalClosed: 0
   doorAnimation: {fileID: 6732384535867978066}
   openAnim: {fileID: 7400000, guid: 45548ae1f97435a4b8ceff4e75646c20, type: 2}
@@ -44270,7 +44271,6 @@ MonoBehaviour:
   openKey: key_kozoroom
   keyHoleTarget: {fileID: 6732384535923563427}
   keyLockTarget: {fileID: 0}
-  isForceOpenable: 0
   isEternalClosed: 0
   doorAnimation: {fileID: 6732384536075768560}
   openAnim: {fileID: 7400000, guid: 45548ae1f97435a4b8ceff4e75646c20, type: 2}
@@ -44640,7 +44640,6 @@ MonoBehaviour:
   openKey: key_bathroom
   keyHoleTarget: {fileID: 6732384536098999668}
   keyLockTarget: {fileID: 0}
-  isForceOpenable: 0
   isEternalClosed: 0
   doorAnimation: {fileID: 6732384536101836094}
   openAnim: {fileID: 7400000, guid: 45548ae1f97435a4b8ceff4e75646c20, type: 2}
@@ -48685,7 +48684,6 @@ MonoBehaviour:
   openKey: key_1fhiddenroom
   keyHoleTarget: {fileID: 6732384536285156144}
   keyLockTarget: {fileID: 0}
-  isForceOpenable: 0
   isEternalClosed: 0
   openSlideDirection: 3
   slideDistance: 1.5
@@ -49592,7 +49590,6 @@ MonoBehaviour:
   openKey: key_entrance
   keyHoleTarget: {fileID: 6732384536318463163}
   keyLockTarget: {fileID: 0}
-  isForceOpenable: 0
   isEternalClosed: 0
   doorAnimation: {fileID: 6732384536324890904}
   openAnim: {fileID: 7400000, guid: 45548ae1f97435a4b8ceff4e75646c20, type: 2}
@@ -54164,7 +54161,6 @@ MonoBehaviour:
   openKey: 
   keyHoleTarget: {fileID: 0}
   keyLockTarget: {fileID: 0}
-  isForceOpenable: 0
   isEternalClosed: 0
   openSlideDirection: 3
   slideDistance: 2
@@ -55598,7 +55594,6 @@ MonoBehaviour:
   openKey: key_garage
   keyHoleTarget: {fileID: 7367749816124881891}
   keyLockTarget: {fileID: 0}
-  isForceOpenable: 0
   isEternalClosed: 0
   doorAnimation: {fileID: 8494371327958920106}
   openAnim: {fileID: 7400000, guid: 45548ae1f97435a4b8ceff4e75646c20, type: 2}
