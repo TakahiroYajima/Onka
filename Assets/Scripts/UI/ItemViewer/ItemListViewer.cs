@@ -19,6 +19,8 @@ public class ItemListViewer : MonoBehaviour
 
     [SerializeField] private Text backButtonText = null;
 
+    [SerializeField] private WatchDiaryManager watchDiaryManager = null;
+
     public UnityAction onViewed = null;
     public UnityAction onClosed = null;
 
@@ -124,12 +126,34 @@ public class ItemListViewer : MonoBehaviour
         }
         else
         {
-            currentInstanceViewer.ViewItem(_itemSprite, _itemData.Name, _itemData.Description, true, CloseOneItemView, null);
+            //難易度：普通なら日記やノートを見られる
+            if (GameManager.Instance.GetSettingData().difficulty == Difficulty.Normal && _itemData.type == ItemType.WatchOnly)
+            {
+                currentInstanceViewer.ViewItem(_itemSprite, _itemData.Name, _itemData.Description, true, CloseOneItemView, ()=> StartWatchDiary(_itemData));
+            }
+            else
+            {
+                currentInstanceViewer.ViewItem(_itemSprite, _itemData.Name, _itemData.Description, true, CloseOneItemView, null);
+            }
         }
     }
     private void CloseOneItemView()
     {
         currentInstanceViewer = null;
+    }
+
+    public void StartWatchDiary(ItemData currentWatchingItemData)
+    {
+        currentInstanceViewer.gameObject.SetActive(false);
+        watchDiaryManager.gameObject.SetActive(true);
+        watchDiaryManager.OnFinishWatched = OnEndedWatchDiary;
+        watchDiaryManager.StartWatchDiary(currentWatchingItemData);
+    }
+
+    private void OnEndedWatchDiary()
+    {
+        currentInstanceViewer.gameObject.SetActive(true);
+        watchDiaryManager.gameObject.SetActive(false);
     }
 
     private void OnPressItemDetailButtonInViewer()
