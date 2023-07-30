@@ -114,7 +114,7 @@ public class YukieStateWandering : StateBase
         yukieStateLookInRoom.OnCompleted = EndLookInRoom;
         yukieStateLookInRoom.StartAction();
         currentState = State.LookInRoom;
-        Debug.Log($"StartLookInRoom : {soundDistancePointID}");
+        //Debug.Log($"StartLookInRoom : {soundDistancePointID}");
     }
     private void EndLookInRoom()
     {
@@ -125,7 +125,7 @@ public class YukieStateWandering : StateBase
         //NavMeshのターゲットを本来のものに戻す
         yukie.wanderingActor.SetWanderingID(yukie.wanderingActor.currentWanderingPointID);
         yukie.SoundEmitter.OnEnterOuterPoint = StartLookInRoom;
-        Debug.Log($"EndLookInRoom : {yukie.wanderingActor.currentWanderingPointID}");
+        //Debug.Log($"EndLookInRoom : {yukie.wanderingActor.currentWanderingPointID}");
     }
 
     private void OnColliderEnterEvent(Collider collider)
