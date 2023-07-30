@@ -11,9 +11,13 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         base.Awake();
         TextMaster.Initialize();
-        LoadSettingData();
-        //SetDisplayBrightness(settingData.brightness);
         LayerMaskData.Initialize();
+    }
+
+    private void Start()
+    {
+        LoadSettingData();
+        //Debug.Log($"LoadSettingData complete");
     }
 
     private void LoadSettingData()
