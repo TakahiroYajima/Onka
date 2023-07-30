@@ -235,7 +235,7 @@ public class GameSceneManager : SceneBase
     public void SetDisplayBrightness(float brightness)
     {
         float brightnessRatio = (brightness - SettingConstant.BrightnessMin) / (SettingConstant.BrightnessMax - SettingConstant.BrightnessMin);
-        Debug.Log($"brightnessRatio : {brightnessRatio}");
+        //Debug.Log($"brightnessRatio : {brightnessRatio}");
         //PostProcess
         float bloomIndencityMagnification = SettingConstant.BloomIntensityBright - SettingConstant.BloomIntensityDark;
         float bloomIndencityValue = SettingConstant.BloomIntensityDark + bloomIndencityMagnification * brightnessRatio;
