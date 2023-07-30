@@ -65,8 +65,8 @@ public class UserSettingMenuView : MonoBehaviour
         SetDifficulty(settingData.difficulty);
         SetTexts();
         SetDifficulyDescriptionText(currentDifficulty);
-        Debug.Log($"SaveData : {settingData.brightness}, {settingData.mouseSensitivity}, {settingData.difficulty}");
-        Debug.Log($"Init : {brightnessValue}, {mouseSensitivityValue}, {currentDifficulty}");
+        //Debug.Log($"SaveData : {settingData.brightness}, {settingData.mouseSensitivity}, {settingData.difficulty}");
+        //Debug.Log($"Init : {brightnessValue}, {mouseSensitivityValue}, {currentDifficulty}");
     }
 
     public void SetTexts()
@@ -115,7 +115,7 @@ public class UserSettingMenuView : MonoBehaviour
 
     private void OnClickOK()
     {
-        Debug.Log($"Save : {brightnessValue}, {mouseSensitivityValue}, {currentDifficulty}");
+        //Debug.Log($"Save : {brightnessValue}, {mouseSensitivityValue}, {currentDifficulty}");
 
         GameManager.Instance.SetUserSettings(brightnessValue, mouseSensitivityValue, currentDifficulty);
         Close();
@@ -124,6 +124,7 @@ public class UserSettingMenuView : MonoBehaviour
     private void Close()
     {
         gameSceneManager.SetDisplayBrightness(settingData.brightness);
+        gameSceneManager.SetMouseSensitivity(settingData.mouseSensitivity);
         onClose?.Invoke();
     }
 }

@@ -169,6 +169,23 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
         }
     }
 
+    public void OnStartPlayerWatchItem()
+    {
+        if (Yukie != null && GameManager.Instance.GetSettingData().difficulty == Difficulty.Normal)
+        {
+            prevYukieState = yukieObject.currentState;
+            yukieObject.ChangeState(EnemyState.CanNotAction);
+        }
+    }
+
+    public void OnEndPlayerWatchItem()
+    {
+        if (Yukie != null && GameManager.Instance.GetSettingData().difficulty == Difficulty.Normal)
+        {
+            yukieObject.ChangeState(prevYukieState);
+        }
+    }
+
     public void StartSaveAction()
     {
         prevPlayerState = playerObject.currentState;

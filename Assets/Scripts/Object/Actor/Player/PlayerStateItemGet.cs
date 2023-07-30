@@ -28,9 +28,11 @@ public class PlayerStateItemGet : StateBase
             {
                 player.ChangeState(PlayerState.Free);
             }
+            StageManager.Instance.OnEndPlayerWatchItem();
             EventManager.Instance.ProgressEvent();
         };
         timeCount = 0f;
+        StageManager.Instance.OnStartPlayerWatchItem();
     }
 
     public override void UpdateAction()
