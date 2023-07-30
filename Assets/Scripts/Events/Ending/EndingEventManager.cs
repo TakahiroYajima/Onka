@@ -181,6 +181,7 @@ public class EndingEventManager : MonoBehaviour
     private IEnumerator EndingEventAction()
     {
         InGameUtil.DoCursorLock();
+        SoundManager.Instance.StopEnvironment();
         SoundManager.Instance.PlayBGMWithFadeIn(ambientClip,2f,0.1f);
         //フェードイン（Wordの方で背景を黒くしているため、まだ暗いままになる）
         FadeManager.Instance.FadeIn(FadeManager.FadeColorType.Black, 0.1f);
