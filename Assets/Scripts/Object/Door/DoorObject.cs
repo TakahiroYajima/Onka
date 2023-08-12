@@ -24,6 +24,9 @@ public abstract class DoorObject : MonoBehaviour
 
     protected string seKey = "se_door_open";
 
+    protected const int DoorLayerNum = 9;
+    protected const int RaycastWallNum = 23;
+
     //過去にプレイヤーがドアを開けているか（ItemのisUsedで判定）
     public bool isUnlocked
     {

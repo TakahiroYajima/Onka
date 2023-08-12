@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// 開き戸のドア
@@ -23,7 +21,7 @@ public class SwingDoor : DoorObject
         if (!isMoving && !isOpenState)
         {
             isOpenState = true;
-            thisCollider.enabled = false;
+            thisCollider.gameObject.layer = RaycastWallNum;
             doorAnimation.clip = openAnim;
             doorAnimation.Play();
             StartCoroutine(DoorCloseWithWateTime());
@@ -35,7 +33,7 @@ public class SwingDoor : DoorObject
         if (!isMoving && isOpenState)
         {
             isOpenState = false;
-            thisCollider.enabled = true;
+            thisCollider.gameObject.layer = DoorLayerNum;
             doorAnimation.clip = closeAnim;
             doorAnimation.Play();
         }
