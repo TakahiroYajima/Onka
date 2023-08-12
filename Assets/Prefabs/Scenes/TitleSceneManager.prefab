@@ -1096,6 +1096,7 @@ MonoBehaviour:
   bonusText: {fileID: 1653171325288937388}
   settingText: {fileID: 5010652172521754756}
   userSettingText: {fileID: 1945930707098048937}
+  versionText: {fileID: 1653171325039514364}
 --- !u!1 &1653171324936059045
 GameObject:
   m_ObjectHideFlags: 0

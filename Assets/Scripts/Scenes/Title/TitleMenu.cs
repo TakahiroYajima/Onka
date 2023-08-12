@@ -19,6 +19,7 @@ public class TitleMenu : MonoBehaviour
     [SerializeField] private Text bonusText = null;
     [SerializeField] private Text settingText = null;
     [SerializeField] private Text userSettingText = null;
+    [SerializeField] private Text versionText = null;
 
     public void Initialize()
     {
@@ -37,6 +38,7 @@ public class TitleMenu : MonoBehaviour
         bonusText.text = TextMaster.GetText("text_bonus");
         settingText.text = TextMaster.GetText("text_language_setting");
         userSettingText.text = TextMaster.GetText("text_user_setting");
+        versionText.text = $"Ver. {Application.version}";
     }
 
     public void OnPressNewGameButton()
