@@ -15,6 +15,8 @@ public class EA_AfterGetEntranceKey : EventActorBase
     [SerializeField] private CollisionEnterEvent eventEndCollisionEnterEvent = null;
     private BoxCollider eventEndCollider = null;
 
+    [SerializeField, ReadOnly] private string azuyuzuDoorKey = "door_azuyuzu_room";
+    [SerializeField, ReadOnly] private string nobuyukiDoorKey = "door_nobuyuki_room";
     [SerializeField, ReadOnly] private string entranceDoorKey = "door_entrance";
     [SerializeField, ReadOnly] private string emitterPointKey = "sd_point_room1_0002";
     [SerializeField, ReadOnly] private string emitterNextPointKey = "sd_point_2f_0001";
@@ -33,6 +35,10 @@ public class EA_AfterGetEntranceKey : EventActorBase
     public override void EventStart()
     {
         StageManager.Instance.Yukie.StopSound();
+        var azuyuzuDoor = Onka.Manager.Event.EventManager.Instance.GetUseEventObject(azuyuzuDoorKey).GetComponent<DoorObject>();
+        var nobuyukiDoor = Onka.Manager.Event.EventManager.Instance.GetUseEventObject(nobuyukiDoorKey).GetComponent<DoorObject>();
+        azuyuzuDoor.isEternalClosed = true;
+        nobuyukiDoor.isEternalClosed = true;
     }
     
     public override void EventEnd()
