@@ -11,7 +11,7 @@ public class PlayerStateArrested : StateBase
     }
     public override void StartAction()
     {
-        player.FirstPersonAIO.enabled = false;
+        player.FirstPersonAIO.isEnable = false;
         player.capsuleCollider.enabled = false;
         player.rigidbody.velocity = Vector3.zero;
         player.rigidbody.angularVelocity = Vector3.zero;
@@ -26,6 +26,6 @@ public class PlayerStateArrested : StateBase
 
     public override void EndAction()
     {
-        player.FirstPersonAIO.enabled = true;
+        player.StartActiveFPS();
     }
 }

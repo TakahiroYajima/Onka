@@ -31,7 +31,7 @@ public class PlayerStateKeylock : StateBase
 
     public override void EndAction()
     {
-        player.FirstPersonAIO.enabled = true;
+        player.StartActiveFPS();
         InGameUtil.DoCursorLock();
         CrosshairManager.Instance.SetCrosshairActive(true);
     }

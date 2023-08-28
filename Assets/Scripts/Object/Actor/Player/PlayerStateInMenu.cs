@@ -13,7 +13,6 @@ public class PlayerStateInMenu : StateBase
     public override void StartAction()
     {
         player.ForcedStopFPS();
-        player.FirstPersonAIO.enabled = false;
     }
 
     public override void UpdateAction()
@@ -23,6 +22,6 @@ public class PlayerStateInMenu : StateBase
 
     public override void EndAction()
     {
-        player.FirstPersonAIO.enabled = true;
+        player.StartActiveFPS();
     }
 }

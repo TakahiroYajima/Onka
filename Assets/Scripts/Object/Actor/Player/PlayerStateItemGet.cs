@@ -42,7 +42,7 @@ public class PlayerStateItemGet : StateBase
 
     public override void EndAction()
     {
-        player.FirstPersonAIO.enabled = true;
+        player.StartActiveFPS();
         player.onStateChangedInPlayerScriptOnly = null;
     }
 }

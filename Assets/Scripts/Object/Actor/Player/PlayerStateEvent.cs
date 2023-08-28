@@ -22,6 +22,6 @@ public class PlayerStateEvent : StateBase
 
     public override void EndAction()
     {
-        player.FirstPersonAIO.enabled = true;
+        player.StartActiveFPS();
     }
 }

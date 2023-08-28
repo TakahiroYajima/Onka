@@ -116,9 +116,13 @@ public class PlayerObject : MonoBehaviour
 
     public void ForcedStopFPS()
     {
-        firstPersonAIO.enabled = false;
+        firstPersonAIO.isEnable = false;
         rigidbody.velocity = Vector3.zero;
         rigidbody.angularVelocity = Vector3.zero;
+    }
+    public void StartActiveFPS()
+    {
+        firstPersonAIO.isEnable = true;
     }
     /// <summary>
     /// プレイヤーの視界に入っているか
@@ -161,6 +165,20 @@ public class PlayerObject : MonoBehaviour
                 doorObject.OpenDoor();
             }
         }
+    }
+
+    /// <summary>
+    /// しゃがむ状態から強制的に立ち上がらせる
+    /// </summary>
+    public void ForceStandUp_UpdateCrouch()
+    {
+        firstPersonAIO.isCrouching = false;
+        firstPersonAIO.CrouchUpdate();
+    }
+
+    public bool IsCrouching()
+    {
+        return firstPersonAIO.isCrouching;
     }
 
     //private void OnCollisionExit(Collision collision)

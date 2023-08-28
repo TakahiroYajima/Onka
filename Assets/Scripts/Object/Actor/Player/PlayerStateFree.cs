@@ -17,7 +17,7 @@ public class PlayerStateFree : StateBase
 
     public override void StartAction()
     {
-        player.FirstPersonAIO.enabled = true;
+        player.StartActiveFPS();
         CrosshairManager.Instance.FindCrosshair();
         CrosshairManager.Instance.FindStaminaGauge();
         frameCount = 0;

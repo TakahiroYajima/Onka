@@ -12,7 +12,7 @@ public class PlayerStateInit : StateBase
 
     public override void StartAction()
     {
-        player.FirstPersonAIO.enabled = false;
+        player.FirstPersonAIO.isEnable = false;
 
     }
 
