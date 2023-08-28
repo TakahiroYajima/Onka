@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+using Onka.Manager.Data;
 
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
@@ -22,15 +21,15 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     private void LoadSettingData()
     {
-        settingData = FileManager.LoadSaveData<SettingData>(SaveType.SettingData, "SettingData");
-        if(settingData == default)
+        settingData = FileManager.LoadSaveData<SettingData>(SaveType.SettingData, DataManager.SettingDataKeyName);
+        if(settingData == null || settingData == default)
         {
             settingData = new SettingData();
             settingData.language = Language.Ja;
             settingData.brightness = 1f;
             settingData.mouseSensitivity = 10f;
             settingData.difficulty = Difficulty.Normal;
-            FileManager.DataSave<SettingData>(settingData, SaveType.SettingData, "SettingData");
+            FileManager.DataSave<SettingData>(settingData, SaveType.SettingData, DataManager.SettingDataKeyName);
         }
         TextMaster.ChangeLanguage(settingData.language);
     }
@@ -39,7 +38,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         settingData.language = language;
         TextMaster.ChangeLanguage(settingData.language);
-        FileManager.DataSave<SettingData>(settingData, SaveType.SettingData, "SettingData");
+        FileManager.DataSave<SettingData>(settingData, SaveType.SettingData, DataManager.SettingDataKeyName);
     }
 
     public void SetUserSettings(float brightness, float mouseSensitivity, Difficulty difficulty)
@@ -47,7 +46,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         settingData.brightness = brightness;
         settingData.mouseSensitivity = mouseSensitivity;
         settingData.difficulty = difficulty;
-        FileManager.DataSave<SettingData>(settingData, SaveType.SettingData, "SettingData");
+        FileManager.DataSave<SettingData>(settingData, SaveType.SettingData, DataManager.SettingDataKeyName);
         OnSetUserSettings?.Invoke(brightness, mouseSensitivity);
     }
 
