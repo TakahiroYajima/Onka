@@ -28,9 +28,9 @@ public class DebugUtilityMenu : MonoBehaviour
     [MenuItem("Debug/GameData/バックグラウンドセーブデータ初期化or生成")]
     public static void InitGeneralPlayerData()
     {
-        GameData data = LoadOrNewInstanceGameData(SaveType.GeneralPlayerData, DataManager.GameDataFileName);
+        GameData data = LoadOrNewInstanceGameData(SaveType.GeneralPlayerData, DataManager.GeneralPlayerDataKeyName);
         data = CheckAndCopyMasterDataToGameData(ref data);
-        FileManager.DataSave<GameData>(data, SaveType.GeneralPlayerData, DataManager.GameDataFileName);
+        FileManager.DataSave<GameData>(data, SaveType.GeneralPlayerData, DataManager.GeneralPlayerDataKeyName);
     }
 
     [MenuItem("Debug/GameData/オープニングまでクリアした状態でデータ初期化（1番目のデータのみ）")]
@@ -41,6 +41,37 @@ public class DebugUtilityMenu : MonoBehaviour
         fileName.Append("0.txt");
         GameData data = LoadOrNewInstanceGameData(SaveType.PlayerData, fileName.ToString());
         
+        //マスターデータがある事前提なので注意
+        ItemDataList itemDataList = FileManager.LoadSaveData<ItemDataList>(SaveType.MasterData, DataManager.ItemDataFileName);
+        EventDataList eventDataList = FileManager.LoadSaveData<EventDataList>(SaveType.MasterData, DataManager.EventDataFileName);
+        //アイテムを手に入れた事にする
+        DoGetedAndUsedItem(itemDataList, "key_drawingroom");
+
+        //イベントを終えたことにする
+        DoEndedEvent(eventDataList, "Event_Opnening");
+
+
+        //アイテムとイベントをセーブ用データに適用
+        data.itemDataList = itemDataList;
+        data.eventDataList = eventDataList;
+
+        //日付を入れないとNewGameのデータと判断される
+        System.DateTime dateTime = System.DateTime.Now;
+        string parceDate = dateTime.ToString(DataManager.SaveDateTimeFormat);
+        data.saveDate = parceDate;
+
+        FileManager.DataSave<GameData>(data, SaveType.PlayerData, fileName.ToString());
+        AssetDatabase.Refresh();
+    }
+
+    [MenuItem("Debug/GameData/最初の逃走までクリアした状態でデータ初期化（1番目のデータのみ）")]
+    public static void InitGameData_AfterFirstChased()
+    {
+        StringBuilder fileName = new StringBuilder();
+        fileName.Append(DataManager.GameDataBaseFileName);
+        fileName.Append("0.txt");
+        GameData data = LoadOrNewInstanceGameData(SaveType.PlayerData, fileName.ToString());
+
         //マスターデータがある事前提なので注意
         ItemDataList itemDataList = FileManager.LoadSaveData<ItemDataList>(SaveType.MasterData, DataManager.ItemDataFileName);
         EventDataList eventDataList = FileManager.LoadSaveData<EventDataList>(SaveType.MasterData, DataManager.EventDataFileName);
@@ -92,7 +123,7 @@ public class DebugUtilityMenu : MonoBehaviour
         //イベントを終えたことにする
         foreach (var v in eventDataList.list)
         {
-            if (v.eventKey != "Event_NoteFinalActive" && v.eventKey != "Event_AfterOutHouse")
+            if (v.eventKey != "Event_NoteFinalActive" && v.eventKey != "Event_AfterOutHouse" && v.eventKey != "Event_AftertGetEntranceKey")
             {
                 DoEndedEvent(eventDataList, v.eventKey);
             }
@@ -152,9 +183,9 @@ public class DebugUtilityMenu : MonoBehaviour
             fileName.Clear();
         }
 
-        GameData generalPlayerData = LoadOrNewInstanceGameData(SaveType.GeneralPlayerData, DataManager.GameDataFileName);
+        GameData generalPlayerData = LoadOrNewInstanceGameData(SaveType.GeneralPlayerData, DataManager.GeneralPlayerDataKeyName);
         generalPlayerData = SetUpdateItemData(ref generalPlayerData, updateItemList);
-        FileManager.DataSave<GameData>(generalPlayerData, SaveType.GeneralPlayerData, DataManager.GameDataFileName);
+        FileManager.DataSave<GameData>(generalPlayerData, SaveType.GeneralPlayerData, DataManager.GeneralPlayerDataKeyName);
     }
     private static GameData SetUpdateItemData(ref GameData data, ItemDataList setItemDataList)
     {
@@ -193,9 +224,9 @@ public class DebugUtilityMenu : MonoBehaviour
             fileName.Clear();
         }
 
-        GameData generalPlayerData = LoadOrNewInstanceGameData(SaveType.GeneralPlayerData, DataManager.GameDataFileName);
+        GameData generalPlayerData = LoadOrNewInstanceGameData(SaveType.GeneralPlayerData, DataManager.GeneralPlayerDataKeyName);
         generalPlayerData = SetUpdateEventData(ref generalPlayerData, updateEventList);
-        FileManager.DataSave<GameData>(generalPlayerData, SaveType.GeneralPlayerData, DataManager.GameDataFileName);
+        FileManager.DataSave<GameData>(generalPlayerData, SaveType.GeneralPlayerData, DataManager.GeneralPlayerDataKeyName);
     }
     private static GameData SetUpdateEventData(ref GameData data, EventDataList setEventDataList)
     {
