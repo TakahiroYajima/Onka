@@ -55,8 +55,8 @@ public class YukieStateLookInRoom : StateBase
 
     public override void StartAction()
     {
-        yukie.onColliderEnterCallback = null;
-        yukie.onColliderStayCallback = null;
+        yukie.onPlayerEnterCallback = null;
+        yukie.onPlayerStayCallback = null;
         currentState = State.Init;
         frameCount = 0;
     }

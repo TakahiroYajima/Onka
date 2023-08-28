@@ -16,8 +16,8 @@ public class YukieStateInit : StateBase
         yukie.navMeshAgent.enabled = false;
         yukie.wanderingActor.SetActive(false);
         yukie.inRoomWanderingActor.SetActive(false, null);
-        yukie.onColliderEnterCallback = null;
-        yukie.onColliderStayCallback = null;
+        yukie.onPlayerEnterCallback = null;
+        yukie.onPlayerStayCallback = null;
     }
 
     public override void UpdateAction()

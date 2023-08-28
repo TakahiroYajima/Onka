@@ -42,7 +42,7 @@ public class YukieStateWandering : StateBase
             yukie.wanderingActor.SetWanderingID(yukie.wanderingActor.currentWanderingPointID);
         }
         yukie.wanderingActor.SetMoveSpeed(yukie.walkSpeed);
-        yukie.onColliderEnterCallback = null;
+        yukie.onPlayerEnterCallback = null;
         yukie.PlaySoundLoop(0, 0.3f);
         float noticeProvocationTime = DataManager.Instance.IsAfterMiddleStage() ? NoticeProvocationTimeEary : NoticeProvocationTimeInit;
         yukie.provokedSystem.Initialize(noticeProvocationTime, () =>

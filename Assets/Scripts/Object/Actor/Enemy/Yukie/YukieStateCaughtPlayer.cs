@@ -22,7 +22,7 @@ public class YukieStateCaughtPlayer : StateBase
         yukie.navMeshAgent.enabled = false;
         yukie.capsuleCollider.enabled = false;
         yukie.ToPlayerWallCollider.enabled = false;
-        yukie.onColliderEnterCallback = null;
+        yukie.onPlayerEnterCallback = null;
         //Debug.Log("GameOver");
 
         yukie.player.ChangeState(PlayerState.Arrested);

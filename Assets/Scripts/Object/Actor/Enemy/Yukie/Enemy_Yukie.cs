@@ -21,6 +21,7 @@ public class Enemy_Yukie : Enemy
     public MovingObject movingObject { get; private set; } = null;
     public Rigidbody rigidbody { get; private set; } = null;
     private SoundPlayerObject emitterSoundPlayer = null;
+    [SerializeField] private HitColliderEvent catchPlayerCollider = null;//プレイヤーを捕まえる判定専用のコライダー
     [SerializeField] private CapsuleCollider toPlayerWallCollider = null;//プレイヤーと一定の距離を保つためにあるコライダー
     public CapsuleCollider ToPlayerWallCollider { get { return toPlayerWallCollider; } }
     [SerializeField] private Transform faceTransform = null;
@@ -33,8 +34,8 @@ public class Enemy_Yukie : Enemy
     public Dictionary<EnemyState, StateBase> yukieStateDic { get; private set; } = new Dictionary<EnemyState, StateBase>();
 
     public UnityAction<EnemyState> onStateChangeCallback = null;
-    public UnityAction<Collider> onColliderEnterCallback = null;
-    public UnityAction<Collider> onColliderStayCallback = null;
+    public UnityAction<Collider> onPlayerEnterCallback = null;
+    public UnityAction<Collider> onPlayerStayCallback = null;
 
     //プレイヤーとの距離計算用（Y軸を無視してVector2(x,z)に変換）
     private Vector2 yukieXZ = new Vector2(0, 0);
@@ -88,6 +89,9 @@ public class Enemy_Yukie : Enemy
         //コールバック登録
         inRoomChecker.onEnterRoomAction = OnEnterRoomAction;
         inRoomChecker.onExitRoomAction = OnExitRoomAction;
+
+        catchPlayerCollider.OnEnter = OnPlayerTriggerEnter;
+        catchPlayerCollider.OnStay = OnPlayerTriggerStay;
 
         inRoomWanderingActor.SetActive(false, null);
     }
@@ -273,19 +277,19 @@ public class Enemy_Yukie : Enemy
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnPlayerTriggerEnter(Collider other)
     {
-        if (onColliderEnterCallback != null)
+        if (onPlayerEnterCallback != null)
         {
-            onColliderEnterCallback(other);
+            onPlayerEnterCallback(other);
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnPlayerTriggerStay(Collider other)
     {
-        if(onColliderStayCallback != null)
+        if(onPlayerStayCallback != null)
         {
-            onColliderStayCallback(other);
+            onPlayerStayCallback(other);
         }
     }
     #endregion

@@ -25,8 +25,8 @@ public class YukieStateChasePlayer : StateBase
     {
         yukie.navMeshAgent.enabled = true;
         yukie.navMeshAgent.speed = yukie.runSpeed;
-        yukie.onColliderEnterCallback = OnColliderEnterEvent;
-        yukie.onColliderStayCallback = OnColliderEnterEvent;
+        yukie.onPlayerEnterCallback = OnColliderEnterEvent;
+        yukie.onPlayerStayCallback = OnColliderEnterEvent;
         frameCount = 0;
         yukie.SetMaxVolume(1f);
         yukie.PlaySoundLoop(1,1f);
@@ -96,7 +96,7 @@ public class YukieStateChasePlayer : StateBase
 
     public override void EndAction()
     {
-        yukie.onColliderStayCallback = null;
+        yukie.onPlayerStayCallback = null;
         yukie.ToPlayerWallCollider.enabled = true;
     }
 
