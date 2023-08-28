@@ -111,6 +111,7 @@ public abstract class DoorObject : MonoBehaviour
             yield return new WaitForSeconds(3f);
             if ((transform.position - StageManager.Instance.Player.Position).sqrMagnitude >= DistanceRequiredToCloseDoorSqrMagnitude &&
                  !StageManager.Instance.Player.inRoomChecker.isEnterRoom && !StageManager.Instance.Yukie.inRoomChecker.isEnterRoom &&
+                 StageManager.Instance.Player.currentState != PlayerState.Chased && //逃げている時はドアを閉めない（無限追いかけモードの時に庭で詰む）
                  isOpenState)
             {
                 break;
