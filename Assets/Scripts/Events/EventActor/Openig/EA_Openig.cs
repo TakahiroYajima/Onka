@@ -57,7 +57,7 @@ public class EA_Openig : EventActorBase
         yield return new WaitForSecondsRealtime(0.5f);
         SoundManager.Instance.PlaySeWithKeyOne("se_door_close");
         yield return new WaitForSecondsRealtime(0.9f);
-        StageManager.Instance.Player.FirstPersonAIO.enabled = true;
+        StageManager.Instance.Player.StartActiveFPS();
         eventBase.EventClearContact();
     }
 
