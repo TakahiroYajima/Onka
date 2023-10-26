@@ -12,7 +12,7 @@ public class PlayerStateWatchItem : StateBase
 
     public override void StartAction()
     {
-        player.FirstPersonAIO.enabled = false;
+        player.ForcedStopFPS();
     }
 
     public override void UpdateAction()
@@ -22,6 +22,6 @@ public class PlayerStateWatchItem : StateBase
 
     public override void EndAction()
     {
-        player.FirstPersonAIO.enabled = true;
+        player.StartActiveFPS();
     }
 }

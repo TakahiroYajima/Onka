@@ -12,17 +12,14 @@ public class DebugUtilityMenu : MonoBehaviour
     [MenuItem("Debug/GameData/全セーブデータ初期化or生成")]
     public static void InitAllSaveData()
     {
-        StringBuilder fileName = new StringBuilder();
         for (int i = 0; i < DataManager.MaxSaveDataCount; i++)
         {
-            fileName.Append(DataManager.GameDataBaseFileName);
-            fileName.Append(i.ToString());
-            fileName.Append(".txt");
-            GameData data = LoadOrNewInstanceGameData(SaveType.PlayerData, fileName.ToString());
+            string fileName = DataManager.CreatePlayerDataFileName(i);
+            GameData data = LoadOrNewInstanceGameData(SaveType.PlayerData, fileName);
             data = CheckAndCopyMasterDataToGameData(ref data);
-            FileManager.DataSave<GameData>(data, SaveType.PlayerData, fileName.ToString());
-            fileName.Clear();
+            FileManager.DataSave<GameData>(data, SaveType.PlayerData, fileName);
         }
+        PlayerPrefs.DeleteAll();
     }
 
     [MenuItem("Debug/GameData/バックグラウンドセーブデータ初期化or生成")]
@@ -31,15 +28,14 @@ public class DebugUtilityMenu : MonoBehaviour
         GameData data = LoadOrNewInstanceGameData(SaveType.GeneralPlayerData, DataManager.GeneralPlayerDataKeyName);
         data = CheckAndCopyMasterDataToGameData(ref data);
         FileManager.DataSave<GameData>(data, SaveType.GeneralPlayerData, DataManager.GeneralPlayerDataKeyName);
+        PlayerPrefs.DeleteAll();
     }
 
     [MenuItem("Debug/GameData/オープニングまでクリアした状態でデータ初期化（1番目のデータのみ）")]
     public static void InitGameData_AfterOpening()
     {
-        StringBuilder fileName = new StringBuilder();
-        fileName.Append(DataManager.GameDataBaseFileName);
-        fileName.Append("0.txt");
-        GameData data = LoadOrNewInstanceGameData(SaveType.PlayerData, fileName.ToString());
+        string fileName = DataManager.CreatePlayerDataFileName(0);
+        GameData data = LoadOrNewInstanceGameData(SaveType.PlayerData, fileName);
         
         //マスターデータがある事前提なので注意
         ItemDataList itemDataList = FileManager.LoadSaveData<ItemDataList>(SaveType.MasterData, DataManager.ItemDataFileName);
@@ -60,17 +56,15 @@ public class DebugUtilityMenu : MonoBehaviour
         string parceDate = dateTime.ToString(DataManager.SaveDateTimeFormat);
         data.saveDate = parceDate;
 
-        FileManager.DataSave<GameData>(data, SaveType.PlayerData, fileName.ToString());
+        FileManager.DataSave<GameData>(data, SaveType.PlayerData, fileName);
         AssetDatabase.Refresh();
     }
 
     [MenuItem("Debug/GameData/最初の逃走までクリアした状態でデータ初期化（1番目のデータのみ）")]
     public static void InitGameData_AfterFirstChased()
     {
-        StringBuilder fileName = new StringBuilder();
-        fileName.Append(DataManager.GameDataBaseFileName);
-        fileName.Append("0.txt");
-        GameData data = LoadOrNewInstanceGameData(SaveType.PlayerData, fileName.ToString());
+        string fileName = DataManager.CreatePlayerDataFileName(0);
+        GameData data = LoadOrNewInstanceGameData(SaveType.PlayerData, fileName);
 
         //マスターデータがある事前提なので注意
         ItemDataList itemDataList = FileManager.LoadSaveData<ItemDataList>(SaveType.MasterData, DataManager.ItemDataFileName);
@@ -96,17 +90,15 @@ public class DebugUtilityMenu : MonoBehaviour
         string parceDate = dateTime.ToString(DataManager.SaveDateTimeFormat);
         data.saveDate = parceDate;
 
-        FileManager.DataSave<GameData>(data, SaveType.PlayerData, fileName.ToString());
+        FileManager.DataSave<GameData>(data, SaveType.PlayerData, fileName);
         AssetDatabase.Refresh();
     }
 
     [MenuItem("Debug/GameData/全クリ直前（2番目データ）")]
     public static void InitGameData_AllClear()
     {
-        StringBuilder fileName = new StringBuilder();
-        fileName.Append(DataManager.GameDataBaseFileName);
-        fileName.Append("1.txt");
-        GameData data = LoadOrNewInstanceGameData(SaveType.PlayerData, fileName.ToString());
+        string fileName = DataManager.CreatePlayerDataFileName(1);
+        GameData data = LoadOrNewInstanceGameData(SaveType.PlayerData, fileName);
 
         //マスターデータがある事前提なので注意
         ItemDataList itemDataList = FileManager.LoadSaveData<ItemDataList>(SaveType.MasterData, DataManager.ItemDataFileName);
@@ -138,7 +130,7 @@ public class DebugUtilityMenu : MonoBehaviour
         string parceDate = dateTime.ToString(DataManager.SaveDateTimeFormat);
         data.saveDate = parceDate;
 
-        FileManager.DataSave<GameData>(data, SaveType.PlayerData, fileName.ToString());
+        FileManager.DataSave<GameData>(data, SaveType.PlayerData, fileName);
         AssetDatabase.Refresh();
     }
 
@@ -170,17 +162,13 @@ public class DebugUtilityMenu : MonoBehaviour
     public static void SetUpdatedItemDataToAllSaveDataAndBackgroundData()
     {
         ItemDataList updateItemList = FileManager.LoadSaveData<ItemDataList>(SaveType.MasterData, DataManager.ItemDataFileName);
-        StringBuilder fileName = new StringBuilder();
         for (int i = 0; i < DataManager.MaxSaveDataCount; i++)
         {
-            fileName.Append(DataManager.GameDataBaseFileName);
-            fileName.Append(i.ToString());
-            fileName.Append(".txt");
-            GameData data = LoadOrNewInstanceGameData(SaveType.PlayerData, fileName.ToString());
+            string fileName = DataManager.CreatePlayerDataFileName(i);
+            GameData data = LoadOrNewInstanceGameData(SaveType.PlayerData, fileName);
             
             data = SetUpdateItemData(ref data, updateItemList);
-            FileManager.DataSave<GameData>(data, SaveType.PlayerData, fileName.ToString());
-            fileName.Clear();
+            FileManager.DataSave<GameData>(data, SaveType.PlayerData, fileName);
         }
 
         GameData generalPlayerData = LoadOrNewInstanceGameData(SaveType.GeneralPlayerData, DataManager.GeneralPlayerDataKeyName);
@@ -211,17 +199,13 @@ public class DebugUtilityMenu : MonoBehaviour
     public static void SetUpdatedEventDataToAllSaveDataAndBackgroundData()
     {
         EventDataList updateEventList = FileManager.LoadSaveData<EventDataList>(SaveType.MasterData, DataManager.EventDataFileName);
-        StringBuilder fileName = new StringBuilder();
         for (int i = 0; i < DataManager.MaxSaveDataCount; i++)
         {
-            fileName.Append(DataManager.GameDataBaseFileName);
-            fileName.Append(i.ToString());
-            fileName.Append(".txt");
-            GameData data = LoadOrNewInstanceGameData(SaveType.PlayerData, fileName.ToString());
+            string fileName = DataManager.CreatePlayerDataFileName(i);
+            GameData data = LoadOrNewInstanceGameData(SaveType.PlayerData, fileName);
 
             data = SetUpdateEventData(ref data, updateEventList);
-            FileManager.DataSave<GameData>(data, SaveType.PlayerData, fileName.ToString());
-            fileName.Clear();
+            FileManager.DataSave<GameData>(data, SaveType.PlayerData, fileName);
         }
 
         GameData generalPlayerData = LoadOrNewInstanceGameData(SaveType.GeneralPlayerData, DataManager.GeneralPlayerDataKeyName);

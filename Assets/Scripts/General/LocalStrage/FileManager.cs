@@ -7,7 +7,7 @@ using Encrypter;
 
 public enum SaveType
 {
-    Normal,
+    //Normal,
     PlayerData,//セーブデータ
     GeneralPlayerData,//1度取得すれば取得済みフラグが立つもの
     MasterData,//最初からあり、更新できないもの
@@ -21,7 +21,7 @@ public sealed class FileManager
 
     static readonly Dictionary<SaveType, string> saveFolderPath = new Dictionary<SaveType, string>()
     {
-        {SaveType.Normal, "/SaveData" },
+        //{SaveType.Normal, "/SaveData" },
         {SaveType.PlayerData,"/SaveData/PlayerData" },
         {SaveType.GeneralPlayerData, "/SaveData/GeneralPlayerData" },
         {SaveType.MasterData, "/SaveData/MasterData" },
@@ -70,6 +70,10 @@ public sealed class FileManager
 
     public static bool Exists(SaveType saveType, string fileName)
     {
+        //if (saveType != SaveType.MasterData)
+        //{
+        //    return ES3.KeyExists(fileName);
+        //}
         //Debug.Log($"{fileName } Exists {saveType.ToString()}");
         string filePath = Application.streamingAssetsPath + saveFolderPath[saveType];
         string path = filePath + "/" + fileName;
@@ -81,6 +85,13 @@ public sealed class FileManager
 
     private static void Save(SaveType saveType, string fileName, string json, UnityAction onComplete = null)
     {
+        //プレイヤーのデータはES3を使う
+        if (saveType != SaveType.MasterData)
+        {
+            SaveWithPlayerPrefs(saveType, fileName, json, onComplete);
+            return;
+        }
+
         string filePath = Application.streamingAssetsPath + saveFolderPath[saveType];
         string path = filePath + "/" + fileName;
         //ディレクトリが無ければ作成
@@ -97,6 +108,12 @@ public sealed class FileManager
     }
     private static string Read(SaveType saveType, string fileName)
     {
+        //プレイヤーのデータはES3を使う
+        if (saveType != SaveType.MasterData)
+        {
+            return ReadFromPlayerPrefs(saveType, fileName);
+        }
+
         string filePath = Application.streamingAssetsPath + saveFolderPath[saveType];
         string path = filePath + "/" + fileName;
         string data;
@@ -117,4 +134,43 @@ public sealed class FileManager
             }
         }
     }
+
+    private static void SaveWithPlayerPrefs(SaveType saveType, string fileName, string json, UnityAction onComplete = null)
+    {
+        PlayerPrefs.SetString(fileName, json);
+        if (onComplete != null)
+        {
+            onComplete();
+        }
+    }
+
+    private static string ReadFromPlayerPrefs(SaveType saveType, string fileName)
+    {
+        if (PlayerPrefs.HasKey(fileName))
+        {
+            return PlayerPrefs.GetString(fileName);
+        }
+        return null;
+    }
+
+    //private static void DataSaveWithES3<Types>(Types saveClass, SaveType saveType, string fileName, UnityAction onComplete = null)
+    //{
+    //    ES3.Save(fileName, saveClass);
+    //    if (onComplete != null)
+    //    {
+    //        onComplete();
+    //    }
+    //}
+
+    //private static Types LoadSaveDataWithES3<Types>(SaveType saveType, string fileName)
+    //{
+    //    if (ES3.KeyExists(fileName))
+    //    {
+    //        return ES3.Load<Types>(fileName);
+    //    }
+    //    else
+    //    {
+    //        return default;
+    //    }
+    //}
 }

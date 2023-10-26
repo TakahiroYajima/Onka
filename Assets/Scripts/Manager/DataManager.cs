@@ -38,9 +38,10 @@ namespace Onka.Manager.Data
         public const string ItemDataFileName = "ItemData.txt";
         public const string CharactorDataFileName = "CharactorData.txt";
 
-        public const string GameDataFileName = "GameData.txt";
+        public const string GeneralPlayerDataKeyName = "GeneralPlayerData";//"GeneralPlayerData.txt";
         public const string GameDataBaseFileName = "GameData";
         public const string EventDataFileName = "EventData.txt";
+        public const string SettingDataKeyName = "SettingData";//"SettingData.txt"; 
 
         public const string SaveDateTimeFormat = "yyyy/MM/dd HH:mm:ss";
 
@@ -67,35 +68,56 @@ namespace Onka.Manager.Data
             eventDataListMasterData = FileManager.LoadSaveData<EventDataList>(SaveType.MasterData, DataManager.EventDataFileName);
             //Debug.Log($"MasterData : {soundDataSOMasterData} : {itemDatalistMasterData}");
 
-            generalGameData = FileManager.LoadSaveData<GameData>(SaveType.GeneralPlayerData, GameDataFileName);
+            generalGameData = FileManager.LoadSaveData<GameData>(SaveType.GeneralPlayerData, GeneralPlayerDataKeyName);
         }
         public void LoadAllSavedGameData()
         {
             loadedAllGameDataList.Clear();
             InGameUtil.GCCollect();
-            StringBuilder fileName = new StringBuilder();
+            //StringBuilder fileName = new StringBuilder();
             for (int i = 0; i < MaxSaveDataCount; i++)
             {
-                fileName.Append(GameDataBaseFileName);
-                fileName.Append(i.ToString());
-                fileName.Append(".txt");
-                if (FileManager.Exists(SaveType.PlayerData, fileName.ToString()))
+                //fileName.Append(GameDataBaseFileName);
+                //fileName.Append(i.ToString());
+                //fileName.Append(".txt");
+
+                GameData loadData = FileManager.LoadSaveData<GameData>(SaveType.PlayerData, CreatePlayerDataFileName(i));//fileName.ToString());
+                if(loadData == default || loadData == null)
                 {
-                    //Debug.Log($"{fileName.ToString()} ロード");
-                    loadedAllGameDataList.Add(FileManager.LoadSaveData<GameData>(SaveType.PlayerData, fileName.ToString()));
+                    Debug.Log($"PlayData存在しないので作成 LoopCount : {i}");
+                    loadedAllGameDataList.Add(GetInitializedData());
+                    //loadedAllGameDataList[i].itemDataList = new ItemDataList();
+                    //loadedAllGameDataList[i].itemDataList.itemDataList = new List<ItemData>(itemDatalistMasterData.itemDataList);
+                    //loadedAllGameDataList[i].AllInitialize();
                 }
                 else
                 {
-                    //Debug.Log($"PlayData存在しないので作成 LoopCount : {i}");
-                    //存在しないので作成
-                    loadedAllGameDataList.Add(new GameData());
-                    loadedAllGameDataList[i].itemDataList = new ItemDataList();
-                    loadedAllGameDataList[i].itemDataList.itemDataList = new List<ItemData>(itemDatalistMasterData.itemDataList);
-                    loadedAllGameDataList[i].AllInitialize();
-                    //Debug.Log($"PlayData作成完了 : {i}");
+                    Debug.Log($"PlayData作成済み LoopCount : {i}");
+                    loadedAllGameDataList.Add(loadData);
                 }
-                fileName.Clear();
+
+                //fileName.Append(".txt");
+                //if (FileManager.Exists(SaveType.PlayerData, fileName.ToString()))
+                //{
+                //    //Debug.Log($"{fileName.ToString()} ロード");
+                //    loadedAllGameDataList.Add(FileManager.LoadSaveData<GameData>(SaveType.PlayerData, fileName.ToString()));
+                //}
+                //else
+                //{
+                //    //Debug.Log($"PlayData存在しないので作成 LoopCount : {i}");
+                //    //存在しないので作成
+                //    loadedAllGameDataList.Add(new GameData());
+                //    loadedAllGameDataList[i].itemDataList = new ItemDataList();
+                //    loadedAllGameDataList[i].itemDataList.itemDataList = new List<ItemData>(itemDatalistMasterData.itemDataList);
+                //    loadedAllGameDataList[i].AllInitialize();
+                //    //Debug.Log($"PlayData作成完了 : {i}");
+                //}
+                //fileName.Clear();
             }
+        }
+        public static string CreatePlayerDataFileName(int index)
+        {
+            return $"{GameDataBaseFileName}{index}";
         }
         #region GameData
         //----------------------------------------------------
@@ -147,7 +169,7 @@ namespace Onka.Manager.Data
             StringBuilder fileName = new StringBuilder();
             fileName.Append(GameDataBaseFileName);
             fileName.Append(currentSelectLoadDataArrayNum.ToString());
-            fileName.Append(".txt");
+            //fileName.Append(".txt");
             System.DateTime dateTime = System.DateTime.Now;
             string parceDate = dateTime.ToString(SaveDateTimeFormat);
             playingGameData.saveDate = parceDate;
@@ -187,7 +209,7 @@ namespace Onka.Manager.Data
 
         private void SaveGeneralGameData(UnityAction onComplete = null)
         {
-            FileManager.DataSave<GameData>(generalGameData, SaveType.GeneralPlayerData, GameDataFileName, () =>
+            FileManager.DataSave<GameData>(generalGameData, SaveType.GeneralPlayerData, GeneralPlayerDataKeyName, () =>
             {
                 //Debug.Log("ゲームデータセーブ完了");
                 if (onComplete != null)
@@ -214,7 +236,8 @@ namespace Onka.Manager.Data
         {
             if (generalGameData == null)
             {
-                Debug.LogError("generalGameData is not find");
+                //Debug.LogError("generalGameData is not find");
+                generalGameData = GetInitializedData();
                 return false;
             }
             return generalGameData.isGameCleared;

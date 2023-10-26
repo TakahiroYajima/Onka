@@ -103,22 +103,22 @@ public class EndingEventManager : MonoBehaviour
         CrosshairManager.Instance.SetStaminaGaugeActive(false);
         Onka.Manager.Menu.InStageMenuManager.Instance.HideGuide();
         //しゃがんでいると最後の雪絵が目の前に迫ってこなくてシュールなので対策
-        bool isPlayerCrouching = StageManager.Instance.Player.IsCrouching();
-        if (isPlayerCrouching)
-        {
-            StartCoroutine(ForceStandUpPlayerUpdate());
-            yield return new WaitForSeconds(1f);
-        }
+        //StartCoroutine(ForceStandUpPlayerUpdate());
+        //yield return new WaitForSeconds(1.2f);
+        //bool isPlayerCrouching = StageManager.Instance.Player.IsCrouching();
+        //if (isPlayerCrouching)
+        //{
+        //    StartCoroutine(ForceStandUpPlayerUpdate());
+        //    yield return new WaitForSeconds(1.2f);
+        //}
         yield return null;
         //new List<string>() { "……", "………", "……悪かった","俺が悪かった……","金が……","金が足りなかったんだよ……！！",
         //"助けてくれるって言うから話をしたのに……","でもあんたらは焦る俺を笑うかのように幸せな姿を見せつけて！！","すぐに金が必要だったんだよ……","俺は……！！"}
         yield return StartCoroutine(Words(TextMaster.GetEndingEventConversationTexts()));
         yield return StartCoroutine(StartupHatsu());
         yield return new WaitForSeconds(0.7f);
-        if (isPlayerCrouching)
-        {
-            StopCoroutine(ForceStandUpPlayerUpdate());
-        }
+        //StopCoroutine(ForceStandUpPlayerUpdate());
+        StageManager.Instance.Player.FirstPersonAIO.isForceUpdateStandup = false;//念のためEA_AfterGetEntranceKeyで変えていたフラグを戻す
         //ドアの方を向く
         StartCoroutine(mainCamera.TurnAroundSmooth_Coroutine(turnTarget_DoorDir.transform.position, 12f));
         yield return new WaitForSeconds(0.7f);

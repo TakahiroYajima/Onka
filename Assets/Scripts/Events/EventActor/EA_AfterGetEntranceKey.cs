@@ -99,8 +99,9 @@ public class EA_AfterGetEntranceKey : EventActorBase
         StageManager.Instance.Yukie.ChangeState(EnemyState.CanNotAction);
         StageManager.Instance.Yukie.StopSound();
         StageManager.Instance.Player.ChangeState(PlayerState.Event);
+        StageManager.Instance.Player.FirstPersonAIO.isForceUpdateStandup = true;
         //雪絵がドアに当たるくらいプレイヤーに接近していた場合、ドアと被さるので無理やり移動させる（4fは感覚値）
-        if(StageManager.Instance.Yukie.transform.position.z < 4f)
+        if (StageManager.Instance.Yukie.transform.position.z < 4f)
         {
             Vector3 tPos = StageManager.Instance.Yukie.transform.position;
             tPos.z = 4.3f;

@@ -173,7 +173,7 @@ public class PlayerObject : MonoBehaviour
     public void ForceStandUp_UpdateCrouch()
     {
         firstPersonAIO.isCrouching = false;
-        firstPersonAIO.CrouchUpdate();
+        firstPersonAIO.CrouchUpdate(false);
     }
 
     public bool IsCrouching()
