@@ -20,6 +20,7 @@ public class PlayerObject : MonoBehaviour
     public Vector3 Position { get { return transform.position; } }
     public Vector3 eyePosition { get { return transform.position + new Vector3(0,0.7f,0); } }
     public Rigidbody rigidbody { get; private set; } = null;
+    public Camera Camera { get; private set; } = null;
     public MovingObject cameraMovingObject { get; private set; } = null;
     public CapsuleCollider capsuleCollider { get; private set; } = null;
     //public float colliderHeightHalf { get { return capsuleCollider.height * 0.49f; } }//0.5だと完全に頂点になるため、若干下げる
@@ -61,6 +62,7 @@ public class PlayerObject : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
         capsuleCollider = GetComponent<CapsuleCollider>();
         cameraMovingObject = cameraObj.GetComponent<MovingObject>();
+        Camera = cameraObj.GetComponent<Camera>();
 
         //Stateパターン初期化
         playerStateDic.Clear();

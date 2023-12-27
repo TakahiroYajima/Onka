@@ -10,6 +10,11 @@ public class Raycastor : MonoBehaviour
     [SerializeField] private Camera camera = null;
     private const float RayDirection = 2f;
 
+    public void SetCamera(Camera camera)
+    {
+        this.camera = camera;
+    }
+
     public void ScreenToRayAction(UnityAction<RaycastHit> hitCallback, UnityAction noHitCallback = null)
     {
         RaycastHit hit;

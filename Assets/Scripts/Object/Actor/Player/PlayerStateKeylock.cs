@@ -13,6 +13,8 @@ public class PlayerStateKeylock : StateBase
     public override void StartAction()
     {
         player.ForcedStopFPS();
+        StageManager.Instance.GimmickCamera.gameObject.SetActive(true);
+        player.raycastor.SetCamera(StageManager.Instance.GimmickCamera);
         InGameUtil.DoCursorFree();
         if (CrosshairManager.Instance.Crosshair == null)
         {
@@ -32,6 +34,8 @@ public class PlayerStateKeylock : StateBase
     public override void EndAction()
     {
         player.StartActiveFPS();
+        StageManager.Instance.GimmickCamera.gameObject.SetActive(false);
+        player.raycastor.SetCamera(player.Camera);
         InGameUtil.DoCursorLock();
         CrosshairManager.Instance.SetCrosshairActive(true);
     }
