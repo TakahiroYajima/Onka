@@ -3,10 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Onka.Manager.Data;
+using Onka.Manager.Event;
+using System.Linq;
 
-public class OnkaDebug : MonoBehaviour
+public class OnkaDebug : SingletonMonoBehaviour<OnkaDebug>
 {
     private bool isDoBeforeClearState = false;
+    private SceneType currentSceneType = SceneType.Initialize;
+
+    private GameSceneManager gameSceneManager;
+
+    public void SetCurrentScene(SceneBase sceneBase)
+    {
+        switch (sceneBase.CurrentScene)
+        {
+            case SceneType.Game:
+                gameSceneManager = sceneBase as GameSceneManager;
+                break;
+        }
+        currentSceneType = sceneBase.CurrentScene;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,16 +33,26 @@ public class OnkaDebug : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F))
+        if(currentSceneType == SceneType.Game)
         {
-            DoBeforeClearState();
-        }
-        if (isDoBeforeClearState)
-        {
-            if(Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.A))
+            //初回オープニングスキップ
+            if(gameSceneManager.IsOpening && Input.GetKey(KeyCode.S))
             {
-                DoGetEntranceKey();
-                Onka.Manager.Event.EventManager.Instance.ProgressEvent();
+                gameSceneManager.SkipOpening();
+                return;
+            }
+
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.F))
+            {
+                DoBeforeClearState();
+            }
+            if (isDoBeforeClearState)
+            {
+                if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.A))
+                {
+                    DoGetEntranceKey();
+                    Onka.Manager.Event.EventManager.Instance.ProgressEvent();
+                }
             }
         }
     }

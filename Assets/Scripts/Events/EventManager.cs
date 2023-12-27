@@ -20,6 +20,7 @@ namespace Onka.Manager.Event
         //private int inProgressEventArrayNum = -1;
         public bool IsAnyEventEnabled { get { return doingEventList.Count > 0; /*inProgressEventArrayNum > -1;*/ } }
         public bool isEnable = false;
+        public string[] DoingEventKeys => doingEventList.Select(v => v.EventKey).ToArray();
 
         public void AddUseEventObjects(List<UseEventObject> list)
         {
