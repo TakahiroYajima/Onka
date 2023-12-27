@@ -17,12 +17,13 @@ public class SolveKeylockManager : SingletonMonoBehaviour<SolveKeylockManager>
         StageManager.Instance.Player.ChangeState(PlayerState.SolveKeylock);
         canvasObj.SetActive(true);
         //currentSolvingKeyLockObjectをカメラの前まで移動させる
-        Vector3 pos = StageManager.Instance.Player.CameraObj.transform.position + StageManager.Instance.Player.CameraObj.transform.forward * currentSolvingKeyLockObject.distanceFromCamera;
+        Camera gimmickCamera = StageManager.Instance.GimmickCamera;
+        Vector3 pos = gimmickCamera.transform.position + gimmickCamera.transform.forward * currentSolvingKeyLockObject.distanceFromCamera;
         //カメラの向きの先に置き、スケール調整
         currentSolvingKeyLockObject.transform.position = pos;
         currentSolvingKeyLockObject.transform.localScale = currentSolvingKeyLockObject.changeScaleInEvent;
         //currentSolvingKeyLockObjectをカメラの方に向かせる(transform.lookat?)
-        currentSolvingKeyLockObject.transform.LookAt(currentSolvingKeyLockObject.transform.position + StageManager.Instance.Player.CameraObj.transform.forward);
+        currentSolvingKeyLockObject.transform.LookAt(currentSolvingKeyLockObject.transform.position + gimmickCamera.transform.forward);
         //鍵が揺れる的な効果音
     }
     /// <summary>
