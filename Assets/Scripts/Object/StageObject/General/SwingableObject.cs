@@ -17,11 +17,11 @@ public class SwingableObject : OpenableObjectBase
     [SerializeField] private UnityEvent ClosedCallback = null;
     
     private Transform swingTransform = null;
-    private Collider thisCollider = null;
 
     public bool isMoving { get; private set; } = false;
     public bool isOpenState { get; private set; } = false;
 
+    private float initLocalRotation = 0f;
     private float currentLocalRotation = 0f;
     private const string openSEKey = "se_closet_open";
     private const string closeSEKey = "se_closet_close";
@@ -29,8 +29,7 @@ public class SwingableObject : OpenableObjectBase
     private void Start()
     {
         swingTransform = GetComponent<Transform>();
-        thisCollider = GetComponent<Collider>();
-        currentLocalRotation = swingTransform.localRotation.y;
+        initLocalRotation = currentLocalRotation = swingTransform.localRotation.y;
     }
 
     public void Swing()
@@ -47,7 +46,7 @@ public class SwingableObject : OpenableObjectBase
         isMoving = true;
         float endTime = 0.5f;
         float currentTime = 0;
-        float initAngale = currentLocalRotation;
+        float initAngale = _open ? initLocalRotation : currentLocalRotation;
         float angle = initAngale;
         float swingAngle = 90f;
         if(swingDirection == SwingDirection.Right || swingDirection == SwingDirection.Up) { swingAngle = -swingAngle; }
