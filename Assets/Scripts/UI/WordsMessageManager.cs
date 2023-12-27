@@ -170,11 +170,23 @@ public class WordsMessageManager : SingletonMonoBehaviour<WordsMessageManager>
         else
         {
             //メッセージが0なので終了
-            isStartable = true;
-            routeObj.SetActive(false);
-            clickText.gameObject.SetActive(false);
-            InitImage();
+            OnEnd();
         }
+    }
+
+    private void OnEnd()
+    {
+        isStartable = true;
+        routeObj.SetActive(false);
+        clickText.gameObject.SetActive(false);
+        InitImage();
+    }
+
+    public void ForceEnd()
+    {
+        StopCoroutine(HideText());
+        StopCoroutine(ShowTextAndSprite());
+        messageList.Clear();
     }
 
     private IEnumerator ShowTextAndSprite()
