@@ -10,8 +10,8 @@ public class AppearedItemLightupper : MonoBehaviour
 
     private float currentWaitTime = 0f;
     private float currentActionTime = 0f;
-    private const float LightupTime = 600f;//10•ª
-    private const float MaxIntensity = 3f;
+    private const float LightupTime = 20f;//20•b
+    private const float MaxIntensity = 0.2f;
 
     private bool isGeted = false;
 
@@ -51,7 +51,7 @@ public class AppearedItemLightupper : MonoBehaviour
                     light.enabled = true;
                 }
                 light.intensity = Mathf.PingPong(currentActionTime, MaxIntensity);
-                currentActionTime += Time.deltaTime;
+                currentActionTime += Time.deltaTime * MaxIntensity;
             }
         }
         isGeted = Onka.Manager.Data.DataManager.Instance.IsGetedItem(target.ItemKey);
