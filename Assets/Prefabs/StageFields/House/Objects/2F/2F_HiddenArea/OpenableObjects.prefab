@@ -156,6 +156,7 @@ MonoBehaviour:
   isSetParent: 0
   inItemKeys:
   - diary_azuhayuzuha_3
+  - key_keymanagementcabinet
 --- !u!1 &2842148219607541675
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,6 +313,7 @@ MonoBehaviour:
   isSetParent: 0
   inItemKeys:
   - diary_azuhayuzuha_3
+  - key_keymanagementcabinet
 --- !u!1 &2842148219711913445
 GameObject:
   m_ObjectHideFlags: 0
