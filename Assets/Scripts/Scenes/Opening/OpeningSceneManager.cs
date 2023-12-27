@@ -6,8 +6,7 @@ public class OpeningSceneManager : SceneBase
 {
     [SerializeField] private OpeningEventManager openingEventManager = null;
 
-    // Start is called before the first frame update
-    protected override void Start()
+    protected override void OnStartInitialize()
     {
         base.Initialize();
         //openingEventManager.StartAction();

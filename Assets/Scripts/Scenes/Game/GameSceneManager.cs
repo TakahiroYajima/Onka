@@ -31,7 +31,9 @@ public class GameSceneManager : SceneBase
 
     private PostProcessVolume fieldPostProcess = null;
 
-    protected override void Start()
+    public bool IsOpening => openingEventManager != null;
+
+    protected override void OnStartInitialize()
     {
         titleManager = Instantiate(titleManagerPrefab);
         titleManager.Initialize();
@@ -51,7 +53,7 @@ public class GameSceneManager : SceneBase
     {
         if (titleManager != null)
         {
-            DestroyImmediate(titleManager.gameObject);
+            Destroy(titleManager.gameObject);
         }
     }
 
@@ -59,7 +61,7 @@ public class GameSceneManager : SceneBase
     {
         if (openingEventManager != null)
         {
-            DestroyImmediate(openingEventManager.gameObject);
+            Destroy(openingEventManager.gameObject);
         }
     }
 
@@ -75,6 +77,11 @@ public class GameSceneManager : SceneBase
         DeleteTitle();
         openingEventManager = Instantiate(openingEventManagerPrefab);
         openingEventManager.StartAction(() => { StartCoroutine(SetStart()); });
+    }
+
+    public void SkipOpening()
+    {
+        openingEventManager.Skip();
     }
     
     private IEnumerator SetStart()
@@ -154,6 +161,7 @@ public class GameSceneManager : SceneBase
         if (EventManager.Instance.IsEventEnded("Event_Opnening"))
         {
             //セーブ地点から再開
+            Debug.Log($"セーブ地点から再開 ; {StageManager.Instance.Player.name}");
             StageManager.Instance.Player.transform.position = StageManager.Instance.fieldObject.restartPosition.transform.position;
             StageManager.Instance.Player.transform.rotation = Quaternion.Euler(0f, 180f, 0f);//セーブポイントの方を向かせる
         }

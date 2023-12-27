@@ -11,10 +11,18 @@ public abstract class SceneBase : SingletonMonoBehaviour<SceneBase>
 {
     [SerializeField] protected string sceneBGMKey = "";
     [SerializeField] protected SceneType thisScene;
+    public SceneType CurrentScene => thisScene;
 
-    protected virtual void Start()
+    private void Start()
     {
-        
+#if UNITY_EDITOR
+        OnkaDebug.Instance.SetCurrentScene(this);
+#endif
+        OnStartInitialize();
+    }
+
+    protected virtual void OnStartInitialize()
+    {
         Initialize();
     }
 
