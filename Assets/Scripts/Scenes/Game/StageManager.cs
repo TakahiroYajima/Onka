@@ -7,11 +7,13 @@ using SoundDistance;
 using Onka.Manager.Menu;
 using Onka.Manager.InputKey;
 using Onka.Manager.Data;
+using UnityEngine.Rendering.Universal;
 
 public class StageManager : SingletonMonoBehaviour<StageManager>
 {
     //[SerializeField] private FieldManager houseFieldPrefab;
     public FieldManager fieldObject { get; private set; }
+    [field: SerializeField] public Camera GimmickCamera { get; private set; } = null;
     [SerializeField] private PlayerObject playerPrefab;
     private PlayerObject playerObject = null;
     public PlayerObject Player { get { return playerObject; } }
@@ -46,6 +48,8 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
         InStageMenuManager.Instance.onClosedMenu = ClosedMenuAction;
         InputKeyManager.Instance.onEscKeyPress = OnEscKeyPress;
         InputKeyManager.Instance.onF12KeyPress = OnF12KeyPress;
+
+        GimmickCamera.gameObject.SetActive(false);
     }
 
     public void ActorSetUp()
@@ -53,6 +57,7 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
         if (playerObject == null)
         {
             playerObject = Instantiate(playerPrefab, this.transform);
+            playerObject.Camera.GetUniversalAdditionalCameraData().cameraStack.Add(GimmickCamera);
         }
         playerObject.onStateChangeCallback = OnPlayerStateChanged;
         if (yukieObject == null)
