@@ -13,6 +13,10 @@ public class OnkaDebug : SingletonMonoBehaviour<OnkaDebug>
 
     private GameSceneManager gameSceneManager;
 
+    [SerializeField]
+    private GameObject sample;
+    private GameObject instanceSample;
+
     public void SetCurrentScene(SceneBase sceneBase)
     {
         switch (sceneBase.CurrentScene)
@@ -24,10 +28,13 @@ public class OnkaDebug : SingletonMonoBehaviour<OnkaDebug>
         currentSceneType = sceneBase.CurrentScene;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void InstanceSample()
     {
-        
+        instanceSample = Instantiate(sample, Vector3.one, Quaternion.identity);
+    }
+    public void SetSamplePos(Vector3 pos)
+    {
+        instanceSample.transform.position = pos;
     }
 
     // Update is called once per frame
