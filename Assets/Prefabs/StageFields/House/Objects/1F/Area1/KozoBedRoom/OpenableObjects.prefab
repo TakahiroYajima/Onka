@@ -17,7 +17,7 @@ GameObject:
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 16
+  m_StaticEditorFlags: 85
   m_IsActive: 1
 --- !u!4 &1754396211442218452
 Transform:
@@ -681,7 +681,7 @@ GameObject:
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 16
+  m_StaticEditorFlags: 85
   m_IsActive: 1
 --- !u!4 &4592860609443531771
 Transform:
@@ -1173,7 +1173,7 @@ GameObject:
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 16
+  m_StaticEditorFlags: 85
   m_IsActive: 1
 --- !u!4 &6554571207417103992
 Transform:
@@ -1289,7 +1289,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6554571207417316383}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1646,8 +1646,9 @@ MonoBehaviour:
   openableObject: {fileID: 6554571207659381151}
   isSetParent: 0
   inItemKeys:
-  - key_courtyard
   - key_underground
+  - note_kozo2
+  - small_memo1
 --- !u!1 &6554571207844091429
 GameObject:
   m_ObjectHideFlags: 0
@@ -1809,7 +1810,7 @@ GameObject:
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 16
+  m_StaticEditorFlags: 85
   m_IsActive: 1
 --- !u!4 &6554571208170559179
 Transform:
@@ -2491,8 +2492,9 @@ MonoBehaviour:
   openableObject: {fileID: 6554571208899910611}
   isSetParent: 0
   inItemKeys:
-  - key_courtyard
   - key_underground
+  - note_kozo2
+  - small_memo1
 --- !u!1 &6554571209042128400
 GameObject:
   m_ObjectHideFlags: 0
@@ -2840,6 +2842,16 @@ PrefabInstance:
     - target: {fileID: 488752, guid: 3b683da856d477443ac2334e95eb2272, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4488067978921597593, guid: 3b683da856d477443ac2334e95eb2272,
+        type: 3}
+      propertyPath: slideDistance
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4488067978921597593, guid: 3b683da856d477443ac2334e95eb2272,
+        type: 3}
+      propertyPath: openSlideDirection
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

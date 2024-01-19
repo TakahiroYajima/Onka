@@ -16460,11 +16460,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6630358250527362518, guid: 496b90ba8132a584ebf3f214ac2b8a85,
         type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6630358250527362518, guid: 496b90ba8132a584ebf3f214ac2b8a85,
-        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -16544,11 +16539,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6732384535792245220}
     m_Modifications:
-    - target: {fileID: 1311905644039786501, guid: 4b1f295261b930c4ea4154a9cf9595ab,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 1311905644039786501, guid: 4b1f295261b930c4ea4154a9cf9595ab,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -16905,11 +16895,6 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6554571207417316382, guid: fd9b4ad44ddf0094a897d92f1a0cb5e4,
         type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6554571207417316382, guid: fd9b4ad44ddf0094a897d92f1a0cb5e4,
-        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -16962,56 +16947,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: OpenableObjects
-      objectReference: {fileID: 0}
-    - target: {fileID: 6554571207659381146, guid: fd9b4ad44ddf0094a897d92f1a0cb5e4,
-        type: 3}
-      propertyPath: inItemKeys.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6554571207659381146, guid: fd9b4ad44ddf0094a897d92f1a0cb5e4,
-        type: 3}
-      propertyPath: inItemKeys.Array.data[0]
-      value: key_underground
-      objectReference: {fileID: 0}
-    - target: {fileID: 6554571207659381146, guid: fd9b4ad44ddf0094a897d92f1a0cb5e4,
-        type: 3}
-      propertyPath: inItemKeys.Array.data[1]
-      value: note_kozo2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6554571207659381146, guid: fd9b4ad44ddf0094a897d92f1a0cb5e4,
-        type: 3}
-      propertyPath: inItemKeys.Array.data[2]
-      value: small_memo1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6554571207659381146, guid: fd9b4ad44ddf0094a897d92f1a0cb5e4,
-        type: 3}
-      propertyPath: inItemKeys.Array.data[3]
-      value: small_memo1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6554571208899910606, guid: fd9b4ad44ddf0094a897d92f1a0cb5e4,
-        type: 3}
-      propertyPath: inItemKeys.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6554571208899910606, guid: fd9b4ad44ddf0094a897d92f1a0cb5e4,
-        type: 3}
-      propertyPath: inItemKeys.Array.data[0]
-      value: key_underground
-      objectReference: {fileID: 0}
-    - target: {fileID: 6554571208899910606, guid: fd9b4ad44ddf0094a897d92f1a0cb5e4,
-        type: 3}
-      propertyPath: inItemKeys.Array.data[1]
-      value: note_kozo2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6554571208899910606, guid: fd9b4ad44ddf0094a897d92f1a0cb5e4,
-        type: 3}
-      propertyPath: inItemKeys.Array.data[2]
-      value: small_memo1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6554571208899910606, guid: fd9b4ad44ddf0094a897d92f1a0cb5e4,
-        type: 3}
-      propertyPath: inItemKeys.Array.data[3]
-      value: small_memo1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17737,6 +17672,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6732384535701502070}
     m_Modifications:
+    - target: {fileID: 1353503162548621176, guid: 7ad01a9f0c7af8043883d00eec14b12f,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 85
+      objectReference: {fileID: 0}
     - target: {fileID: 1353503162548621177, guid: 7ad01a9f0c7af8043883d00eec14b12f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -17801,6 +17741,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1353503163365520728, guid: 7ad01a9f0c7af8043883d00eec14b12f,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 85
       objectReference: {fileID: 0}
     - target: {fileID: 1353503163365520729, guid: 7ad01a9f0c7af8043883d00eec14b12f,
         type: 3}
@@ -18098,11 +18043,6 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4613077493378532849, guid: 5309af6deb464e34db9864776d4bfe2b,
         type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4613077493378532849, guid: 5309af6deb464e34db9864776d4bfe2b,
-        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -18326,6 +18266,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HaveItemOpenableObjects
       objectReference: {fileID: 0}
+    - target: {fileID: 5348620410211596967, guid: 8bcfcde067c1bb04785e95089e5afb2d,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 85
+      objectReference: {fileID: 0}
     - target: {fileID: 6704704351601931784, guid: 8bcfcde067c1bb04785e95089e5afb2d,
         type: 3}
       propertyPath: ClosedCallback.m_PersistentCalls.m_Calls.Array.size
@@ -18379,45 +18324,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6732384536645062081}
     m_Modifications:
-    - target: {fileID: 2842148219232184253, guid: 64005710454f01d4ca60b45d41dd3ecd,
-        type: 3}
-      propertyPath: inItemKeys.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2842148219232184253, guid: 64005710454f01d4ca60b45d41dd3ecd,
-        type: 3}
-      propertyPath: inItemKeys.Array.data[1]
-      value: key_keymanagementcabinet
-      objectReference: {fileID: 0}
-    - target: {fileID: 2842148219607541680, guid: 64005710454f01d4ca60b45d41dd3ecd,
-        type: 3}
-      propertyPath: inItemKeys.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2842148219607541680, guid: 64005710454f01d4ca60b45d41dd3ecd,
-        type: 3}
-      propertyPath: inItemKeys.Array.data[1]
-      value: key_keymanagementcabinet
-      objectReference: {fileID: 0}
-    - target: {fileID: 2842148219607541684, guid: 64005710454f01d4ca60b45d41dd3ecd,
-        type: 3}
-      propertyPath: ClosedCallback.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2842148219607541684, guid: 64005710454f01d4ca60b45d41dd3ecd,
-        type: 3}
-      propertyPath: OpenedCallback.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2900596935717874390, guid: 64005710454f01d4ca60b45d41dd3ecd,
         type: 3}
       propertyPath: m_Name
       value: OpenableObjects
-      objectReference: {fileID: 0}
-    - target: {fileID: 6135461752446726696, guid: 64005710454f01d4ca60b45d41dd3ecd,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6135461752446726696, guid: 64005710454f01d4ca60b45d41dd3ecd,
         type: 3}
@@ -23420,6 +23330,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6732384536532393676}
     m_Modifications:
+    - target: {fileID: 1578071148685050533, guid: c21887d82e7a2b94994ed7b6ef48964a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 85
+      objectReference: {fileID: 0}
     - target: {fileID: 8927761607209074653, guid: c21887d82e7a2b94994ed7b6ef48964a,
         type: 3}
       propertyPath: m_RootOrder
