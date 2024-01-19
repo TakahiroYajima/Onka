@@ -16,12 +16,13 @@ public class HatsuThreatenAction : MonoBehaviour
 
     private Vector2 initPos = Vector2.zero;
 
-    private CRT crt = null;
+    private CRTController crt = null;
     private Camera worldCamera = null;
 
     public void Initialize()
     {
-        crt = StageManager.Instance.Player.CameraObj.GetComponent<CRT>();
+        var scene = GameSceneManager.Instance as GameSceneManager;
+        crt = scene.CRTController;
         worldCamera = StageManager.Instance.Player.CameraObj.GetComponent<Camera>();
         canvasObj.gameObject.SetActive(false);
         initPos = hatsuRectTransform.anchoredPosition;
@@ -38,7 +39,7 @@ public class HatsuThreatenAction : MonoBehaviour
         underPos.y -= 30f;
 
         canvasObj.gameObject.SetActive(true);
-        crt.enabled = true;
+        crt?.PlayEffect();
         hatsuAudio.clip = hatsuVoiceSEClip;
         noiseAudio.clip = noiseSEClip;
         hatsuAudio.Play();
@@ -55,7 +56,7 @@ public class HatsuThreatenAction : MonoBehaviour
         hatsuRectTransform.anchoredPosition = underPos;
         hatsuAudio.Stop();
         noiseAudio.Stop();
-        crt.enabled = false;
+        crt?.CancelEffect();
         if (onComplete != null)
         {
             onComplete();

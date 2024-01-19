@@ -32,7 +32,7 @@ public class EndingEventManager : MonoBehaviour
     [SerializeField] private AudioClip footStepClip = null;//ここでしか使わないのでデータでなくても良い方針で
     [SerializeField] private AudioClip ambientClip = null;
 
-    private CRT tvEffect = null;
+    private CRTController crt = null;
 
     private bool isPlaying = false;
 
@@ -47,8 +47,8 @@ public class EndingEventManager : MonoBehaviour
         zoom = mainCamera.GetComponent<CameraZoom>();
         if(zoom == null) { zoom = cameraObj.AddComponent<CameraZoom>(); }
         zoom.Initialize(60f, 26f, 0.3f);
-        tvEffect = cameraObj.GetComponent<CRT>();
-        if(tvEffect == null) { tvEffect = cameraObj.AddComponent<CRT>(); }
+        var scene = GameSceneManager.Instance as GameSceneManager;
+        crt = scene.CRTController;
 
         yukieSoundPlayer = yukie.GetComponent<SoundPlayerObject>();
         shioriSoundPlayer = shiori.GetComponent<SoundPlayerObject>();
@@ -67,7 +67,7 @@ public class EndingEventManager : MonoBehaviour
         azuha.gameObject.SetActive(false);
         yuzuha.gameObject.SetActive(false);
 
-        tvEffect.enabled = false;
+        crt.CancelEffect();
     }
 
     public void StartAction(EndingEventType type, UnityAction onComplete = null)
@@ -340,7 +340,7 @@ public class EndingEventManager : MonoBehaviour
     private IEnumerator StartEndrollEvent()
     {
         //テレビの砂嵐効果でエンディング
-        tvEffect.enabled = true;
+        crt.PlayEffect();
         yield return new WaitForSeconds(0.05f);
         
         kozo.walkAnimObj.AnimOff();
@@ -499,7 +499,8 @@ public class EndingEventManager : MonoBehaviour
         SoundManager.Instance.StopBGMWithFadeOut(3f);
         yield return new WaitForSeconds(4.5f);
         isPlaying = false;
-        if(onComplete != null)
+        crt.CancelEffect();
+        if (onComplete != null)
         {
             onComplete();
         }
