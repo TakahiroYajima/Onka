@@ -12,17 +12,25 @@ public class TemplateDialog : DialogBase
 
     public void Open(string message, TempDialogType tempDialogType, UnityAction<bool> pressButtonCallback)
     {
-        var yesMaster = tempDialogType == TempDialogType.YesOrNo_LanguageReverce ? "text_yes_reverce_language" : "text_yes";
+        string yesMaster;
+        if (tempDialogType != TempDialogType.Back)
+        {
+            yesMaster = tempDialogType == TempDialogType.YesOrNo_LanguageReverce ? "text_yes_reverce_language" : "text_yes";
+        }
+        else
+        {
+            yesMaster = "text_back";
+        }
         var noMaster = tempDialogType == TempDialogType.YesOrNo_LanguageReverce ? "text_no_reverce_language" : "text_no";
         yesButton.text.text = TextMaster.GetText(yesMaster);
         noButton.text.text = TextMaster.GetText(noMaster);
         yesButton.button.onClick.AddListener(() => { pressButtonCallback(true); });
         noButton.button.onClick.AddListener(() => { pressButtonCallback(false); });
-        if(tempDialogType != TempDialogType.YesOrNo && tempDialogType != TempDialogType.YesOrNo_LanguageReverce)
+        if (tempDialogType != TempDialogType.YesOrNo && tempDialogType != TempDialogType.YesOrNo_LanguageReverce)
         {
             noButton.gameObject.SetActive(false);
         }
-        if(tempDialogType == TempDialogType.InButtonMessage)
+        if (tempDialogType == TempDialogType.InButtonMessage)
         {
             messageText.text = string.Empty;
             yesButton.text.text = message;
@@ -46,4 +54,5 @@ public enum TempDialogType
     YesOrNo,
     YesOrNo_LanguageReverce,//言語反転のYesOrNo
     InButtonMessage,//ボタンの方にメッセージを表示させる
+    Back,//ボタンが「戻る」表示になる
 }
