@@ -18,6 +18,7 @@ public partial class TextMaster
         MessageTables.Add("StoryOpening", LocalizationSettings.StringDatabase.GetTable("StoryOpening"));
         MessageTables.Add("StoryEventAfterOutHouse", LocalizationSettings.StringDatabase.GetTable("StoryEventAfterOutHouse"));
         MessageTables.Add("StoryEnding", LocalizationSettings.StringDatabase.GetTable("StoryEnding"));
+        MessageTables.Add("Hint", LocalizationSettings.StringDatabase.GetTable("Hint"));
     }
 
     public static string GetText(string key)
@@ -47,6 +48,15 @@ public partial class TextMaster
     public static List<string> GetEndingSceneConversationTexts()
     {
         return MessageTables["StoryEnding"].Values.Where(v => v.Key.Contains("story_ending_words")).OrderBy(v => v.KeyId).Select(v => v.Value).ToList();
+    }
+
+    public static string GetHint(string key)
+    {
+        if (!MessageTables.ContainsKey("Hint"))
+        {
+            Initialize();
+        }
+        return MessageTables["Hint"].GetEntry(key).Value;
     }
 
     public static string HandOverMaster(string ja, string en)

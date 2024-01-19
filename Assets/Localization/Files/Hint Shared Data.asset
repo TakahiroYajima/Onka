@@ -1,0 +1,133 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Hint Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Hint
+  m_TableCollectionNameGuidString: 2a646ca5f41cfd64086e8f5daa77cc01
+  m_Entries:
+  - m_Id: 74299416576
+    m_Key: hint_bathroom_key
+    m_Metadata:
+      m_Items: []
+  - m_Id: 797573586944
+    m_Key: hint_bathroom_key_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1108589617152
+    m_Key: hint_in_childrenroom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1396654415872
+    m_Key: hint_in_childrenroom_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1711462096896
+    m_Key: hint_keylock_shiori
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2108343918592
+    m_Key: hint_keylock_shiori_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3116117729280
+    m_Key: hint_keylock_garage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3232484499456
+    m_Key: hint_keylock_garage_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4059496390656
+    m_Key: hint_smallnote_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4521209569280
+    m_Key: hint_smallnote_1_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5024823844864
+    m_Key: hint_smallnote_1_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5093543321600
+    m_Key: hint_smallnote_1_2_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5640014995456
+    m_Key: hint_smallnote_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5662358052864
+    m_Key: hint_smallnote_2_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6389788778496
+    m_Key: hint_smallnote_2_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6410017906688
+    m_Key: hint_smallnote_2_2_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7070838890496
+    m_Key: hint_smallnote_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7091273539584
+    m_Key: hint_smallnote_3_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7556539293696
+    m_Key: hint_smallnote_3_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7600193609728
+    m_Key: hint_smallnote_3_2_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9155739328512
+    m_Key: hint_numberpadlock
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10223546212352
+    m_Key: hint_numberpadlock_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10617810788352
+    m_Key: hint_numberpadlock_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10664145264640
+    m_Key: hint_numberpadlock_description_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12035456180224
+    m_Key: hint_underground
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12257951424512
+    m_Key: hint_underground_description
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 6551922924759023618
+  references:
+    version: 2
+    RefIds:
+    - rid: 6551922924759023618
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables,
+        asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1704911142420

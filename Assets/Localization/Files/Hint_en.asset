@@ -1,0 +1,165 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Hint_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 2a646ca5f41cfd64086e8f5daa77cc01, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 74299416576
+    m_Localized: After watching Shiori's Diary 3, I don't know where to go
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6389788778496
+    m_Localized: Still, the mystery of "Small note 2" cannot be solved
+    m_Metadata:
+      m_Items: []
+  - m_Id: 797573586944
+    m_Localized: Didn't the spirit that appeared after seeing Shiori's Diary 3 drop
+      something...?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1108589617152
+    m_Localized: I don't know what to do after entering Azuha and Yuzuha's room.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1396654415872
+    m_Localized: 'Did you go to the room you can see from the stairs?
+
+      I can
+      only think of one room that leads to it.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1711462096896
+    m_Localized: The mystery of the padlock in Shiori's room cannot be solved.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2108343918592
+    m_Localized: Did you find "Yuzuha's note" in the kitchen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3116117729280
+    m_Localized: I can't solve the mystery of the padlock in the garage.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3232484499456
+    m_Localized: 'When you read "Kozo''s Note 2" in the chest of drawers in the first
+      room with Kozo and Hatsu, three small notebooks will appear somewhere. If you
+      solve this mystery and arrange the notes in numerical order, you can unlock
+      the number lock.
+
+      Let''s search the mansion again.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4059496390656
+    m_Localized: The mystery of "Small note 1" cannot be solved
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5024823844864
+    m_Localized: Still, the mystery of "Small note 1" cannot be solved
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4521209569280
+    m_Localized: 'Let''s take another look at Yukie''s diary, as it says, ``Hints
+      are from my diary.''''
+
+      What did you want to give Nobuyuki as a present?'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5093543321600
+    m_Localized: 'Did you notice that the digital clock is a hint...?
+
+      Digital
+      clocks represent each number with seven bars.
+
+      Let''s convert the numbers
+      written in "Small note 1" into digital notation.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5640014995456
+    m_Localized: The mystery of "Small note 2" cannot be solved
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5662358052864
+    m_Localized: There is a hint in "Azuha's note".
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6410017906688
+    m_Localized: 'Let''s replace the numbers on the left side of "Small note 2" with
+      English.
+
+      For example, "1" is "ONE".'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7070838890496
+    m_Localized: The mystery of "Small note 3" cannot be solved
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7556539293696
+    m_Localized: Still, the mystery of "Small note 3" cannot be solved
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7091273539584
+    m_Localized: 'The clue for the first question was a digital clock.
+
+      What
+      is a clock that is not a digital clock?'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7600193609728
+    m_Localized: What numbers are in the direction that the hands of an analog clock
+      point?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9155739328512
+    m_Localized: The mystery of the first floor warehouse cannot be solved.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10223546212352
+    m_Localized: 'The Roman letters written in ``Kozo''s note 1'''' are the initials
+      of each family member''s name.
+
+      Also, the age to match is 2009, so even
+      if you compare it directly, it will not be the correct answer.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10617810788352
+    m_Localized: Still, the mystery of the first floor warehouse cannot be solved.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10664145264640
+    m_Localized: 'Since 2012 is written in "Diary of Hatsu 1", subtract 3 years from
+      his age in 2012.
+
+      Why are the numbers to the right of each initial only
+      1 and 10?
+
+      Hints are 1, 10, 100...'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12035456180224
+    m_Localized: I don't know where to go after unlocking the "Number lock"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12257951424512
+    m_Localized: 'Let''s review "Kozo''s note 1" again.
+
+      There should be an
+      entrance somewhere underground.'
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
