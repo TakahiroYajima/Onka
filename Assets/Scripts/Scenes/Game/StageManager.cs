@@ -46,8 +46,6 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
 
         InStageMenuManager.Instance.onOpenedMenu = OpenedMenuAction;
         InStageMenuManager.Instance.onClosedMenu = ClosedMenuAction;
-        InputKeyManager.Instance.onEscKeyPress = OnEscKeyPress;
-        InputKeyManager.Instance.onF12KeyPress = OnF12KeyPress;
 
         GimmickCamera.gameObject.SetActive(false);
     }
@@ -117,33 +115,6 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
 
         SoundDistanceManager.Instance.Emitter.SetPointID(soundDistancePoint.ID);
         SoundDistanceManager.Instance.ForceInitCalc();
-    }
-
-    /// <summary>
-    /// Escキーを押した時の挙動（メニュー表示）
-    /// </summary>
-    private void OnEscKeyPress()
-    {
-        if (playerObject.currentState == PlayerState.Free && !InStageMenuManager.Instance.isInMenu)
-        {
-            InStageMenuManager.Instance.OpenMenu();
-        }
-        else if (playerObject.currentState == PlayerState.InMenu && InStageMenuManager.Instance.isInMenu)
-        {
-            //InStageMenuManager.Instance.CloseMenu();
-        }
-    }
-    private void OnF12KeyPress()
-    {
-        //if(Cursor.lockState == CursorLockMode.Locked)
-        //{
-        //    InGameUtil.DoCursorFree();
-        //}
-        //else
-        //{
-        //    InGameUtil.DoCursorLock();
-        //}
-        Application.Quit();
     }
     private void OpenedMenuAction()
     {
@@ -280,6 +251,39 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
         }
     }
 
+    public void AllEnemyActive()
+    {
+        if (Yukie != null)
+        {
+            yukieObject.PlaySoundLoop(0,0.3f);
+            yukieObject.gameObject.SetActive(true);
+        }
+        if (Kozo != null)
+        {
+            Kozo.soundPlayerObject.PlaySoundLoop(0);
+            Kozo.gameObject.SetActive(false);
+        }
+        if (Hatsu != null)
+        {
+            Hatsu.soundPlayerObject.PlaySoundLoop(0);
+            Hatsu.gameObject.SetActive(false);
+        }
+        if (Shiori != null)
+        {
+            Shiori.gameObject.SetActive(false);
+        }
+        if (Azuha != null)
+        {
+            Azuha.ChangeState(EnemyState.CanNotAction);
+            Azuha.gameObject.SetActive(false);
+        }
+        if (Yuzuha != null && Yuzuha.gameObject.activeSelf)
+        {
+            Yuzuha.ChangeState(EnemyState.CanNotAction);
+            Yuzuha.gameObject.SetActive(false);
+        }
+    }
+
     public void AllEnemyInactive()
     {
         if(Yukie != null)
@@ -313,9 +317,51 @@ public class StageManager : SingletonMonoBehaviour<StageManager>
         }
     }
 
+    public void SetYukieActive(bool isActive)
+    {
+        if (Yukie != null)
+        {
+            Yukie.gameObject.SetActive(isActive);
+            if (isActive)
+            {
+                yukieObject.ChangeState(EnemyState.Wandering);
+            }
+            else
+            {
+                yukieObject.StopSound();
+            }
+        }
+    }
+
     public void FinishGameOver_DataControl()
     {
         yukieObject.ChangeState(EnemyState.CanNotAction);
 
+    }
+
+    public IEnumerator EventMove_ForceLookCamera(Vector3 playerLookPosition, float awaitTime = 0f, bool isUseVertical = false, float vertical = 0f)
+    {
+        CrosshairManager.Instance.SetCrosshairActive(false);
+        playerObject.ChangeState(PlayerState.Event);
+        playerObject.FirstPersonAIO.isEnable = false;
+        StartCoroutine(playerObject.TurnAroundSmooth_Coroutine(playerLookPosition, 1f, isUseVertical, vertical));
+        if(awaitTime > 0f)
+        {
+            yield return new WaitForSeconds(awaitTime);
+        }
+
+        playerObject.FirstPersonAIO.isEnable = true;
+        playerObject.ChangeState(PlayerState.Free);
+        CrosshairManager.Instance.SetCrosshairActive(true);
+    }
+
+    public float CalcVerticalAngleFromCamera(Vector3 targetPos)
+    {
+        var dir = targetPos - playerObject.CameraObj.transform.position;
+        var normal = dir;
+        normal.y = playerObject.CameraObj.transform.position.y;
+        normal = normal.normalized;
+        var angle = Vector3.Angle(normal, dir);
+        return angle;
     }
 }
