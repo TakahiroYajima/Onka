@@ -1,8 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
 using SoundSystem;
 
 /// <summary>
@@ -14,12 +12,14 @@ public class GameOverManager : SingletonMonoBehaviour<GameOverManager>
     private GameOverEventBase instanceEvent = null;
     [SerializeField] private GameObject canvasObj = null;
     [SerializeField] private Text gameOverText = null;
+    [SerializeField] private TextButton backTitleButton = null;
 
     private bool isDoingAction = false;
     // Start is called before the first frame update
     void Start()
     {
         canvasObj.SetActive(false);
+        backTitleButton.gameObject.SetActive(false);
     }
 
     public void StartGameOver(GameOverType type)
@@ -30,6 +30,11 @@ public class GameOverManager : SingletonMonoBehaviour<GameOverManager>
         instanceEvent.Initialize();
         StageManager.Instance.AllEnemyInactive();
         gameOverText.text = TextMaster.GetText("text_game_over");
+        backTitleButton.text.text = TextMaster.GetText("text_game_over_back_to_title");
+        backTitleButton.button.onClick.RemoveAllListeners();
+        backTitleButton.button.onClick.AddListener(() => BackToTitleCallback(true));
+        backTitleButton.button.onClick.AddListener(() => SoundManager.Instance.PlaySeWithKey("menuse_click"));
+        backTitleButton.gameObject.SetActive(false);
         StartCoroutine(StartGameOverAction());
     }
 
@@ -51,7 +56,7 @@ public class GameOverManager : SingletonMonoBehaviour<GameOverManager>
         yield return StartCoroutine(FadeManager.Instance.FadeAction(gameOverText, FadeType.Out, 2f));
         yield return new WaitForSeconds(1.5f);
         InGameUtil.DoCursorFree();
-        DialogManager.Instance.OpenTemplateDialog(TextMaster.GetText("text_game_over_back_to_title"), TempDialogType.InButtonMessage, BackToTitleCallback);
+        backTitleButton.gameObject.SetActive(true);
     }
 
     public void EndEventAction()
