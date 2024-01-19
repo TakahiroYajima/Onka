@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.AI;
-//using UnityEngine.Rendering;
-//using UnityEngine.Rendering.Universal;
-using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+//using UnityEngine.Rendering.PostProcessing;
 using SoundSystem;
 using SoundDistance;
 using Onka.Manager.Event;
 using Onka.Manager.Menu;
+using Onka.Manager.InputKey;
 
 /// <summary>
 /// ゲーム本編のScene制御
@@ -29,7 +30,10 @@ public class GameSceneManager : SceneBase
 
     private NavMeshDataInstance navMeshInstance;
 
-    private PostProcessVolume fieldPostProcess = null;
+    [SerializeField]
+    private Volume fieldPostProcess;
+    [field: SerializeField] public CRTController CRTController { get; private set; }
+    //private PostProcessVolume fieldPostProcess = null;
 
     public bool IsOpening => openingEventManager != null;
 
@@ -37,16 +41,11 @@ public class GameSceneManager : SceneBase
     {
         titleManager = Instantiate(titleManagerPrefab);
         titleManager.Initialize();
+        CRTController.PlayEffect();
         SceneControlManager.Instance.FadeInScene(FadeManager.FadeColorType.Black, null, 1f);
         GameManager.Instance.OnSetUserSettings = OnSetUserSettings;
 
-        fieldPostProcess = fieldObject.fieldPostProcess;
         SetDisplayBrightness(GameManager.Instance.GetSettingData().brightness);
-    }
-
-    public PostProcessVolume GetFieldPostProcess()
-    {
-        return fieldPostProcess;
     }
 
     private void DeleteTitle()
@@ -86,14 +85,13 @@ public class GameSceneManager : SceneBase
     
     private IEnumerator SetStart()
     {
-        var async = StartCoroutine(InitSceneSetUp());
+        CRTController.CancelEffect();
 
         LoadingUIManager.Instance.SetActive(true);
         LoadingUIManager.Instance.SetProgress(0f);
         LoadingUIManager.Instance.SetMessage(TextMaster.GetText("text_loading"));
-        yield return async;
-        DeleteTitle();
-        DeleteOpening();
+        yield return InitSceneSetUp();
+        
         StartCoroutine(StartScene());
     }
 
@@ -105,15 +103,20 @@ public class GameSceneManager : SceneBase
         //yield return LoadInScene();
         LoadingUIManager.Instance.SetProgress(0.25f);
         yield return LoadStage();
+        ActorSetUp();
+        DeleteTitle();
+        DeleteOpening();
         yield return await;
         LoadingUIManager.Instance.SetProgress(0.5f);
+        yield return new WaitForSeconds(0.3f);//なぜか0.3秒以上待たないと位置がプレハブ設定の位置に上書きされる
         //Debug.Log("0.5");
         //ステージが生成されてから
         yield return SetUpManager();
         yield return await;
         LoadingUIManager.Instance.SetProgress(0.75f);
-        yield return ActorSetUp();
+        //titleManager?.CameraSystemOff();
         yield return await;
+        
         InGameUtil.GCCollect();
         StageManager.Instance.fieldObject.SetUp();
         LoadingUIManager.Instance.SetProgress(1f);
@@ -144,13 +147,11 @@ public class GameSceneManager : SceneBase
         ItemManager.Instance.Initialize();
         yield return null;
     }
-    private IEnumerator ActorSetUp()
+    private void ActorSetUp()
     {
         SoundDistanceManager.Instance.Initialize();
         StageManager.Instance.ActorSetUp();
         SoundDistanceManager.Instance.SetUp(StageManager.Instance.Player.SoundListener, StageManager.Instance.Yukie.SoundEmitter);
-        
-        yield return null;
     }
     
     private IEnumerator StartScene()
@@ -161,9 +162,9 @@ public class GameSceneManager : SceneBase
         if (EventManager.Instance.IsEventEnded("Event_Opnening"))
         {
             //セーブ地点から再開
-            Debug.Log($"セーブ地点から再開 ; {StageManager.Instance.Player.name}");
-            StageManager.Instance.Player.transform.position = StageManager.Instance.fieldObject.restartPosition.transform.position;
-            StageManager.Instance.Player.transform.rotation = Quaternion.Euler(0f, 180f, 0f);//セーブポイントの方を向かせる
+            StageManager.Instance.Player.SetPosition(StageManager.Instance.fieldObject.restartPosition.transform.position);
+            StageManager.Instance.Player.transform.rotation = Quaternion.Euler(0f, 0f, 0f);//セーブポイントの方を向かせる
+            //Debug.Log($"セーブ地点から再開 ; {StageManager.Instance.Player.name} : {StageManager.Instance.Player.GetInstanceID()} : {StageManager.Instance.Player.Position} : {StageManager.Instance.fieldObject.restartPosition.transform.position}");
         }
         //オープニングイベントだけ終了済み
         if (!EventManager.Instance.IsEventEnded("Event_YukieHint"))
@@ -213,13 +214,15 @@ public class GameSceneManager : SceneBase
         SetMouseSensitivity(GameManager.Instance.GetSettingData().mouseSensitivity);
 
         yield return new WaitForEndOfFrame();
-        yield return new WaitForSeconds(0.2f);
         FadeManager.Instance.FadeIn(FadeManager.FadeColorType.Black, 1f, ()=>
         {
             StageManager.Instance.Player.ChangeState(PlayerState.Free);
         });
         yield return new WaitForSeconds(0.1f);
         LoadingUIManager.Instance.SetInactiveWithFadeOut();
+
+        InputKeyManager.Instance.onEscKeyPress = OnEscKeyPress;
+        InputKeyManager.Instance.onF12KeyPress = OnF12KeyPress;
     }
 
     public void StartEnding()
@@ -245,35 +248,47 @@ public class GameSceneManager : SceneBase
         float brightnessRatio = (brightness - SettingConstant.BrightnessMin) / (SettingConstant.BrightnessMax - SettingConstant.BrightnessMin);
         //Debug.Log($"brightnessRatio : {brightnessRatio}");
         //PostProcess
-        float bloomIndencityMagnification = SettingConstant.BloomIntensityBright - SettingConstant.BloomIntensityDark;
-        float bloomIndencityValue = SettingConstant.BloomIntensityDark + bloomIndencityMagnification * brightnessRatio;
+        //float bloomIndencityMagnification = SettingConstant.BloomIntensityBright - SettingConstant.BloomIntensityDark;
+        //float bloomIndencityValue = SettingConstant.BloomIntensityDark + bloomIndencityMagnification * brightnessRatio;
 
-        float bloomThresholdMagnification = SettingConstant.BloomThresholdBright - SettingConstant.BloomThresholdDark;//0に近づくほど明るくなるのでこれはマイナス値になる
-        float bloomThresholdValue = SettingConstant.BloomThresholdDark + bloomThresholdMagnification * brightnessRatio;
+        //float bloomThresholdMagnification = SettingConstant.BloomThresholdBright - SettingConstant.BloomThresholdDark;//0に近づくほど明るくなるのでこれはマイナス値になる
+        //float bloomThresholdValue = SettingConstant.BloomThresholdDark + bloomThresholdMagnification * brightnessRatio;
 
-        float ambientIndencityMagnification = SettingConstant.AmbientIntensityBright - SettingConstant.AmbientIntensityDark;//0に近づくほど明るくなるのでこれはマイナス値になる
-        float ambientIndencityValue = SettingConstant.AmbientIntensityDark + ambientIndencityMagnification * brightnessRatio;
+        //float ambientIndencityMagnification = SettingConstant.AmbientIntensityBright - SettingConstant.AmbientIntensityDark;//0に近づくほど明るくなるのでこれはマイナス値になる
+        //float ambientIndencityValue = SettingConstant.AmbientIntensityDark + ambientIndencityMagnification * brightnessRatio;
 
-        Bloom bloom = fieldPostProcess.profile.GetSetting<Bloom>();
-        if(bloom != null)
+        //Bloom bloom = fieldPostProcess.profile.GetSetting<Bloom>();
+        //if(bloom != null)
+        //{
+        //    bloom.intensity.Override(bloomIndencityValue);
+        //    bloom.threshold.Override(bloomThresholdValue);
+        //}
+
+        //AmbientOcclusion ambientOcclusion = fieldPostProcess.profile.GetSetting<AmbientOcclusion>();
+        //if(ambientOcclusion != null)
+        //{
+        //    ambientOcclusion.intensity.Override(ambientIndencityValue);
+        //}
+
+        ////本編中はプレイヤーのライトに影響
+        //if (managerObject != null && StageManager.Instance.Player != null)
+        //{
+        //    Light light = StageManager.Instance.Player.spotLight;
+        //    float lightMagnification = SettingConstant.PlayerLightBright - SettingConstant.PlayerLightDark;
+        //    float lightValue = SettingConstant.PlayerLightDark + lightMagnification * brightnessRatio;
+        //    light.intensity = lightValue;
+        //}
+
+        //BloomとColorAdjustmentsは光の強さの関係で反比例させる
+        float bloomIntensity = Mathf.Lerp(SettingConstant.BrightnessMin, SettingConstant.BrightnessMax, 1 - brightnessRatio);
+        float colorAdjustments = Mathf.Lerp(SettingConstant.ColorAdjustmentMin, SettingConstant.ColorAdjustmentsMax, brightnessRatio);
+        if(fieldPostProcess.profile.TryGet(out Bloom bloom))
         {
-            bloom.intensity.Override(bloomIndencityValue);
-            bloom.threshold.Override(bloomThresholdValue);
+            bloom.intensity.value = bloomIntensity;
         }
-
-        AmbientOcclusion ambientOcclusion = fieldPostProcess.profile.GetSetting<AmbientOcclusion>();
-        if(ambientOcclusion != null)
+        if (fieldPostProcess.profile.TryGet(out ColorAdjustments ca))
         {
-            ambientOcclusion.intensity.Override(ambientIndencityValue);
-        }
-
-        //本編中はプレイヤーのライトに影響
-        if (managerObject != null && StageManager.Instance.Player != null)
-        {
-            Light light = StageManager.Instance.Player.spotLight;
-            float lightMagnification = SettingConstant.PlayerLightBright - SettingConstant.PlayerLightDark;
-            float lightValue = SettingConstant.PlayerLightDark + lightMagnification * brightnessRatio;
-            light.intensity = lightValue;
+            ca.postExposure.value = colorAdjustments;
         }
     }
 
@@ -283,6 +298,37 @@ public class GameSceneManager : SceneBase
         {
             StageManager.Instance.Player.FirstPersonAIO.mouseSensitivity = mouseSensitivity;
         }
+    }
+
+    /// <summary>
+    /// Escキーを押した時の挙動（メニュー表示）
+    /// </summary>
+    private void OnEscKeyPress()
+    {
+        if(StageManager.Instance.Player == null)
+        {
+            return;
+        }
+        if (StageManager.Instance.Player.currentState == PlayerState.Free && !InStageMenuManager.Instance.isInMenu)
+        {
+            InStageMenuManager.Instance.OpenMenu();
+        }
+        else if (StageManager.Instance.Player.currentState == PlayerState.InMenu && InStageMenuManager.Instance.isInMenu)
+        {
+            //InStageMenuManager.Instance.CloseMenu();
+        }
+    }
+    private void OnF12KeyPress()
+    {
+        //if(Cursor.lockState == CursorLockMode.Locked)
+        //{
+        //    InGameUtil.DoCursorFree();
+        //}
+        //else
+        //{
+        //    InGameUtil.DoCursorLock();
+        //}
+        Application.Quit();
     }
 }
 
