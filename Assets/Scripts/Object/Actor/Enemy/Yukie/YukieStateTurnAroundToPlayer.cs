@@ -17,7 +17,7 @@ public class YukieStateTurnAroundToPlayer : StateBase
 
     public override void UpdateAction()
     {
-        if (yukie.TurnAroundToTargetAngle_Update(yukie.player.transform.position, yukie.player.transform.position.y >= 3f))
+        if (yukie.TurnAroundToTargetAngle_Update(yukie.player.Position, yukie.player.Position.y >= 3f))
         {
             yukie.ChangeState(EnemyState.RecognizedPlayer);
         }

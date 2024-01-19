@@ -25,7 +25,7 @@ public class YuzuhaStateChasePlayer : StateBase
     public override void UpdateAction()
     {
         yuzuha.walkAnimObj.lookTargetPosition = StageManager.Instance.Player.eyePosition;
-        yuzuha.navMeshAgent.SetDestination(StageManager.Instance.Player.transform.position);
+        yuzuha.navMeshAgent.SetDestination(StageManager.Instance.Player.Position);
     }
 
     public override void EndAction()

@@ -19,7 +19,7 @@ public class Enemy_ShioriStateWalkEvent : StateBase
     }
     public override void UpdateAction()
     {
-        Vector3 moveDir = StageManager.Instance.Player.transform.position - StageManager.Instance.Shiori.transform.position;
+        Vector3 moveDir =StageManager.Instance.Player.Position - StageManager.Instance.Shiori.transform.position;
         moveDir.y = 0f;
         StageManager.Instance.Shiori.transform.rotation = Quaternion.LookRotation(moveDir);
         StageManager.Instance.Shiori.transform.position += moveDir.normalized * Time.deltaTime * moveSpeed;

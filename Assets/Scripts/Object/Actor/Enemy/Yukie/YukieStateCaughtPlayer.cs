@@ -27,7 +27,7 @@ public class YukieStateCaughtPlayer : StateBase
 
         yukie.player.ChangeState(PlayerState.Arrested);
         //プレイヤーの背後から捕まえたかによってアクションを変える
-        playerDir = (yukie.transform.position - yukie.player.transform.position).normalized;
+        playerDir = (yukie.transform.position - yukie.player.Position).normalized;
         isFrontCaught = Utility.Instance.IsInSightAngle(yukie.player.gameObject, yukie.gameObject, 120f);
         yukie.StartCoroutine(Move());
         

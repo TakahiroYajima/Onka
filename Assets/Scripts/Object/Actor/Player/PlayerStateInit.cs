@@ -13,7 +13,6 @@ public class PlayerStateInit : StateBase
     public override void StartAction()
     {
         player.FirstPersonAIO.isEnable = false;
-
     }
 
     public override void UpdateAction()
@@ -23,6 +22,6 @@ public class PlayerStateInit : StateBase
 
     public override void EndAction()
     {
-        
+
     }
 }

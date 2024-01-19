@@ -143,7 +143,7 @@ public class YukieStateInRoomWandering : StateBase
                 yukie.ChangeState(EnemyState.Wandering);
                 break;
             //case YukieInRoomWanderingState.RotateToPlayer:
-            //    yukie.TurnAroundToTargetAngle_Update(yukie.player.transform.position, () =>
+            //    yukie.TurnAroundToTargetAngle_Update(yukie.player.Position, () =>
             //    {
             //        yukie.ChangeState(EnemyState.ChasePlayer);
             //    });
@@ -162,9 +162,9 @@ public class YukieStateInRoomWandering : StateBase
     {
         //まだプレイヤーを目視できているか判定
         //隠れ箇所で余分に当たり判定が上に出ている部分があるので、立っている時には気付くようにする
-        if (IsPlayerHitSerchRay(yukie.player.transform.position))
+        if (IsPlayerHitSerchRay(yukie.player.Position))
             yukie.ChangeState(EnemyState.RecognizedPlayer);//プレイヤーを目視できていたら追いかけるステートへ
-        else if (IsPlayerHitSerchRay(yukie.player.transform.position + new Vector3(0f, yukie.player.defaultColliderHeightHalf, 0f)))
+        else if (IsPlayerHitSerchRay(yukie.player.Position + new Vector3(0f, yukie.player.defaultColliderHeightHalf, 0f)))
             yukie.ChangeState(EnemyState.RecognizedPlayer);
         else
         {
@@ -183,14 +183,14 @@ public class YukieStateInRoomWandering : StateBase
     {
         if (yukie.IsInSightPlayer())
         {
-            if (IsPlayerHitSerchRay(yukie.player.transform.position))
+            if (IsPlayerHitSerchRay(yukie.player.Position))
                 yukie.ChangeState(EnemyState.RecognizedPlayer);//プレイヤーを目視できていたら追いかけるステートへ
-            else if (IsPlayerHitSerchRay(yukie.player.transform.position + new Vector3(0f, yukie.player.defaultColliderHeightHalf, 0f)))
+            else if (IsPlayerHitSerchRay(yukie.player.Position + new Vector3(0f, yukie.player.defaultColliderHeightHalf, 0f)))
                 yukie.ChangeState(EnemyState.RecognizedPlayer);
         }
         else
         {
-            yukie.provokedSystem.ProvokedUpdate_ToPlayer_6Frame(yukie.player.transform.position);
+            yukie.provokedSystem.ProvokedUpdate_ToPlayer_6Frame(yukie.player.Position);
         }
     }
     /// <summary>

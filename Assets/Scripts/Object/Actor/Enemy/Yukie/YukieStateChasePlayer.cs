@@ -38,10 +38,10 @@ public class YukieStateChasePlayer : StateBase
 
     public override void UpdateAction()
     {
-        yukie.navMeshAgent.SetDestination(yukie.player.transform.position);
-        bool isHitPlayer = yukie.raycastor.IsRaycastHitObjectMatch(yukie.transform.position, yukie.player.transform.position, Tags.Player, 11f);
+        yukie.navMeshAgent.SetDestination(yukie.player.Position);
+        bool isHitPlayer = yukie.raycastor.IsRaycastHitObjectMatch(yukie.transform.position, yukie.player.Position, Tags.Player, 11f);
         //2階に向かって追いかけている時はプレイヤーを見上げるようにする（プレイヤーにRayが当たっていないと壁越しに階段の上を見上げるというちょっと笑える挙動になるのでチェックを入れる）
-        if (Mathf.Abs(yukie.transform.position.y - yukie.player.transform.position.y) > 0.35f && isHitPlayer)
+        if (Mathf.Abs(yukie.transform.position.y - yukie.player.Position.y) > 0.35f && isHitPlayer)
         {
             yukie.LookRotationFaceToTarget(yukie.player.eyePosition);
         }
@@ -75,7 +75,7 @@ public class YukieStateChasePlayer : StateBase
             {
                 noRecognitionTime += Time.deltaTime * doUpdateFrameCount;
             }
-            //yukie.raycastor.ObjectToRayAction(yukie.transform.position, yukie.player.transform.position, (RaycastHit hit) =>
+            //yukie.raycastor.ObjectToRayAction(yukie.transform.position, yukie.player.Position, (RaycastHit hit) =>
             //{
             //    if (Utility.Instance.IsTagNameMatch(hit.transform.gameObject, Tags.Player))
             //    {

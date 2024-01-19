@@ -28,7 +28,7 @@ public class KozoStateChasePlayer : StateBase
 
     public override void UpdateAction()
     {
-        kozo.navMeshAgent.SetDestination(StageManager.Instance.Player.transform.position);
+        kozo.navMeshAgent.SetDestination(StageManager.Instance.Player.Position);
     }
 
     public override void EndAction()

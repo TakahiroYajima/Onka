@@ -27,7 +27,7 @@ public class HatsuStateChasePlayer : StateBase
 
     public override void UpdateAction()
     {
-        hatsu.navMeshAgent.SetDestination(StageManager.Instance.Player.transform.position);
+        hatsu.navMeshAgent.SetDestination(StageManager.Instance.Player.Position);
     }
 
     public override void EndAction()

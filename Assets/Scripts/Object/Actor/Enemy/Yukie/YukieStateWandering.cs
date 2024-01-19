@@ -60,7 +60,7 @@ public class YukieStateWandering : StateBase
         {
             if (yukie.IsInSightPlayer()){
                 //壁を挟んでいなければプレイヤーを発見させる
-                yukie.raycastor.ObjectToRayAction(yukie.transform.position, yukie.player.transform.position, (RaycastHit hit) =>
+                yukie.raycastor.ObjectToRayAction(yukie.transform.position, yukie.player.Position, (RaycastHit hit) =>
                 {
                     if (Utility.Instance.IsTagNameMatch(hit.transform.gameObject, Tags.Player))
                     {
@@ -74,7 +74,7 @@ public class YukieStateWandering : StateBase
                 float noticeProvocationTime = DataManager.Instance.IsAfterMiddleStage() ? NoticeProvocationTimeEary : NoticeProvocationTimeInit;
                 yukie.provokedSystem.SetNoticeProvocationTime(noticeProvocationTime);
                 //一定時間プレイヤーが自分の近くをうろついていたら振り返り、発見モードになる
-                yukie.provokedSystem.ProvokedUpdate_ToPlayer_6Frame(yukie.player.transform.position);
+                yukie.provokedSystem.ProvokedUpdate_ToPlayer_6Frame(yukie.player.Position);
             }
             frameCount = 0;
         }

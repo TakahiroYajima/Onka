@@ -91,7 +91,7 @@ public class YukieStateLookInRoom : StateBase
                 }
                 break;
             case State.FirstSearchRay:
-                if (IsPlayerHitSerchRay(yukie.player.transform.position + new Vector3(0f, yukie.player.defaultColliderHeightHalf, 0f)))
+                if (IsPlayerHitSerchRay(yukie.player.Position + new Vector3(0f, yukie.player.defaultColliderHeightHalf, 0f)))
                 {
                     OnRecognizedPlayerAction();//プレイヤーを目視できていたら追いかけるステートへ
                 }
@@ -138,14 +138,14 @@ public class YukieStateLookInRoom : StateBase
     {
         if (yukie.IsInSightPlayer())
         {
-            if (IsPlayerHitSerchRay(yukie.player.transform.position))
+            if (IsPlayerHitSerchRay(yukie.player.Position))
                 OnRecognizedPlayerAction();//プレイヤーを目視できていたら追いかけるステートへ
-            else if (IsPlayerHitSerchRay(yukie.player.transform.position + new Vector3(0f, yukie.player.defaultColliderHeightHalf, 0f)))
+            else if (IsPlayerHitSerchRay(yukie.player.Position + new Vector3(0f, yukie.player.defaultColliderHeightHalf, 0f)))
                 OnRecognizedPlayerAction();
         }
         else
         {
-            yukie.provokedSystem.ProvokedUpdate_ToPlayer_6Frame(yukie.player.transform.position);
+            yukie.provokedSystem.ProvokedUpdate_ToPlayer_6Frame(yukie.player.Position);
         }
     }
 
@@ -210,7 +210,7 @@ public class YukieStateLookInRoom : StateBase
     /// <returns></returns>
     private bool OnRecognizedPlayerAndCoroutineJudge()
     {
-        if (IsPlayerHitSerchRay(yukie.player.transform.position))
+        if (IsPlayerHitSerchRay(yukie.player.Position))
         {
             OnRecognizedPlayerAction();
             yukie.StopCoroutine(LookInRoomOrAlwaysOpenPoint(State.None));
