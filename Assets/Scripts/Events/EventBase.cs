@@ -16,6 +16,8 @@ public abstract class EventBase : MonoBehaviour
     public string EventKey { get { return eventKey; } }
     [SerializeField] protected string[] needItemKeys = null;//このイベントが発生するのに必要なアイテムキー
     [SerializeField] protected string[] needEventKeys = null;//このイベントが発生するのに必要なイベントキー
+    [SerializeField]
+    protected string forceClearItemKey = string.Empty;//このアイテムを持っていたら強制でイベントをクリアさせる（Ver1のセーブデータが残っていることによるバグ対策）
     [System.NonSerialized] public int managementID = -1;//配列で管理する際のID
 
     [SerializeField] protected EventActorBase eventActorPref = null;
@@ -40,6 +42,13 @@ public abstract class EventBase : MonoBehaviour
     /// </summary>
     public void InitProgress()
     {
+        //特定のアイテムを持っていたらクリア済みと判定させる（Ver2.0.0現在はSeeThePast専用）
+        if (!string.IsNullOrEmpty(forceClearItemKey) && DataManager.Instance.IsGetedItem(forceClearItemKey))
+        {
+            AlreadyClearedMove();
+            return;
+        }
+        //通常のクリア判定フロー
         if (EventManager.Instance.IsEventEnded(eventKey))
         {
             AlreadyClearedMove();

@@ -79,6 +79,18 @@ public class SoundPlayerObject : MonoBehaviour
         audioSource.Play();
     }
 
+    public void PlayOne(int arrayNum, float volume = 1f)
+    {
+        if (arrayNum >= 0 && arrayNum < audioClipList.Count)
+        {
+            AudioClip clip = audioClipList[arrayNum];
+            audioSource.clip = clip;
+            audioSource.loop = false;
+            audioSource.volume = volume;
+            audioSource.Play();
+        }
+    }
+
     public void VolumeUpWithFade(float fadeTime = 1f, float endVolume = 1f)
     {
         StartCoroutine(audioSource.VolumeUpWithFade(fadeTime, endVolume));
