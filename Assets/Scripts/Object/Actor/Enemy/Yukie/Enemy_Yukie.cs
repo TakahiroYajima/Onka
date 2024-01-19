@@ -127,8 +127,8 @@ public class Enemy_Yukie : Enemy
         yukieXZ.x = transform.position.x;
         yukieXZ.y = transform.position.z;
 
-        playerXZ.x = player.transform.position.x;
-        playerXZ.y = player.transform.position.z;
+        playerXZ.x = player.Position.x;
+        playerXZ.y = player.Position.z;
     }
     /// <summary>
     /// プレイヤーが視界に入っているか
@@ -139,7 +139,7 @@ public class Enemy_Yukie : Enemy
         if ((yukieXZ - playerXZ).sqrMagnitude < playerDetectionDistance * playerDetectionDistance)
         {
             //視界に入っていたら検知
-            var positionDiff = player.transform.position - transform.position;
+            var positionDiff = player.Position - transform.position;
             var angle = Vector3.Angle(transform.forward, positionDiff);
             if (angle <= searchAngle)
             {
@@ -261,7 +261,7 @@ public class Enemy_Yukie : Enemy
     #region コライダーイベント関連
     private void OnEnterRoomAction(RoomWanderingManager _roomWanderingManager)
     {
-        if (currentState != EnemyState.InRoomWandering)
+        if (currentState != EnemyState.InRoomWandering && currentState != EnemyState.CanNotAction && currentState != EnemyState.Init && currentState != EnemyState.Event)
         {
             inRoomWanderingActor.currentManager = _roomWanderingManager;
             ChangeState(EnemyState.InRoomWandering);
