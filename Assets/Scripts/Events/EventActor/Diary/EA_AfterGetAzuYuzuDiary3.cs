@@ -16,8 +16,6 @@ public class EA_AfterGetAzuYuzuDiary3 : EventActorBase
     [SerializeField] private Enemy_Azuha azuha = null;
     [SerializeField] private Enemy_Yuzuha yuzuha = null;
 
-    public Event_AfterGetKozoDiary3 eventBase { private get; set; } = null;
-
     private enum AYDState
     {
         Thunder,//雷で脅かす

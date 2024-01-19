@@ -21,12 +21,13 @@ public class EA_AfterGetKozoDiary3 : EventActorBase
     public Event_AfterGetKozoDiary3 eventBase { private get; set; } = null;
 
     [SerializeField] private Canvas canvasObj = null;
-    private CRT crt = null;
+    private CRTController crt = null;
     private Camera worldCamera = null;
 
     protected override void Initialize()
     {
-        crt = StageManager.Instance.Player.CameraObj.GetComponent<CRT>();
+        var scene = GameSceneManager.Instance as GameSceneManager;
+        crt = scene.CRTController;
         worldCamera = StageManager.Instance.Player.CameraObj.GetComponent<Camera>();
         canvasObj.renderMode = RenderMode.ScreenSpaceCamera;
         canvasObj.worldCamera = worldCamera;
@@ -99,7 +100,7 @@ public class EA_AfterGetKozoDiary3 : EventActorBase
 
             kozo.gameObject.SetActive(true);
             kozo.ChangeState(EnemyState.ChasePlayer);
-            crt.enabled = true;
+            crt?.PlayEffect();
             canvasObj.gameObject.SetActive(true);
         }
     }
@@ -127,7 +128,7 @@ public class EA_AfterGetKozoDiary3 : EventActorBase
             hatsu.ChangeState(EnemyState.Init);
             kozo.gameObject.SetActive(false);
             hatsu.gameObject.SetActive(false);
-            crt.enabled = false;
+            crt?.CancelEffect();
             canvasObj.gameObject.SetActive(false);
             parent.EventClearContact();
         }

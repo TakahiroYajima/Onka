@@ -35,7 +35,7 @@ public class EA_Openig : EventActorBase
 
     private IEnumerator FirstEventAction()
     {
-        StageManager.Instance.Player.transform.position = initPlayerPosition.transform.position;
+        StageManager.Instance.Player.SetPosition(initPlayerPosition.transform.position);
         yield return null;//他のスクリプト初期化待ち
 
         //各アクターの初期化

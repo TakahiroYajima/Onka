@@ -73,7 +73,7 @@ public class EA_AfterGetEntranceKey : EventActorBase
         SoundDistanceManager.Instance.Listener.SetNextTargetPointID(listenerNextPoint.ID);
 
 
-        Vector3 lookPos = new Vector3(StageManager.Instance.Player.transform.position.x, StageManager.Instance.Yukie.transform.position.y, StageManager.Instance.Player.transform.position.z);
+        Vector3 lookPos = new Vector3(StageManager.Instance.Player.Position.x, StageManager.Instance.Yukie.transform.position.y, StageManager.Instance.Player.Position.z);
         StageManager.Instance.Yukie.transform.LookAt(lookPos);
         StageManager.Instance.Yukie.isEternalChaseMode = true;
         StageManager.Instance.Yukie.isIgnoreInRoom = true;

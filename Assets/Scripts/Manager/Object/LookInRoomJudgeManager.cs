@@ -56,7 +56,7 @@ public class LookInRoomJudgeManager : SingletonMonoBehaviour<LookInRoomJudgeMana
             case AlwaysOpenRookPointType.InRoom:
                 return StageManager.Instance.Player.inRoomChecker.CurrentEnterRoomList.Contains(point.targetRoom);
             case AlwaysOpenRookPointType.OnThe2F:
-                return StageManager.Instance.Player.transform.position.y > 3f;
+                return StageManager.Instance.Player.Position.y > 3f;
             default: return false;
         }
     }

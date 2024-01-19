@@ -36,7 +36,7 @@ public class EA_AfterGetNobuyukiDiary3 : EventActorBase
 
     private void NobuyukiEvent(UnityAction onComplete)
     {
-        StageManager.Instance.Player.raycastor.ObjectToRayAction(StageManager.Instance.Player.transform.position, StageManager.Instance.Player.transform.position + StageManager.Instance.Player.transform.forward, (RaycastHit hit) =>
+        StageManager.Instance.Player.raycastor.ObjectToRayAction(StageManager.Instance.Player.Position, StageManager.Instance.Player.Position + StageManager.Instance.Player.transform.forward, (RaycastHit hit) =>
         {
             Vector3 hitPoint = hit.point;
             hitPoint.y = initNobuyukiPos.y;
@@ -51,12 +51,12 @@ public class EA_AfterGetNobuyukiDiary3 : EventActorBase
     {
         yield return new WaitForEndOfFrame();
         //プレイヤーのカメラの向きの先に信之生成（位置調整だけ）
-        Vector3 playerPos = StageManager.Instance.Player.transform.position;
+        Vector3 playerPos = StageManager.Instance.Player.Position;
         playerPos.y = nobuyukiObj.transform.position.y;
         Vector3 toPlayerNormal;
         while ((nobuyukiObj.transform.position - playerPos).sqrMagnitude > 2f)
         {
-            playerPos = StageManager.Instance.Player.transform.position;
+            playerPos = StageManager.Instance.Player.Position;
             toPlayerNormal = (playerPos - nobuyukiObj.transform.position).normalized;
             nobuyukiObj.MoveToTargetDir_Update(toPlayerNormal, 9f);
             yield return null;
