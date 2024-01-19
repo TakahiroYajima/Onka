@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using Onka.Manager.Data;
 
 namespace Onka.Manager.Menu
 {
@@ -19,6 +20,8 @@ namespace Onka.Manager.Menu
         [SerializeField] private OperationDescriptionView operationDescriptionViewPref = null;
         [SerializeField] private UserSettingMenuView userSettingMenuViewPref = null;
         [SerializeField] private ItemListViewer itemListViewerPref = null;
+        [SerializeField]
+        private HintListViewer hintListViewerPref;
 
         public UnityAction onOpenedMenu { private get; set; } = null;
         public UnityAction onClosedMenu { private get; set; } = null;
@@ -36,6 +39,7 @@ namespace Onka.Manager.Menu
             menuView.onClickOperateGuideButton = OpenOperationDesctiption;
             menuView.onClickSettingButton = OpenSettingView;
             menuView.onClickItemButton = OpenItemListView;
+            menuView.onClickHintButton = OpenHintListView;
             menuView.onClickBackToTitleButton = OpenBackToTitleDialog;
             menuView.onClickCanselButton = CloseMenu;
         }
@@ -106,6 +110,13 @@ namespace Onka.Manager.Menu
             v.Initialize();
             v.ViewList(ItemListViewer.ViewMode.Playing);
         }
+
+        private void OpenHintListView()
+        {
+            HintListViewer v = Instantiate(hintListViewerPref, instanceParent);
+            v.ViewList(DataManager.Instance.GetAllItemData());
+        }
+
         private void OpenBackToTitleDialog()
         {
             menuView.HideButtons();

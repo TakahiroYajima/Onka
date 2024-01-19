@@ -1,8 +1,7 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
 
 namespace Onka.Manager.Menu
 {
@@ -12,19 +11,22 @@ namespace Onka.Manager.Menu
         [SerializeField] private Text operationText = null;
         [SerializeField] private Text settingText = null;
         [SerializeField] private Text ItemText = null;
+        [SerializeField] private Text hintText = null;
         [SerializeField] private Text backToTitleText = null;
         [SerializeField] private Text backText = null;
-        public UnityAction onClickOperateGuideButton = null;
-        public UnityAction onClickSettingButton = null;
-        public UnityAction onClickItemButton = null;
-        public UnityAction onClickBackToTitleButton = null;
-        public UnityAction onClickCanselButton = null;
+        public Action onClickOperateGuideButton = null;
+        public Action onClickSettingButton = null;
+        public Action onClickItemButton = null;
+        public Action onClickHintButton = null;
+        public Action onClickBackToTitleButton = null;
+        public Action onClickCanselButton = null;
 
         public void Initialize()
         {
             operationText.text = TextMaster.GetText("text_menu_content_operation");
             settingText.text = TextMaster.GetText("text_menu_content_setting");
             ItemText.text = TextMaster.GetText("text_menu_content_item");
+            hintText.text = TextMaster.GetText("text_menu_content_hint");
             backToTitleText.text = TextMaster.GetText("text_menu_content_back_to_title");
             backText.text = TextMaster.GetText("text_menu_content_back");
         }
@@ -48,6 +50,13 @@ namespace Onka.Manager.Menu
             if(onClickItemButton != null)
             {
                 onClickItemButton();
+            }
+        }
+        public void ClickHintButton()
+        {
+            if (onClickHintButton != null)
+            {
+                onClickHintButton();
             }
         }
         public void ClickBackToTitleButton()
