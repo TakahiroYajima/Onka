@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Schema;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -18,6 +19,7 @@ public class PlayerObject : MonoBehaviour
     public Raycastor raycastor { get; private set; } = null;
     public InRoomChecker inRoomChecker { get; private set; } = null;
     public Vector3 Position { get { return transform.position; } }
+    public void SetPosition(Vector3 pos) { transform.position = pos; }
     public Vector3 eyePosition { get { return transform.position + new Vector3(0,0.7f,0); } }
     public Rigidbody rigidbody { get; private set; } = null;
     public Camera Camera { get; private set; } = null;
@@ -64,6 +66,8 @@ public class PlayerObject : MonoBehaviour
         cameraMovingObject = cameraObj.GetComponent<MovingObject>();
         Camera = cameraObj.GetComponent<Camera>();
 
+        firstPersonAIO.isEnable = false;
+
         //Stateパターン初期化
         playerStateDic.Clear();
         playerStateDic.Add(PlayerState.Init, new PlayerStateInit(this));
@@ -74,7 +78,7 @@ public class PlayerObject : MonoBehaviour
         playerStateDic.Add(PlayerState.Arrested, new PlayerStateArrested(this));
         playerStateDic.Add(PlayerState.InMenu, new PlayerStateInMenu(this));
         playerStateDic.Add(PlayerState.Event, new PlayerStateEvent(this));
-
+        
         currentState = PlayerState.Init;
     }
 
@@ -88,6 +92,7 @@ public class PlayerObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log($"Player : {transform.position} , {currentState} , {this.GetInstanceID()}");
         playerStateDic[currentState].UpdateAction();
     }
     /// <summary>
@@ -126,6 +131,29 @@ public class PlayerObject : MonoBehaviour
     {
         firstPersonAIO.isEnable = true;
     }
+    
+    public IEnumerator TurnAroundSmooth_Coroutine(Vector3 targetPosition, float waitTime = 1f, bool isUseVertical = false, float vertical = 0f)
+    {
+        //Vector3 targetDir = new Vector3(firstPersonAIO.GetCameraPosition().x, targetPosition.y, firstPersonAIO.GetCameraPosition().z) - firstPersonAIO.GetCameraPosition();
+        Vector3 myTargetDir = new Vector3(targetPosition.x, firstPersonAIO.transform.position.y, targetPosition.z) - firstPersonAIO.transform.position;
+        //Vector3 normalized = targetDir.normalized;
+        //Vector3 myTargetNormalized = myTargetDir.normalized;
+        //normalized.y = 0f;
+        //myTargetNormalized.x = 0f;
+        var time = 0f;
+        var hAngle = Vector3.SignedAngle(firstPersonAIO.transform.forward, myTargetDir, Vector3.up);
+        //var vAngle = Vector3.SignedAngle(firstPersonAIO.GetCameraForward(), targetDir, firstPersonAIO.GetCameraRight());
+        //Debug.Log($"Angle : p:{hAngle}, c:{vAngle}");
+        firstPersonAIO.ForceRotationHorizontal(hAngle, isUseVertical, vertical);
+        while (time < waitTime)
+        {
+            firstPersonAIO.CameraRotationUpdate();
+            time += Time.deltaTime;
+            yield return null;
+        }
+        firstPersonAIO.CameraRotationUpdate();
+    }
+
     /// <summary>
     /// プレイヤーの視界に入っているか
     /// </summary>

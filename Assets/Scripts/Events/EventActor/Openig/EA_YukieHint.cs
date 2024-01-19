@@ -34,7 +34,8 @@ public class EA_YukieHint : EventActorBase
 
     private IEnumerator EventAction()
     {
-        var playerCameraMovingObject = StageManager.Instance.Player.cameraMovingObject;
+        //StageManagerのEventMove_ForceLookCameraで同じことをやっているので、プレイヤーのカメラ部分だけ共通のものを使えないか検討
+        //var playerCameraMovingObject = StageManager.Instance.Player.cameraMovingObject;
         CrosshairManager.Instance.SetCrosshairActive(false);
         StageManager.Instance.Player.ChangeState(PlayerState.Event);
         StageManager.Instance.Yukie.transform.position = yukieFirstPosition.transform.position;
@@ -42,13 +43,17 @@ public class EA_YukieHint : EventActorBase
         StageManager.Instance.Yukie.gameObject.SetActive(true);
         StageManager.Instance.Yukie.ChangeState(EnemyState.CanNotAction);
 
-        Vector3 initRotation = playerCameraMovingObject.transform.forward;
-        StartCoroutine(playerCameraMovingObject.TurnAroundSmooth_Coroutine(playerLookPosition.transform.position, 10f));
+        //Vector3 initRotation = playerCameraMovingObject.transform.forward;
+        var player = StageManager.Instance.Player;
+        var diff = player.Position - playerLookPosition.transform.position;
+        //Debug.Log($"ForceLook : {playerLookPosition.transform.position}, {diff} , {playerLookPosition.transform.position - diff}");
+        player.FirstPersonAIO.isEnable = false;
+        StartCoroutine(player.TurnAroundSmooth_Coroutine(playerLookPosition.transform.position, 1f, true));
         yield return StartCoroutine(StageManager.Instance.Yukie.movingObject.MoveWithTime(yukieFirstPosition.transform.position + Vector3.right * 3f, 3f));
-        //yield return StartCoroutine(eventBase.playerCameraMovingObject.TurnAroundSmooth_Coroutine(initRotation, 6f));
+        ////yield return StartCoroutine(eventBase.playerCameraMovingObject.TurnAroundSmooth_Coroutine(initRotation, 6f));
 
-        
-        StageManager.Instance.Player.ChangeState(PlayerState.Free);
+        player.FirstPersonAIO.isEnable = true;
+        player.ChangeState(PlayerState.Free);
         CrosshairManager.Instance.SetCrosshairActive(true);
 
         FinishEvent();
